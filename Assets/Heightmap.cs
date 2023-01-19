@@ -1,21 +1,109 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class Heightmap : MonoBehaviour
 {
+    public static Heightmap _instance;
+    
+    [Tooltip("1 = Random")]
     public float noiseScale;
 
-    private float[,] heights;
+    public int octaves;
+    
+    public float[,] heights;
+
+    public float persistence;
+    public float lacunarity;
+
+    public int seed;
+
+    public Slider octaveSlider;
+    public Slider persistenceSlider;
+    public Slider lacunaritySlider;
+    public InputField seedInput;
+    
+    //private GameObject[,] cubes;
     
     void Start()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+
         heights = new float[Grid._instance.width, Grid._instance.height];
+        //cubes = new GameObject[Grid._instance.width, Grid._instance.height];
+        
+        Random.seed = seed;
 
-        Random.seed = 43;
+        octaveSlider.value = octaves;
+        persistenceSlider.value = persistence;
+        lacunaritySlider.value = lacunarity;
+        seedInput.text = "" + seed;
+        
+        
+        Vector2[] offsets = new Vector2[octaves];
+        for (int i = 0; i < octaves; i++)
+        {
+            float xOffset = Random.Range(-10000, 10000);
+            float zOffset = Random.Range(-10000, 10000);
+            offsets[i] = new Vector2(xOffset, zOffset);
+        }
 
 
+        if (noiseScale < 0) noiseScale = 0.0001f;
+        else if (noiseScale == 1) noiseScale = Random.Range(0f, 1f);
+
+        float middleWidth = Grid._instance.width / 2f;
+        float middleHeight = Grid._instance.height / 2f;
+        
+        for (int i = 0; i < Grid._instance.width; i++)
+        {
+            for (int j = 0; j < Grid._instance.height; j++)
+            {
+                float amplitude = 1;
+                float frequency = 1;
+                float noiseHeight = 0;
+
+                for (int a = 0; a < octaves; a++) {
+                    float sampleX = (i-middleWidth)  / noiseScale * frequency + offsets[a].x;
+                    float sampleY = (j-middleHeight) / noiseScale * frequency + offsets[a].y;
+
+                    float perlinValue = Mathf.PerlinNoise (sampleX, sampleY) * 2 - 1;
+                    noiseHeight += perlinValue * amplitude;
+
+                    amplitude *= persistence;
+                    frequency *= lacunarity;
+                }
+
+                /*
+                if (noiseHeight > maxNoiseHeight) {
+                    maxNoiseHeight = noiseHeight;
+                } else if (noiseHeight < minNoiseHeight) {
+                    minNoiseHeight = noiseHeight;
+                }
+                */
+                
+                
+                heights[i,j] = noiseHeight;
+                /*
+                cubes[i,j] = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                cubes[i,j].transform.position = new Vector3(i,heights[i,j],j);
+
+                cubes[i,j].GetComponent<MeshRenderer>().material.color = new Color(1,heights[i,j],1,1);
+*/
+            }
+        }
+        
+
+        /*
         noiseScale = 0.853f;
         for (int i = 0; i < Grid._instance.width; i++)
         {
@@ -63,8 +151,8 @@ public class Heightmap : MonoBehaviour
             }
         }
         
+*/
 
-        
         /*
         xyzInfo[i, j, k] = (Mathf.PerlinNoise(i * noiseScale, j * noiseScale) + Mathf.PerlinNoise(j * noiseScale, k * noiseScale) + Mathf.PerlinNoise(i * noiseScale,k * noiseScale));
         Debug.Log("" + xyzInfo[i,j,k]);
@@ -73,9 +161,83 @@ public class Heightmap : MonoBehaviour
         */
     }
 
-    void Update()
+    public void UpdateGenerationSettings()
+    {
+        octaves = (int)octaveSlider.value;
+        lacunarity = lacunaritySlider.value;
+        persistence = persistenceSlider.value;
+        seed = int.Parse(seedInput.text);
+        
+        Regenerate();
+    }
+    
+    
+    
+    private void Regenerate()
     {
         
+        Random.seed = seed;
+
+        Vector2[] offsets = new Vector2[octaves];
+        for (int i = 0; i < octaves; i++)
+        {
+            float xOffset = Random.Range(-10000, 10000);
+            float zOffset = Random.Range(-10000, 10000);
+            offsets[i] = new Vector2(xOffset, zOffset);
+        }
+
+
+        if (noiseScale < 0) noiseScale = 0.0001f;
+        else if (noiseScale == 1) noiseScale = Random.Range(0f, 1f);
+
+        float middleWidth = Grid._instance.width / 2f;
+        float middleHeight = Grid._instance.height / 2f;
+        
+        for (int i = 0; i < Grid._instance.width; i++)
+        {
+            for (int j = 0; j < Grid._instance.height; j++)
+            {
+                float amplitude = 1;
+                float frequency = 1;
+                float noiseHeight = 0;
+
+                for (int a = 0; a < octaves; a++) {
+                    float sampleX = (i-middleWidth)  / noiseScale * frequency + offsets[a].x;
+                    float sampleY = (j-middleHeight) / noiseScale * frequency + offsets[a].y;
+
+                    float perlinValue = Mathf.PerlinNoise (sampleX, sampleY) * 2 - 1;
+                    noiseHeight += perlinValue * amplitude;
+
+                    amplitude *= persistence;
+                    frequency *= lacunarity;
+                }
+
+                /*
+                if (noiseHeight > maxNoiseHeight) {
+                    maxNoiseHeight = noiseHeight;
+                } else if (noiseHeight < minNoiseHeight) {
+                    minNoiseHeight = noiseHeight;
+                }
+                */
+                
+                
+                heights[i,j] = noiseHeight;
+
+                /*
+                cubes[i,j].transform.position = new Vector3(i,heights[i,j],j);
+                cubes[i,j].GetComponent<MeshRenderer>().material.color = new Color(1,heights[i,j],1,1);
+                */
+            }
+        }
+        PlaceTiles._instance.SetTiles();
+    }
+    
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Regenerate();
+        }
     }
 }
 
