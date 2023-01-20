@@ -27,7 +27,7 @@ public class Heightmap : MonoBehaviour
     
     //private GameObject[,] cubes;
     
-    void Start()
+    public void Setup()
     {
         if (_instance == null)
         {
@@ -169,6 +169,8 @@ public class Heightmap : MonoBehaviour
         seed = int.Parse(seedInput.text);
         
         Regenerate();
+        
+        Grid._instance.UpdateTileInformation();
     }
     
     
@@ -230,14 +232,6 @@ public class Heightmap : MonoBehaviour
             }
         }
         PlaceTiles._instance.SetTiles();
-    }
-    
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Regenerate();
-        }
     }
 }
 

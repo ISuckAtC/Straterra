@@ -13,6 +13,8 @@ public class PlaceTiles : MonoBehaviour
     // 0 = water, 1 = grass, 2 = mountain
     
     public Tilemap tilemap;
+
+    private GameObject spamParent;
     
     void Start()
     {
@@ -24,48 +26,54 @@ public class PlaceTiles : MonoBehaviour
         {
             Destroy(this);
         }
-        
-        Invoke("SetTiles", 0.1f);
+
+        //Invoke("SetTiles", 0.1f);
     }
 
     public void SetTiles()
     {
+        
         for (int i = 0; i < Grid._instance.width; i++)
         {
             for (int j = 0; j < Grid._instance.height; j++)
             {
-                // Mountains
-                if (Heightmap._instance.heights[i,j] > MapData.mountainMinHeight)
-                    tilemap.SetTile(new Vector3Int(i, j, 1), tiles[2]);
+                int id = Grid._instance.GetIdByInt(i, j);
                 
+                // 0 - no tile | 1 - water | 2 - grassland | 3 - forest | 4 - hill | 5 - mountain
+                
+                // Mountains
+                if (Grid._instance.tiles[id].tileType == 5)
+                {
+                    tilemap.SetTile(new Vector3Int(i, j, 1), tiles[2]);
+                }
+
                 // Hills
-                else if (Heightmap._instance.heights[i, j] > MapData.hillMinHeight && Heightmap._instance.heights[i, j] < MapData.hillMaxHeight)
+                else if (Grid._instance.tiles[id].tileType == 4)
                 {
                     tilemap.SetTile(new Vector3Int(i, j, 1), tiles[5]);
                 }
-                
-                // Forest
-                else if (Heightmap._instance.heights[i, j] > MapData.forestMinHeight && Heightmap._instance.heights[i, j] < MapData.forestMaxHeight)
-                {
-                    if (Random.Range(0f, 1f) < MapData.forestSpawnChance)
-                    {
-                        if (Random.Range(0f, 1f) < MapData.richForestChance)
-                            tilemap.SetTile(new Vector3Int(i, j, 1), tiles[3]);
-                        else
-                            tilemap.SetTile(new Vector3Int(i, j, 1), tiles[4]);
-                    }
 
+                // Forest
+                else if (Grid._instance.tiles[id].tileType == 3)
+                {
+                    if (Random.Range(0f, 1f) < MapData.richForestChance)
+                        tilemap.SetTile(new Vector3Int(i, j, 1), tiles[3]);
+                    else
+                        tilemap.SetTile(new Vector3Int(i, j, 1), tiles[4]);
                 }
-                
+
                 // Grassland
-                else if (Heightmap._instance.heights[i, j] > MapData.grasslandMinHeight && Heightmap._instance.heights[i, j] < MapData.grasslandMaxHeight)
+                else if (Grid._instance.tiles[id].tileType == 2)
                 {
                     tilemap.SetTile(new Vector3Int(i, j, 1), tiles[1]);
                 }
 
                 // Water
-                else
+                else if (Grid._instance.tiles[id].tileType == 1)
                 {
+                    tilemap.SetTile(new Vector3Int(i, j, 1), tiles[0]);
+                    
+                    /*
                     if (i > 0 && i < Grid._instance.width - 1 && j > 0 && j < Grid._instance.height - 1)
                     {
                         if (Heightmap._instance.heights[i+1, j] < MapData.waterMaxHeight ||
@@ -74,51 +82,34 @@ public class PlaceTiles : MonoBehaviour
                             Heightmap._instance.heights[i, j-1] < MapData.waterMaxHeight)
                         {
                             tilemap.SetTile(new Vector3Int(i, j, 1), tiles[0]);
-                        }
+                        }*/
+                        /*
                         else
                         {
+                            
                             tilemap.SetTile(new Vector3Int(i, j, 1), tiles[1]);
-                        }  
+                        } 
+                        */ 
+                        /*
                     }
+                    
+                    /*
                     else
                     {
                         tilemap.SetTile(new Vector3Int(i, j, 1), tiles[1]);
-                    }  
+                    } 
+                    */ 
                 }
-                    
+                else
+                {
+                    tilemap.SetTile(new Vector3Int(i, j, 1), null);
+                }
             }
         }
         //tilemap.RefreshAllTiles();
+
     }
 
 
-    private void RemoveSingleLakes()
-    {
-        for (int i = 0; i < Grid._instance.width; i++)
-        {
-            for (int j = 0; j < Grid._instance.height; j++)
-            {
-                if (Heightmap._instance.heights[i, j] < 4f)
-                {
-                    if (i > 0 && i < Grid._instance.width - 1 && j > 0 && j < Grid._instance.height - 1)
-                    {
-                        if (Heightmap._instance.heights[i+1, j] < 4f ||
-                            Heightmap._instance.heights[i, j+1] < 4f ||
-                            Heightmap._instance.heights[i-1, j] < 4f ||
-                            Heightmap._instance.heights[i, j-1] < 4f)
-                        {
-                            // If any water tiles are touching this water tile, ignore
-                        }
-                        else
-                        {
-                            //tilemap.
-                            tilemap.SetTile(new Vector3Int(i, j, 1), null);
-                            tilemap.SetTile(new Vector3Int(i, j, 1), tiles[1]);
-                            tilemap.RefreshTile(new Vector3Int(i, j, 1));
-                        }    
-                    }
-                }
-            }
-        }
-    }
+    
 }

@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Grid : MonoBehaviour
 {
     public static Grid _instance;
+
+    private PlaceTiles _placeTiles;
+    private Heightmap _heightmap;
 
     public int width { get; private set; } = 256;
     public int height { get; private set; } = 256;
@@ -13,7 +18,9 @@ public class Grid : MonoBehaviour
 
     public Tile[] tiles;
 
-    void Awake()
+    public GameObject gamePlane;
+    
+    void Start()
     {
         if (_instance == null)
         {
@@ -24,8 +31,14 @@ public class Grid : MonoBehaviour
             Destroy(this);
         }
 
+        _placeTiles = GetComponent<PlaceTiles>();
+        _heightmap = GetComponent<Heightmap>();
+
         int size = width * height;
 
+        gamePlane.transform.position = new Vector3(width / 2f, -0.1f, height / 2f);
+        gamePlane.transform.localScale = new Vector3(width / 10f, 1f, height / 10f);
+        
         pos = new Vector2[size];
         tiles = new Tile[size];
 
@@ -37,14 +50,17 @@ public class Grid : MonoBehaviour
             pos[i] = new Vector2(x, y);
         }
         
-        Invoke("UpdateTileInformation", 0.2f);
-        //UpdateTileInformation();
+        //Invoke("UpdateTileInformation", 0.2f);
+        _heightmap.Setup();
+        UpdateTileInformation();
     }
 
-    private void UpdateTileInformation()
+    public void UpdateTileInformation()
     {
         for (int i = 0; i < width * height; i++)
         {
+            int x = i % width;
+            int y = i / width;
             Vector2 xyPos = GetPosition(i);
             int xPos = (int)xyPos.x;
             int yPos = (int)xyPos.y;
@@ -59,6 +75,14 @@ public class Grid : MonoBehaviour
             tiles[i].metalAmount = Random.Range(0.2f, 0.8f);
             //tiles[i].chaosAmount = Random.Range(0.2f, 0.8f);
 
+            // Edge
+            if (x == 0 || x == width - 1 || y == 0 || y == height - 1)
+            {
+                tiles[i].tileType = 0;
+                tiles[i].travelCost = Int32.MaxValue / 2;
+                continue;
+            }
+            
             // Mountains
             if (heightValue > MapData.mountainMinHeight)
             {
@@ -104,10 +128,6 @@ public class Grid : MonoBehaviour
             {
                 tiles[i].tileType = 1;
                 tiles[i].travelCost = int.MaxValue / 2;
-                
-                tiles[i].metalAmount *= 0f;
-                tiles[i].woodAmount *= 0.1f;
-                tiles[i].foodAmount *= 1.25f;
             }
             else
             {
@@ -118,7 +138,38 @@ public class Grid : MonoBehaviour
 
             //tiles[i].tileType = 
         }
+
+        for (int i = 0; i < width * height; ++i)
+        {
+            if (tiles[i].tileType != 1) continue;
+            int x = i % width;
+            int y = i / width;
+
+            if (!(x == 0 || x == width-1 || y == 0 || y == height-1))
+            {
+                if (tiles[i - 1].tileType == 1 ||
+                    tiles[i + 1].tileType == 1 ||
+                    tiles[i - width].tileType == 1 ||
+                    tiles[i + width].tileType == 1)
+                {
+                    tiles[i].metalAmount *= 0f;
+                    tiles[i].woodAmount *= 0.1f;
+                    tiles[i].foodAmount *= 1.25f;
+                }
+                else
+                {
+                    tiles[i].tileType = 2;
+                    tiles[i].travelCost = 15;
+                    tiles[i].metalAmount *= 0.5f;
+                    tiles[i].woodAmount *= 0.5f;
+                    tiles[i].foodAmount *= 1.25f;
+                }
+            }
+        }
+        
+        _placeTiles.SetTiles();
     }
+    
 
     public Vector2 GetPosition(int id)
     {
