@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GridTestScript : MonoBehaviour
+public class InfoScreen : MonoBehaviour
 {
     public GameObject infoScreen;
     
@@ -79,7 +79,7 @@ public class GridTestScript : MonoBehaviour
         {
             // 0 - no tile | 1 - water | 2 - grassland | 3 - forest | 4 - hill | 5 - mountain
             case 0 :
-                tileTypeText.text = "(ERROR)";
+                tileTypeText.text = "Barrier";
                 break;
             
             case 1 :

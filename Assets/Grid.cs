@@ -11,14 +11,16 @@ public class Grid : MonoBehaviour
     private PlaceTiles _placeTiles;
     private Heightmap _heightmap;
 
-    public int width { get; private set; } = 256;
-    public int height { get; private set; } = 256;
+    public int width { get; private set; } = 64;
+    public int height { get; private set; } = 64;
 
     private Vector2[] pos;
 
     public Tile[] tiles;
 
     public GameObject gamePlane;
+
+    private float startTime;
     
     void Start()
     {
@@ -30,6 +32,8 @@ public class Grid : MonoBehaviour
         {
             Destroy(this);
         }
+
+        startTime = Time.time;
 
         _placeTiles = GetComponent<PlaceTiles>();
         _heightmap = GetComponent<Heightmap>();
@@ -55,17 +59,25 @@ public class Grid : MonoBehaviour
         UpdateTileInformation();
     }
 
+    public void EndTime(float t)
+    {
+        Debug.Log("StartTime: " + startTime * 1000f);
+        Debug.Log("EndTime: " + t * 1000f);
+        
+        Debug.Log(UnityEngine.Time.realtimeSinceStartup);
+        
+        //Debug.Log("Execution time: " + (t - startTime));
+    }
+
     public void UpdateTileInformation()
     {
         for (int i = 0; i < width * height; i++)
         {
-            int x = i % width;
-            int y = i / width;
             Vector2 xyPos = GetPosition(i);
-            int xPos = (int)xyPos.x;
-            int yPos = (int)xyPos.y;
+            int x = (int)xyPos.x;
+            int y = (int)xyPos.y;
             
-            float heightValue = Heightmap._instance.heights[(int)xPos, (int)yPos];
+            float heightValue = Heightmap._instance.heights[x, y];
             
             // Tile ID
             tiles[i].id = i;
@@ -80,6 +92,12 @@ public class Grid : MonoBehaviour
             {
                 tiles[i].tileType = 0;
                 tiles[i].travelCost = Int32.MaxValue / 2;
+                
+                tiles[i].foodAmount *= 0f;
+                tiles[i].woodAmount *= 0f;
+                tiles[i].metalAmount *= 0f;
+                tiles[i].chaosAmount *= 0f;
+                
                 continue;
             }
             
@@ -152,12 +170,14 @@ public class Grid : MonoBehaviour
                     tiles[i - width].tileType == 1 ||
                     tiles[i + width].tileType == 1)
                 {
+                    // Water tile
                     tiles[i].metalAmount *= 0f;
                     tiles[i].woodAmount *= 0.1f;
                     tiles[i].foodAmount *= 1.25f;
                 }
                 else
                 {
+                    // Grassland tile
                     tiles[i].tileType = 2;
                     tiles[i].travelCost = 15;
                     tiles[i].metalAmount *= 0.5f;

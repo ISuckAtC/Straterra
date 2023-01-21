@@ -8,7 +8,7 @@ public struct Tile
 
     public int travelCost;      // grassland = 15  |  forest = 25  |  hill = 35  |  mountain = 50  |  water = int.maxValue/2
 
-    public byte tileType;       // 0 - no tile | 1 - water | 2 - grassland | 3 - forest | 4 - hill | 5 - mountain
+    public byte tileType;       // 0 - wall | 1 - water | 2 - grassland | 3 - forest | 4 - hill | 5 - mountain
 
     public byte building;       // 0 = no building
 

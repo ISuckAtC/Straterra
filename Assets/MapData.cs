@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class MapData
 {
+    // Terrain
     public const float mountainMinHeight = 2.5f;
     public const float mountainMaxHeight = 10000f;
 
@@ -21,5 +22,4 @@ public static class MapData
 
     public const float forestSpawnChance = 0.6f;
     public const float richForestChance = 0.2f;
-
 }
