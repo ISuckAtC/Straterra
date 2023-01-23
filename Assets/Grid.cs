@@ -11,11 +11,13 @@ public class Grid : MonoBehaviour
     private PlaceTiles _placeTiles;
     private Heightmap _heightmap;
 
-    public int width { get; private set; } = 64;
-    public int height { get; private set; } = 64;
+    public int width { get; private set; } = 8;
+    public int height { get; private set; } = 8;
 
+    // Array of tile positions
     private Vector2[] pos;
 
+    // Array of tiles
     public Tile[] tiles;
 
     public GameObject gamePlane;
@@ -40,6 +42,7 @@ public class Grid : MonoBehaviour
 
         int size = width * height;
 
+        // Resize and reposition underlying plane (needed for raycast)
         gamePlane.transform.position = new Vector3(width / 2f, -0.1f, height / 2f);
         gamePlane.transform.localScale = new Vector3(width / 10f, 1f, height / 10f);
         
@@ -65,8 +68,6 @@ public class Grid : MonoBehaviour
         Debug.Log("EndTime: " + t * 1000f);
         
         Debug.Log(UnityEngine.Time.realtimeSinceStartup);
-        
-        //Debug.Log("Execution time: " + (t - startTime));
     }
 
     public void UpdateTileInformation()
@@ -157,6 +158,7 @@ public class Grid : MonoBehaviour
             //tiles[i].tileType = 
         }
 
+        // We have to do this in a separate loop, otherwise the first water tile will never be placed.
         for (int i = 0; i < width * height; ++i)
         {
             if (tiles[i].tileType != 1) continue;
@@ -189,8 +191,13 @@ public class Grid : MonoBehaviour
         
         _placeTiles.SetTiles();
     }
-    
 
+    
+    public int GetIdAdjacent(int id, int x, int y)
+    {
+        return id + (width * y) + x;
+    }
+    
     public Vector2 GetPosition(int id)
     {
         return new Vector2(id % width, id / width);
