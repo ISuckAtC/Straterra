@@ -20,11 +20,14 @@ public class Heightmap : MonoBehaviour
 
     public int seed;
 
+    public Slider xSlider, ySlider;
+    
     public Slider octaveSlider;
     public Slider persistenceSlider;
     public Slider lacunaritySlider;
     public Slider noiseScaleSlider;
     public InputField seedInput;
+    
     
     //private GameObject[,] cubes;
     
@@ -45,6 +48,9 @@ public class Heightmap : MonoBehaviour
         Random.seed = seed;
 
         // UI
+        xSlider.value = Grid._instance.width;
+        ySlider.value = Grid._instance.height;
+        
         octaveSlider.value = octaves;
         persistenceSlider.value = persistence;
         lacunaritySlider.value = lacunarity;
@@ -92,22 +98,28 @@ public class Heightmap : MonoBehaviour
 
     public void UpdateGenerationSettings()
     {
+        // Must run before settings new grid size
+        PlaceTiles._instance.ClearAllTiles();
+        
         octaves = (int)octaveSlider.value;
         lacunarity = lacunaritySlider.value;
         persistence = persistenceSlider.value;
         noiseScale = noiseScaleSlider.value;
         seed = int.Parse(seedInput.text);
-        
-        Regenerate();
+
+        Grid._instance.SetNewSize((int)xSlider.value, (int)ySlider.value);
+
+        Generate();
         
         Grid._instance.UpdateTileInformation();
     }
     
     
     
-    private void Regenerate()
+    private void Generate()
     {
-        
+        heights = new float[Grid._instance.width, Grid._instance.height];
+
         Random.seed = seed;
 
         Vector2[] offsets = new Vector2[octaves];
@@ -147,6 +159,6 @@ public class Heightmap : MonoBehaviour
                 heights[i,j] = noiseHeight;
             }
         }
-        PlaceTiles._instance.SetTiles();
+        //PlaceTiles._instance.SetTiles();
     }
 }

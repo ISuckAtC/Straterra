@@ -11,8 +11,8 @@ public class Grid : MonoBehaviour
     private PlaceTiles _placeTiles;
     private Heightmap _heightmap;
 
-    public int width { get; private set; } = 8;
-    public int height { get; private set; } = 8;
+    public int width = 128;
+    public int height = 128;
 
     // Array of tile positions
     private Vector2[] pos;
@@ -57,11 +57,33 @@ public class Grid : MonoBehaviour
             pos[i] = new Vector2(x, y);
         }
         
-        //Invoke("UpdateTileInformation", 0.2f);
         _heightmap.Setup();
         UpdateTileInformation();
     }
 
+    public void SetNewSize(int width, int height)
+    {
+        this.width = width;
+        this.height = height;
+        
+        int size = width * height;
+
+        // Resize and reposition underlying plane (needed for raycast)
+        gamePlane.transform.position = new Vector3(width / 2f, -0.1f, height / 2f);
+        gamePlane.transform.localScale = new Vector3(width / 10f, 1f, height / 10f);
+        
+        pos = new Vector2[size];
+        tiles = new Tile[size];
+        
+        for (int i = 0; i < size; i++)
+        {
+            int y = i / width;
+            int x = i % width;
+
+            pos[i] = new Vector2(x, y);
+        }
+    }
+    
     public void EndTime(float t)
     {
         Debug.Log("StartTime: " + startTime * 1000f);
