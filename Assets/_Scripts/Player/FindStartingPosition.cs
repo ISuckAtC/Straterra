@@ -11,17 +11,14 @@ public class FindStartingPosition : MonoBehaviour
 
     public int minDistanceFromOtherPlayer;
 
-    private bool foundTile = false;
+    //private bool foundTile = false;
 
     private Vector2Int startPosition;
     
 
     public void FindTile()
     {
-        while (!foundTile)
-        {
-            foundTile = TileValid();
-        }
+        while (!TileValid()) ;
 
         Debug.Log("Ran");
         

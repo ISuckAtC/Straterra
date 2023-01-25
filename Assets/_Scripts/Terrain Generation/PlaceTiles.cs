@@ -10,13 +10,19 @@ using TMPro;
 public class PlaceTiles : MonoBehaviour
 {
     public static PlaceTiles _instance;
-
+    
+    public static readonly Vector2 tileSize = new Vector2(1f, 1f);
+    public static readonly Vector2 tilePivot = tileSize / 2f;
+    
     public UnityEngine.Tilemaps.Tile[] waterTiles;
     public UnityEngine.Tilemaps.Tile[] grassTiles;
     public UnityEngine.Tilemaps.Tile[] forestTiles;
     public UnityEngine.Tilemaps.Tile[] hillTiles;
     public UnityEngine.Tilemaps.Tile[] mountainTiles;
-
+    public UnityEngine.Tilemaps.Tile[] barrierTiles;
+    
+    
+    
     public Tilemap tilemap;
 
     // Relative values to set tile color correctly
@@ -107,7 +113,7 @@ public class PlaceTiles : MonoBehaviour
                 }
                 else
                 {
-                    tilemap.SetTile(new Vector3Int(i, j, 1), null);
+                    tilemap.SetTile(new Vector3Int(i, j, 1), barrierTiles[0]);
                 }
 
                 tilemap.SetTileFlags(new Vector3Int(i, j, 1), TileFlags.None);

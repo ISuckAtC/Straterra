@@ -32,6 +32,17 @@ public class InfoScreen : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                Debug.Log("" + hit.point + PlaceTiles.tilePivot);
+            }
+        }
+        
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             RaycastHit hit;
@@ -40,7 +51,7 @@ public class InfoScreen : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 infoScreen.SetActive(true);
-                UpdateInfoScreen(Grid._instance.GetPositionFromRaycast(hit.point));
+                UpdateInfoScreen(Grid._instance.GetPositionFromRaycast(new Vector3(hit.point.x + PlaceTiles.tilePivot.x, hit.point.y, hit.point.z + PlaceTiles.tilePivot.y)));
             }
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
