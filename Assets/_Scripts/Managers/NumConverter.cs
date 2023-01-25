@@ -22,6 +22,8 @@ public static class NumConverter
 
     public static string GetConvertedArmy(int amount)
     {
+        // Unit tests showed this to be the most efficient way
+        
         // Code
         // string armyText = "The army consists of";
         // for (int i = 0; i < armyUnits.Length; i++)
@@ -30,37 +32,35 @@ public static class NumConverter
         //     if (i == armyUnits.Length-1)
         //         armyText -= the last comma, idk how
         // }
-        
+
         // Output "The army consists of (a legion of) Swordsmen, (zounds of) Archers, (a pack of) Trolls, and an unimaginable number of Slaves"
 
-        if (amount >= 100000000)    // > 100 Million
-            return " an unimaginable number of ";
-        
-        if (amount >= 1000000)      // Millions
-            return " a legion of ";
-        
-        else if (amount >= 100000)  // Hundred Thousands
-            return " zounds of ";
-        
-        else if (amount >= 10000)   // Ten Thousands
-            return " a swarm of ";
-        
-        else if (amount >= 1000)    // Thousands
-            return " a throng of ";
-        
-        else if (amount >= 500)     // Half Thousand
-            return " a horde of ";
-        
-        else if (amount >= 200)     // Two Hundred
-            return " lots of ";
-        
-        else if (amount >= 80)      // Eighty
-            return " a pack of ";
-        
-        else if (amount >= 20)      // Twenty
-            return " several ";
+        if (amount >= 100000)               // Hundred Thousands
+        {
+            if (amount >= 100000000)        // > 100 Million
+                return " an unimaginable number of ";
 
-        return " a few ";               // <Twenty
+            if (amount >= 1000000)          // Millions
+                return " a legion of ";
+
+            return " zounds of ";
+
+        }
+        if (amount >= 200)                  // Two Hundred
+        {
+            if (amount >= 10000)            // Ten Thousands
+                return " a swarm of ";
+
+            if (amount >= 1000)             // Thousands
+                return " a throng of ";
+
+            if (amount >= 500)              // Half Thousand
+                return " a horde of ";
+
+            return " lots of ";
+        }
+
+        return " a few ";                   // <Twenty
     }
     
     
