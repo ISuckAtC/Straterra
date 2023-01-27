@@ -80,7 +80,7 @@ public class DELETETHIS : MonoBehaviour
             // If the connection succeeded, this retrieves the device's current location and displays it in the Console window.
             //Debug.Log("Lat: " + latitudeCurrent + " | Lon: " + longitudeCurrent);
             
-            // CURRENT POSITION 
+            // CURRENT POSITION : Lat = 63.74417  |  Lon = 11.29341
             
             latitudeCurrent = (Input.location.lastData.latitude);
             longitudeCurrent = (Input.location.lastData.longitude);
