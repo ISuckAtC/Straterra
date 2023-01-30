@@ -6,6 +6,8 @@ using TMPro;
 
 public class InfoScreen : MonoBehaviour
 {
+    public static InfoScreen _instance;
+    
     public GameObject infoScreen;
     
     public TMP_Text coordinateText;
@@ -27,41 +29,30 @@ public class InfoScreen : MonoBehaviour
 
     void Start()
     {
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+        
         infoScreen.SetActive(false);
     }
 
-    void Update()
+    public void ToggleInfoScreen(bool enable)
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (enable)
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                Debug.Log("" + hit.point + PlaceTiles.tilePivot);
-            }
+            infoScreen.SetActive(true);
+            return;
         }
         
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                infoScreen.SetActive(true);
-                UpdateInfoScreen(Grid._instance.GetPositionFromRaycast(new Vector3(hit.point.x + PlaceTiles.tilePivot.x, hit.point.y, hit.point.z + PlaceTiles.tilePivot.y)));
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            infoScreen.SetActive(false);
-        }
-        
+        infoScreen.SetActive(false);
     }
 
-    private void UpdateInfoScreen(Vector2 pos)
+    public void UpdateInfoScreen(Vector2 pos)
     {
         int tile = Grid._instance.GetIdByVec(pos);
 

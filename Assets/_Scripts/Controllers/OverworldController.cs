@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CameraMovement : MonoBehaviour
+public class OverworldController : MonoBehaviour
 {
     public float movementAmount;
 
@@ -140,5 +140,54 @@ public class CameraMovement : MonoBehaviour
             cam.orthographicSize = zoom;
         }
         
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                Debug.Log("" + hit.point + PlaceTiles.tilePivot);
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                CheckTile(new Vector3(hit.point.x + PlaceTiles.tilePivot.x, hit.point.y, hit.point.z + PlaceTiles.tilePivot.y));
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            InfoScreen._instance.ToggleInfoScreen(false);
+        }
     }
+
+    private void CheckTile(Vector3 pos)
+    {
+        int id = Grid._instance.GetIdByVec(pos);
+        byte tileType = Grid._instance.tiles[id].building;
+        
+        if (tileType > 1)
+        {   // Random building
+            
+        }
+        else if (tileType == 1)
+        {   // Village building
+            
+            
+            
+        }
+        else
+        {   // No building -> Show tile resources
+            InfoScreen._instance.UpdateInfoScreen(Grid._instance.GetPositionFromRaycast(new Vector3(pos.x + PlaceTiles.tilePivot.x, pos.y, pos.z + PlaceTiles.tilePivot.y)));
+            InfoScreen._instance.ToggleInfoScreen(true);
+        }
+
+    }
+    
 }

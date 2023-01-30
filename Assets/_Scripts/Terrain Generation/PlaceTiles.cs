@@ -145,7 +145,18 @@ public class PlaceTiles : MonoBehaviour
                 {
                     tilemap.SetTile(new Vector3Int(i, j, 1), null);
                     tilemap.SetTile(new Vector3Int(i, j, 1), grassTiles[watertiles]);
-                    //Grid._instance.tiles[id].tileType = 2;  // BUG: This creates a bug. Tiletype gets switched but resource amount doesn't.
+                    
+                    Grid._instance.tiles[id].tileType = 2;
+
+                    Grid._instance.tiles[i].foodAmount = Random.Range(0.2f, 0.8f);
+                    Grid._instance.tiles[i].woodAmount = Random.Range(0.2f, 0.8f);
+                    Grid._instance.tiles[i].metalAmount = Random.Range(0.2f, 0.8f);
+                        
+                    Grid._instance.tiles[i].travelCost = 15;
+                    Grid._instance.tiles[i].metalAmount *= 0.5f;
+                    Grid._instance.tiles[i].woodAmount *= 0.5f;
+                    Grid._instance.tiles[i].foodAmount *= 1.25f;
+                        
                     tilemap.SetColor(new Vector3Int(i, j, 1), new Color(val, val, val));
                     Debug.Log("Tile xy: " + i + ", " + j + "  Byte: " + watertiles);
                 }

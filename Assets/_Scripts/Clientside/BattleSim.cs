@@ -2,16 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+public enum UnitType
+{
+    TYPELESS,
+    INFANTRY,
+    MISSILE,
+    CAVALRY
+}
 public class BattleSim
 {
-    public enum UnitType
-    {
-        TYPELESS,
-        INFANTRY,
-        MISSILE,
-        CAVALRY
-    }
-
     private void Setup()
     {
         Unit archer = new Unit();
@@ -72,7 +71,6 @@ public class BattleSim
         spearman.bonusDamage.Add(UnitType.CAVALRY, 20);
 
         Group.Units[3] = spearman;
-
     }
 
     private void Run()
@@ -95,24 +93,22 @@ public class BattleSim
 
         int times = 100000000;
         sw.Start();
-        for (int i = 0; i<times; ++i) Fight(army1, army2);
+        for (int i = 0; i < times; ++i) Fight(army1, army2);
         sw.Stop();
         Console.WriteLine("Total time: " + sw.ElapsedMilliseconds + "ms");
         Console.WriteLine("Average time: " + (((float)sw.ElapsedMilliseconds) / (float) times) + "ms");
-
     }
 
-   
 
 // Average runtime 0.00033663ms
-    bool Fight(List<Group> a, List<Group> b)
+    public bool Fight(List<Group> a, List<Group> b)
     {
         List<Group> all = new List<Group>();
         all.AddRange(a);
         all.AddRange(b);
 
-        all = all.OrderBy<Group, Group>(x => x.unit.speed).Reverse().ToList();
-        
+        all = all.OrderBy<Group, byte>(x => x.unit.speed).Reverse().ToList();
+
         bool combat = true;
         int turn = 0;
         bool verbose = true;
@@ -131,6 +127,7 @@ public class BattleSim
                 turn++;
                 continue;
             }
+
             List<Group> enemyArmy = (group.right ? a : b);
 
 
@@ -152,6 +149,7 @@ public class BattleSim
                     if (verbose) Console.WriteLine((group.right ? "Right wins" : "Left wins") + " in " + totalTurns + " turns!");
                     break;
                 }
+
                 group.target = index;
 
                 if (verbose) Console.WriteLine(group.unit.unitType.ToString() + " chose target " + enemyArmy[group.target].unit.unitType.ToString());
@@ -181,6 +179,7 @@ public class BattleSim
 
                 if (verbose) Console.WriteLine(group.unit.unitType.ToString() + " moves " + move + " units");
             }
+
             if (distance <= group.unit.range)
             {
                 // Attack
@@ -192,38 +191,39 @@ public class BattleSim
 
                 if (verbose) Console.WriteLine("Attack caused " + deaths + " deaths");
             }
+
             turn++;
         }
 
         return false;
     }
-
-
-    public struct Unit
-    {
-        public UnitType unitType;
-        public UnitType preference;
-        public byte speed;
-        public byte range;
-        public byte meleeAttack;
-        public byte rangeAttack;
-        public byte meleeDefence;
-        public byte rangeDefence;
-        public byte health;
-        public Dictionary<UnitType, int> bonusDamage;
-        public byte counterBonus;
-
-        public int GetBonusDamage(UnitType targetType)
-        {
-            if (bonusDamage.ContainsKey(targetType))
-            {
-                return bonusDamage[targetType];
-            }
-            return 0;
-        }
-    }
-
 }
+
+public struct Unit
+{
+    public UnitType unitType;
+    public UnitType preference;
+    public byte speed;
+    public byte range;
+    public byte meleeAttack;
+    public byte rangeAttack;
+    public byte meleeDefence;
+    public byte rangeDefence;
+    public byte health;
+    public Dictionary<UnitType, int> bonusDamage;
+    public byte counterBonus;
+
+    public int GetBonusDamage(UnitType targetType)
+    {
+        if (bonusDamage.ContainsKey(targetType))
+        {
+            return bonusDamage[targetType];
+        }
+
+        return 0;
+    }
+}
+
 
 public class Group
 {
@@ -236,16 +236,16 @@ public class Group
         target = -1;
         right = _right;
     }
+
     public static Unit[] Units = new Unit[4];
     public int count;
     public int unitId;
+
     public Unit unit
     {
-        get
-        {
-            return Units[unitId];
-        }
+        get { return Units[unitId]; }
     }
+
     public int frontHealth;
     public int position;
     public int target;

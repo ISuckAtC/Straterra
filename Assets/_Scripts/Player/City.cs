@@ -13,6 +13,15 @@ public class City : MonoBehaviour
     public TopBar topBar;
     public GameObject townhall;
     public GameObject barracks;
+    
+    // embassy, residence, smithy, academy, rally point, marketplace, granary, warehouse, temple, grain mill, cranny(cellar), stonemason, 
+    // waterworks (oasis), 
+    // military: hero mansion, stable, workshop, hospital, torment square (basically just a gym)
+    // resources: sawmill, bakery, brickyard, forge 
+    
+    // town hall: upgrades allow you to upgrade buildings and build more buildings. No buildings can be upgraded past the level of town hall.
+    // 
+    
     public MenuStage stage;
     public void ClickTownHall()
     {
