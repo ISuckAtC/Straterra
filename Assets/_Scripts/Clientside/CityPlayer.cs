@@ -1,9 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class CityPlayer : MonoBehaviour
 {
+    [Header("Static UI")]
+    public GameObject map;
+    public TMPro.TMP_Text worldButtonText;
+    public TopBar topBar;
+    public GameObject armyMenu;
+    public TMPro.TMP_Text armyText;
+    public GameObject queueMenu;
+    public TMPro.TMP_Text queueText;
+
+    [Header("BuildingMenus")]
     public GameObject townHall;
     public GameObject barracks;
     public GameObject academy;
@@ -12,7 +23,10 @@ public class CityPlayer : MonoBehaviour
     public GameObject smithy;
     public GameObject marketplace;
     public GameObject stockpile;
+    
     private List<GameObject> buildingsInterfaces;
+
+    private bool worldView = false;
 
     public void Start()
     {
@@ -29,6 +43,11 @@ public class CityPlayer : MonoBehaviour
         if (smithy) buildingsInterfaces.Add(smithy);
         if (marketplace) buildingsInterfaces.Add(marketplace);
         if (stockpile) buildingsInterfaces.Add(stockpile);
+
+        topBar.Food = PlayerResources.I.food;
+        topBar.Wood = PlayerResources.I.wood;
+        topBar.Metal = PlayerResources.I.metal;
+        topBar.Order = PlayerResources.I.order;
     }
 
     // General button methods
@@ -68,6 +87,69 @@ public class CityPlayer : MonoBehaviour
     public void OpenStockpile()
     {
         buildingsInterfaces.ForEach(x => x.SetActive(x == stockpile));
+    }
+    public void OpenArmyTab()
+    {
+        armyMenu.SetActive(true);
+        string armytext = "";
+        int[] amounts = PlayerResources.I.unitAmounts;
+        for (int i = 0; i < 256; ++i)
+        {
+            int amount = amounts[i];
+            if (amount > 0) armytext += UnitDefinition.I[i].name + ": " + amount + "\n";
+        }
+        armyText.text = armytext;
+        armyText.ForceMeshUpdate();
+        (armyText.transform.parent as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, armyText.renderedHeight);
+    }
+    public void CloseArmyTab()
+    {
+        armyMenu.SetActive(false);
+    }
+    public void OpenOverworld()
+    {
+        if (worldView)
+        {
+            map.SetActive(false);
+            worldButtonText.text = "WORLD";
+            worldView = false;
+        }
+        else
+        {
+            map.SetActive(true);
+            worldButtonText.text = "HOME";
+            worldView = true;
+        }
+    }
+    public void OpenQueue()
+    {
+        queueMenu.SetActive(true);
+        UpdateQueue();
+        EventHub.OnTick += UpdateQueue;
+    }
+    public void UpdateQueue()
+    {
+        string qText = "";
+        List<ScheduledUnitProductionEvent> unitProduction = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Cast<ScheduledUnitProductionEvent>().ToList();
+
+        for (int i = 0; i < unitProduction.Count; ++i)
+        {
+            ScheduledUnitProductionEvent productionEvent = unitProduction[i];
+            qText += productionEvent.amount + " " + UnitDefinition.I[productionEvent.unitId].name + " - " + productionEvent.secondsLeft + " seconds left\n";
+        }
+
+        queueText.text = qText;
+        queueText.ForceMeshUpdate();
+        (queueText.transform.parent as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, queueText.renderedHeight);
+    }
+    public void CloseQueue()
+    {
+        queueMenu.SetActive(false);
+        EventHub.OnTick -= UpdateQueue;
+    }
+    public void OpenMenu()
+    {
+
     }
     #endregion
 
@@ -158,6 +240,11 @@ public class CityPlayer : MonoBehaviour
         PlayerResources.I.wood -= woodCost;
         PlayerResources.I.metal -= metalCost;
         PlayerResources.I.order -= orderCost;
+
+        topBar.Food = PlayerResources.I.food;
+        topBar.Wood = PlayerResources.I.wood;
+        topBar.Metal = PlayerResources.I.metal;
+        topBar.Order = PlayerResources.I.order;
 
         new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount);
         CloseTrainingMenu();

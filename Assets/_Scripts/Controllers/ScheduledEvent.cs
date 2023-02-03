@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ScheduledEvent
 {
+    public static List<ScheduledEvent> activeEvents = new List<ScheduledEvent>();
     public int secondsLeft;
     public int secondsTotal;
     public ScheduledEvent(int secondsTotal)
@@ -11,6 +12,7 @@ public class ScheduledEvent
         this.secondsTotal = secondsTotal;
         secondsLeft = secondsTotal;
         EventHub.OnTick += Tick;
+        activeEvents.Add(this);
     }
     public void Tick()
     {
@@ -19,6 +21,7 @@ public class ScheduledEvent
     public virtual void Complete()
     {
         EventHub.OnTick -= Tick;
+        activeEvents.Remove(this);
     }
 }
 

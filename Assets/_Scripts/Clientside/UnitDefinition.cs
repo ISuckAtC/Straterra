@@ -88,6 +88,9 @@ public class UnitDefinition
         archer.health = 30;
         archer.bonusDamage = new Dictionary<UnitType, int>();
         archer.counterBonus = 0;
+        archer.foodCost = 40;
+        archer.woodCost = 50;
+        archer.metalCost = 5;
         units[0] = archer;
 
         Unit cavalry = new Unit();
@@ -105,6 +108,8 @@ public class UnitDefinition
         cavalry.health = 190;
         cavalry.bonusDamage = new Dictionary<UnitType, int>();
         cavalry.counterBonus = 0;
+        cavalry.foodCost = 200;
+        cavalry.metalCost = 50;
         units[1] = cavalry;
 
         Unit swordsman = new Unit();
@@ -141,6 +146,8 @@ public class UnitDefinition
         spearman.health = 40;
         spearman.bonusDamage = new Dictionary<UnitType, int>();
         spearman.counterBonus = 0;
+        spearman.foodCost = 30;
+        spearman.woodCost = 20;
 
         spearman.bonusDamage.Add(UnitType.CAVALRY, 20);
 

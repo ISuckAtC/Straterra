@@ -14,77 +14,39 @@ public class TopBar : MonoBehaviour
     private TMPro.TextMeshProUGUI orderText;
     [SerializeField]
     private TMPro.TextMeshProUGUI chaosText;
-
-    private string food;
-    private string wood;
-    private string metal;
-    private string order;
-    private string chaos;
-    public string Food 
+    public int Food 
     {
-        get 
-        {
-            return food;
-        }
         set
         {
-            foodText.text = food = value;
+            foodText.text = value.ToString();
         }
     }
-    public string Wood 
+    public int Wood 
     {
-        get 
-        {
-            return wood;
-        }
         set
         {
-            woodText.text = wood = value;
+            woodText.text = value.ToString();
         }
     }
-    public string Metal 
+    public int Metal 
     {
-        get 
-        {
-            return metal;
-        }
         set
         {
-            metalText.text = metal = value;
+            metalText.text = value.ToString();
         }
     }
-    public string Order 
+    public int Order 
     {
-        get 
-        {
-            return order;
-        }
         set
         {
-            orderText.text = order = value;
+            orderText.text = value.ToString();
         }
     }
-    public string Chaos 
+    public int Chaos 
     {
-        get 
-        {
-            return chaos;
-        }
         set
         {
-            chaosText.text = chaos = value;
+            chaosText.text = value.ToString();
         }
-    }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
