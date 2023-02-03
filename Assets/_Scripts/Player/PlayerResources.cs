@@ -10,6 +10,8 @@ public class PlayerResources
 
     public int metal;
 
+    public int order;
+
     public int chaos;
 
     public int population;

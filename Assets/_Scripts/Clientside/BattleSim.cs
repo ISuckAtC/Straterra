@@ -212,6 +212,10 @@ public struct Unit
     public byte health;
     public Dictionary<UnitType, int> bonusDamage;
     public byte counterBonus;
+    public int foodCost;
+    public int woodCost;
+    public int metalCost;
+    public int orderCost;
 
     public int GetBonusDamage(UnitType targetType)
     {
