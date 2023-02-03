@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CityPlayer : MonoBehaviour
 {
-    public PlayerResources playerResources;
     public GameObject townHall;
     public GameObject barracks;
     public GameObject academy;
@@ -79,37 +78,48 @@ public class CityPlayer : MonoBehaviour
     #region Barracks
     [Header("Barracks")]
     public GameObject trainingMenu;
+    public TMPro.TMP_Text trainingTitle;
     public TMPro.TMP_InputField trainingInput;
     public UnityEngine.UI.Slider trainingSlider;
+    public TMPro.TMP_Text trainingFoodcost;
+    public TMPro.TMP_Text trainingWoodcost;
+    public TMPro.TMP_Text trainingMetalcost;
+    public TMPro.TMP_Text trainingTime;
 
     private Unit trainingUnit;
     public void OpenTrainingMenu(int id)
     {
         trainingUnit = UnitDefinition.I[id];
+        trainingTitle.text = trainingUnit.name;
+
+        trainingSlider.onValueChanged.AddListener(delegate {OnTrainingSliderChanged();});
+        trainingInput.onValueChanged.AddListener(delegate {OnTrainingInputChanged();});
+
         int maxAmount = int.MaxValue;
         if (trainingUnit.foodCost > 0)
         {
-            int unitAmount = playerResources.food / trainingUnit.foodCost;
+            int unitAmount = PlayerResources.I.food / trainingUnit.foodCost;
             if (unitAmount < maxAmount) maxAmount = unitAmount;
         }
         if (trainingUnit.woodCost > 0)
         {
-            int unitAmount = playerResources.wood / trainingUnit.woodCost;
+            int unitAmount = PlayerResources.I.wood / trainingUnit.woodCost;
             if (unitAmount < maxAmount) maxAmount = unitAmount;
         }
         if (trainingUnit.metalCost > 0)
         {
-            int unitAmount = playerResources.metal / trainingUnit.metalCost;
+            int unitAmount = PlayerResources.I.metal / trainingUnit.metalCost;
             if (unitAmount < maxAmount) maxAmount = unitAmount;
         }
         if (trainingUnit.orderCost > 0)
         {
-            int unitAmount = playerResources.order / trainingUnit.orderCost;
+            int unitAmount = PlayerResources.I.order / trainingUnit.orderCost;
             if (unitAmount < maxAmount) maxAmount = unitAmount;
         }
         trainingSlider.minValue = 0;
         trainingSlider.maxValue = maxAmount;
         trainingMenu.SetActive(true);
+        OnTrainingInputChanged();
     }
     public void OnTrainingSliderChanged()
     {
@@ -117,7 +127,12 @@ public class CityPlayer : MonoBehaviour
     }
     public void OnTrainingInputChanged()
     {
-
+        if (!int.TryParse(trainingInput.text, out int a)) trainingInput.text = "0";
+        int amount = int.Parse(trainingInput.text);
+        trainingFoodcost.text = (trainingUnit.foodCost * amount).ToString();
+        trainingWoodcost.text = (trainingUnit.woodCost * amount).ToString();
+        trainingMetalcost.text = (trainingUnit.metalCost * amount).ToString();
+        trainingTime.text = (trainingUnit.trainingTime * amount).ToString() + " seconds";
     }
     public void CloseTrainingMenu()
     {
@@ -130,21 +145,22 @@ public class CityPlayer : MonoBehaviour
         int woodCost = amount * trainingUnit.woodCost;
         int metalCost = amount * trainingUnit.metalCost;
         int orderCost = amount * trainingUnit.orderCost;
-        if (foodCost > playerResources.food ||
-            woodCost > playerResources.wood ||
-            metalCost > playerResources.metal ||
-            orderCost > playerResources.order)
+        if (foodCost > PlayerResources.I.food ||
+            woodCost > PlayerResources.I.wood ||
+            metalCost > PlayerResources.I.metal ||
+            orderCost > PlayerResources.I.order)
         {
             Debug.LogWarning("Not enough resources");
             return;
         }
 
-        playerResources.food -= foodCost;
-        playerResources.wood -= woodCost;
-        playerResources.metal -= metalCost;
-        playerResources.order -= orderCost;
+        PlayerResources.I.food -= foodCost;
+        PlayerResources.I.wood -= woodCost;
+        PlayerResources.I.metal -= metalCost;
+        PlayerResources.I.order -= orderCost;
 
-        playerResources.unitAmounts[trainingUnit.id] = 0; // TEMP
+        new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount);
+        CloseTrainingMenu();
     }
     #endregion
 }

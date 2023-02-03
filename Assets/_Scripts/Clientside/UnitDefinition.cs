@@ -2,6 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct Unit
+{
+    public int id;
+    public int trainingTime;
+    public string name;
+    public UnitType unitType;
+    public UnitType preference;
+    public byte speed;
+    public byte range;
+    public byte meleeAttack;
+    public byte rangeAttack;
+    public byte meleeDefence;
+    public byte rangeDefence;
+    public byte health;
+    public Dictionary<UnitType, int> bonusDamage;
+    public byte counterBonus;
+    public int foodCost;
+    public int woodCost;
+    public int metalCost;
+    public int orderCost;
+
+    public int GetBonusDamage(UnitType targetType)
+    {
+        if (bonusDamage.ContainsKey(targetType))
+        {
+            return bonusDamage[targetType];
+        }
+
+        return 0;
+    }
+}
 public class UnitDefinition
 {
     private static UnitDefinition instance = null;
@@ -44,6 +75,8 @@ public class UnitDefinition
 
         Unit archer = new Unit();
         archer.id = 0;
+        archer.trainingTime = 1;
+        archer.name = "Archer";
         archer.preference = UnitType.INFANTRY;
         archer.unitType = UnitType.MISSILE;
         archer.speed = 2;
@@ -59,6 +92,8 @@ public class UnitDefinition
 
         Unit cavalry = new Unit();
         cavalry.id = 1;
+        cavalry.trainingTime = 60;
+        cavalry.name = "Cavalry";
         cavalry.preference = UnitType.MISSILE;
         cavalry.unitType = UnitType.CAVALRY;
         cavalry.speed = 5;
@@ -74,6 +109,8 @@ public class UnitDefinition
 
         Unit swordsman = new Unit();
         swordsman.id = 2;
+        swordsman.trainingTime = 5;
+        swordsman.name = "Swordsman";
         swordsman.preference = UnitType.INFANTRY;
         swordsman.unitType = UnitType.INFANTRY;
         swordsman.speed = 2;
@@ -85,10 +122,14 @@ public class UnitDefinition
         swordsman.health = 60;
         swordsman.bonusDamage = new Dictionary<UnitType, int>();
         swordsman.counterBonus = 1;
+        swordsman.foodCost = 50;
+        swordsman.metalCost = 10;
         units[2] = swordsman;
 
         Unit spearman = new Unit();
         spearman.id = 3;
+        spearman.trainingTime = 3;
+        spearman.name = "Spearman";
         spearman.preference = UnitType.CAVALRY;
         spearman.unitType = UnitType.INFANTRY;
         spearman.speed = 2;

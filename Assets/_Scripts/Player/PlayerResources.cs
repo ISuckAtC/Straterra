@@ -10,7 +10,14 @@ public class PlayerResources
     {
         get
         {
-            if (instance == null) throw new Exception("PlayerResources accessed before intialization");
+            if (instance == null) 
+            {
+                instance = new PlayerResources();
+                int[] unitAmounts = new int[256];
+                Array.Fill(unitAmounts, 0);
+                instance.InitializeValues(1000, 500, 300, 0, 1000, unitAmounts);
+                //throw new Exception("PlayerResources accessed before intialization");
+            }
             return instance;
         }
     }

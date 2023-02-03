@@ -199,35 +199,7 @@ public class BattleSim
     }
 }
 
-public struct Unit
-{
-    public int id;
-    public UnitType unitType;
-    public UnitType preference;
-    public byte speed;
-    public byte range;
-    public byte meleeAttack;
-    public byte rangeAttack;
-    public byte meleeDefence;
-    public byte rangeDefence;
-    public byte health;
-    public Dictionary<UnitType, int> bonusDamage;
-    public byte counterBonus;
-    public int foodCost;
-    public int woodCost;
-    public int metalCost;
-    public int orderCost;
 
-    public int GetBonusDamage(UnitType targetType)
-    {
-        if (bonusDamage.ContainsKey(targetType))
-        {
-            return bonusDamage[targetType];
-        }
-
-        return 0;
-    }
-}
 
 
 public class Group

@@ -8,6 +8,8 @@ public class ScheduledEvent
     public int secondsTotal;
     public ScheduledEvent(int secondsTotal)
     {
+        this.secondsTotal = secondsTotal;
+        secondsLeft = secondsTotal;
         EventHub.OnTick += Tick;
     }
     public void Tick()
@@ -33,6 +35,7 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
     public override void Complete()
     {
         base.Complete();
-
+        PlayerResources.I.unitAmounts[unitId] += amount;
+        Debug.Log("Added " + amount + " " + UnitDefinition.I[unitId].name + " to army! (You now have " + PlayerResources.I.unitAmounts[unitId] + " " + UnitDefinition.I[unitId].name + ")");
     }
 }
