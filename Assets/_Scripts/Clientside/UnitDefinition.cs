@@ -43,6 +43,7 @@ public class UnitDefinition
         System.Array.Fill(units, null);
 
         Unit archer = new Unit();
+        archer.id = 0;
         archer.preference = UnitType.INFANTRY;
         archer.unitType = UnitType.MISSILE;
         archer.speed = 2;
@@ -57,6 +58,7 @@ public class UnitDefinition
         units[0] = archer;
 
         Unit cavalry = new Unit();
+        cavalry.id = 1;
         cavalry.preference = UnitType.MISSILE;
         cavalry.unitType = UnitType.CAVALRY;
         cavalry.speed = 5;
@@ -71,6 +73,7 @@ public class UnitDefinition
         units[1] = cavalry;
 
         Unit swordsman = new Unit();
+        swordsman.id = 2;
         swordsman.preference = UnitType.INFANTRY;
         swordsman.unitType = UnitType.INFANTRY;
         swordsman.speed = 2;
@@ -85,6 +88,7 @@ public class UnitDefinition
         units[2] = swordsman;
 
         Unit spearman = new Unit();
+        spearman.id = 3;
         spearman.preference = UnitType.CAVALRY;
         spearman.unitType = UnitType.INFANTRY;
         spearman.speed = 2;

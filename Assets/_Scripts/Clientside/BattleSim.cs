@@ -201,6 +201,7 @@ public class BattleSim
 
 public struct Unit
 {
+    public int id;
     public UnitType unitType;
     public UnitType preference;
     public byte speed;

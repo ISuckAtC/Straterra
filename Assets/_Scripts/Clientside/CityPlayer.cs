@@ -144,7 +144,7 @@ public class CityPlayer : MonoBehaviour
         playerResources.metal -= metalCost;
         playerResources.order -= orderCost;
 
-
+        playerResources.unitAmounts[trainingUnit.id] = 
     }
     #endregion
 }
