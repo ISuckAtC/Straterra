@@ -6,12 +6,15 @@ public class ResourceData
 {
     // Resources
     public static int foodGatheringRate;
+    private static int restFood;
     public static float foodGatheringMultiplier;
     
     public static int woodGatheringRate;
+    private static int restWood;
     public static float woodGatheringMultiplier;
     
     public static int metalGatheringRate;
+    private static int restMetal;
     public static float metalGatheringMultiplier;
     
     
@@ -26,4 +29,13 @@ public class ResourceData
     
     public static int orderGatheringRate;
     public static float orderGatheringMultiplier;
+
+    public static int GetFoodTickValue()
+    {
+        restFood += foodGatheringRate;
+        int food = restFood / 3600;
+        restFood = restFood % 3600;
+
+        return food;
+    }
 }

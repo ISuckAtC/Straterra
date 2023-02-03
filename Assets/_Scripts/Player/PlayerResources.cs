@@ -1,15 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerResources
 {
+    private static PlayerResources instance;
+    public static PlayerResources I
+    {
+        get
+        {
+            if (instance == null) throw new Exception("PlayerResources accessed before intialization");
+            return instance;
+        }
+    }
+    
     public int food;
     private int restFood;
-    
+
     public int wood;
     private int restWood;
-    
+
     public int metal;
     private int restMetal;
 
@@ -27,20 +38,15 @@ public class PlayerResources
     public void AddResources()
     {
         // Food
-        restFood += ResourceData.foodGatheringRate;
+        food += ResourceData.GetFoodTickValue();
 
-        food += restFood / 3600;
-        restFood = restFood % 3600;
-        
         // Wood
         restWood += ResourceData.woodGatheringRate;
-
         wood += restWood / 3600;
         restWood = restWood % 3600;
-        
+
         // Metal
         restMetal += ResourceData.metalGatheringRate;
-
         metal += restMetal / 3600;
         restMetal = restMetal % 3600;
     }
@@ -54,8 +60,9 @@ public class PlayerResources
         this.population = population;
 
         this.unitAmounts = unitAmounts;
-        
+
         EventHub.OnTick += AddResources;
+
+        instance = this;
     }
 }
-
