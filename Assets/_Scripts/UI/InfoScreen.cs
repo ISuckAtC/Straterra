@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,11 +53,71 @@ public class InfoScreen : MonoBehaviour
         infoScreen.SetActive(false);
     }
 
-    public void UpdateInfoScreen(Vector2 pos)
+    public void UpdateInfoScreenVillage(int id)
     {
-        int tile = Grid._instance.GetIdByVec(pos);
+        int owner = Grid._instance.tiles[id].owner;
+        
+        // Village
+        tileTypeText.text = "Player Village"/*server.GetPlayerName(id) + "'s Village" */;
+        
+        Vector2 idSplit = Grid._instance.GetPosition(id);
+        coordinateText.text = "ID: " + idSplit.x + ", " + idSplit.y;
+        
+        
+        foodAmountText.text = "Food: Unknown";
 
-        int tileType = Grid._instance.tiles[tile].tileType;
+        woodAmountText.text = "Wood: Unknown";
+
+        metalAmountText.text = "Metal: Unknown";
+        
+        chaosAmountText.text = "Chaos: Unknown";
+    }
+    
+    public void UpdateInfoScreenBuilding(int id)
+    {
+        int buildingType = Grid._instance.tiles[id].building;
+        int owner = Grid._instance.tiles[id].owner;
+        
+        switch (buildingType)
+        {
+                                    // All buildings have levels. For starting we will have level 1, 2 and 3
+            
+                                    // Resource buildings
+            case 10:                // Farm
+                tileTypeText.text = "Farm";
+                break;
+            case 20:                // Logging camp
+                tileTypeText.text = "Logging camp";
+                break;
+            case 30:                // Mine
+                tileTypeText.text = "Mine";
+                break;
+
+            
+                                    // Support buildings
+            case 50:
+                tileTypeText.text = "House";
+                break;
+            case 60:
+                tileTypeText.text = "Castle";
+                break;
+            case 70:
+                tileTypeText.text = "Wall";
+                break;
+            
+                                    // Dark buildings
+            case 250:
+                tileTypeText.text = "Darkshrine";
+                break;
+        }
+        
+        Vector2 idSplit = Grid._instance.GetPosition(id);
+        coordinateText.text = "ID: " + idSplit.x + ", " + idSplit.y;
+    }
+    
+    public void UpdateInfoScreen(int id)
+    {
+        int tileType = Grid._instance.tiles[id].tileType;
 
 
         switch (tileType)
@@ -88,20 +149,20 @@ public class InfoScreen : MonoBehaviour
         }
         
         
-        int roundedFoodAmt = (Mathf.FloorToInt((Grid._instance.tiles[tile].foodAmount) * 100));
+        int roundedFoodAmt = (Mathf.FloorToInt((Grid._instance.tiles[id].foodAmount) * 100));
         foodAmountText.text = "Food: " + roundedFoodAmt + "%";
 
-        float roundedWoodAmt = (Mathf.FloorToInt((Grid._instance.tiles[tile].woodAmount) * 100));
+        float roundedWoodAmt = (Mathf.FloorToInt((Grid._instance.tiles[id].woodAmount) * 100));
         woodAmountText.text = "Wood: " + roundedWoodAmt + "%";
 
-        float roundedMetalAmt = (Mathf.FloorToInt((Grid._instance.tiles[tile].metalAmount) * 100));
+        float roundedMetalAmt = (Mathf.FloorToInt((Grid._instance.tiles[id].metalAmount) * 100));
         metalAmountText.text = "Metal: " + roundedMetalAmt + "%";
 
-        float roundedChaosAmt = (Mathf.FloorToInt((Grid._instance.tiles[tile].chaosAmount) * 100));
+        float roundedChaosAmt = (Mathf.FloorToInt((Grid._instance.tiles[id].chaosAmount) * 100));
         chaosAmountText.text = "Chaos: " + + roundedChaosAmt + "%";
 
-        Vector2 idSplit = Grid._instance.GetPosition(tile);
-        coordinateText.text = "ID: " + idSplit.x + ", " + idSplit.y/* + "  Byte: " + PlaceTiles._instance.FindAdjacentWater(Grid._instance.tiles[tile].id)*/; //PlaceTiles._instance.;
+        Vector2 idSplit = Grid._instance.GetPosition(id);
+        coordinateText.text = "ID: " + idSplit.x + ", " + idSplit.y;
 
 
     }

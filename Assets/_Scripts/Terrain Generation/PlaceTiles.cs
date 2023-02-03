@@ -20,11 +20,12 @@ public class PlaceTiles : MonoBehaviour
     public UnityEngine.Tilemaps.Tile[] hillTiles;
     public UnityEngine.Tilemaps.Tile[] mountainTiles;
     public UnityEngine.Tilemaps.Tile[] barrierTiles;
-    
+    public UnityEngine.Tilemaps.Tile[] buildingTiles;
     
     
     public Tilemap tilemap;
-
+    public Tilemap overlayMap;
+    
     // Relative values to set tile color correctly
     private float maxHeight = 0f;
     private float minHeight = 0f;
@@ -43,6 +44,17 @@ public class PlaceTiles : MonoBehaviour
         }
     }
 
+    public void PlaceBuilding(byte buildingIndex, byte building, Vector2Int pos)
+    {
+        if (buildingIndex == 0) throw new Exception("A building value of 0 means no building. This method should not be called if building is 0.");
+        
+        int id = Grid._instance.GetIdByVec(pos);
+        
+        Grid._instance.tiles[id].building = buildingIndex;
+
+        overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), buildingTiles[building - 1]);
+    }
+    
     public void ClearAllTiles()
     {
         for (int i = 0; i < Grid._instance.width; i++)
@@ -136,11 +148,9 @@ public class PlaceTiles : MonoBehaviour
             for (int i = 1; i < Grid._instance.width - 1; i++)
             {
                 int id = Grid._instance.GetIdByInt(i, j);
-
-
+                
                 byte watertiles = FindAdjacentWater(id);
-                
-                
+
                 if (watertiles > 0 && Grid._instance.tiles[id].tileType > 1)
                 {
                     tilemap.SetTile(new Vector3Int(i, j, 1), null);
@@ -148,24 +158,26 @@ public class PlaceTiles : MonoBehaviour
                     
                     Grid._instance.tiles[id].tileType = 2;
 
-                    Grid._instance.tiles[i].foodAmount = Random.Range(0.2f, 0.8f);
-                    Grid._instance.tiles[i].woodAmount = Random.Range(0.2f, 0.8f);
-                    Grid._instance.tiles[i].metalAmount = Random.Range(0.2f, 0.8f);
-                        
-                    Grid._instance.tiles[i].travelCost = 15;
-                    Grid._instance.tiles[i].metalAmount *= 0.5f;
-                    Grid._instance.tiles[i].woodAmount *= 0.5f;
-                    Grid._instance.tiles[i].foodAmount *= 1.25f;
+                    Grid._instance.tiles[id].foodAmount = Random.Range(0.2f, 0.8f);
+                    Grid._instance.tiles[id].woodAmount = Random.Range(0.2f, 0.8f);
+                    Grid._instance.tiles[id].metalAmount = Random.Range(0.2f, 0.8f);
+                    
+                    Grid._instance.tiles[id].travelCost = 15;
+                    Grid._instance.tiles[id].metalAmount *= 0.5f;
+                    Grid._instance.tiles[id].woodAmount *= 0.5f;
+                    Grid._instance.tiles[id].foodAmount *= 1.25f;
                         
                     tilemap.SetColor(new Vector3Int(i, j, 1), new Color(val, val, val));
-                    Debug.Log("Tile xy: " + i + ", " + j + "  Byte: " + watertiles);
+                    //Debug.Log("Tile xy: " + i + ", " + j + "  Byte: " + watertiles);
                 }
             }
         }
     }
-
-    
-    
+    /*
+        
+        resourceAmount += ((resourceAmount * resourceBuildingCount) );
+        
+    */
     public byte /*bool[]*/ FindAdjacentWater(int id)
     {
         int count = 0;

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class LocalData
 {
@@ -27,7 +26,7 @@ public static class LocalData
             else
             {
                 // 
-                return 0; // TEMP
+                return new Player(); // This is fucked, definitely don't do this.
             }
         }
     }

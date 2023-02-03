@@ -19,9 +19,10 @@ public class OverworldController : MonoBehaviour
     public float holdDelay;
     private float holdCounter;
     private bool holding;
+
+    private byte building;
+    private byte buildingIndex;
     
-    
-    // Start is called before the first frame update
     void Start()
     {
         cam = GetComponent<Camera>();
@@ -31,9 +32,52 @@ public class OverworldController : MonoBehaviour
         cam.orthographicSize = zoom;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Building Selection
+        if (Input.GetKeyDown(KeyCode.Alpha1)) // Village
+        {
+            building = 1;
+            buildingIndex = 1;
+            UIController._instance.SetBuildingImage(buildingIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))   // House
+        {
+            building = 2;
+            buildingIndex = 50;
+            UIController._instance.SetBuildingImage(buildingIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))   // Castle
+        {
+            building = 3;
+            buildingIndex = 60;
+            UIController._instance.SetBuildingImage(buildingIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))   // Farm
+        {
+            building = 4;
+            buildingIndex = 10;
+            UIController._instance.SetBuildingImage(buildingIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))   // Logging Camp
+        {
+            building = 5;
+            buildingIndex = 20;
+            UIController._instance.SetBuildingImage(buildingIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))   // Mine
+        {
+            building = 6;
+            buildingIndex = 30;
+            UIController._instance.SetBuildingImage(buildingIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))   // Darkshrine
+        {
+            building = 7;
+            buildingIndex = 250;
+            UIController._instance.SetBuildingImage(buildingIndex);
+        }
+        
         // Left
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -140,13 +184,15 @@ public class OverworldController : MonoBehaviour
             cam.orthographicSize = zoom;
         }
         
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))    // Place village.
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit))
             {
+                PlaceTiles._instance.PlaceBuilding(buildingIndex, building, new Vector2Int((int)hit.point.x, (int)hit.point.z));
+                
                 Debug.Log("" + hit.point + PlaceTiles.tilePivot);
             }
         }
@@ -158,7 +204,8 @@ public class OverworldController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                CheckTile(new Vector3(hit.point.x + PlaceTiles.tilePivot.x, hit.point.y, hit.point.z + PlaceTiles.tilePivot.y));
+                int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
+                CheckTile(id);
             }
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -167,24 +214,26 @@ public class OverworldController : MonoBehaviour
         }
     }
 
-    private void CheckTile(Vector3 pos)
+    private void CheckTile(int id)
     {
-        int id = Grid._instance.GetIdByVec(pos);
-        byte tileType = Grid._instance.tiles[id].building;
+        byte buildingType = Grid._instance.tiles[id].building;
         
-        if (tileType > 1)
+        if (buildingType > 1)
         {   // Random building
+            InfoScreen._instance.UpdateInfoScreenBuilding(id);
+            InfoScreen._instance.ToggleInfoScreen(true);
             
         }
-        else if (tileType == 1)
+        else if (buildingType == 1)
         {   // Village building
             
-            
+            InfoScreen._instance.UpdateInfoScreenVillage(id);
+            InfoScreen._instance.ToggleInfoScreen(true);
             
         }
         else
         {   // No building -> Show tile resources
-            InfoScreen._instance.UpdateInfoScreen(Grid._instance.GetPositionFromRaycast(new Vector3(pos.x + PlaceTiles.tilePivot.x, pos.y, pos.z + PlaceTiles.tilePivot.y)));
+            InfoScreen._instance.UpdateInfoScreen(id);
             InfoScreen._instance.ToggleInfoScreen(true);
         }
 

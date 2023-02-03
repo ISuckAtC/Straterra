@@ -2,7 +2,7 @@ using System;
 
 public static class NumConverter
 {
-    public static string GetConvertedNumber(int amount)
+    public static string GetConvertedAmount(int amount)
     {
         double val = 0;
 
@@ -62,6 +62,36 @@ public static class NumConverter
 
         return " a few ";                   // <Twenty
     }
-    
+
+    public static string GetConvertedResource(int amount)
+    {
+        
+        if (amount >= 100000)               // Hundred Thousands
+        {
+            if (amount >= 100000000)        // > 100 Million
+                return ( " > " + GetConvertedAmount(100000000) + " ");
+
+            if (amount >= 100000000)          // Millions
+                return ( " > " + GetConvertedAmount(100000000) + " ");
+
+            return ( " > " + GetConvertedAmount(100000) + " ");
+
+        }
+        if (amount >= 200)                  // Two Hundred
+        {
+            if (amount >= 10000)            // Ten Thousands
+                return ( " > " + GetConvertedAmount(10000) + " ");
+
+            if (amount >= 1000)             // Thousands
+                return ( " > " + GetConvertedAmount(1000) + " ");
+
+            if (amount >= 500)              // Half Thousand
+                return ( " > 500 ");
+
+            return ( " > 200 ");
+        }
+
+        return ( " < 200 ");                  // <Twenty
+    }
     
 }
