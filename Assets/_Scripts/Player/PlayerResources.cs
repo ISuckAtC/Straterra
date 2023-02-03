@@ -14,6 +14,7 @@ public class PlayerResources
     private int restMetal;
 
     public int order;
+    private int restOrder;
 
     public int chaos;
     private int restChaos;
