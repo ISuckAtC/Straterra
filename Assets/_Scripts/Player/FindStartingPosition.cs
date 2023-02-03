@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,13 +9,13 @@ public class FindStartingPosition : MonoBehaviour
     public int waterNeed;
     public int grasslandNeed;
     public int mountainNeed;
+    public int forestNeed;
 
     public int minDistanceFromOtherPlayer;
 
     //private bool foundTile = false;
 
     private Vector2Int startPosition;
-    
 
     public void FindTile()
     {
@@ -32,9 +33,10 @@ public class FindStartingPosition : MonoBehaviour
         
         bool water = CheckType(1, waterNeed, startPosition);
         bool grass = CheckType(2, grasslandNeed, startPosition);
+        bool forest = CheckType(3, forestNeed, startPosition);
         bool mount = CheckType(5, mountainNeed, startPosition);
         
-        if (water && grass && mount)
+        if (water && grass && mount && forest)
             return true;
         return false;
 

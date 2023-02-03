@@ -5,36 +5,56 @@ using UnityEngine;
 public class PlayerResources
 {
     public int food;
-
+    private int restFood;
+    
     public int wood;
-
+    private int restWood;
+    
     public int metal;
+    private int restMetal;
 
     public int order;
 
     public int chaos;
+    private int restChaos;
 
     public int population;
 
-    public int unit1_1Amount;
-    public int unit1_2Amount;
-    public int unit1_3Amount;
-    
-    public int unit2_1Amount;
-    public int unit2_2Amount;
-    public int unit2_3Amount;
-    
-    public int unit3_1Amount;
-    public int unit3_2Amount;
-    public int unit3_3Amount;
+    public int[] unitAmounts ;
 
-    public int unit4_1Amount;
-    public int unit4_2Amount;
-    public int unit4_3Amount;
 
-    public int unit5_1Amount;
-    public int unit5_2Amount;
-    public int unit5_3Amount;
+    public void AddResources()
+    {
+        // Food
+        restFood += ResourceData.foodGatheringRate;
 
+        food += restFood / 3600;
+        restFood = restFood % 3600;
+        
+        // Wood
+        restWood += ResourceData.woodGatheringRate;
+
+        wood += restWood / 3600;
+        restWood = restWood % 3600;
+        
+        // Metal
+        restMetal += ResourceData.metalGatheringRate;
+
+        metal += restMetal / 3600;
+        restMetal = restMetal % 3600;
+    }
+
+    public void InitializeValues(int food, int wood, int metal, int chaos, int population, int[] unitAmounts)
+    {
+        this.food = food;
+        this.wood = wood;
+        this.metal = metal;
+        this.chaos = chaos;
+        this.population = population;
+
+        this.unitAmounts = unitAmounts;
+        
+        EventHub.OnTick += AddResources;
+    }
 }
 
