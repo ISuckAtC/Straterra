@@ -14,6 +14,16 @@ public class CityPlayer : MonoBehaviour
     public GameObject queueMenu;
     public TMPro.TMP_Text queueText;
 
+    [Header("Buildings")]
+    public GameObject townHallButton;
+    public GameObject barracksButton;
+    public GameObject academyButton;
+    public GameObject templeButton;
+    public GameObject workshopButton;
+    public GameObject smithyButton;
+    public GameObject marketplaceButton;
+    public GameObject stockpileButton;
+
     [Header("BuildingMenus")]
     public GameObject townHall;
     public GameObject barracks;
