@@ -9,6 +9,8 @@ public struct Unit
     public string name;
     public UnitType unitType;
     public UnitType preference;
+    public byte level;
+    public byte maxLevel;
     public byte speed;
     public byte range;
     public byte meleeAttack;

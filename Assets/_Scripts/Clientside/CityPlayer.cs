@@ -5,6 +5,7 @@ using System.Linq;
 
 public class CityPlayer : MonoBehaviour
 {
+    public static CityPlayer cityPlayer;
     [Header("Static UI")]
     public GameObject map;
     public TMPro.TMP_Text worldButtonText;
@@ -15,14 +16,8 @@ public class CityPlayer : MonoBehaviour
     public TMPro.TMP_Text queueText;
 
     [Header("Buildings")]
-    public GameObject townHallButton;
-    public GameObject barracksButton;
-    public GameObject academyButton;
-    public GameObject templeButton;
-    public GameObject workshopButton;
-    public GameObject smithyButton;
-    public GameObject marketplaceButton;
-    public GameObject stockpileButton;
+    public Transform[] buildingSlots;
+    public GameObject[] buildingPrefabs;
 
     [Header("BuildingMenus")]
     public GameObject townHall;
@@ -40,6 +35,52 @@ public class CityPlayer : MonoBehaviour
 
     public void Start()
     {
+        cityPlayer = this;
+        LoadBuildings();
+        LoadBuildingInterfaces();
+
+        topBar.Food = PlayerResources.I.food;
+        topBar.Wood = PlayerResources.I.wood;
+        topBar.Metal = PlayerResources.I.metal;
+        topBar.Order = PlayerResources.I.order;
+    }
+
+    public void LoadBuildings()
+    {
+        for (int i = 0; i < 8; ++i)
+        {
+            if (buildingSlots[i].childCount > 0) Destroy(buildingSlots[i].GetChild(0).gameObject);
+            if (LocalData.SelfPlayer.cityBuildingSlots[i] == null) return;
+            int id = LocalData.SelfPlayer.cityBuildingSlots[i].Value;
+            GameObject buildingObject = Instantiate(buildingPrefabs[id], buildingSlots[i].position, Quaternion.identity);
+            buildingObject.transform.parent = buildingSlots[i];
+
+            Debug.Log("Building at slot " + i + " has id " + id);
+
+            // Barracks
+            if (id >= 3) 
+            {
+                UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
+                button.onClick.AddListener(OpenBarracks);
+                BuildingMenu menu = barracks.GetComponent<BuildingMenu>();
+                menu.id = id;
+                menu.slotId = i;
+                continue;
+            }
+            // Town Hall
+            {
+                UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
+                button.onClick.AddListener(OpenTownHall);
+                BuildingMenu menu = townHall.GetComponent<BuildingMenu>();
+                menu.id = id;
+                menu.slotId = i;
+                continue;
+            }
+        }
+    }
+
+    public void LoadBuildingInterfaces()
+    {
         buildingsInterfaces = new List<GameObject>();
         if (townHall) buildingsInterfaces.Add(townHall);
         if (barracks)
@@ -53,11 +94,6 @@ public class CityPlayer : MonoBehaviour
         if (smithy) buildingsInterfaces.Add(smithy);
         if (marketplace) buildingsInterfaces.Add(marketplace);
         if (stockpile) buildingsInterfaces.Add(stockpile);
-
-        topBar.Food = PlayerResources.I.food;
-        topBar.Wood = PlayerResources.I.wood;
-        topBar.Metal = PlayerResources.I.metal;
-        topBar.Order = PlayerResources.I.order;
     }
 
     // General button methods
@@ -164,6 +200,9 @@ public class CityPlayer : MonoBehaviour
     #endregion
 
     #region Townhall
+    [Header("TownHall")]
+
+
 
     #endregion
 
