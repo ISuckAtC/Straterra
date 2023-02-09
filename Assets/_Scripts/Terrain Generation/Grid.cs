@@ -220,9 +220,9 @@ public class Grid : MonoBehaviour
         return id + (width * y) + x;
     }
     
-    public Vector2 GetPosition(int id)
+    public Vector2Int GetPosition(int id)
     {
-        return new Vector2(id % width, id / width);
+        return new Vector2Int(id % width, id / width);
     }
 
     public int GetIdByInt(int x, int y)

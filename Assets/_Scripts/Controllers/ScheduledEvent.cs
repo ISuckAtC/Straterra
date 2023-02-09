@@ -63,3 +63,51 @@ public class ScheduledTownBuildEvent : ScheduledEvent
         CityPlayer.cityPlayer.LoadBuildingInterfaces();
     }
 }
+
+public class ScheduledMapBuildEvent : ScheduledEvent
+{
+    public byte buildingId;
+    public int position;
+    public ScheduledMapBuildEvent(int secondsTotal, byte buildingId, int position) : base(secondsTotal)
+    {
+        this.buildingId = buildingId;
+        this.position = position;
+    }
+
+    public override void Complete()
+    {
+        base.Complete();
+
+        Grid._instance.tiles[position].building = buildingId;
+
+        Vector2Int pos = Grid._instance.GetPosition(position);
+
+        PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), PlaceTiles._instance.buildingTiles[buildingId]);
+
+        MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
+        
+        switch (mapBuilding.type)
+        {
+            case MapBuildingType.farm:
+                {
+                    ResourceData.foodGatheringRate += (int)(mapBuilding.baseProduction * Grid._instance.tiles[position].foodAmount);
+                    
+                    break;
+                }
+            
+            case MapBuildingType.wood:
+                {
+                    ResourceData.woodGatheringRate += (int)(mapBuilding.baseProduction * Grid._instance.tiles[position].woodAmount);
+                    
+                    break;
+                }
+            
+            case MapBuildingType.mine:
+                {
+                    ResourceData.metalGatheringRate += (int)(mapBuilding.baseProduction * Grid._instance.tiles[position].metalAmount);
+                    
+                    break;
+                }
+        }
+    }
+}

@@ -5,6 +5,7 @@ using UnityEngine;
 public struct MapBuilding
 {
     public int id;
+    public MapBuildingType type;
     public int buildingTime;
     public string name;
     public int health;
@@ -14,6 +15,17 @@ public struct MapBuilding
     public int woodCost;
     public int metalCost;
     public int orderCost;
+    public int baseProduction;
+}
+
+public enum MapBuildingType
+{
+    village,
+    farm,
+    wood,
+    mine,
+    house,
+    castle
 }
 
 public class MapBuildingDefinition
@@ -60,6 +72,7 @@ public class MapBuildingDefinition
         
         // Farms
         MapBuilding farm1 = new MapBuilding();
+        farm1.type = MapBuildingType.farm;
         farm1.buildingTime = 300;
         farm1.foodCost = 0;
         farm1.metalCost = 0;
@@ -70,11 +83,13 @@ public class MapBuildingDefinition
         farm1.maxLevel = 3;
         farm1.name = "Farm";
         farm1.orderCost = 0;
+        farm1.baseProduction = 0;
         
         mapBuildings[10] = farm1;
         
         
         MapBuilding farm2 = new MapBuilding();
+        farm2.type = MapBuildingType.farm;
         farm2.buildingTime = 700;
         farm2.foodCost = 0;
         farm2.metalCost = 0;
@@ -85,11 +100,13 @@ public class MapBuildingDefinition
         farm2.maxLevel = 3;
         farm2.name = "Farm";
         farm2.orderCost = 0;
+        farm2.baseProduction = 0;
         
         mapBuildings[11] = farm2;
 
         
         MapBuilding farm3 = new MapBuilding();
+        farm3.type = MapBuildingType.farm;
         farm3.buildingTime = 1100;
         farm3.foodCost = 0;
         farm3.metalCost = 600;
@@ -100,6 +117,7 @@ public class MapBuildingDefinition
         farm3.maxLevel = 3;
         farm3.name = "Farm";
         farm3.orderCost = 0;
+        farm3.baseProduction = 0;
         
         mapBuildings[12] = farm3;
         
@@ -107,6 +125,7 @@ public class MapBuildingDefinition
         
         // Logging Camps
         MapBuilding wood1 = new MapBuilding();
+        wood1.type = MapBuildingType.wood;
         wood1.buildingTime = 200;
         wood1.foodCost = 0;
         wood1.metalCost = 0;
@@ -117,11 +136,13 @@ public class MapBuildingDefinition
         wood1.maxLevel = 3;
         wood1.name = "Logging Camp";
         wood1.orderCost = 0;
+        wood1.baseProduction = 0;
         
         mapBuildings[20] = wood1;
 
 
         MapBuilding wood2 = new MapBuilding();
+        wood2.type = MapBuildingType.wood;
         wood2.buildingTime = 500;
         wood2.foodCost = 0;
         wood2.metalCost = 200;
@@ -132,11 +153,13 @@ public class MapBuildingDefinition
         wood2.maxLevel = 3;
         wood2.name = "Logging Camp";
         wood2.orderCost = 0;
+        wood2.baseProduction = 0;
         
         mapBuildings[21] = wood2;
 
 
         MapBuilding wood3 = new MapBuilding();
+        wood3.type = MapBuildingType.wood;
         wood3.buildingTime = 900;
         wood3.foodCost = 0;
         wood3.metalCost = 500;
@@ -147,6 +170,7 @@ public class MapBuildingDefinition
         wood3.maxLevel = 3;
         wood3.name = "Logging Camp";
         wood3.orderCost = 0;
+        wood3.baseProduction = 0;
         
         mapBuildings[22] = wood3;
                 
@@ -154,6 +178,7 @@ public class MapBuildingDefinition
         
         // Mines
         MapBuilding mine1 = new MapBuilding();
+        mine1.type = MapBuildingType.mine;
         mine1.buildingTime = 250;
         mine1.foodCost = 0;
         mine1.metalCost = 100;
@@ -164,11 +189,13 @@ public class MapBuildingDefinition
         mine1.maxLevel = 3;
         mine1.name = "Mine";
         mine1.orderCost = 0;
+        mine1.baseProduction = 0;
         
         mapBuildings[30] = mine1;
 
 
         MapBuilding mine2 = new MapBuilding();
+        mine2.type = MapBuildingType.mine;
         mine2.buildingTime = 250;
         mine2.foodCost = 0;
         mine2.metalCost = 300;
@@ -179,11 +206,13 @@ public class MapBuildingDefinition
         mine2.maxLevel = 3;
         mine2.name = "Mine";
         mine2.orderCost = 0;
+        mine2.baseProduction = 0;
         
         mapBuildings[31] = mine2;
         
         
         MapBuilding mine3 = new MapBuilding();
+        mine3.type = MapBuildingType.mine;
         mine3.buildingTime = 250;
         mine3.foodCost = 0;
         mine3.metalCost = 900;
@@ -194,6 +223,7 @@ public class MapBuildingDefinition
         mine3.maxLevel = 3;
         mine3.name = "Mine";
         mine3.orderCost = 0;
+        mine3.baseProduction = 0;
         
         mapBuildings[32] = mine3;
         return mapBuildings;
