@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
         set
         {
             I.playerResources.food = value;
+            TopBar.I.Food = value;
         }
     }
     public static int PlayerWood
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour
         set
         {
             I.playerResources.wood = value;
+            TopBar.I.Wood = value;
         }
     }
     public static int PlayerMetal
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
         set
         {
             I.playerResources.metal = value;
+            TopBar.I.Metal = value;
         }
     }
     public static int PlayerOrder
@@ -46,6 +49,7 @@ public class GameManager : MonoBehaviour
         set
         {
             I.playerResources.order = value;
+            TopBar.I.Order = value;
         }
     }
     public static int PlayerChaos

@@ -14,6 +14,9 @@ public class TopBar : MonoBehaviour
     private TMPro.TextMeshProUGUI orderText;
     [SerializeField]
     private TMPro.TextMeshProUGUI chaosText;
+
+    public static TopBar I;
+
     public int Food 
     {
         set
@@ -48,5 +51,11 @@ public class TopBar : MonoBehaviour
         {
             chaosText.text = value.ToString();
         }
+    }
+
+    public void Awake()
+    {
+        if (I != null) throw new System.Exception("Another topbar detected");
+        I = this;
     }
 }
