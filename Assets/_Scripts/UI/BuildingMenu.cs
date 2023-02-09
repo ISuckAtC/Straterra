@@ -13,6 +13,7 @@ public class BuildingMenu : MonoBehaviour
     public GameObject clickAwayButton;
     public Image background;
     public Image border;
+    public TMP_Text title;
     public GameObject upgradeButton;
     public GameObject upgradeMenu;
     public GameObject upgradeClickAwayButton;
@@ -32,6 +33,9 @@ public class BuildingMenu : MonoBehaviour
     public TMP_Text statsImprovement2;
     public Image statsImage3;
     public TMP_Text statsImprovement3;
+
+    public Image buildTimeImage;
+    public TMP_Text buildTime;
 
     public Image costsImage1;
     public TMP_Text costsText1;
@@ -71,6 +75,7 @@ public class BuildingMenu : MonoBehaviour
         costsText1.text = foodCost.ToString();
         costsText2.text = woodCost.ToString();
         costsText3.text = metalCost.ToString();
+        buildTime.text = building.buildingTime.ToString() + " seconds";
 
         upgradeTitle.text = "UPGRADE " + building.name + " to level " + nextBuilding.level;
 
@@ -85,7 +90,10 @@ public class BuildingMenu : MonoBehaviour
     {
         TownBuilding building = TownBuildingDefinition.I[id];
         if (building.level >= TownBuildingDefinition.I[id].maxLevel) return;
-        TownBuilding nextBuilding = TownBuildingDefinition.I[id + 1];
+
+        int nextId = id + 1;
+
+        TownBuilding nextBuilding = TownBuildingDefinition.I[nextId];
         
         int foodCost = nextBuilding.foodCost;
         int woodCost = nextBuilding.woodCost;
@@ -111,7 +119,7 @@ public class BuildingMenu : MonoBehaviour
         CityPlayer.cityPlayer.topBar.Metal = GameManager.PlayerMetal;
         CityPlayer.cityPlayer.topBar.Order = GameManager.PlayerOrder;
 
-        LocalData.SelfPlayer.cityBuildingSlots[slotId] = (byte)(id+1);
+        ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[nextId].buildingTime, (byte)nextId, slotId);
 
         CloseUpgradeMenu();
         CityPlayer.cityPlayer.CloseMenus();
