@@ -188,6 +188,7 @@ public class CityPlayer : MonoBehaviour
         string qText = "";
         List<ScheduledUnitProductionEvent> unitProduction = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Cast<ScheduledUnitProductionEvent>().ToList();
         List<ScheduledTownBuildEvent> townBuilding = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledTownBuildEvent)).Cast<ScheduledTownBuildEvent>().ToList();
+        List<ScheduledMapBuildEvent> mapBuilding = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledMapBuildEvent)).Cast<ScheduledMapBuildEvent>().ToList();
 
         qText += "Unit Production\n";
         for (int i = 0; i < unitProduction.Count; ++i)
@@ -195,11 +196,17 @@ public class CityPlayer : MonoBehaviour
             ScheduledUnitProductionEvent productionEvent = unitProduction[i];
             qText += productionEvent.amount + " " + UnitDefinition.I[productionEvent.unitId].name + " - " + productionEvent.secondsLeft + " seconds left\n";
         }
-        qText += "Building Construction\n";
+        qText += "City Building Construction\n";
         for (int i = 0; i < townBuilding.Count; ++i)
         {
             ScheduledTownBuildEvent productionEvent = townBuilding[i];
             qText += TownBuildingDefinition.I[productionEvent.townBuildingId].name + " - " + productionEvent.secondsLeft + " seconds left\n";
+        }
+        qText += "Map Building Construction\n";
+        for (int i = 0; i < townBuilding.Count; ++i)
+        {
+            ScheduledMapBuildEvent productionEvent = mapBuilding[i];
+            qText += TownBuildingDefinition.I[productionEvent.buildingId].name + " - " + productionEvent.secondsLeft + " seconds left\n";
         }
 
         queueText.text = qText;
