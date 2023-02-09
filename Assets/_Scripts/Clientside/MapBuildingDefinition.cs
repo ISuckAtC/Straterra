@@ -83,7 +83,7 @@ public class MapBuildingDefinition
         farm1.maxLevel = 3;
         farm1.name = "Farm";
         farm1.orderCost = 0;
-        farm1.baseProduction = 0;
+        farm1.baseProduction = 3600;
         
         mapBuildings[10] = farm1;
         
@@ -136,7 +136,7 @@ public class MapBuildingDefinition
         wood1.maxLevel = 3;
         wood1.name = "Logging Camp";
         wood1.orderCost = 0;
-        wood1.baseProduction = 0;
+        wood1.baseProduction = 3600;
         
         mapBuildings[20] = wood1;
 
@@ -189,7 +189,7 @@ public class MapBuildingDefinition
         mine1.maxLevel = 3;
         mine1.name = "Mine";
         mine1.orderCost = 0;
-        mine1.baseProduction = 0;
+        mine1.baseProduction = 3600;
         
         mapBuildings[30] = mine1;
 

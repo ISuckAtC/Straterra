@@ -263,10 +263,9 @@ public class OverworldController : MonoBehaviour
             Debug.LogWarning("Not enough resources");
             return;
         }
-
-        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime, buildingId, position);
+                                                                                                        // BUG Remove division later
+        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, buildingId, position);
         
-
         GameManager.PlayerFood -= mapBuilding.foodCost;
         GameManager.PlayerWood -= mapBuilding.woodCost;
         GameManager.PlayerMetal -= mapBuilding.metalCost;

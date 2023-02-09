@@ -86,13 +86,13 @@ public class GameManager : MonoBehaviour
     public void AddResources()
     {
         // Food
-        playerResources.food += ResourceData.GetFoodTickValue();
+        PlayerFood += ResourceData.GetFoodTickValue();
 
         // Wood
-        playerResources.wood += ResourceData.GetWoodTickValue();
+        PlayerWood += ResourceData.GetWoodTickValue();
 
         // Metal
-        playerResources.metal += ResourceData.GetMetalTickValue();
+        PlayerMetal += ResourceData.GetMetalTickValue();
         
         Debug.Log("F: " + PlayerFood + " | W: " + PlayerWood + " | M: " + PlayerMetal);
     }

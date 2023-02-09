@@ -7,31 +7,31 @@ public class ResourceData
     // Resources
     public static int foodGatheringRate;
     private static int restFood;
-    public static float foodGatheringMultiplier;
+    public static float foodGatheringMultiplier = 1f;
     
     public static int woodGatheringRate;
     private static int restWood;
-    public static float woodGatheringMultiplier;
+    public static float woodGatheringMultiplier = 1f;
     
     public static int metalGatheringRate;
     private static int restMetal;
-    public static float metalGatheringMultiplier;
+    public static float metalGatheringMultiplier = 1f;
     
     
     // Population
     public static int populationGatheringRate;
     private static int restPopulation;
-    public static float populationGatheringMultiplier;
+    public static float populationGatheringMultiplier = 1f;
 
     
     // Religious
     public static int chaosGatheringRate;
     private static int restChaos;
-    public static float chaosGatheringMultiplier;
+    public static float chaosGatheringMultiplier = 1f;
     
     public static int orderGatheringRate;
     private static int restOrder;
-    public static float orderGatheringMultiplier;
+    public static float orderGatheringMultiplier = 1f;
 
     public static int GetFoodTickValue()
     {
