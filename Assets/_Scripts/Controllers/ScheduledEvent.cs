@@ -42,3 +42,24 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
         Debug.Log("Added " + amount + " " + UnitDefinition.I[unitId].name + " to army! (You now have " + PlayerResources.I.unitAmounts[unitId] + " " + UnitDefinition.I[unitId].name + ")");
     }
 }
+
+public class ScheduledTownBuildEvent : ScheduledEvent
+{
+    public byte townBuildingId;
+    public int slot;
+    public ScheduledTownBuildEvent(int secondsTotal, byte townBuildingId, int slot) : base(secondsTotal)
+    {
+        this.townBuildingId = townBuildingId;
+        this.slot = slot;
+    }
+
+    public override void Complete()
+    {
+        base.Complete();
+
+        LocalData.SelfPlayer.cityBuildingSlots[slot] = townBuildingId;
+        
+        CityPlayer.cityPlayer.LoadBuildings();
+        CityPlayer.cityPlayer.LoadBuildingInterfaces();
+    }
+}

@@ -5,6 +5,7 @@ using UnityEngine;
 public struct TownBuilding
 {
     public int id;
+    public TownBuildingType type;
     public int buildingTime;
     public string name;
     public int health;
@@ -14,6 +15,14 @@ public struct TownBuilding
     public int woodCost;
     public int metalCost;
     public int orderCost;
+}
+
+public enum TownBuildingType
+{
+    townhall,
+    barracks,
+    temple,
+    wall
 }
 
 public class TownBuildingDefinition
@@ -59,6 +68,7 @@ public class TownBuildingDefinition
 
         TownBuilding townhall1 = new TownBuilding();
         townhall1.id = 0;
+        townhall1.type = TownBuildingType.townhall;
         townhall1.buildingTime = 5;
         townhall1.name = "Town Hall";
         townhall1.health = 1000;
@@ -69,6 +79,7 @@ public class TownBuildingDefinition
 
         TownBuilding townhall2 = new TownBuilding();
         townhall2.id = 1;
+        townhall2.type = TownBuildingType.townhall;
         townhall2.buildingTime = 60;
         townhall2.name = "Town Hall";
         townhall2.health = 2000;
@@ -80,6 +91,7 @@ public class TownBuildingDefinition
 
         TownBuilding barracks1 = new TownBuilding();
         barracks1.id = 3;
+        barracks1.type = TownBuildingType.barracks;
         barracks1.buildingTime = 30;
         barracks1.name = "Barracks";
         barracks1.health = 500;
@@ -91,6 +103,7 @@ public class TownBuildingDefinition
 
         TownBuilding barracks2 = new TownBuilding();
         barracks2.id = 4;
+        barracks2.type = TownBuildingType.barracks;
         barracks2.buildingTime = 30;
         barracks2.name = "Barracks";
         barracks2.health = 500;

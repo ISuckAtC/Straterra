@@ -28,7 +28,7 @@ public class CityPlayer : MonoBehaviour
     public GameObject smithy;
     public GameObject marketplace;
     public GameObject stockpile;
-    
+
     private List<GameObject> buildingsInterfaces;
 
     private bool worldView = false;
@@ -57,24 +57,26 @@ public class CityPlayer : MonoBehaviour
 
             Debug.Log("Building at slot " + i + " has id " + id);
 
-            // Barracks
-            if (id >= 3) 
+            switch (TownBuildingDefinition.I[id].type)
             {
-                UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
-                button.onClick.AddListener(OpenBarracks);
-                BuildingMenu menu = barracks.GetComponent<BuildingMenu>();
-                menu.id = id;
-                menu.slotId = i;
-                continue;
-            }
-            // Town Hall
-            {
-                UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
-                button.onClick.AddListener(OpenTownHall);
-                BuildingMenu menu = townHall.GetComponent<BuildingMenu>();
-                menu.id = id;
-                menu.slotId = i;
-                continue;
+                case TownBuildingType.barracks:
+                    {
+                        UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
+                        button.onClick.AddListener(OpenBarracks);
+                        BuildingMenu menu = barracks.GetComponent<BuildingMenu>();
+                        menu.id = id;
+                        menu.slotId = i;
+                        break;
+                    }
+                case TownBuildingType.townhall:
+                    {
+                        UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
+                        button.onClick.AddListener(OpenTownHall);
+                        BuildingMenu menu = townHall.GetComponent<BuildingMenu>();
+                        menu.id = id;
+                        menu.slotId = i;
+                        break;
+                    }
             }
         }
     }
@@ -82,10 +84,18 @@ public class CityPlayer : MonoBehaviour
     public void LoadBuildingInterfaces()
     {
         buildingsInterfaces = new List<GameObject>();
-        if (townHall) buildingsInterfaces.Add(townHall);
+        if (townHall)
+        {
+            BuildingMenu townhallMenu = townHall.GetComponent<BuildingMenu>();
+            Debug.Log("Changing townhall name: " + TownBuildingDefinition.I[townhallMenu.id].name);
+            townhallMenu.title.text = TownBuildingDefinition.I[townhallMenu.id].name.ToUpper() + " LV" + TownBuildingDefinition.I[townhallMenu.id].level;
+            buildingsInterfaces.Add(townHall);
+        }
         if (barracks)
         {
             trainingSlider.onValueChanged.AddListener(delegate { OnTrainingSliderChanged(); });
+            BuildingMenu barracksMenu = barracks.GetComponent<BuildingMenu>();
+            barracksMenu.title.text = TownBuildingDefinition.I[barracksMenu.id].name.ToUpper() + " LV" + TownBuildingDefinition.I[barracksMenu.id].level;
             buildingsInterfaces.Add(barracks);
         }
         if (academy) buildingsInterfaces.Add(academy);
@@ -177,11 +187,19 @@ public class CityPlayer : MonoBehaviour
     {
         string qText = "";
         List<ScheduledUnitProductionEvent> unitProduction = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Cast<ScheduledUnitProductionEvent>().ToList();
+        List<ScheduledTownBuildEvent> townBuilding = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledTownBuildEvent)).Cast<ScheduledTownBuildEvent>().ToList();
 
+        qText += "Unit Production\n";
         for (int i = 0; i < unitProduction.Count; ++i)
         {
             ScheduledUnitProductionEvent productionEvent = unitProduction[i];
             qText += productionEvent.amount + " " + UnitDefinition.I[productionEvent.unitId].name + " - " + productionEvent.secondsLeft + " seconds left\n";
+        }
+        qText += "Building Construction\n";
+        for (int i = 0; i < townBuilding.Count; ++i)
+        {
+            ScheduledTownBuildEvent productionEvent = townBuilding[i];
+            qText += TownBuildingDefinition.I[productionEvent.townBuildingId].name + " - " + productionEvent.secondsLeft + " seconds left\n";
         }
 
         queueText.text = qText;
@@ -223,8 +241,8 @@ public class CityPlayer : MonoBehaviour
         trainingUnit = UnitDefinition.I[id];
         trainingTitle.text = trainingUnit.name;
 
-        trainingSlider.onValueChanged.AddListener(delegate {OnTrainingSliderChanged();});
-        trainingInput.onValueChanged.AddListener(delegate {OnTrainingInputChanged();});
+        trainingSlider.onValueChanged.AddListener(delegate { OnTrainingSliderChanged(); });
+        trainingInput.onValueChanged.AddListener(delegate { OnTrainingInputChanged(); });
 
         int maxAmount = int.MaxValue;
         if (trainingUnit.foodCost > 0)
