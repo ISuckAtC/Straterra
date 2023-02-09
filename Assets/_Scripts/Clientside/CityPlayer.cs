@@ -308,11 +308,6 @@ public class CityPlayer : MonoBehaviour
         GameManager.PlayerMetal -= metalCost;
         GameManager.PlayerOrder -= orderCost;
 
-        topBar.Food = GameManager.PlayerFood;
-        topBar.Wood = GameManager.PlayerWood;
-        topBar.Metal = GameManager.PlayerMetal;
-        topBar.Order = GameManager.PlayerOrder;
-
         new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount);
         CloseTrainingMenu();
     }
