@@ -44,15 +44,21 @@ public class PlaceTiles : MonoBehaviour
         }
     }
 
-    public void PlaceBuilding(byte buildingIndex, byte building, Vector2Int pos)
+    public void PlaceBuilding(byte buildingId, Vector2Int pos)
     {
-        if (buildingIndex == 0) throw new Exception("A building value of 0 means no building. This method should not be called if building is 0.");
+        if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
         
         int id = Grid._instance.GetIdByVec(pos);
         
-        Grid._instance.tiles[id].building = buildingIndex;
+        Grid._instance.tiles[id].building = buildingId;
 
-        overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), buildingTiles[building - 1]);
+        GameManager.PlayerFood -= MapBuildingDefinition.I[buildingId].foodCost;
+        GameManager.PlayerWood -= MapBuildingDefinition.I[buildingId].woodCost;
+        GameManager.PlayerMetal -= MapBuildingDefinition.I[buildingId].metalCost;
+        GameManager.PlayerOrder -= MapBuildingDefinition.I[buildingId].orderCost;
+        
+
+        overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), buildingTiles[buildingId]);
     }
     
     public void ClearAllTiles()

@@ -57,19 +57,145 @@ public class MapBuildingDefinition
         MapBuilding?[] mapBuildings = new MapBuilding?[256];
         System.Array.Fill(mapBuildings, null);
 
+        
+        // Farms
         MapBuilding farm1 = new MapBuilding();
         farm1.buildingTime = 300;
         farm1.foodCost = 0;
         farm1.metalCost = 0;
-        farm1.woodCost = 500;
+        farm1.woodCost = 200;
         farm1.health = 5000;
-        farm1.id = 1;
+        farm1.id = 10;
         farm1.level = 1;
-        farm1.maxLevel = 2;
+        farm1.maxLevel = 3;
         farm1.name = "Farm";
         farm1.orderCost = 0;
+        
+        mapBuildings[10] = farm1;
+        
+        
+        MapBuilding farm2 = new MapBuilding();
+        farm2.buildingTime = 700;
+        farm2.foodCost = 0;
+        farm2.metalCost = 0;
+        farm2.woodCost = 700;
+        farm2.health = 7000;
+        farm2.id = 11;
+        farm2.level = 2;
+        farm2.maxLevel = 3;
+        farm2.name = "Farm";
+        farm2.orderCost = 0;
+        
+        mapBuildings[11] = farm2;
 
-        mapBuildings[1] = farm1;
+        
+        MapBuilding farm3 = new MapBuilding();
+        farm3.buildingTime = 1100;
+        farm3.foodCost = 0;
+        farm3.metalCost = 600;
+        farm3.woodCost = 1200;
+        farm3.health = 9000;
+        farm3.id = 12;
+        farm3.level = 3;
+        farm3.maxLevel = 3;
+        farm3.name = "Farm";
+        farm3.orderCost = 0;
+        
+        mapBuildings[12] = farm3;
+        
+        
+        
+        // Logging Camps
+        MapBuilding wood1 = new MapBuilding();
+        wood1.buildingTime = 200;
+        wood1.foodCost = 0;
+        wood1.metalCost = 0;
+        wood1.woodCost = 300;
+        wood1.health = 5000;
+        wood1.id = 20;
+        wood1.level = 1;
+        wood1.maxLevel = 3;
+        wood1.name = "Logging Camp";
+        wood1.orderCost = 0;
+        
+        mapBuildings[20] = wood1;
+
+
+        MapBuilding wood2 = new MapBuilding();
+        wood2.buildingTime = 500;
+        wood2.foodCost = 0;
+        wood2.metalCost = 200;
+        wood2.woodCost = 800;
+        wood2.health = 7000;
+        wood2.id = 21;
+        wood2.level = 2;
+        wood2.maxLevel = 3;
+        wood2.name = "Logging Camp";
+        wood2.orderCost = 0;
+        
+        mapBuildings[21] = wood2;
+
+
+        MapBuilding wood3 = new MapBuilding();
+        wood3.buildingTime = 900;
+        wood3.foodCost = 0;
+        wood3.metalCost = 500;
+        wood3.woodCost = 1300;
+        wood3.health = 9000;
+        wood3.id = 22;
+        wood3.level = 3;
+        wood3.maxLevel = 3;
+        wood3.name = "Logging Camp";
+        wood3.orderCost = 0;
+        
+        mapBuildings[22] = wood3;
+                
+
+        
+        // Mines
+        MapBuilding mine1 = new MapBuilding();
+        mine1.buildingTime = 250;
+        mine1.foodCost = 0;
+        mine1.metalCost = 100;
+        mine1.woodCost = 300;
+        mine1.health = 5000;
+        mine1.id = 30;
+        mine1.level = 1;
+        mine1.maxLevel = 3;
+        mine1.name = "Mine";
+        mine1.orderCost = 0;
+        
+        mapBuildings[30] = mine1;
+
+
+        MapBuilding mine2 = new MapBuilding();
+        mine2.buildingTime = 250;
+        mine2.foodCost = 0;
+        mine2.metalCost = 300;
+        mine2.woodCost = 700;
+        mine2.health = 5000;
+        mine2.id = 31;
+        mine2.level = 2;
+        mine2.maxLevel = 3;
+        mine2.name = "Mine";
+        mine2.orderCost = 0;
+        
+        mapBuildings[31] = mine2;
+        
+        
+        MapBuilding mine3 = new MapBuilding();
+        mine3.buildingTime = 250;
+        mine3.foodCost = 0;
+        mine3.metalCost = 900;
+        mine3.woodCost = 900;
+        mine3.health = 5000;
+        mine3.id = 32;
+        mine3.level = 3;
+        mine3.maxLevel = 3;
+        mine3.name = "Mine";
+        mine3.orderCost = 0;
+        
+        mapBuildings[32] = mine3;
         return mapBuildings;
     }
 }

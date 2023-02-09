@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance
+    public static GameManager I
     {
         get
         {
@@ -13,16 +14,83 @@ public class GameManager : MonoBehaviour
         }
     }
     private static GameManager instance;
-    // Start is called before the first frame update
+
+    public PlayerResources playerResources;
+    public static int PlayerFood
+    {
+        get => I.playerResources.food;
+        set
+        {
+            I.playerResources.food = value;
+        }
+    }
+    public static int PlayerWood
+    {
+        get => I.playerResources.wood;
+        set
+        {
+            I.playerResources.wood = value;
+        }
+    }
+    public static int PlayerMetal
+    {
+        get => I.playerResources.metal;
+        set
+        {
+            I.playerResources.metal = value;
+        }
+    }
+    public static int PlayerOrder
+    {
+        get => I.playerResources.order;
+        set
+        {
+            I.playerResources.order = value;
+        }
+    }
+    public static int PlayerChaos
+    {
+        get => I.playerResources.chaos;
+        set
+        {
+            I.playerResources.chaos = value;
+        }
+    }
+
+    public static int[] PlayerUnitAmounts { get => I.playerResources.unitAmounts; }
+
     void Start()
     {
         if (instance != null) throw new System.Exception("Duplicate GameManager");
         instance = this;
+
+#if UNITY_EDITOR
+        QualitySettings.vSyncCount = 0; // VSync must be disabled
+        Application.targetFrameRate = 60;
+#endif
+
+
+        int[] unitAmounts = new int[256];
+        Array.Fill(unitAmounts, 0);
+
+        playerResources = new PlayerResources(1000, 500, 300, 0, 1000, unitAmounts);
+
+        EventHub.OnTick += AddResources;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void AddResources()
     {
+        // Food
+        playerResources.food += ResourceData.GetFoodTickValue();
+
+        // Wood
+        playerResources.wood += ResourceData.GetWoodTickValue();
+
+        // Metal
+        playerResources.metal += ResourceData.GetMetalTickValue();
         
+        Debug.Log("F: " + PlayerFood + " | W: " + PlayerWood + " | M: " + PlayerMetal);
     }
+
 }

@@ -29,6 +29,7 @@ public class EventHub : MonoBehaviour
     private const float tickMax = 1f;
     private float tickTime = 0f;
 
+    public const int ticksPerHour = (int)(3600 / tickMax);
         
     void Awake()
     {

@@ -56,10 +56,10 @@ public class BuildingMenu : MonoBehaviour
         int metalCost = nextBuilding.metalCost;
         int orderCost = nextBuilding.orderCost;
 
-        if (foodCost > PlayerResources.I.food ||
-            woodCost > PlayerResources.I.wood ||
-            metalCost > PlayerResources.I.metal ||
-            orderCost > PlayerResources.I.order)
+        if (foodCost >  GameManager.PlayerFood ||
+            woodCost >  GameManager.PlayerWood ||
+            metalCost > GameManager.PlayerMetal ||
+            orderCost > GameManager.PlayerOrder)
         {
             upgradeConfirmButton.GetComponent<Image>().color = Color.red;
         }
@@ -92,24 +92,24 @@ public class BuildingMenu : MonoBehaviour
         int metalCost = nextBuilding.metalCost;
         int orderCost = nextBuilding.orderCost;
 
-        if (foodCost > PlayerResources.I.food ||
-            woodCost > PlayerResources.I.wood ||
-            metalCost > PlayerResources.I.metal ||
-            orderCost > PlayerResources.I.order)
+        if (foodCost >  GameManager.PlayerFood ||
+            woodCost >  GameManager.PlayerWood ||
+            metalCost > GameManager.PlayerMetal ||
+            orderCost > GameManager.PlayerOrder)
         {
             Debug.LogWarning("Not enough resources");
             return;
         }
 
-        PlayerResources.I.food -= foodCost;
-        PlayerResources.I.wood -= woodCost;
-        PlayerResources.I.metal -= metalCost;
-        PlayerResources.I.order -= orderCost;
+        GameManager.PlayerFood -= foodCost;
+        GameManager.PlayerWood -= woodCost;
+        GameManager.PlayerMetal -= metalCost;
+        GameManager.PlayerOrder -= orderCost;
 
-        CityPlayer.cityPlayer.topBar.Food = PlayerResources.I.food;
-        CityPlayer.cityPlayer.topBar.Wood = PlayerResources.I.wood;
-        CityPlayer.cityPlayer.topBar.Metal = PlayerResources.I.metal;
-        CityPlayer.cityPlayer.topBar.Order = PlayerResources.I.order;
+        CityPlayer.cityPlayer.topBar.Food =  GameManager.PlayerFood;
+        CityPlayer.cityPlayer.topBar.Wood =  GameManager.PlayerWood;
+        CityPlayer.cityPlayer.topBar.Metal = GameManager.PlayerMetal;
+        CityPlayer.cityPlayer.topBar.Order = GameManager.PlayerOrder;
 
         LocalData.SelfPlayer.cityBuildingSlots[slotId] = (byte)(id+1);
 

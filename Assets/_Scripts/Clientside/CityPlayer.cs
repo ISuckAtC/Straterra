@@ -39,10 +39,10 @@ public class CityPlayer : MonoBehaviour
         LoadBuildings();
         LoadBuildingInterfaces();
 
-        topBar.Food = PlayerResources.I.food;
-        topBar.Wood = PlayerResources.I.wood;
-        topBar.Metal = PlayerResources.I.metal;
-        topBar.Order = PlayerResources.I.order;
+        topBar.Food =  GameManager.PlayerFood;
+        topBar.Wood =  GameManager.PlayerWood;
+        topBar.Metal = GameManager.PlayerMetal;
+        topBar.Order = GameManager.PlayerOrder;
     }
 
     public void LoadBuildings()
@@ -138,7 +138,7 @@ public class CityPlayer : MonoBehaviour
     {
         armyMenu.SetActive(true);
         string armytext = "";
-        int[] amounts = PlayerResources.I.unitAmounts;
+        int[] amounts = GameManager.PlayerUnitAmounts;
         for (int i = 0; i < 256; ++i)
         {
             int amount = amounts[i];
@@ -229,22 +229,22 @@ public class CityPlayer : MonoBehaviour
         int maxAmount = int.MaxValue;
         if (trainingUnit.foodCost > 0)
         {
-            int unitAmount = PlayerResources.I.food / trainingUnit.foodCost;
+            int unitAmount = GameManager.PlayerFood / trainingUnit.foodCost;
             if (unitAmount < maxAmount) maxAmount = unitAmount;
         }
         if (trainingUnit.woodCost > 0)
         {
-            int unitAmount = PlayerResources.I.wood / trainingUnit.woodCost;
+            int unitAmount = GameManager.PlayerWood / trainingUnit.woodCost;
             if (unitAmount < maxAmount) maxAmount = unitAmount;
         }
         if (trainingUnit.metalCost > 0)
         {
-            int unitAmount = PlayerResources.I.metal / trainingUnit.metalCost;
+            int unitAmount = GameManager.PlayerMetal / trainingUnit.metalCost;
             if (unitAmount < maxAmount) maxAmount = unitAmount;
         }
         if (trainingUnit.orderCost > 0)
         {
-            int unitAmount = PlayerResources.I.order / trainingUnit.orderCost;
+            int unitAmount = GameManager.PlayerOrder / trainingUnit.orderCost;
             if (unitAmount < maxAmount) maxAmount = unitAmount;
         }
         trainingSlider.minValue = 0;
@@ -276,24 +276,24 @@ public class CityPlayer : MonoBehaviour
         int woodCost = amount * trainingUnit.woodCost;
         int metalCost = amount * trainingUnit.metalCost;
         int orderCost = amount * trainingUnit.orderCost;
-        if (foodCost > PlayerResources.I.food ||
-            woodCost > PlayerResources.I.wood ||
-            metalCost > PlayerResources.I.metal ||
-            orderCost > PlayerResources.I.order)
+        if (foodCost > GameManager.PlayerFood ||
+            woodCost > GameManager.PlayerWood ||
+            metalCost > GameManager.PlayerMetal ||
+            orderCost > GameManager.PlayerOrder)
         {
             Debug.LogWarning("Not enough resources");
             return;
         }
 
-        PlayerResources.I.food -= foodCost;
-        PlayerResources.I.wood -= woodCost;
-        PlayerResources.I.metal -= metalCost;
-        PlayerResources.I.order -= orderCost;
+        GameManager.PlayerFood -= foodCost;
+        GameManager.PlayerWood -= woodCost;
+        GameManager.PlayerMetal -= metalCost;
+        GameManager.PlayerOrder -= orderCost;
 
-        topBar.Food = PlayerResources.I.food;
-        topBar.Wood = PlayerResources.I.wood;
-        topBar.Metal = PlayerResources.I.metal;
-        topBar.Order = PlayerResources.I.order;
+        topBar.Food = GameManager.PlayerFood;
+        topBar.Wood = GameManager.PlayerWood;
+        topBar.Metal = GameManager.PlayerMetal;
+        topBar.Order = GameManager.PlayerOrder;
 
         new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount);
         CloseTrainingMenu();

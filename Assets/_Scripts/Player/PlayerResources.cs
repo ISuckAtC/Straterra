@@ -5,23 +5,6 @@ using UnityEngine;
 
 public class PlayerResources
 {
-    private static PlayerResources instance;
-    public static PlayerResources I
-    {
-        get
-        {
-            if (instance == null) 
-            {
-                instance = new PlayerResources();
-                int[] unitAmounts = new int[256];
-                Array.Fill(unitAmounts, 0);
-                instance.InitializeValues(1000, 500, 300, 0, 1000, unitAmounts);
-                //throw new Exception("PlayerResources accessed before intialization");
-            }
-            return instance;
-        }
-    }
-    
     public int food;
     private int restFood;
 
@@ -39,26 +22,10 @@ public class PlayerResources
 
     public int population;
 
-    public int[] unitAmounts ;
+    public int[] unitAmounts;
 
 
-    public void AddResources()
-    {
-        // Food
-        food += ResourceData.GetFoodTickValue();
-
-        // Wood
-        restWood += ResourceData.woodGatheringRate;
-        wood += restWood / 3600;
-        restWood = restWood % 3600;
-
-        // Metal
-        restMetal += ResourceData.metalGatheringRate;
-        metal += restMetal / 3600;
-        restMetal = restMetal % 3600;
-    }
-
-    public void InitializeValues(int food, int wood, int metal, int chaos, int population, int[] unitAmounts)
+    public PlayerResources(int food, int wood, int metal, int chaos, int population, int[] unitAmounts)
     {
         this.food = food;
         this.wood = wood;
@@ -67,9 +34,5 @@ public class PlayerResources
         this.population = population;
 
         this.unitAmounts = unitAmounts;
-
-        EventHub.OnTick += AddResources;
-
-        instance = this;
     }
 }

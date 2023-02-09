@@ -22,6 +22,8 @@ public class OverworldController : MonoBehaviour
 
     private byte building;
     private byte buildingIndex;
+
+    public Transform tileHighlight;
     
     void Start()
     {
@@ -34,6 +36,15 @@ public class OverworldController : MonoBehaviour
 
     void Update()
     {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            tileHighlight.transform.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), 1, (int)(hit.point.z + PlaceTiles.tilePivot.y));
+        }
+
+
         // Building Selection
         if (Input.GetKeyDown(KeyCode.Alpha1)) // Village
         {
@@ -44,13 +55,13 @@ public class OverworldController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2))   // House
         {
             building = 2;
-            buildingIndex = 50;
+            buildingIndex = 100;
             UIController._instance.SetBuildingImage(buildingIndex);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))   // Castle
         {
             building = 3;
-            buildingIndex = 60;
+            buildingIndex = 110;
             UIController._instance.SetBuildingImage(buildingIndex);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))   // Farm
@@ -186,12 +197,9 @@ public class OverworldController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Q))    // Place village.
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
             if (Physics.Raycast(ray, out hit))
             {
-                PlaceTiles._instance.PlaceBuilding(buildingIndex, building, new Vector2Int((int)hit.point.x, (int)hit.point.z));
+                PlaceTiles._instance.PlaceBuilding(buildingIndex, new Vector2Int((int)hit.point.x, (int)hit.point.z));
                 
                 Debug.Log("" + hit.point + PlaceTiles.tilePivot);
             }
@@ -199,9 +207,6 @@ public class OverworldController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
             if (Physics.Raycast(ray, out hit))
             {
                 int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));

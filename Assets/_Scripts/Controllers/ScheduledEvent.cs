@@ -38,7 +38,7 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
     public override void Complete()
     {
         base.Complete();
-        PlayerResources.I.unitAmounts[unitId] += amount;
-        Debug.Log("Added " + amount + " " + UnitDefinition.I[unitId].name + " to army! (You now have " + PlayerResources.I.unitAmounts[unitId] + " " + UnitDefinition.I[unitId].name + ")");
+        GameManager.PlayerUnitAmounts[unitId] += amount;
+        Debug.Log("Added " + amount + " " + UnitDefinition.I[unitId].name + " to army! (You now have " + GameManager.PlayerUnitAmounts[unitId] + " " + UnitDefinition.I[unitId].name + ")");
     }
 }
