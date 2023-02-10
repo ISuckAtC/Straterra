@@ -84,14 +84,16 @@ public class CityPlayer : MonoBehaviour
         {
             BuildingMenu townhallMenu = townHall.GetComponent<BuildingMenu>();
             Debug.Log("Changing townhall name: " + TownBuildingDefinition.I[townhallMenu.id].name);
-            townhallMenu.title.text = TownBuildingDefinition.I[townhallMenu.id].name.ToUpper() + " LV" + TownBuildingDefinition.I[townhallMenu.id].level;
+            townhallMenu.title.text = TownBuildingDefinition.I[townhallMenu.id].name.ToUpper();
+            townhallMenu.level.text = "Lv. " + TownBuildingDefinition.I[townhallMenu.id].level;
             buildingsInterfaces.Add(townHall);
         }
         if (barracks)
         {
             trainingSlider.onValueChanged.AddListener(delegate { OnTrainingSliderChanged(); });
             BuildingMenu barracksMenu = barracks.GetComponent<BuildingMenu>();
-            barracksMenu.title.text = TownBuildingDefinition.I[barracksMenu.id].name.ToUpper() + " LV" + TownBuildingDefinition.I[barracksMenu.id].level;
+            barracksMenu.title.text = TownBuildingDefinition.I[barracksMenu.id].name.ToUpper();
+            barracksMenu.level.text = "Lv. " + TownBuildingDefinition.I[barracksMenu.id].level;
             buildingsInterfaces.Add(barracks);
         }
         if (academy) buildingsInterfaces.Add(academy);

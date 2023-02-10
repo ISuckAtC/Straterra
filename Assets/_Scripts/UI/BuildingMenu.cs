@@ -14,6 +14,7 @@ public class BuildingMenu : MonoBehaviour
     public Image background;
     public Image border;
     public TMP_Text title;
+    public TMP_Text level;
     public GameObject upgradeButton;
     public GameObject upgradeMenu;
     public GameObject upgradeClickAwayButton;
