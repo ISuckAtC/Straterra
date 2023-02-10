@@ -217,6 +217,8 @@ public class OverworldController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             InfoScreen._instance.ToggleInfoScreen(false);
+            InfoScreen._instance.ToggleInfoScreenResource(false);
+            //InfoScreen._instance.ToggleInfoScreen(false);
         }
     }
 
@@ -227,8 +229,9 @@ public class OverworldController : MonoBehaviour
         if (buildingType > 1)
         {
             // Random building
-            InfoScreen._instance.UpdateInfoScreenBuilding(id);
-            InfoScreen._instance.ToggleInfoScreen(true);
+            InfoScreen._instance.ToggleInfoScreenResource(true);
+            InfoScreen._instance.UpdateInfoScreenResource(id);
+            
         }
         else if (buildingType == 1)
         {

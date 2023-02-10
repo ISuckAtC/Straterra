@@ -14,22 +14,22 @@ public class InfoScreen : MonoBehaviour
     public GameObject infoScreen;
 
     public TMP_Text coordinateText;
-
     public TMP_Text tileTypeText;
-    public Image tileImage;
-
     public TMP_Text foodAmountText;
-    public Image foodImage;
-
     public TMP_Text woodAmountText;
-    public Image woodImage;
-
     public TMP_Text metalAmountText;
-    public Image metalImage;
-
     public TMP_Text chaosAmountText;
-    public Image chaosImage;
 
+    public TMP_Text resourceTypeText;
+    public Slider healthSlider;
+    public TMP_Text healthText;
+    public Slider efficiencySlider;
+    public TMP_Text efficiencyText;
+
+    public TMP_Text resourceBreadText;
+    
+    public Image tileImage;
+    
     void Start()
     {
         if (_instance == null)
@@ -46,6 +46,8 @@ public class InfoScreen : MonoBehaviour
 
     public void ToggleInfoScreen(bool enable)
     {
+        resourceInfoScreen.SetActive(false);
+        
         if (enable)
         {
             infoScreen.SetActive(true);
@@ -53,6 +55,19 @@ public class InfoScreen : MonoBehaviour
         }
 
         infoScreen.SetActive(false);
+    }
+    
+    public void ToggleInfoScreenResource(bool enable)
+    {
+        infoScreen.SetActive(false);
+        
+        if (enable)
+        {
+            resourceInfoScreen.SetActive(true);
+            return;
+        }
+
+        resourceInfoScreen.SetActive(false);
     }
 
     public void UpdateInfoScreenVillage(int id)
@@ -75,24 +90,66 @@ public class InfoScreen : MonoBehaviour
         chaosAmountText.text = "Chaos: Unknown";
     }
 
-    public void UpdateInfoScreenBuilding(int id)
+    public void UpdateInfoScreenResource(int id)
     {
         int buildingType = Grid._instance.tiles[id].building;
         int owner = Grid._instance.tiles[id].owner;
-
+        
         switch (buildingType)
         {
             // All buildings have levels. For starting we will have level 1, 2 and 3
 
+            
             // Resource buildings
             case 10:                // Farm
-                tileTypeText.text = "Farm";
+                
+                int foodEfficiency = (int)(Grid._instance.tiles[id].foodAmount * 100);
+                
+                resourceTypeText.text = "Farm";
+                
+                tileImage.sprite = PlaceTiles._instance.buildingTiles[buildingType].sprite;
+                resourceBreadText.text = "The Farm is functioning like normal.";
+                
+                healthSlider.maxValue =  MapBuildingDefinition.I[buildingType].health;
+                healthSlider.value =  MapBuildingDefinition.I[buildingType].health;
+                healthText.text = ("" + MapBuildingDefinition.I[buildingType].health);
+
+                efficiencySlider.value = foodEfficiency;
+                efficiencyText.text = ("" + foodEfficiency + "%");
                 break;
             case 20:                // Logging camp
-                tileTypeText.text = "Logging camp";
+                
+                int woodEfficiency = (int)(Grid._instance.tiles[id].woodAmount * 100);
+                
+                resourceTypeText.text = "Logging camp";
+                
+                
+                tileImage.sprite = PlaceTiles._instance.buildingTiles[buildingType].sprite;
+                resourceBreadText.text = "The Mine is functioning like normal.";
+                
+                healthSlider.maxValue =  MapBuildingDefinition.I[buildingType].health;
+                healthSlider.value =  MapBuildingDefinition.I[buildingType].health;
+                healthText.text = ("" + MapBuildingDefinition.I[buildingType].health);
+
+                efficiencySlider.value = woodEfficiency;
+                efficiencyText.text = ("" + woodEfficiency + "%");
                 break;
             case 30:                // Mine
-                tileTypeText.text = "Mine";
+                
+                int mineEfficiency = (int)(Grid._instance.tiles[id].metalAmount * 100);
+                
+                resourceTypeText.text = "Mine";
+                
+                
+                tileImage.sprite = PlaceTiles._instance.buildingTiles[buildingType].sprite;
+                resourceBreadText.text = "The Logging Camp is functioning like normal.";
+                
+                healthSlider.maxValue =  MapBuildingDefinition.I[buildingType].health;
+                healthSlider.value =  MapBuildingDefinition.I[buildingType].health;
+                healthText.text = ("" + MapBuildingDefinition.I[buildingType].health);
+
+                efficiencySlider.value = mineEfficiency;
+                efficiencyText.text = ("" + mineEfficiency + "%");
                 break;
 
 
