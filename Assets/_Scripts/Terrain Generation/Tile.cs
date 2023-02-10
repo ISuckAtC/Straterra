@@ -23,4 +23,6 @@ public struct Tile
     public float chaosAmount;
 
     public float corruptionProgress;
+
+    public List<Group> army; // 64bit reference?
 }

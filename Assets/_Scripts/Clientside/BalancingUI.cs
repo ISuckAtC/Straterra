@@ -9,6 +9,8 @@ public class BalancingUI : MonoBehaviour
     public TMPro.TMP_Text text;
 
     private bool winner;
+
+    public bool verbose;
     
     // Group : 3 ints, 1 bool
 
@@ -41,7 +43,7 @@ public class BalancingUI : MonoBehaviour
         {
             FillGroup();
             
-            winner = bs.Fight(green, red);
+            winner = bs.Fight(green, red, verbose);
 
             if (winner)
                 Debug.LogWarning("Right Wins.");
@@ -75,6 +77,20 @@ public class BalancingUI : MonoBehaviour
         if (spearmenA > 0)
             green.Add(new Group(spearmenA, 3, -10, false));
 
+        
+        if (archersB > 0)
+            red.Add(new Group(archersB, 0, 10, true));
+        
+        if (cavalryB > 0)
+            red.Add(new Group(cavalryB, 1, 10, true));
+        
+        if (swordsmenB > 0)
+            red.Add(new Group(swordsmenB, 2, 10, true));
+        
+        if (spearmenB > 0)
+            red.Add(new Group(spearmenB, 3, 10, true));
+
+        
         int leftRange = 0;
         for (int i = 0; i < green.Count; ++i) 
         {
@@ -91,17 +107,5 @@ public class BalancingUI : MonoBehaviour
 
         green.ForEach(x => x.position = -leftRange);
         red.ForEach(x => x.position = rightRange);
-        
-        if (archersB > 0)
-            red.Add(new Group(archersB, 0, 10, true));
-        
-        if (cavalryB > 0)
-            red.Add(new Group(cavalryB, 1, 10, true));
-        
-        if (swordsmenB > 0)
-            red.Add(new Group(swordsmenB, 2, 10, true));
-        
-        if (spearmenB > 0)
-            red.Add(new Group(spearmenB, 3, 10, true));
     }
 }

@@ -126,6 +126,8 @@ public class ScheduledTroopMovementEvent : ScheduledEvent
     {
         base.Complete();
 
+        Grid._instance.tiles[destination].army = null; // temp
+
         
     }
 }

@@ -104,7 +104,7 @@ public class BattleSim
 
 
 // Average runtime 0.00033663ms
-    public bool Fight(List<Group> a, List<Group> b)
+    public bool Fight(List<Group> a, List<Group> b, bool verbose = false)
     {
         List<Group> all = new List<Group>();
         all.AddRange(a);
@@ -129,7 +129,6 @@ public class BattleSim
 
         bool combat = true;
         int turn = 0;
-        bool verbose = true;
         int totalTurns = 0;
 
         while (combat)
@@ -150,7 +149,7 @@ public class BattleSim
 
 
             if (verbose)
-                Console.WriteLine(
+                UnityEngine.Debug.Log(
                     ("[" + totalTurns + "]").PadRight(10) + "Turn start: Team: " + (group.right ? 2 : 1) +
                     " | UnitId: " + group.unitId +
                     " | Unit Type: " + UnitDefinition.I[group.unitId].unitType.ToString() +
@@ -164,7 +163,7 @@ public class BattleSim
                 if (index < 0) index = enemyArmy.FindIndex(x => !x.dead);
                 if (index < 0)
                 {
-                    if (verbose) Console.WriteLine((group.right ? "Right wins" : "Left wins") + " in " + totalTurns + " turns!");
+                    if (verbose) UnityEngine.Debug.Log((group.right ? "Right wins" : "Left wins") + " in " + totalTurns + " turns!");
                     
                     output += "\n\nWinning Team: " + (group.right ? "Red" : "Green") + "\n";
 
@@ -183,7 +182,7 @@ public class BattleSim
 
                 group.target = index;
 
-                if (verbose) Console.WriteLine(UnitDefinition.I[group.unitId].unitType.ToString() + " chose target " + UnitDefinition.I[enemyArmy[group.target].unitId].unitType.ToString());
+                if (verbose) UnityEngine.Debug.Log(UnitDefinition.I[group.unitId].unitType.ToString() + " chose target " + UnitDefinition.I[enemyArmy[group.target].unitId].unitType.ToString());
             }
 
             Group enemy = enemyArmy[group.target];
@@ -208,7 +207,7 @@ public class BattleSim
                     group.position += move;
                 }
 
-                if (verbose) Console.WriteLine(UnitDefinition.I[group.unitId].unitType.ToString() + " moves " + move + " units");
+                if (verbose) UnityEngine.Debug.Log(UnitDefinition.I[group.unitId].unitType.ToString() + " moves " + move + " units");
             }
 
             if (distance <= UnitDefinition.I[group.unitId].range)
@@ -216,11 +215,11 @@ public class BattleSim
                 // Attack
                 int damage = group.GetDamage(distance, enemy);
 
-                if (verbose) Console.WriteLine(UnitDefinition.I[group.unitId].unitType.ToString() + " attacks " + UnitDefinition.I[enemy.unitId].unitType.ToString() + " for " + damage + " damage!");
+                if (verbose) UnityEngine.Debug.Log(UnitDefinition.I[group.unitId].unitType.ToString() + " attacks " + UnitDefinition.I[enemy.unitId].unitType.ToString() + " for " + damage + " damage!");
 
                 int deaths = enemy.TakeDamage(damage, group, distance == 0, true, verbose);
 
-                if (verbose) Console.WriteLine("Attack caused " + deaths + " deaths");
+                if (verbose) UnityEngine.Debug.Log("Attack caused " + deaths + " deaths");
             }
 
             turn++;
@@ -311,11 +310,11 @@ public class Group
         if (melee && counterable)
         {
             int counterDamage = GetDamage(0, source, true);
-            if (verbose) Console.WriteLine(unit.unitType.ToString() + " counters " + enemyUnit.unitType.ToString() + " for " + counterDamage + " damage!");
+            if (verbose) UnityEngine.Debug.Log(unit.unitType.ToString() + " counters " + enemyUnit.unitType.ToString() + " for " + counterDamage + " damage!");
 
             int cDeaths = source.TakeDamage(counterDamage, this, true, false, verbose);
 
-            if (verbose) Console.WriteLine("Counter caused " + cDeaths + " deaths");
+            if (verbose) UnityEngine.Debug.Log("Counter caused " + cDeaths + " deaths");
         }
 
         count -= deaths;
