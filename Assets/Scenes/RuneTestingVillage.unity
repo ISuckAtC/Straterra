@@ -527,11 +527,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 189442967}
-  swordsmenA: 175
-  archersA: 0
-  spearmenA: 0
+  verbose: 1
+  swordsmenA: 0
+  archersA: 1
+  spearmenA: 200
   cavalryA: 0
-  swordsmenB: 100
+  swordsmenB: 0
   archersB: 0
   spearmenB: 0
-  cavalryB: 50
+  cavalryB: 200

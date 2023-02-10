@@ -82,7 +82,7 @@ public class UnitDefinition
         archer.preference = UnitType.INFANTRY;
         archer.unitType = UnitType.MISSILE;
         archer.speed = 2;
-        archer.range = 6;
+        archer.range = 10;
         archer.meleeAttack = 2;
         archer.rangeAttack = 7;
         archer.meleeDefence = 2;
@@ -103,7 +103,7 @@ public class UnitDefinition
         cavalry.unitType = UnitType.CAVALRY;
         cavalry.speed = 6;
         cavalry.range = 0;
-        cavalry.meleeAttack = 10;
+        cavalry.meleeAttack = 14;
         cavalry.rangeAttack = 0;
         cavalry.meleeDefence = 4;
         cavalry.rangeDefence = 3;
@@ -114,7 +114,7 @@ public class UnitDefinition
         cavalry.metalCost = 50;
         units[1] = cavalry;
 
-        cavalry.bonusDamage.Add(UnitType.INFANTRY, 2);
+       // cavalry.bonusDamage.Add(UnitType.INFANTRY, 2);
 
         Unit swordsman = new Unit();
         swordsman.id = 2;

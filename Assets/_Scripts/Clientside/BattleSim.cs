@@ -104,28 +104,28 @@ public class BattleSim
 
 
 // Average runtime 0.00033663ms
-    public bool Fight(List<Group> a, List<Group> b, bool verbose = false)
+    public bool Fight(List<Group> defender, List<Group> attacker, bool verbose = false)
     {
         List<Group> all = new List<Group>();
-        all.AddRange(a);
-        all.AddRange(b);
+        all.AddRange(defender);
+        all.AddRange(attacker);
 
         output = "";
         output += "Green Team\n";
-        for (int i = 0; i < a.Count; ++i)
+        for (int i = 0; i < defender.Count; ++i)
         {
-            Unit unit = UnitDefinition.I[a[i].unitId];
-            output += unit.name + " LV" + unit.level + " (" + a[i].count + ")\n";
+            Unit unit = UnitDefinition.I[defender[i].unitId];
+            output += unit.name + " LV" + unit.level + " (" + defender[i].count + ")\n";
         }
 
         output += "Red Team\n";
-        for (int i = 0; i < b.Count; ++i)
+        for (int i = 0; i < attacker.Count; ++i)
         {
-            Unit unit = UnitDefinition.I[b[i].unitId];
-            output += unit.name + " LV" + unit.level + " (" + b[i].count + ")\n";
+            Unit unit = UnitDefinition.I[attacker[i].unitId];
+            output += unit.name + " LV" + unit.level + " (" + attacker[i].count + ")\n";
         }
 
-        all = all.OrderBy<Group, byte>(x => UnitDefinition.I[x.unitId].speed).Reverse().ToList();
+        all = all.OrderBy<Group, float>(x => (UnitDefinition.I[x.unitId].speed + (x.right ? 0.5f : 0))).Reverse().ToList();
 
         bool combat = true;
         int turn = 0;
@@ -145,7 +145,7 @@ public class BattleSim
                 continue;
             }
 
-            List<Group> enemyArmy = (group.right ? a : b);
+            List<Group> enemyArmy = (group.right ? defender : attacker);
 
 
             if (verbose)
@@ -155,7 +155,7 @@ public class BattleSim
                 UnityEngine.Debug.Log(
                     ("[" + totalTurns + "]").PadRight(10) + "Turn start: Team: " + (group.right ? 2 : 1) +
                     " | UnitId: " + group.unitId +
-                    " | Unit Type: " + UnitDefinition.I[group.unitId].unitType.ToString() +
+                    " | Unit Type: " + UnitDefinition.I[group.unitId].name.ToString() +
                     " | Count: " + group.count +
                     " | Front Health: " + group.frontHealth +
                     " | Position: " + group.position);
@@ -164,8 +164,20 @@ public class BattleSim
 
             if (group.target < 0 || enemyArmy[group.target].dead)
             {
-                int index = enemyArmy.FindIndex(x => !x.dead && (UnitDefinition.I[x.unitId].unitType == UnitDefinition.I[group.unitId].preference));
-                if (index < 0) index = enemyArmy.FindIndex(x => !x.dead);
+                
+                int index = -1;
+                if (enemyArmy.Any(x => !x.dead))
+                {
+                    List<Group> prefTargets = enemyArmy.Where(x => !x.dead && (UnitDefinition.I[x.unitId].unitType == UnitDefinition.I[group.unitId].preference)).OrderBy(x => Math.Abs(group.position - x.position)).ToList();
+                    if (prefTargets.Count > 0)
+                    {
+                        index = enemyArmy.IndexOf(prefTargets[0]);
+                    }
+                    if (index < 0)
+                    {
+                        index = enemyArmy.IndexOf(enemyArmy.Where(x => !x.dead).OrderBy(x => Math.Abs(group.position - x.position)).ElementAt(0));
+                    }
+                }
                 if (index < 0)
                 {
                     if (verbose) UnityEngine.Debug.Log((group.right ? "Right wins" : "Left wins") + " in " + totalTurns + " turns!");
@@ -174,7 +186,7 @@ public class BattleSim
 
                     output += "Remaining Units\n";
 
-                    List<Group> remains = (group.right ? b : a);
+                    List<Group> remains = (group.right ? attacker : defender).Where(x => !x.dead).ToList();
 
                     for (int i = 0; i < remains.Count; ++i)
                     {
@@ -187,7 +199,7 @@ public class BattleSim
 
                 group.target = index;
 
-                if (verbose) UnityEngine.Debug.Log(UnitDefinition.I[group.unitId].unitType.ToString() + " chose target " + UnitDefinition.I[enemyArmy[group.target].unitId].unitType.ToString());
+                if (verbose) UnityEngine.Debug.Log(UnitDefinition.I[group.unitId].name.ToString() + " chose target " + UnitDefinition.I[enemyArmy[group.target].unitId].name.ToString());
             }
 
             Group enemy = enemyArmy[group.target];
@@ -202,17 +214,36 @@ public class BattleSim
                     move = distance;
                     distance = 0;
                 }
-
+                int direction = 1;
                 if (group.position > enemy.position)
                 {
-                    group.position -= move;
+                    direction = -1;
                 }
-                else
+                if (UnitDefinition.I[group.unitId].unitType == UnitType.CAVALRY)
                 {
-                    group.position += move;
-                }
+                    // Trample
+                    for (int i = 0; i < move; ++i)
+                    {
+                        List<Group> tramples = enemyArmy.Where(x => x.position == (group.position + (i * direction))).ToList();
+                        for (int k = 0; k < tramples.Count; ++k)
+                        {
+                            Group trampleEnemy = tramples[k];
+                            // Attack
+                            int damage = group.GetDamage(distance, trampleEnemy) / 5;
 
-                if (verbose) UnityEngine.Debug.Log(UnitDefinition.I[group.unitId].unitType.ToString() + " moves " + move + " units");
+                            if (verbose) UnityEngine.Debug.Log(UnitDefinition.I[group.unitId].name.ToString() + " tramples " + UnitDefinition.I[trampleEnemy.unitId].name.ToString() + " for " + damage + " damage!");
+
+                            int deaths = trampleEnemy.TakeDamage(damage, group, true, verbose, true);
+
+                            if (verbose) UnityEngine.Debug.Log("Trample caused " + deaths + " deaths");
+                        }
+                    }
+                }
+                
+
+                group.position += move * direction;
+
+                if (verbose) UnityEngine.Debug.Log(UnitDefinition.I[group.unitId].name.ToString() + " moves " + move + " units");
             }
 
             if (distance <= UnitDefinition.I[group.unitId].range)
@@ -220,7 +251,7 @@ public class BattleSim
                 // Attack
                 int damage = group.GetDamage(distance, enemy);
 
-                if (verbose) UnityEngine.Debug.Log(UnitDefinition.I[group.unitId].unitType.ToString() + " attacks " + UnitDefinition.I[enemy.unitId].unitType.ToString() + " for " + damage + " damage!");
+                if (verbose) UnityEngine.Debug.Log(UnitDefinition.I[group.unitId].name.ToString() + " attacks " + UnitDefinition.I[enemy.unitId].name.ToString() + " for " + damage + " damage!");
 
                 int deaths = enemy.TakeDamage(damage, group, distance == 0, true, verbose);
 
@@ -265,14 +296,14 @@ public class Group
     public bool right;
     public bool dead;
 
-    public int GetDamage(int range, Group enemy, bool counter = false)
+    public int GetDamage(int range, Group enemy, bool counter = false, bool trampleCounter = false)
     {
         Unit unit = UnitDefinition.I[unitId];
         Unit enemyUnit = UnitDefinition.I[enemy.unitId];
         
         int damage = 0;
 
-        damage += unit.GetBonusDamage(enemyUnit.unitType);
+        
 
 
         int attackCount = count;
@@ -289,6 +320,15 @@ public class Group
             damage += unit.meleeAttack;
             if (counter) damage += unit.counterBonus;
             damage -= enemyUnit.meleeDefence;
+            
+        }
+
+        if (trampleCounter && damage > 1) damage = 1;
+
+        damage += unit.GetBonusDamage(enemyUnit.unitType);
+
+        if (range == 0)
+        {
             if (attackCount > (enemy.count * 2.5)) attackCount = (int)(enemy.count * 2.5);
         }
 
@@ -298,7 +338,7 @@ public class Group
         return damage * attackCount;
     }
 
-    public int TakeDamage(int damage, Group source, bool melee, bool counterable = true, bool verbose = true)
+    public int TakeDamage(int damage, Group source, bool melee, bool counterable = true, bool verbose = true, bool trample = false)
     {
         Unit unit = UnitDefinition.I[unitId];
         Unit enemyUnit = UnitDefinition.I[source.unitId];
@@ -314,8 +354,8 @@ public class Group
 
         if (melee && counterable)
         {
-            int counterDamage = GetDamage(0, source, true);
-            if (verbose) UnityEngine.Debug.Log(unit.unitType.ToString() + " counters " + enemyUnit.unitType.ToString() + " for " + counterDamage + " damage!");
+            int counterDamage = GetDamage(0, source, true, trample);
+            if (verbose) UnityEngine.Debug.Log(unit.name.ToString() + " counters " + enemyUnit.name.ToString() + " for " + counterDamage + " damage!");
 
             int cDeaths = source.TakeDamage(counterDamage, this, true, false, verbose);
 
