@@ -111,3 +111,21 @@ public class ScheduledMapBuildEvent : ScheduledEvent
         }
     }
 }
+
+public class ScheduledTroopMovementEvent : ScheduledEvent
+{
+    public int destination;
+    public List<Group> army;
+    public ScheduledTroopMovementEvent(int secondsTotal, List<Group> army, int destination) : base(secondsTotal)
+    {
+        this.army = army;
+        this.destination = destination;
+    }
+
+    public override void Complete()
+    {
+        base.Complete();
+
+        
+    }
+}
