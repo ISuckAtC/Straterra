@@ -149,6 +149,9 @@ public class BattleSim
 
 
             if (verbose)
+            {
+                UnityEngine.Debug.Log("__________________________________________________");
+                UnityEngine.Debug.Log("__________________________________________________");
                 UnityEngine.Debug.Log(
                     ("[" + totalTurns + "]").PadRight(10) + "Turn start: Team: " + (group.right ? 2 : 1) +
                     " | UnitId: " + group.unitId +
@@ -156,6 +159,8 @@ public class BattleSim
                     " | Count: " + group.count +
                     " | Front Health: " + group.frontHealth +
                     " | Position: " + group.position);
+            }
+                
 
             if (group.target < 0 || enemyArmy[group.target].dead)
             {
