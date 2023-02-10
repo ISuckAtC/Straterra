@@ -9,6 +9,8 @@ public class InfoScreen : MonoBehaviour
 {
     public static InfoScreen _instance;
 
+    public GameObject villageInfoScreen;
+    public GameObject resourceInfoScreen;
     public GameObject infoScreen;
 
     public TMP_Text coordinateText;
