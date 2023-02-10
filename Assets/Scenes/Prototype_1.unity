@@ -156,8 +156,8 @@ RectTransform:
   m_Father: {fileID: 1941301437}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1434,8 +1434,6 @@ RectTransform:
   m_Children:
   - {fileID: 1882753132}
   - {fileID: 1626545865}
-  - {fileID: 1379491953}
-  - {fileID: 1382259712}
   m_Father: {fileID: 1731830722}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2817,7 +2815,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.875, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2943,8 +2941,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
+      - m_Target: {fileID: 1715130593}
+        m_TargetAssemblyTypeName: BottomBar, Assembly-CSharp
         m_MethodName: OpenQueue
         m_Mode: 1
         m_Arguments:
@@ -3546,7 +3544,7 @@ RectTransform:
   m_Children:
   - {fileID: 1653382605}
   m_Father: {fileID: 1379491953}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5357,7 +5355,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6023,7 +6021,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7149,8 +7147,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
+      - m_Target: {fileID: 1715130593}
+        m_TargetAssemblyTypeName: BottomBar, Assembly-CSharp
         m_MethodName: OpenOverworld
         m_Mode: 1
         m_Arguments:
@@ -7283,8 +7281,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
+      - m_Target: {fileID: 1715130593}
+        m_TargetAssemblyTypeName: BottomBar, Assembly-CSharp
         m_MethodName: OpenMenu
         m_Mode: 1
         m_Arguments:
@@ -7657,8 +7655,8 @@ RectTransform:
   m_Father: {fileID: 899875086}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.12096774, y: 0}
+  m_AnchorMax: {x: 0.12096774, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9070,6 +9068,8 @@ RectTransform:
   m_Children:
   - {fileID: 2110080107}
   - {fileID: 1731830722}
+  - {fileID: 1379491953}
+  - {fileID: 1382259712}
   - {fileID: 2066742145}
   - {fileID: 1715130590}
   - {fileID: 1604529405}
@@ -9358,8 +9358,8 @@ RectTransform:
   m_Father: {fileID: 1948443443}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.12096774, y: 0}
+  m_AnchorMax: {x: 0.12096774, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9540,8 +9540,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1731830723}
-        m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
+      - m_Target: {fileID: 1715130593}
+        m_TargetAssemblyTypeName: BottomBar, Assembly-CSharp
         m_MethodName: CloseArmyTab
         m_Mode: 1
         m_Arguments:
@@ -9603,7 +9603,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1379491953}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9863,8 +9863,8 @@ RectTransform:
   m_Father: {fileID: 263570804}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.875, y: 0}
+  m_AnchorMax: {x: 0.875, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10214,11 +10214,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 379797309}
   - {fileID: 1270921469}
   - {fileID: 1910640860}
   - {fileID: 1423832347}
-  m_Father: {fileID: 181248686}
+  - {fileID: 379797309}
+  m_Father: {fileID: 1221880316}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -10260,7 +10260,7 @@ RectTransform:
   - {fileID: 871557454}
   - {fileID: 1175493277}
   - {fileID: 138531241}
-  m_Father: {fileID: 181248686}
+  m_Father: {fileID: 1221880316}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -11356,7 +11356,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1379491953}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -11652,8 +11652,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
+      - m_Target: {fileID: 1715130593}
+        m_TargetAssemblyTypeName: BottomBar, Assembly-CSharp
         m_MethodName: OpenArmyTab
         m_Mode: 1
         m_Arguments:
@@ -12620,7 +12620,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7757040486522029315, guid: 0cfdf48c193373044853c304b7f33521, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7757040486522029315, guid: 0cfdf48c193373044853c304b7f33521, type: 3}
       propertyPath: m_AnchorMax.x
@@ -13259,7 +13259,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13348,6 +13348,7 @@ GameObject:
   - component: {fileID: 1715130590}
   - component: {fileID: 1715130592}
   - component: {fileID: 1715130591}
+  - component: {fileID: 1715130593}
   m_Layer: 5
   m_Name: BottomBar
   m_TagString: Untagged
@@ -13372,7 +13373,7 @@ RectTransform:
   - {fileID: 333503227}
   - {fileID: 909348138}
   m_Father: {fileID: 1221880316}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -13417,6 +13418,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715130589}
   m_CullTransparentMesh: 1
+--- !u!114 &1715130593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715130589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9847316d1fe93cc4cbd5c42d5b64e624, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapGrid: {fileID: 1943953673}
+  mapUI: {fileID: 2066742144}
+  cityPlayer: {fileID: 1731830721}
+  armyMenu: {fileID: 1379491950}
+  armyText: {fileID: 1574741333}
+  queueMenu: {fileID: 1382259711}
+  queueText: {fileID: 54668103}
+  worldButtonText: {fileID: 533044147}
 --- !u!1 &1715631662
 GameObject:
   m_ObjectHideFlags: 0
@@ -13680,13 +13701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169d1f74cd24f6249a487394ee3e8f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 2066742144}
-  worldButtonText: {fileID: 533044147}
   topBar: {fileID: 1604529406}
-  armyMenu: {fileID: 1379491950}
-  armyText: {fileID: 1574741333}
-  queueMenu: {fileID: 1382259711}
-  queueText: {fileID: 54668103}
   buildingSlots:
   - {fileID: 416744490}
   - {fileID: 1705038903}
@@ -14341,8 +14356,8 @@ RectTransform:
   m_Father: {fileID: 1590510025}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15178,7 +15193,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.12096774, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15424,7 +15439,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1379491953}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -15541,7 +15556,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0.12096774, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15636,7 +15651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &1943953674
 Grid:
   m_ObjectHideFlags: 0
@@ -16034,8 +16049,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1731830723}
-        m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
+      - m_Target: {fileID: 1715130593}
+        m_TargetAssemblyTypeName: BottomBar, Assembly-CSharp
         m_MethodName: CloseQueue
         m_Mode: 1
         m_Arguments:
@@ -16431,7 +16446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2066742145
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16449,7 +16464,7 @@ RectTransform:
   - {fileID: 155331613}
   - {fileID: 1473972345}
   m_Father: {fileID: 1221880316}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -16803,7 +16818,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

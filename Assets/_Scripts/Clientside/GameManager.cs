@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
         // Metal
         PlayerMetal += ResourceData.GetMetalTickValue();
         
-        Debug.Log("F: " + PlayerFood + " | W: " + PlayerWood + " | M: " + PlayerMetal);
+        //Debug.Log("F: " + PlayerFood + " | W: " + PlayerWood + " | M: " + PlayerMetal);
     }
 
 }
