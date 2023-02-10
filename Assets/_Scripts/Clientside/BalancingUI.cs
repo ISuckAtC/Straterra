@@ -74,7 +74,23 @@ public class BalancingUI : MonoBehaviour
         
         if (spearmenA > 0)
             green.Add(new Group(spearmenA, 3, -10, false));
+
+        int leftRange = 0;
+        for (int i = 0; i < green.Count; ++i) 
+        {
+            int range = UnitDefinition.I[green[i].unitId].range;
+            if (range > leftRange) leftRange = range;
+        }
         
+        int rightRange = 0;
+        for (int i = 0; i < red.Count; ++i) 
+        {
+            int range = UnitDefinition.I[red[i].unitId].range;
+            if (range > rightRange) rightRange = range;
+        }
+
+        green.ForEach(x => x.position = -leftRange);
+        red.ForEach(x => x.position = rightRange);
         
         if (archersB > 0)
             red.Add(new Group(archersB, 0, 10, true));
