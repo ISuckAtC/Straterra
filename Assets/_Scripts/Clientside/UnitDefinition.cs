@@ -82,12 +82,12 @@ public class UnitDefinition
         archer.preference = UnitType.INFANTRY;
         archer.unitType = UnitType.MISSILE;
         archer.speed = 2;
-        archer.range = 11;
+        archer.range = 6;
         archer.meleeAttack = 2;
         archer.rangeAttack = 7;
-        archer.meleeDefence = 1;
-        archer.rangeDefence = 2;
-        archer.health = 30;
+        archer.meleeDefence = 2;
+        archer.rangeDefence = 1;
+        archer.health = 10;
         archer.bonusDamage = new Dictionary<UnitType, int>();
         archer.counterBonus = 0;
         archer.foodCost = 40;
@@ -101,18 +101,20 @@ public class UnitDefinition
         cavalry.name = "Cavalry";
         cavalry.preference = UnitType.MISSILE;
         cavalry.unitType = UnitType.CAVALRY;
-        cavalry.speed = 5;
+        cavalry.speed = 6;
         cavalry.range = 0;
         cavalry.meleeAttack = 10;
         cavalry.rangeAttack = 0;
-        cavalry.meleeDefence = 3;
-        cavalry.rangeDefence = 2;
-        cavalry.health = 190;
+        cavalry.meleeDefence = 4;
+        cavalry.rangeDefence = 3;
+        cavalry.health = 50;
         cavalry.bonusDamage = new Dictionary<UnitType, int>();
         cavalry.counterBonus = 0;
         cavalry.foodCost = 200;
         cavalry.metalCost = 50;
         units[1] = cavalry;
+
+        cavalry.bonusDamage.Add(UnitType.INFANTRY, 2);
 
         Unit swordsman = new Unit();
         swordsman.id = 2;
@@ -120,15 +122,15 @@ public class UnitDefinition
         swordsman.name = "Swordsman";
         swordsman.preference = UnitType.INFANTRY;
         swordsman.unitType = UnitType.INFANTRY;
-        swordsman.speed = 2;
+        swordsman.speed = 2;        //4 should be standard footspeed for footsoldiers.
         swordsman.range = 0;
         swordsman.meleeAttack = 8;
         swordsman.rangeAttack = 0;
-        swordsman.meleeDefence = 3;
-        swordsman.rangeDefence = 3;
-        swordsman.health = 60;
+        swordsman.meleeDefence = 5;
+        swordsman.rangeDefence = 4;
+        swordsman.health = 15;
         swordsman.bonusDamage = new Dictionary<UnitType, int>();
-        swordsman.counterBonus = 1;
+        swordsman.counterBonus = 0;
         swordsman.foodCost = 50;
         swordsman.metalCost = 10;
         units[2] = swordsman;
@@ -139,19 +141,19 @@ public class UnitDefinition
         spearman.name = "Spearman";
         spearman.preference = UnitType.CAVALRY;
         spearman.unitType = UnitType.INFANTRY;
-        spearman.speed = 2;
+        spearman.speed = 3;
         spearman.range = 0;
-        spearman.meleeAttack = 3;
+        spearman.meleeAttack = 7;
         spearman.rangeAttack = 0;
-        spearman.meleeDefence = 1;
-        spearman.rangeDefence = 0;
-        spearman.health = 40;
+        spearman.meleeDefence = 3;
+        spearman.rangeDefence = 2;       //Should probably have less.
+        spearman.health = 12;
         spearman.bonusDamage = new Dictionary<UnitType, int>();
         spearman.counterBonus = 0;
         spearman.foodCost = 30;
         spearman.woodCost = 20;
 
-        spearman.bonusDamage.Add(UnitType.CAVALRY, 20);
+        spearman.bonusDamage.Add(UnitType.CAVALRY, 10);
 
         units[3] = spearman;
         return units;
