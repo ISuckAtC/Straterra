@@ -6,6 +6,7 @@ using UnityEngine;
 public class BalancingUI : MonoBehaviour
 {
     private BattleSim bs = new BattleSim();
+    public TMPro.TMP_Text text;
 
     private bool winner;
     
@@ -43,9 +44,11 @@ public class BalancingUI : MonoBehaviour
             winner = bs.Fight(green, red);
 
             if (winner)
-                Debug.LogWarning("Left Wins.");
-            else
                 Debug.LogWarning("Right Wins.");
+            else
+                Debug.LogWarning("Left Wins.");
+
+            text.text = bs.output;
         }
     }
     
@@ -74,15 +77,15 @@ public class BalancingUI : MonoBehaviour
         
         
         if (archersB > 0)
-            red.Add(new Group(archersB, 0, -10, false));
+            red.Add(new Group(archersB, 0, 10, true));
         
         if (cavalryB > 0)
-            red.Add(new Group(cavalryB, 1, -10, false));
+            red.Add(new Group(cavalryB, 1, 10, true));
         
         if (swordsmenB > 0)
-            red.Add(new Group(swordsmenB, 2, -10, false));
+            red.Add(new Group(swordsmenB, 2, 10, true));
         
         if (spearmenB > 0)
-            red.Add(new Group(spearmenB, 3, -10, false));
+            red.Add(new Group(spearmenB, 3, 10, true));
     }
 }

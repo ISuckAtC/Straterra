@@ -13,13 +13,13 @@ public class Cheats : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            if (Input.GetKeyDown(KeyCode.U))
+            if (Input.GetKeyDown(KeyCode.J))
                 GameManager.PlayerFood += 100;
 
             if (Input.GetKeyDown(KeyCode.I))
                 GameManager.PlayerWood += 100;
 
-            if (Input.GetKeyDown(KeyCode.O))
+            if (Input.GetKeyDown(KeyCode.L))
                 GameManager.PlayerMetal += 100;
         }
     }

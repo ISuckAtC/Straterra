@@ -45,7 +45,7 @@ public class MapBuildingDefinition
         get
         {
             if (MapBuildingDefinitions[index] == null) throw new System.Exception("MapBuilding ID [" + index + "] not defined");
-            return MapBuildingDefinitions[index].Value;
+                return MapBuildingDefinitions[index].Value;
         }
     }
     private static MapBuilding?[] mapBuildingDefinitions;
@@ -69,6 +69,22 @@ public class MapBuildingDefinition
         MapBuilding?[] mapBuildings = new MapBuilding?[256];
         System.Array.Fill(mapBuildings, null);
 
+        // Village
+        MapBuilding village1 = new MapBuilding();
+        village1.type = MapBuildingType.farm;
+        village1.buildingTime = 0;
+        village1.foodCost = 0;
+        village1.metalCost = 0;
+        village1.woodCost = 0;
+        village1.health = 15000;
+        village1.id = 1;
+        village1.level = 0;
+        village1.maxLevel = 0;
+        village1.name = "Village";
+        village1.orderCost = 0;
+        village1.baseProduction = 0;
+
+        mapBuildings[1] = village1;
         
         // Farms
         MapBuilding farm1 = new MapBuilding();

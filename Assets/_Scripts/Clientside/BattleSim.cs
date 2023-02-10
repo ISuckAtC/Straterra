@@ -13,6 +13,7 @@ public enum UnitType
 
 public class BattleSim
 {
+    public string output;
 /*    public void Setup()
     {
         Unit archer = new Unit();
@@ -109,6 +110,21 @@ public class BattleSim
         all.AddRange(a);
         all.AddRange(b);
 
+        output = "";
+        output += "Green Team\n";
+        for (int i = 0; i < a.Count; ++i)
+        {
+            Unit unit = UnitDefinition.I[a[i].unitId];
+            output += unit.name + " LV" + unit.level + " (" + a[i].count + ")\n";
+        }
+
+        output += "Red Team\n";
+        for (int i = 0; i < b.Count; ++i)
+        {
+            Unit unit = UnitDefinition.I[b[i].unitId];
+            output += unit.name + " LV" + unit.level + " (" + b[i].count + ")\n";
+        }
+
         all = all.OrderBy<Group, byte>(x => UnitDefinition.I[x.unitId].speed).Reverse().ToList();
 
         bool combat = true;
@@ -149,6 +165,19 @@ public class BattleSim
                 if (index < 0)
                 {
                     if (verbose) Console.WriteLine((group.right ? "Right wins" : "Left wins") + " in " + totalTurns + " turns!");
+                    
+                    output += "\n\nWinning Team: " + (group.right ? "Red" : "Green") + "\n";
+
+                    output += "Remaining Units\n";
+
+                    List<Group> remains = (group.right ? b : a);
+
+                    for (int i = 0; i < remains.Count; ++i)
+                    {
+                        Unit unit = UnitDefinition.I[remains[i].unitId];
+                        output += unit.name + " LV" + unit.level + " (" + remains[i].count + ")\n";
+                    }
+
                     return group.right;
                 }
 
