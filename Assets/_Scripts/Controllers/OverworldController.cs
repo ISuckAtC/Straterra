@@ -200,7 +200,7 @@ public class OverworldController : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit))
             {
-                int position = Grid._instance.GetIdByVec(new Vector2(hit.point.x, hit.point.z));
+                int position = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
 
                 PlaceBuilding(buildingIndex, position);
             }

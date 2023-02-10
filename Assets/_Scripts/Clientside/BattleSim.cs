@@ -9,9 +9,11 @@ public enum UnitType
     MISSILE,
     CAVALRY
 }
+
+
 public class BattleSim
 {
-    private void Setup()
+/*    public void Setup()
     {
         Unit archer = new Unit();
         archer.preference = UnitType.INFANTRY;
@@ -72,8 +74,8 @@ public class BattleSim
 
         Group.Units[3] = spearman;
     }
-
-    private void Run()
+*/
+    public void Run()
     {
         List<Group> army1 = new List<Group>();
         army1.Add(new Group(10, 0, -13, false));
@@ -107,7 +109,7 @@ public class BattleSim
         all.AddRange(a);
         all.AddRange(b);
 
-        all = all.OrderBy<Group, byte>(x => x.unit.speed).Reverse().ToList();
+        all = all.OrderBy<Group, byte>(x => UnitDefinition.I[x.unitId].speed).Reverse().ToList();
 
         bool combat = true;
         int turn = 0;
@@ -135,33 +137,33 @@ public class BattleSim
                 Console.WriteLine(
                     ("[" + totalTurns + "]").PadRight(10) + "Turn start: Team: " + (group.right ? 2 : 1) +
                     " | UnitId: " + group.unitId +
-                    " | Unit Type: " + group.unit.unitType.ToString() +
+                    " | Unit Type: " + UnitDefinition.I[group.unitId].unitType.ToString() +
                     " | Count: " + group.count +
                     " | Front Health: " + group.frontHealth +
                     " | Position: " + group.position);
 
             if (group.target < 0 || enemyArmy[group.target].dead)
             {
-                int index = enemyArmy.FindIndex(x => !x.dead && (x.unit.unitType == group.unit.preference));
+                int index = enemyArmy.FindIndex(x => !x.dead && (UnitDefinition.I[x.unitId].unitType == UnitDefinition.I[group.unitId].preference));
                 if (index < 0) index = enemyArmy.FindIndex(x => !x.dead);
                 if (index < 0)
                 {
                     if (verbose) Console.WriteLine((group.right ? "Right wins" : "Left wins") + " in " + totalTurns + " turns!");
-                    break;
+                    return group.right;
                 }
 
                 group.target = index;
 
-                if (verbose) Console.WriteLine(group.unit.unitType.ToString() + " chose target " + enemyArmy[group.target].unit.unitType.ToString());
+                if (verbose) Console.WriteLine(UnitDefinition.I[group.unitId].unitType.ToString() + " chose target " + UnitDefinition.I[enemyArmy[group.target].unitId].unitType.ToString());
             }
 
             Group enemy = enemyArmy[group.target];
 
             int distance = Math.Abs(enemy.position - group.position);
 
-            if (distance > group.unit.range)
+            if (distance > UnitDefinition.I[group.unitId].range)
             {
-                int move = group.unit.speed;
+                int move = UnitDefinition.I[group.unitId].speed;
                 if (move >= distance)
                 {
                     move = distance;
@@ -177,15 +179,15 @@ public class BattleSim
                     group.position += move;
                 }
 
-                if (verbose) Console.WriteLine(group.unit.unitType.ToString() + " moves " + move + " units");
+                if (verbose) Console.WriteLine(UnitDefinition.I[group.unitId].unitType.ToString() + " moves " + move + " units");
             }
 
-            if (distance <= group.unit.range)
+            if (distance <= UnitDefinition.I[group.unitId].range)
             {
                 // Attack
                 int damage = group.GetDamage(distance, enemy);
 
-                if (verbose) Console.WriteLine(group.unit.unitType.ToString() + " attacks " + enemy.unit.unitType.ToString() + " for " + damage + " damage!");
+                if (verbose) Console.WriteLine(UnitDefinition.I[group.unitId].unitType.ToString() + " attacks " + UnitDefinition.I[enemy.unitId].unitType.ToString() + " for " + damage + " damage!");
 
                 int deaths = enemy.TakeDamage(damage, group, distance == 0, true, verbose);
 
@@ -209,19 +211,20 @@ public class Group
         count = _count;
         unitId = _unitId;
         position = _position;
-        frontHealth = Units[unitId].health;
+        frontHealth = UnitDefinition.I[unitId].health;
         target = -1;
         right = _right;
     }
 
-    public static Unit[] Units = new Unit[4];
+    //public static Unit[] Units = new Unit[4];
+    
     public int count;
     public int unitId;
-
+/*
     public Unit unit
     {
         get { return Units[unitId]; }
-    }
+    }*/
 
     public int frontHealth;
     public int position;
@@ -231,9 +234,12 @@ public class Group
 
     public int GetDamage(int range, Group enemy, bool counter = false)
     {
+        Unit unit = UnitDefinition.I[unitId];
+        Unit enemyUnit = UnitDefinition.I[enemy.unitId];
+        
         int damage = 0;
 
-        damage += unit.GetBonusDamage(enemy.unit.unitType);
+        damage += unit.GetBonusDamage(enemyUnit.unitType);
 
 
         int attackCount = count;
@@ -242,14 +248,14 @@ public class Group
         {
             // Ranged
             damage += unit.rangeAttack;
-            damage -= enemy.unit.rangeDefence;
+            damage -= enemyUnit.rangeDefence;
         }
         else
         {
             // Melee
             damage += unit.meleeAttack;
             if (counter) damage += unit.counterBonus;
-            damage -= enemy.unit.meleeDefence;
+            damage -= enemyUnit.meleeDefence;
             if (attackCount > (enemy.count * 2.5)) attackCount = (int)(enemy.count * 2.5);
         }
 
@@ -261,6 +267,9 @@ public class Group
 
     public int TakeDamage(int damage, Group source, bool melee, bool counterable = true, bool verbose = true)
     {
+        Unit unit = UnitDefinition.I[unitId];
+        Unit enemyUnit = UnitDefinition.I[source.unitId];
+        
         int deaths = damage / unit.health;
         int rest = damage % unit.health;
         frontHealth -= rest;
@@ -273,7 +282,7 @@ public class Group
         if (melee && counterable)
         {
             int counterDamage = GetDamage(0, source, true);
-            if (verbose) Console.WriteLine(unit.unitType.ToString() + " counters " + source.unit.unitType.ToString() + " for " + counterDamage + " damage!");
+            if (verbose) Console.WriteLine(unit.unitType.ToString() + " counters " + enemyUnit.unitType.ToString() + " for " + counterDamage + " damage!");
 
             int cDeaths = source.TakeDamage(counterDamage, this, true, false, verbose);
 
