@@ -23,6 +23,10 @@ public class Grid : MonoBehaviour
     public GameObject gamePlane;
 
     private float startTime;
+
+    public delegate void OnReadyDelegate();
+
+    public static event OnReadyDelegate onReady;
     
     void Start()
     {
@@ -59,6 +63,9 @@ public class Grid : MonoBehaviour
         
         _heightmap.Setup();
         UpdateTileInformation();
+        
+        onReady.Invoke();
+        
     }
 
     public void SetNewSize(int width, int height)

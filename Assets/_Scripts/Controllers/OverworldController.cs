@@ -26,13 +26,31 @@ public class OverworldController : MonoBehaviour
 
     public Transform tileHighlight;
 
+    
+    
     void Start()
+    {
+        Grid.onReady += OnGridReady;
+
+
+    }
+
+    private void OnGridReady()
     {
         cam = GetComponent<Camera>();
 
         holdCounter = holdDelay;
 
         cam.orthographicSize = zoom;
+
+        int startingposition = FindStartingPosition.FirstVillage();
+        
+        PlaceBuilding(1, startingposition);
+
+        Vector2 cameraposition = Grid._instance.GetPosition(startingposition);
+        
+        transform.position = new Vector3(cameraposition.x, 98f, cameraposition.y);
+        
     }
 
     void Update()

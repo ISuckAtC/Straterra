@@ -3,21 +3,60 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FindStartingPosition : MonoBehaviour
+public class FindStartingPosition //: MonoBehaviour
 {
-    public int searchArea;
-    public int waterNeed;
-    public int grasslandNeed;
-    public int mountainNeed;
-    public int forestNeed;
+    
+    private static FindStartingPosition instance = null;
+    public static FindStartingPosition I 
+    {
+        get 
+        {
+            if (instance == null) instance = new FindStartingPosition();
+            return instance;
+        }
+    }
 
-    public int minDistanceFromOtherPlayer;
+    public static int searchArea;
+    public static int waterNeed;
+    public static int grasslandNeed;
+    public static int mountainNeed;
+    public static int forestNeed;
+
+    public static int minDistanceFromOtherPlayer;
 
     //private bool foundTile = false;
 
-    private Vector2Int startPosition;
+    private static Vector2Int startPosition;
 
-    public void FindTile()
+    /*
+    private void Start()
+    {
+        if (_instance == null)
+            _instance = this;
+        else
+        {
+            Destroy(this);
+        }
+    }
+    */
+
+    public static int FirstVillage()
+    {
+        while (!TileValid()) ;
+        
+
+        return Grid._instance.GetIdByVec(new Vector2Int(startPosition.x, startPosition.y));
+        
+        /*
+        Grid._instance.tiles[position].
+        
+        PlaceTiles._instance.
+        
+        GameObject spot = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        spot.transform.position = new Vector3(startPosition.x, 1f, startPosition.y);*/
+    }
+    
+    public static void FindTile()
     {
         while (!TileValid()) ;
 
@@ -27,7 +66,7 @@ public class FindStartingPosition : MonoBehaviour
         spot.transform.position = new Vector3(startPosition.x, 1f, startPosition.y);
     }
 
-    private bool TileValid()
+    private static bool TileValid()
     {
         startPosition = new Vector2Int(UnityEngine.Random.Range(1, Grid._instance.width - searchArea), UnityEngine.Random.Range(1, Grid._instance.height - searchArea));
         
@@ -42,7 +81,7 @@ public class FindStartingPosition : MonoBehaviour
 
     }
 
-    private bool CheckType(int type, int need, Vector2Int startPosition)
+    private static bool CheckType(int type, int need, Vector2Int startPosition)
     {
         int xPos = startPosition.x;
         int yPos = startPosition.y;
