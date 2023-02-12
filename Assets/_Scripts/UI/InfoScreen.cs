@@ -78,8 +78,8 @@ public class InfoScreen : MonoBehaviour
         tileTypeText.text = "Player Village" /*server.GetPlayerName(id) + "'s Village" */;
 
         Vector2 idSplit = Grid._instance.GetPosition(id);
-        coordinateText.text = "ID: " + idSplit.x + ", " + idSplit.y;
-
+        //coordinateText.text = "ID: " + idSplit.x + ", " + idSplit.y;
+        coordinateText.text = "ID: " + id + "   (" + idSplit.x + ", " + idSplit.y + ")";
 
         foodAmountText.text = "Food: Unknown";
 

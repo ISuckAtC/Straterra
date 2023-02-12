@@ -314,5 +314,7 @@ public class OverworldController : MonoBehaviour
         GameManager.PlayerWood -= mapBuilding.woodCost;
         GameManager.PlayerMetal -= mapBuilding.metalCost;
         GameManager.PlayerOrder -= mapBuilding.orderCost;
+        
+        Debug.Log("" + mapBuilding.name + " was placed in location " + position);
     }
 }
