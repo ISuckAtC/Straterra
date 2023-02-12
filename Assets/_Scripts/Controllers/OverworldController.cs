@@ -249,8 +249,8 @@ public class OverworldController : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
-                InfoScreen._instance.ToggleInfoScreen(false);
-                InfoScreen._instance.ToggleInfoScreenResource(false);
+                //InfoScreen._instance.ToggleInfoScreen(false);
+                //InfoScreen._instance.ToggleInfoScreenResource(false);
                 CheckTile(id);
             }
         }
@@ -279,7 +279,8 @@ public class OverworldController : MonoBehaviour
             // Village building
 
             InfoScreen._instance.UpdateInfoScreenVillage(id);
-            InfoScreen._instance.ToggleInfoScreen(true);
+            InfoScreen._instance.ToggleInfoScreenVillage(true);
+            //InfoScreen._instance.ToggleInfoScreen(true);
         }
         else
         {

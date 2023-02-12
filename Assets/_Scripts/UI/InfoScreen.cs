@@ -8,11 +8,11 @@ using TMPro;
 public class InfoScreen : MonoBehaviour
 {
     public static InfoScreen _instance;
-
-    public GameObject villageInfoScreen;
-    public GameObject resourceInfoScreen;
+    
     public GameObject infoScreen;
-
+    public GameObject resourceInfoScreen;
+    public GameObject villageInfoScreen;
+    
     public TMP_Text coordinateText;
     public TMP_Text tileTypeText;
     public TMP_Text foodAmountText;
@@ -20,16 +20,20 @@ public class InfoScreen : MonoBehaviour
     public TMP_Text metalAmountText;
     public TMP_Text chaosAmountText;
 
+    
     public TMP_Text resourceTypeText;
     public Slider healthSlider;
     public TMP_Text healthText;
     public Slider efficiencySlider;
     public TMP_Text efficiencyText;
-
     public TMP_Text resourceBreadText;
-    
     public Image tileImage;
+
     
+    public TMP_Text playerNameText;
+    public TMP_Text villagePositionText;
+    //public Image villageImage;
+
     void Start()
     {
         if (_instance == null)
@@ -46,7 +50,8 @@ public class InfoScreen : MonoBehaviour
 
     public void ToggleInfoScreen(bool enable)
     {
-        //resourceInfoScreen.SetActive(false);
+        resourceInfoScreen.SetActive(false);
+        villageInfoScreen.SetActive(false);
         
         if (enable)
         {
@@ -60,6 +65,7 @@ public class InfoScreen : MonoBehaviour
     public void ToggleInfoScreenResource(bool enable)
     {
         //infoScreen.SetActive(false);
+        villageInfoScreen.SetActive(false);
         
         if (enable)
         {
@@ -69,15 +75,33 @@ public class InfoScreen : MonoBehaviour
 
         resourceInfoScreen.SetActive(false);
     }
+    
+    public void ToggleInfoScreenVillage(bool enable)
+    {
+        //infoScreen.SetActive(false);
+        resourceInfoScreen.SetActive(false);
+        
+        if (enable)
+        {
+            villageInfoScreen.SetActive(true);
+            return;
+        }
+
+        villageInfoScreen.SetActive(false);
+    }
 
     public void UpdateInfoScreenVillage(int id)
     {
         int owner = Grid._instance.tiles[id].owner;
 
         // Village
-        tileTypeText.text = "Player Village" /*server.GetPlayerName(id) + "'s Village" */;
-
         Vector2 idSplit = Grid._instance.GetPosition(id);
+        //tileTypeText.text = "Player Village" /*server.GetPlayerName(id) + "'s Village" */;
+
+        playerNameText.text = "" + Grid._instance.tiles[id].owner;
+        villagePositionText.text = "ID: " + id + "   (" + idSplit.x + ", " + idSplit.y + ")";
+        
+/*
         //coordinateText.text = "ID: " + idSplit.x + ", " + idSplit.y;
         coordinateText.text = "ID: " + id + "   (" + idSplit.x + ", " + idSplit.y + ")";
 
@@ -87,7 +111,7 @@ public class InfoScreen : MonoBehaviour
 
         metalAmountText.text = "Metal: Unknown";
 
-        chaosAmountText.text = "Chaos: Unknown";
+        chaosAmountText.text = "Chaos: Unknown";*/
     }
 
     public void UpdateInfoScreenResource(int id)
