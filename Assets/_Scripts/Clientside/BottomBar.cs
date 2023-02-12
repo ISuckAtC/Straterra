@@ -98,6 +98,6 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenMenu()
     {
-
+        
     }
 }
