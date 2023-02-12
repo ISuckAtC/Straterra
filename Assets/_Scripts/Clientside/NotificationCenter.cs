@@ -21,15 +21,16 @@ public class NotificationCenter
 
     public static void Add(string message)
     {
-        instance.notifications.Add(message);
+        Debug.Log("NOTIFICATION MESSAGE\n_________________\n\n" + message);
+        I.notifications.Add(message);
     }
     public static void Remove(int index)
     {
-        instance.notifications.RemoveAt(index);
+        I.notifications.RemoveAt(index);
     }
 
     public static string Get(int index)
     {
-        return instance.notifications[index];
+        return I.notifications[index];
     }
 }

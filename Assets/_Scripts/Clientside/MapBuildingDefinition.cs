@@ -71,7 +71,7 @@ public class MapBuildingDefinition
 
         // Village
         MapBuilding village1 = new MapBuilding();
-        village1.type = MapBuildingType.farm;
+        village1.type = MapBuildingType.village;
         village1.buildingTime = 0;
         village1.foodCost = 0;
         village1.metalCost = 0;

@@ -127,6 +127,8 @@ public class ScheduledMoveArmyEvent : ScheduledEvent
     public override void Complete()
     {
         base.Complete();
+
+        Debug.Log("Scheduled Move Event Completed");
         
         if (Grid._instance.tiles[destination].building == 0) 
         {
@@ -143,6 +145,7 @@ public class ScheduledMoveArmyEvent : ScheduledEvent
 
         if (building.type == MapBuildingType.village)
         {
+            Debug.Log("Soliders have returned home");
             for (int i = 0; i < army.Count; ++i)
             {
                 GameManager.I.playerResources.unitAmounts[army[i].unitId] += army[i].count;
@@ -194,12 +197,19 @@ public class ScheduledAttackEvent : ScheduledEvent
 
                 for (int i = 0; i < army.Count; ++i)
                 {
-                    message += UnitDefinition.I[army[i].unitId].name + " (" + army[i].count + ")\n";
+                    message += UnitDefinition.I[result.remains[i].unitId].name + " (" + result.remains[i].count + ")\n";
                 }
             }
             else
             {
                 message += "Your troops were defeated in location [" + destination + "]!\n";
+                message += "___________________________________\n";
+                message += "Remaining enemies:\n\n";
+
+                for (int i = 0; i < army.Count; ++i)
+                {
+                    message += UnitDefinition.I[result.remains[i].unitId].name + " (" + result.remains[i].count + ")\n";
+                }
             }
 
 

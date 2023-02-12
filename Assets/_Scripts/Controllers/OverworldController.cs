@@ -244,6 +244,15 @@ public class OverworldController : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            if (Physics.Raycast(ray, out hit))
+            {
+                int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
+                AttackWithAll(id);
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             if (Physics.Raycast(ray, out hit))
@@ -259,6 +268,26 @@ public class OverworldController : MonoBehaviour
             InfoScreen._instance.ToggleInfoScreen(false);
             InfoScreen._instance.ToggleInfoScreenResource(false);
             //InfoScreen._instance.ToggleInfoScreen(false);
+        }
+    }
+
+    public void AttackWithAll(int position)
+    {
+        Debug.Log("Attacked tile has building type " + Grid._instance.tiles[position].building);
+        if (Grid._instance.tiles[position].building != 1) return;
+        List<Group> army = new List<Group>();
+        for (int i = 0; i < GameManager.I.playerResources.unitAmounts.Length; ++i)
+        {
+            if (GameManager.I.playerResources.unitAmounts[i] > 0) 
+            {
+                army.Add(new Group(GameManager.I.playerResources.unitAmounts[i], i));
+                GameManager.I.playerResources.unitAmounts[i] = 0;
+            }
+        }
+        if (army.Count > 0)
+        {
+            Debug.Log("Scheduling attack");
+            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(5, army, position, LocalData.SelfPlayer.cityLocation);
         }
     }
 
