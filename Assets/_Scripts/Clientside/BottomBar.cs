@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class BottomBar : MonoBehaviour
 {
@@ -15,9 +16,22 @@ public class BottomBar : MonoBehaviour
     public TMPro.TMP_Text queueText;
     public TMPro.TMP_Text worldButtonText;
 
+    public GameObject reportsMenu;
+    public GameObject reportsNotificationBlinker;
+    public GameObject reportView;
+    public Transform reportContentParent;
+    public TMPro.TMP_Text reportTitle;
+    public TMPro.TMP_Text reportContent;
+    public GameObject reportPrefab;
+
+    private List<GameObject> reports = new List<GameObject>();
 
     private bool worldView = false;
     
+    public void Start()
+    {
+        EventHub.OnTick += CheckNotifications;
+    }
     public void OpenArmyTab()
     {
         armyMenu.SetActive(true);
@@ -96,8 +110,56 @@ public class BottomBar : MonoBehaviour
         queueMenu.SetActive(false);
         EventHub.OnTick -= UpdateQueue;
     }
+
+    public void CheckNotifications()
+    {
+        reportsNotificationBlinker.SetActive(NotificationCenter.I.notifications.Where(x => !x.viewed).Count() > 0);
+    }
     public void OpenMenu()
     {
-        
+        reports.ForEach(x => Destroy(x));
+        reports.Clear();
+        for (int i = 0; i < NotificationCenter.Count(); ++i)
+        {
+            Debug.Log("Dealing with notification index " + i);
+            reports.Add(Instantiate(reportPrefab, Vector3.zero, Quaternion.identity));
+
+            RectTransform rectTransform = reports[i].GetComponent<RectTransform>();
+            rectTransform.parent = reportContentParent;
+
+            rectTransform.localPosition = new Vector3(0, (rectTransform.sizeDelta.y + 5) * i, 0);
+            rectTransform.offsetMax = new Vector2(0, rectTransform.offsetMax.y);
+
+            int index = i; // most useful line
+            
+            rectTransform.GetComponentInChildren<TMPro.TMP_Text>().text = NotificationCenter.Get(index).title;
+            rectTransform.GetComponentInChildren<Button>().onClick.AddListener(delegate {OpenReport(index);});
+        }
+
+        reportsMenu.SetActive(true);
+    }
+    public void OpenReport(int index)
+    {
+        Debug.Log("OpenReport with index " + index);
+        var notification = NotificationCenter.Get(index);
+        reportTitle.text = notification.title;
+        reportContent.text = notification.content;
+        notification.viewed = true;
+        NotificationCenter.I[index] = notification;
+
+        reportView.SetActive(true);
+    }
+    public void RemoveReport(int index)
+    {
+        NotificationCenter.Remove(index);
+    }
+    public void CloseReport()
+    {
+        OpenMenu();
+        reportView.SetActive(false);
+    }
+    public void CloseMenu()
+    {
+        reportsMenu.SetActive(false);
     }
 }

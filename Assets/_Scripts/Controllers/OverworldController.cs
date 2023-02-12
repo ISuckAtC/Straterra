@@ -287,7 +287,7 @@ public class OverworldController : MonoBehaviour
         if (army.Count > 0)
         {
             Debug.Log("Scheduling attack");
-            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(5, army, position, LocalData.SelfPlayer.cityLocation);
+            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(1, army, position, LocalData.SelfPlayer.cityLocation);
         }
     }
 

@@ -12,25 +12,40 @@ public class NotificationCenter
             if (instance == null) 
             {
                 instance = new NotificationCenter();
-                instance.notifications = new List<string>();
+                instance.notifications = new List<(string title, string content, bool viewed)>();
             }
             return instance;
         }
     }
-    public List<string> notifications;
+    public (string title, string content, bool viewed) this[int index]
+    {
+        get
+        {
+            return notifications[index];
+        }
+        set
+        {
+            notifications[index] = value;
+        }
+    }
+    public List<(string title, string content, bool viewed)> notifications;
 
-    public static void Add(string message)
+    public static void Add(string title, string message)
     {
         Debug.Log("NOTIFICATION MESSAGE\n_________________\n\n" + message);
-        I.notifications.Add(message);
+        I.notifications.Add((title, message, false));
     }
     public static void Remove(int index)
     {
         I.notifications.RemoveAt(index);
     }
 
-    public static string Get(int index)
+    public static (string title, string content, bool viewed) Get(int index)
     {
         return I.notifications[index];
+    }
+    public static int Count()
+    {
+        return I.notifications.Count;
     }
 }

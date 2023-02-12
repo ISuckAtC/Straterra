@@ -213,7 +213,7 @@ public class ScheduledAttackEvent : ScheduledEvent
             }
 
 
-            NotificationCenter.Add(message);
+            NotificationCenter.Add("BATTLE REPORT", message);
         }
     }
 }
