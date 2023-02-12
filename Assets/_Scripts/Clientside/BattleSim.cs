@@ -13,7 +13,7 @@ public enum UnitType
 
 public class BattleSim
 {
-    public string output;
+    public static string output;
 /*    public void Setup()
     {
         Unit archer = new Unit();
@@ -104,7 +104,7 @@ public class BattleSim
 
 
 // Average runtime 0.00033663ms
-    public bool Fight(List<Group> defender, List<Group> attacker, bool verbose = false)
+    public static (bool attackerWon, List<Group> unitsLeft) Fight(List<Group> defender, List<Group> attacker, bool verbose = false)
     {
         List<Group> all = new List<Group>();
         all.AddRange(defender);
@@ -194,7 +194,7 @@ public class BattleSim
                         output += unit.name + " LV" + unit.level + " (" + remains[i].count + ")\n";
                     }
 
-                    return group.right;
+                    return (group.right, remains);
                 }
 
                 group.target = index;
@@ -261,7 +261,7 @@ public class BattleSim
             turn++;
         }
 
-        return false;
+        return (false, null);
     }
 }
 

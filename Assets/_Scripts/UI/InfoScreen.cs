@@ -46,7 +46,7 @@ public class InfoScreen : MonoBehaviour
 
     public void ToggleInfoScreen(bool enable)
     {
-        resourceInfoScreen.SetActive(false);
+        //resourceInfoScreen.SetActive(false);
         
         if (enable)
         {
@@ -59,7 +59,7 @@ public class InfoScreen : MonoBehaviour
     
     public void ToggleInfoScreenResource(bool enable)
     {
-        infoScreen.SetActive(false);
+        //infoScreen.SetActive(false);
         
         if (enable)
         {

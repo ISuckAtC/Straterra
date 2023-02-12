@@ -229,6 +229,8 @@ public class OverworldController : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
+                InfoScreen._instance.ToggleInfoScreen(false);
+                InfoScreen._instance.ToggleInfoScreenResource(false);
                 CheckTile(id);
             }
         }
@@ -248,6 +250,7 @@ public class OverworldController : MonoBehaviour
         {
             // Random building
             InfoScreen._instance.ToggleInfoScreenResource(true);
+            InfoScreen._instance.ToggleInfoScreen(true);
             InfoScreen._instance.UpdateInfoScreenResource(id);
             
         }
@@ -292,5 +295,4 @@ public class OverworldController : MonoBehaviour
         GameManager.PlayerMetal -= mapBuilding.metalCost;
         GameManager.PlayerOrder -= mapBuilding.orderCost;
     }
-
 }

@@ -112,22 +112,98 @@ public class ScheduledMapBuildEvent : ScheduledEvent
     }
 }
 
-public class ScheduledTroopMovementEvent : ScheduledEvent
+public class ScheduledMoveArmyEvent : ScheduledEvent
 {
+    public int origin;
     public int destination;
     public List<Group> army;
-    public ScheduledTroopMovementEvent(int secondsTotal, List<Group> army, int destination) : base(secondsTotal)
+    public ScheduledMoveArmyEvent(int secondsTotal, List<Group> army, int destination, int origin) : base(secondsTotal)
     {
         this.army = army;
         this.destination = destination;
+        this.origin = origin;
+    }
+
+    public override void Complete()
+    {
+        base.Complete();
+        
+        if (Grid._instance.tiles[destination].building == 0) 
+        {
+            Debug.Log("Tried to move troops to a tile with no buildings");
+            if (Grid._instance.tiles[destination].building != 0)
+            {
+                ScheduledMoveArmyEvent e = new ScheduledMoveArmyEvent(0, army, origin, destination);
+                return;
+            }
+            return;
+        }
+
+        MapBuilding building = MapBuildingDefinition.I[Grid._instance.tiles[destination].building];
+
+        if (building.type == MapBuildingType.village)
+        {
+            for (int i = 0; i < army.Count; ++i)
+            {
+                GameManager.I.playerResources.unitAmounts[army[i].unitId] += army[i].count;
+            }
+            return;
+        }
+
+        if (Grid._instance.tiles[destination].army != null && Grid._instance.tiles[destination].army.Count > 0)
+        {
+            Debug.Log("Tried to move troops to a tile with troops on it");
+            return;
+        }
+        Grid._instance.tiles[destination].army = army;
+    }
+}
+
+public class ScheduledAttackEvent : ScheduledEvent
+{
+    public int origin;
+    public int destination;
+    public List<Group> army;
+    public ScheduledAttackEvent(int secondsTotal, List<Group> army, int destination, int origin) : base(secondsTotal)
+    {
+        this.army = army;
+        this.destination = destination;
+        this.origin = origin;
     }
 
     public override void Complete()
     {
         base.Complete();
 
-        Grid._instance.tiles[destination].army = null; // temp
+        List<Group> enemyArmy = Grid._instance.tiles[destination].army;
 
-        
+        if (enemyArmy != null && enemyArmy.Count > 0)
+        {
+            (bool attackerWon, List<Group> remains) result = BattleSim.Fight(enemyArmy, army);
+
+            string message = "";
+
+            if (result.attackerWon)
+            {
+                ScheduledMoveArmyEvent moveArmy = new ScheduledMoveArmyEvent(10, result.remains, LocalData.SelfPlayer.cityLocation, destination);
+                
+
+                message += "Your troops were victorious in location [" + destination + "]!\n\n";
+                message += "___________________________________\n";
+                message += "Remaining troops returning home in " + moveArmy.secondsTotal + " seconds:\n\n";
+
+                for (int i = 0; i < army.Count; ++i)
+                {
+                    message += UnitDefinition.I[army[i].unitId].name + " (" + army[i].count + ")\n";
+                }
+            }
+            else
+            {
+                message += "Your troops were defeated in location [" + destination + "]!\n";
+            }
+
+
+            NotificationCenter.Add(message);
+        }
     }
 }
