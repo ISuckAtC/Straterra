@@ -65,29 +65,29 @@ public class BalancingUI : MonoBehaviour
         
         // public Group(int _count, int _unitId, int _position, bool _right)
         if (archersA > 0)
-            green.Add(new Group(archersA, 0, false));
+            green.Add(new Group(archersA, 0));
         
         if (cavalryA > 0)
-            green.Add(new Group(cavalryA, 1, false));
+            green.Add(new Group(cavalryA, 1));
         
         if (swordsmenA > 0)
-            green.Add(new Group(swordsmenA, 2, false));
+            green.Add(new Group(swordsmenA, 2));
         
         if (spearmenA > 0)
-            green.Add(new Group(spearmenA, 3, false));
+            green.Add(new Group(spearmenA, 3));
 
         
         if (archersB > 0)
-            red.Add(new Group(archersB, 0, true));
+            red.Add(new Group(archersB, 0));
         
         if (cavalryB > 0)
-            red.Add(new Group(cavalryB, 1, true));
+            red.Add(new Group(cavalryB, 1));
         
         if (swordsmenB > 0)
-            red.Add(new Group(swordsmenB, 2, true));
+            red.Add(new Group(swordsmenB, 2));
         
         if (spearmenB > 0)
-            red.Add(new Group(spearmenB, 3, true));
+            red.Add(new Group(spearmenB, 3));
 
         
         int leftRange = 0;

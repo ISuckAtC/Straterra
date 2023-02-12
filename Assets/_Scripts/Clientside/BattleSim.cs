@@ -79,13 +79,13 @@ public class BattleSim
     public void Run()
     {
         List<Group> army1 = new List<Group>();
-        army1.Add(new Group(10, 0, false));
-        army1.Add(new Group(10, 2, false));
-        army1.Add(new Group(10, 3, false));
+        army1.Add(new Group(10, 0));
+        army1.Add(new Group(10, 2));
+        army1.Add(new Group(10, 3));
 
         List<Group> army2 = new List<Group>();
-        army2.Add(new Group(10, 1, true));
-        army2.Add(new Group(10, 0, true));
+        army2.Add(new Group(10, 1));
+        army2.Add(new Group(10, 0));
 
         Fight(army1, army2);
         return;
@@ -121,7 +121,9 @@ public class BattleSim
         }
 
         defender.ForEach(x => x.position = -leftRange);
+        defender.ForEach(x => x.right = false);
         attacker.ForEach(x => x.position = rightRange);
+        attacker.ForEach(x => x.right = true);
 
 
         List<Group> all = new List<Group>();
@@ -288,13 +290,12 @@ public class BattleSim
 
 public class Group
 {
-    public Group(int _count, int _unitId, bool _right)
+    public Group(int _count, int _unitId)
     {
         count = _count;
         unitId = _unitId;
         frontHealth = UnitDefinition.I[unitId].health;
         target = -1;
-        right = _right;
     }
 
     //public static Unit[] Units = new Unit[4];
