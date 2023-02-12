@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UIElements;
 
@@ -27,7 +28,7 @@ public class OverworldController : MonoBehaviour
 
     public Transform tileHighlight;
 
-    
+    public UnityEngine.UI.GraphicRaycaster gr;
     
     void Start()
     {
@@ -46,12 +47,12 @@ public class OverworldController : MonoBehaviour
 
         int startingposition = FindStartingPosition.FirstVillage();
         
-        PlaceBuilding(1, startingposition);
+        PlaceBuilding(1, startingposition, LocalData.SelfPlayer.playerId);
 
         Vector2 cameraposition = Grid._instance.GetPosition(startingposition);
         
         transform.position = new Vector3(cameraposition.x, 98f, cameraposition.y);
-
+        
         Player selfPlayer = LocalData.SelfPlayer;
         
         selfPlayer.cityLocation = startingposition;
@@ -60,7 +61,7 @@ public class OverworldController : MonoBehaviour
         
         
         int enemyposition = FindStartingPosition.FirstVillage();
-        PlaceBuilding(1, enemyposition);
+        PlaceBuilding(1, enemyposition, 5);
 
         List<Group> enemyArmy = new List<Group>();
 
@@ -240,7 +241,7 @@ public class OverworldController : MonoBehaviour
             {
                 int position = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
 
-                PlaceBuilding(buildingIndex, position);
+                PlaceBuilding(buildingIndex, position, LocalData.SelfPlayer.playerId);
             }
         }
 
@@ -253,25 +254,40 @@ public class OverworldController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-            if (Physics.Raycast(ray, out hit))
+            //if (!UnityEngine.EventSystems.EventSystem.current.sendNavigationEvents)
+
+            PointerEventData ped = new PointerEventData(EventSystem.current);
+            ped.position = Input.mousePosition;
+
+            List<RaycastResult> rrs = new List<RaycastResult>();
+            
+            gr.Raycast(ped, rrs);
+            
+            if (rrs.Count == 0 && Physics.Raycast(ray, out hit))
             {
+                
                 int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
                 //InfoScreen._instance.ToggleInfoScreen(false);
                 //InfoScreen._instance.ToggleInfoScreenResource(false);
+                InfoScreen._instance.CloseInfoScreen();
+                InfoScreen._instance.CloseResourceInfoScreen();
+                InfoScreen._instance.CloseVillageInfoScreen();
+                
                 CheckTile(id);
             }
         }
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyUp(KeyCode.Mouse1))
         {
-            InfoScreen._instance.ToggleInfoScreen(false);
-            InfoScreen._instance.ToggleInfoScreenResource(false);
+            InfoScreen._instance.CloseInfoScreen();
+            InfoScreen._instance.CloseResourceInfoScreen();
+            InfoScreen._instance.CloseVillageInfoScreen();
             //InfoScreen._instance.ToggleInfoScreen(false);
         }
     }
 
-    public void AttackWithAll(int position)
+    public static void AttackWithAll(int position)
     {
         Debug.Log("Attacked tile has building type " + Grid._instance.tiles[position].building);
         if (Grid._instance.tiles[position].building != 1) return;
@@ -287,7 +303,7 @@ public class OverworldController : MonoBehaviour
         if (army.Count > 0)
         {
             Debug.Log("Scheduling attack");
-            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(5, army, position, LocalData.SelfPlayer.cityLocation);
+            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(5, army, position, LocalData.SelfPlayer.cityLocation, LocalData.SelfPlayer.playerId);
         }
     }
 
@@ -295,11 +311,14 @@ public class OverworldController : MonoBehaviour
     {
         byte buildingType = Grid._instance.tiles[id].building;
 
+        InfoScreen._instance.UpdateInfoScreen(id);
+        InfoScreen._instance.OpenInfoScreen();
         if (buildingType > 1)
         {
             // Random building
-            InfoScreen._instance.ToggleInfoScreenResource(true);
-            InfoScreen._instance.ToggleInfoScreen(true);
+            
+            InfoScreen._instance.OpenResourceInfoScreen();
+            InfoScreen._instance.OpenInfoScreen();
             InfoScreen._instance.UpdateInfoScreenResource(id);
             
         }
@@ -308,22 +327,19 @@ public class OverworldController : MonoBehaviour
             // Village building
 
             InfoScreen._instance.UpdateInfoScreenVillage(id);
-            InfoScreen._instance.ToggleInfoScreenVillage(true);
+            InfoScreen._instance.OpenInfoScreen();
+            InfoScreen._instance.OpenVillageInfoScreen(id);
             //InfoScreen._instance.ToggleInfoScreen(true);
         }
-        else
-        {
-            // No building -> Show tile resources
-            InfoScreen._instance.UpdateInfoScreen(id);
-            InfoScreen._instance.ToggleInfoScreen(true);
-        }
+        
     }
-    public void PlaceBuilding(byte buildingId, int position)
+    public void PlaceBuilding(byte buildingId, int position, int owner)
     {
         if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
-
+        
         MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
-
+        
+        
         int foodCost = mapBuilding.foodCost;
         int woodCost = mapBuilding.woodCost;
         int metalCost = mapBuilding.metalCost;
@@ -338,13 +354,17 @@ public class OverworldController : MonoBehaviour
             return;
         }
                                                                                                         // BUG Remove division later
-        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, buildingId, position);
+        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, buildingId, position, owner);
         
         GameManager.PlayerFood -= mapBuilding.foodCost;
         GameManager.PlayerWood -= mapBuilding.woodCost;
         GameManager.PlayerMetal -= mapBuilding.metalCost;
         GameManager.PlayerOrder -= mapBuilding.orderCost;
         
+        
+        
         Debug.Log("" + mapBuilding.name + " was placed in location " + position);
+        
+        
     }
 }

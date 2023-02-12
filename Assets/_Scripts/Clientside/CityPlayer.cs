@@ -235,7 +235,7 @@ public class CityPlayer : MonoBehaviour
         GameManager.PlayerMetal -= metalCost;
         GameManager.PlayerOrder -= orderCost;
 
-        new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount);
+        new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfPlayer.playerId);
         CloseTrainingMenu();
     }
     #endregion

@@ -43,7 +43,7 @@ public class BottomBar : MonoBehaviour
             mapGrid.SetActive(false);
             mapUI.SetActive(false);
             cityPlayer.SetActive(true);
-            worldButtonText.text = "WORLD";
+            //worldButtonText.text = "WORLD";
             worldView = false;
         }
         else
@@ -51,7 +51,7 @@ public class BottomBar : MonoBehaviour
             mapGrid.SetActive(true);
             mapUI.SetActive(true);
             cityPlayer.SetActive(false);
-            worldButtonText.text = "HOME";
+            //worldButtonText.text = "HOME";
             worldView = true;
         }
     }

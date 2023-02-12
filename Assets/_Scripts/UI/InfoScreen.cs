@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.Tilemaps;
 
 public class InfoScreen : MonoBehaviour
 {
@@ -32,6 +34,8 @@ public class InfoScreen : MonoBehaviour
     
     public TMP_Text playerNameText;
     public TMP_Text villagePositionText;
+    public TMP_Text tileArmyText;
+    public Button attackButton;
     //public Image villageImage;
 
     void Start()
@@ -48,10 +52,49 @@ public class InfoScreen : MonoBehaviour
         infoScreen.SetActive(false);
     }
 
+    public void OpenInfoScreen()
+    {
+        infoScreen.SetActive(true);    
+    }
+    
+    public void CloseInfoScreen()
+    {
+        infoScreen.SetActive(false);
+    }
+
+    public void OpenVillageInfoScreen(int position)
+    {
+        villageInfoScreen.SetActive(true);
+        
+        CloseResourceInfoScreen();
+        
+        attackButton.onClick.AddListener(delegate { OverworldController.AttackWithAll(position); });
+    }
+    public void CloseVillageInfoScreen()
+    {
+        villageInfoScreen.SetActive(false);
+
+        attackButton.onClick.RemoveAllListeners();
+    }
+    
+    public void OpenResourceInfoScreen()
+    {
+        resourceInfoScreen.SetActive(true);
+        
+        CloseVillageInfoScreen();
+    }
+    
+    public void CloseResourceInfoScreen()
+    {
+        resourceInfoScreen.SetActive(false);
+    }
+    /*
     public void ToggleInfoScreen(bool enable)
     {
         resourceInfoScreen.SetActive(false);
         villageInfoScreen.SetActive(false);
+        
+        
         
         if (enable)
         {
@@ -76,42 +119,37 @@ public class InfoScreen : MonoBehaviour
         resourceInfoScreen.SetActive(false);
     }
     
-    public void ToggleInfoScreenVillage(bool enable)
+    public void ToggleInfoScreenVillage(bool enable, int position)
     {
         //infoScreen.SetActive(false);
         resourceInfoScreen.SetActive(false);
         
         if (enable)
         {
+            attackButton.onClick.AddListener(delegate { OverworldController.AttackWithAll(position); });
+            
             villageInfoScreen.SetActive(true);
             return;
         }
 
         villageInfoScreen.SetActive(false);
     }
-
+*/
     public void UpdateInfoScreenVillage(int id)
     {
         int owner = Grid._instance.tiles[id].owner;
 
+        attackButton.transform.parent.gameObject.SetActive(owner != LocalData.SelfPlayer.playerId);
+
+        
+        
         // Village
         Vector2 idSplit = Grid._instance.GetPosition(id);
         //tileTypeText.text = "Player Village" /*server.GetPlayerName(id) + "'s Village" */;
 
         playerNameText.text = "" + Grid._instance.tiles[id].owner;
         villagePositionText.text = "ID: " + id + "   (" + idSplit.x + ", " + idSplit.y + ")";
-        
-/*
-        //coordinateText.text = "ID: " + idSplit.x + ", " + idSplit.y;
-        coordinateText.text = "ID: " + id + "   (" + idSplit.x + ", " + idSplit.y + ")";
 
-        foodAmountText.text = "Food: Unknown";
-
-        woodAmountText.text = "Wood: Unknown";
-
-        metalAmountText.text = "Metal: Unknown";
-
-        chaosAmountText.text = "Chaos: Unknown";*/
     }
 
     public void UpdateInfoScreenResource(int id)
@@ -208,6 +246,23 @@ public class InfoScreen : MonoBehaviour
     {
         int tileType = Grid._instance.tiles[id].tileType;
 
+        Debug.Log("Earliyer");
+        
+        Debug.Log("Here " + Grid._instance.tiles[id].army.Count);
+        if (Grid._instance.tiles[id].army != null && Grid._instance.tiles[id].army.Count/*[0].count*/ > 0)
+        {
+            tileArmyText.text = "There is an army on this tile consisting of: \n";
+
+            for (int i = 0; i < Grid._instance.tiles[id].army.Count; i++)
+            {
+                tileArmyText.text += NumConverter.GetConvertedArmy(Grid._instance.tiles[id].army[i].count) + " " + UnitDefinition.I[Grid._instance.tiles[id].army[i].unitId].name + "\n";
+            }
+        }
+        else
+        {
+            tileArmyText.text = "";
+        }
+        
 
         switch (tileType)
         {
