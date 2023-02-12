@@ -79,13 +79,13 @@ public class BattleSim
     public void Run()
     {
         List<Group> army1 = new List<Group>();
-        army1.Add(new Group(10, 0, -13, false));
-        army1.Add(new Group(10, 2, -13, false));
-        army1.Add(new Group(10, 3, -13, false));
+        army1.Add(new Group(10, 0, false));
+        army1.Add(new Group(10, 2, false));
+        army1.Add(new Group(10, 3, false));
 
         List<Group> army2 = new List<Group>();
-        army2.Add(new Group(10, 1, 13, true));
-        army2.Add(new Group(10, 0, 13, true));
+        army2.Add(new Group(10, 1, true));
+        army2.Add(new Group(10, 0, true));
 
         Fight(army1, army2);
         return;
@@ -106,6 +106,24 @@ public class BattleSim
 // Average runtime 0.00033663ms
     public static (bool attackerWon, List<Group> unitsLeft) Fight(List<Group> defender, List<Group> attacker, bool verbose = false)
     {
+        int leftRange = 0;
+        for (int i = 0; i < defender.Count; ++i) 
+        {
+            int range = UnitDefinition.I[defender[i].unitId].range;
+            if (range > leftRange) leftRange = range;
+        }
+        
+        int rightRange = 0;
+        for (int i = 0; i < attacker.Count; ++i) 
+        {
+            int range = UnitDefinition.I[attacker[i].unitId].range;
+            if (range > rightRange) rightRange = range;
+        }
+
+        defender.ForEach(x => x.position = -leftRange);
+        attacker.ForEach(x => x.position = rightRange);
+
+
         List<Group> all = new List<Group>();
         all.AddRange(defender);
         all.AddRange(attacker);
@@ -270,11 +288,10 @@ public class BattleSim
 
 public class Group
 {
-    public Group(int _count, int _unitId, int _position, bool _right)
+    public Group(int _count, int _unitId, bool _right)
     {
         count = _count;
         unitId = _unitId;
-        position = _position;
         frontHealth = UnitDefinition.I[unitId].health;
         target = -1;
         right = _right;
