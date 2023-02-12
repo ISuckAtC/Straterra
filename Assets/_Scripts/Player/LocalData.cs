@@ -44,5 +44,9 @@ public static class LocalData
                 return selfPlayer.Value;
             }
         }
+        set
+        {
+            selfPlayer = value;
+        }
     }
 }
