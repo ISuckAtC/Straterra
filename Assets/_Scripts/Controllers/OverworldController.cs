@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UIElements;
 
 public class OverworldController : MonoBehaviour
@@ -50,7 +51,26 @@ public class OverworldController : MonoBehaviour
         Vector2 cameraposition = Grid._instance.GetPosition(startingposition);
         
         transform.position = new Vector3(cameraposition.x, 98f, cameraposition.y);
+
+        Player selfPlayer = LocalData.SelfPlayer;
         
+        selfPlayer.cityLocation = startingposition;
+
+        LocalData.SelfPlayer = selfPlayer;
+        
+        
+        int enemyposition = FindStartingPosition.FirstVillage();
+        PlaceBuilding(1, enemyposition);
+
+        List<Group> enemyArmy = new List<Group>();
+
+        enemyArmy.Add(new Group(5, 1));
+        enemyArmy.Add(new Group(5, 2));
+        enemyArmy.Add(new Group(5, 3));
+
+        Grid._instance.tiles[enemyposition].army = enemyArmy;
+
+
     }
 
     void Update()

@@ -11,8 +11,8 @@ public class Grid : MonoBehaviour
     private PlaceTiles _placeTiles;
     private Heightmap _heightmap;
 
-    public int width = 128;
-    public int height = 128;
+    public int width =  16;
+    public int height = 16;
 
     // Array of tile positions
     private Vector2[] pos;

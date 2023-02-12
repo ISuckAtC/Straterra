@@ -16,11 +16,11 @@ public class FindStartingPosition //: MonoBehaviour
         }
     }
 
-    public static int searchArea;
-    public static int waterNeed;
-    public static int grasslandNeed;
-    public static int mountainNeed;
-    public static int forestNeed;
+    public static int searchArea = 10;
+    public static int waterNeed = 2;
+    public static int grasslandNeed = 2;
+    public static int mountainNeed = 2;
+    public static int forestNeed = 2;
 
     public static int minDistanceFromOtherPlayer;
 
