@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class BalancingUI : MonoBehaviour
 {
-    private BattleSim bs = new BattleSim();
     public TMPro.TMP_Text text;
 
     private bool winner;
@@ -43,14 +42,14 @@ public class BalancingUI : MonoBehaviour
         {
             FillGroup();
             
-            winner = bs.Fight(green, red, verbose);
+            winner = BattleSim.Fight(green, red, verbose).attackerWon;
 
             if (winner)
                 Debug.LogWarning("Right Wins.");
             else
                 Debug.LogWarning("Left Wins.");
 
-            text.text = bs.output;
+            text.text = BattleSim.output;
         }
     }
     

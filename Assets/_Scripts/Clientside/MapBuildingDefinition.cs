@@ -89,7 +89,7 @@ public class MapBuildingDefinition
         // Farms
         MapBuilding farm1 = new MapBuilding();
         farm1.type = MapBuildingType.farm;
-        farm1.buildingTime = 300;
+        farm1.buildingTime = 100;
         farm1.foodCost = 0;
         farm1.metalCost = 0;
         farm1.woodCost = 200;

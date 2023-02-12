@@ -27,4 +27,9 @@ public class NotificationCenter
     {
         instance.notifications.RemoveAt(index);
     }
+
+    public static string Get(int index)
+    {
+        return instance.notifications[index];
+    }
 }
