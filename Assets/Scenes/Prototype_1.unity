@@ -12032,8 +12032,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d91c31a3823b2f4ab9690571445fb80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 128
-  height: 128
+  width: 16
+  height: 16
   gamePlane: {fileID: 1795489984}
 --- !u!81 &1415235161
 AudioListener:
@@ -16273,6 +16273,7 @@ MonoBehaviour:
   mountainNeed: 2
   forestNeed: 6
   minDistanceFromOtherPlayer: 20
+  startPosition: {x: 0, y: 0}
 --- !u!64 &1795489986
 MeshCollider:
   m_ObjectHideFlags: 0
