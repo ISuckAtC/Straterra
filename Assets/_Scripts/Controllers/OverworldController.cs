@@ -71,6 +71,24 @@ public class OverworldController : MonoBehaviour
 
         Grid._instance.tiles[enemyposition].army = enemyArmy;
 
+        
+        enemyposition = FindStartingPosition.FirstVillage();
+        PlaceBuilding(1, enemyposition, 6);
+
+        List<Group> enemyArmy2 = new List<Group>();
+
+        enemyArmy2.Add(new Group(100000001, 1));
+        enemyArmy2.Add(new Group(10001, 2));
+        enemyArmy2.Add(new Group(501, 3));
+        enemyArmy2.Add(new Group(205, 0));
+
+
+        Grid._instance.tiles[enemyposition].army = enemyArmy2;
+        
+        
+        
+        building = 1;
+        buildingIndex = 10;
 
     }
 
@@ -88,22 +106,23 @@ public class OverworldController : MonoBehaviour
         // Building Selection
         if (Input.GetKeyDown(KeyCode.Alpha1)) // Village
         {
-            building = 1;
-            buildingIndex = 1;
+            building = 4;
+            buildingIndex = 10;
             UIController._instance.SetBuildingImage(buildingIndex);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2)) // House
         {
-            building = 2;
-            buildingIndex = 100;
+            building = 5;
+            buildingIndex = 20;
             UIController._instance.SetBuildingImage(buildingIndex);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3)) // Castle
         {
-            building = 3;
-            buildingIndex = 110;
+            building = 6;
+            buildingIndex = 30;
             UIController._instance.SetBuildingImage(buildingIndex);
         }
+        /*
         if (Input.GetKeyDown(KeyCode.Alpha4)) // Farm
         {
             building = 4;
@@ -128,6 +147,7 @@ public class OverworldController : MonoBehaviour
             buildingIndex = 250;
             UIController._instance.SetBuildingImage(buildingIndex);
         }
+        */
 
         // Left
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
@@ -336,6 +356,7 @@ public class OverworldController : MonoBehaviour
     public void PlaceBuilding(byte buildingId, int position, int owner)
     {
         if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
+        if (Grid._instance.tiles[position].tileType == 1) throw new Exception("Tiletype 1 is water. No buildings can be built on water.");
         
         MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
         

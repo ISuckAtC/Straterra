@@ -38,29 +38,29 @@ public static class NumConverter
         if (amount >= 100000)               // Hundred Thousands
         {
             if (amount >= 100000000)        // > 100 Million
-                return " An unimaginable number of ";
+                return "An unimaginable number of";
 
             if (amount >= 1000000)          // Millions
-                return " A legion of ";
+                return "A legion of";
 
-            return " Zounds of ";
+            return "Zounds of";
 
         }
         if (amount >= 200)                  // Two Hundred
         {
             if (amount >= 10000)            // Ten Thousands
-                return " A swarm of ";
+                return "A swarm of";
 
             if (amount >= 1000)             // Thousands
-                return " A throng of ";
+                return "A throng of";
 
             if (amount >= 500)              // Half Thousand
-                return " A horde of ";
+                return "A horde of";
 
-            return " Lots of ";
+            return "Lots of";
         }
 
-        return " A few ";                   // <Twenty
+        return "A few";                   // <Twenty
     }
 
     public static string GetConvertedResource(int amount)

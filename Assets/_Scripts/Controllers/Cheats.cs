@@ -6,7 +6,7 @@ public class Cheats : MonoBehaviour
 { 
     void Start()
     {
-        if (!Application.isEditor) Destroy(this);
+        //if (!Application.isEditor) Destroy(this);
     }
 
     void Update()

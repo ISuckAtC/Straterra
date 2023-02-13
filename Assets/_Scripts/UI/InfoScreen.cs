@@ -1,11 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Mono.Cecil;
+//using System;
+//using System.Collections;
+//using System.Collections.Generic;
+//using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.Tilemaps;
+//using UnityEditor.Tilemaps;
 
 public class InfoScreen : MonoBehaviour
 {
@@ -147,7 +147,11 @@ public class InfoScreen : MonoBehaviour
         Vector2 idSplit = Grid._instance.GetPosition(id);
         //tileTypeText.text = "Player Village" /*server.GetPlayerName(id) + "'s Village" */;
 
-        playerNameText.text = "" + Grid._instance.tiles[id].owner;
+        if (owner == 0)
+            playerNameText.text = "Your Village."; //+ Grid._instance.tiles[id].owner;
+        else
+            playerNameText.text = "" + Grid._instance.tiles[id].owner;
+        
         villagePositionText.text = "ID: " + id + "   (" + idSplit.x + ", " + idSplit.y + ")";
 
     }
@@ -246,11 +250,9 @@ public class InfoScreen : MonoBehaviour
     {
         int tileType = Grid._instance.tiles[id].tileType;
 
-        Debug.Log("Earliyer");
-        
-        Debug.Log("Here " + Grid._instance.tiles[id].army.Count);
         if (Grid._instance.tiles[id].army != null && Grid._instance.tiles[id].army.Count/*[0].count*/ > 0)
         {
+            tileArmyText.transform.parent.gameObject.SetActive(true);
             tileArmyText.text = "There is an army on this tile consisting of: \n";
 
             for (int i = 0; i < Grid._instance.tiles[id].army.Count; i++)
@@ -260,6 +262,7 @@ public class InfoScreen : MonoBehaviour
         }
         else
         {
+            tileArmyText.transform.parent.gameObject.SetActive(false);
             tileArmyText.text = "";
         }
         
