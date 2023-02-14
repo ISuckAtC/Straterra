@@ -164,10 +164,13 @@ public class BottomBar : MonoBehaviour
             rectTransform.localPosition = new Vector3(0, (rectTransform.sizeDelta.y + 5) * i, 0);
             rectTransform.offsetMax = new Vector2(0, rectTransform.offsetMax.y);
 
+            
+
             int index = i; // most useful line
             
             rectTransform.GetComponentInChildren<TMPro.TMP_Text>().text = NotificationCenter.Get(index).title;
             rectTransform.GetComponentInChildren<Button>().onClick.AddListener(delegate {OpenReport(index);});
+            
         }
 
         reportsMenu.SetActive(true);
