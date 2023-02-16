@@ -87,51 +87,6 @@ public class GameMaster : MonoBehaviour
         chaosText.SetText(chaos.ToString());
     }
 
-    #region toUse
-    public void MenuRaid()
-    {
-
-    }
-
-    void MenuSocial()
-    {
-
-    }
-
-    void MenuUpgradeCity()
-    {
-
-    }
-
-    void MenuUpgradeTroops()
-    {
-        upgradeTroopsMenu.gameObject.SetActive(!upgradeTroopsMenu.gameObject.activeSelf);
-
-    }
-
-    void MenuHireTroops()
-    {
-        hireTroopsMenu.gameObject.SetActive(!hireTroopsMenu.gameObject.activeSelf);
-    }
-
-    void OpenMap()
-    {
-
-    }
-    public void ToggleMenu()
-    {
-
-    }
-    void OpenMenu()
-    {
-
-    }
-    #endregion
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()

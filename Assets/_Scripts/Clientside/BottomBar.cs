@@ -40,7 +40,7 @@ public class BottomBar : MonoBehaviour
         for (int i = 0; i < 256; ++i)
         {
             int amount = amounts[i];
-            if (amount > 0) armytext += UnitDefinition.I[i].name + ": " + amount + "\n";
+            if (amount > 0) armytext += UnitDefinition.I[i].name + ": " + NumConverter.GetConvertedAmount(amount) + "\n";
         }
         armyText.text = armytext;
         armyText.ForceMeshUpdate();
@@ -86,19 +86,19 @@ public class BottomBar : MonoBehaviour
         for (int i = 0; i < unitProduction.Count; ++i)
         {
             ScheduledUnitProductionEvent productionEvent = unitProduction[i];
-            qText += productionEvent.amount + " " + UnitDefinition.I[productionEvent.unitId].name + " - " + productionEvent.secondsLeft + " seconds left\n";
+            qText += productionEvent.amount + " " + UnitDefinition.I[productionEvent.unitId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft) + "\n";
         }
         qText += "City Building Construction\n";
         for (int i = 0; i < townBuilding.Count; ++i)
         {
             ScheduledTownBuildEvent productionEvent = townBuilding[i];
-            qText += TownBuildingDefinition.I[productionEvent.townBuildingId].name + " - " + productionEvent.secondsLeft + " seconds left\n";
+            qText += TownBuildingDefinition.I[productionEvent.townBuildingId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft) + "\n";
         }
         qText += "Map Building Construction\n";
         for (int i = 0; i < mapBuilding.Count; ++i)
         {
             ScheduledMapBuildEvent productionEvent = mapBuilding[i];
-            qText += MapBuildingDefinition.I[productionEvent.buildingId].name + " - " + productionEvent.secondsLeft + " seconds left\n";
+            qText += MapBuildingDefinition.I[productionEvent.buildingId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft) + "\n";
         }
 
         queueText.text = qText;
@@ -147,6 +147,7 @@ public class BottomBar : MonoBehaviour
         notification.viewed = true;
         NotificationCenter.I[index] = notification;
 
+        reportView.transform.position = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
         reportView.SetActive(true);
     }
     public void RemoveReport(int index)

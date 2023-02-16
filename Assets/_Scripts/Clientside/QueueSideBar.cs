@@ -28,32 +28,32 @@ public class QueueSideBar : MonoBehaviour
             for (int i = 0; i < unitProduction.Count; ++i)
             {
                 ScheduledUnitProductionEvent productionEvent = unitProduction[i];
-                qText += productionEvent.amount + " " + UnitDefinition.I[productionEvent.unitId].name + " - " + productionEvent.secondsLeft + " seconds left\n";
+                qText += productionEvent.amount + " " + UnitDefinition.I[productionEvent.unitId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft - 1) + "\n";
             }
             line = true;
         }
 
         if (townBuilding.Count > 0)
         {
-            if (line) qText += "__________________________________________\n";
+            if (line) qText += "_______________________________________\n";
             qText += "City Building Construction\n";
             for (int i = 0; i < townBuilding.Count; ++i)
             {
                 ScheduledTownBuildEvent productionEvent = townBuilding[i];
                 TownBuilding definition = TownBuildingDefinition.I[productionEvent.townBuildingId];
-                qText += definition.name + " LV" + (definition.level - 1) + "->" + definition.level + " - " + productionEvent.secondsLeft + " seconds left\n";
+                qText += definition.name + " LV" + (definition.level - 1) + "->" + definition.level + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft - 1) + "\n";
             }
             line = true;
         }
 
         if (mapBuilding.Count > 0)
         {
-            if (line) qText += "__________________________________________\n";
+            if (line) qText += "_______________________________________\n";
             qText += "Map Building Construction\n";
             for (int i = 0; i < mapBuilding.Count; ++i)
             {
                 ScheduledMapBuildEvent productionEvent = mapBuilding[i];
-                qText += MapBuildingDefinition.I[productionEvent.buildingId].name + " - " + productionEvent.secondsLeft + " seconds left\n";
+                qText += MapBuildingDefinition.I[productionEvent.buildingId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft - 1) + "\n";
             }
         }
 

@@ -1,7 +1,33 @@
 using System;
+using UnityEngine;
 
 public static class NumConverter
 {
+    public static string GetConvertedTime(int amount)
+    {
+        int hours = amount / 3600;
+        int minutes = (amount - hours * 3600) / 60;
+        int seconds = amount - hours * 3600 - minutes * 60;
+
+        string output = "";
+        
+        if (hours > 0)
+        {
+            output += hours + " h, ";
+            
+        }
+        if (minutes > 0)
+        {
+            output += minutes + " m, ";
+            
+            //return amount / 60 + " minutes, " + amount % 60 + "seconds";
+        }
+        output += seconds + " s";    
+
+        return output;
+        
+    }
+    
     public static string GetConvertedAmount(int amount)
     {
         double val = 0;

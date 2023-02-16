@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2445071381331574419}
   - component: {fileID: 598876021480162871}
   - component: {fileID: 6409459830400671018}
+  - component: {fileID: 2655284929511889655}
   m_Layer: 5
   m_Name: BannerColor
   m_TagString: Untagged
@@ -76,6 +77,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2655284929511889655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206057611723549970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dadf38affc3fba49ad962d6c6de9904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1874679834418663350
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,35 +21,35 @@ public class TopBar : MonoBehaviour
     {
         set
         {
-            foodText.text = value.ToString();
+            foodText.text = NumConverter.GetConvertedAmount(value);
         }
     }
     public int Wood 
     {
         set
         {
-            woodText.text = value.ToString();
+            woodText.text = NumConverter.GetConvertedAmount(value);
         }
     }
     public int Metal 
     {
         set
         {
-            metalText.text = value.ToString();
+            metalText.text = NumConverter.GetConvertedAmount(value);
         }
     }
     public int Order 
     {
         set
         {
-            orderText.text = value.ToString();
+            orderText.text = NumConverter.GetConvertedAmount(value);
         }
     }
     public int Chaos 
     {
         set
         {
-            chaosText.text = value.ToString();
+            chaosText.text = NumConverter.GetConvertedAmount(value);
         }
     }
 

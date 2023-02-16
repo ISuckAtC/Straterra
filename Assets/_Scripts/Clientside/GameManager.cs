@@ -61,6 +61,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static Color PlayerColor = new Color(0.1f, 0.9f, 0.2f, 0.8f);
+
     public static int[] PlayerUnitAmounts { get => I.playerResources.unitAmounts; }
 
     void Start()
