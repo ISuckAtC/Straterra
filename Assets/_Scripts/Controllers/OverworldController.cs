@@ -366,6 +366,7 @@ public class OverworldController : MonoBehaviour
         if (Grid._instance.tiles[position].tileType == 255)
         {
             Debug.Log("Tried to construct building on construction");
+            return;
         }
         MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
         
