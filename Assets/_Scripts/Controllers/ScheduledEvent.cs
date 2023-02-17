@@ -91,10 +91,19 @@ public class ScheduledMapBuildEvent : ScheduledEvent
 {
     public byte buildingId;
     public int position;
-    public ScheduledMapBuildEvent(int secondsTotal, byte buildingId, int position, int owner) : base(secondsTotal, owner)
+    public ScheduledMapBuildEvent(int secondsTotal, byte buildingId, int position, int owner, bool runImmediately = true) : base(secondsTotal, owner, runImmediately)
     {
         this.buildingId = buildingId;
         this.position = position;
+        if (runImmediately)
+        {
+            // Set to construction site
+            Grid._instance.tiles[position].tileType = 255;
+            Vector2Int pos = Grid._instance.GetPosition(position);
+            PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), PlaceTiles._instance.buildingTiles[255]);
+
+            running = true;
+        }
     }
 
     public override void Complete()
