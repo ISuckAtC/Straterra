@@ -16,6 +16,9 @@ public class BottomBar : MonoBehaviour
     public TMPro.TMP_Text queueText;
     public TMPro.TMP_Text worldButtonText;
 
+    public TMPro.TMP_Text queueAmount;
+    public TMPro.TMP_Text reportAmount;
+
     public GameObject reportsMenu;
     public GameObject reportsNotificationBlinker;
     public GameObject reportView;
@@ -43,6 +46,7 @@ public class BottomBar : MonoBehaviour
             CloseArmyTab();
             return;
         }
+        armyOpen = true;
         armyMenu.SetActive(true);
         string armytext = "";
         int[] amounts = GameManager.PlayerUnitAmounts;
@@ -58,6 +62,7 @@ public class BottomBar : MonoBehaviour
     public void CloseArmyTab()
     {
         armyMenu.SetActive(false);
+        armyOpen = false;
     }
     public void OpenOverworld()
     {
@@ -85,6 +90,7 @@ public class BottomBar : MonoBehaviour
             CloseQueue();
             return;
         }
+        queueOpen = true;
         queueMenu.SetActive(true);
         UpdateQueue();
         EventHub.OnTick += UpdateQueue;
@@ -123,11 +129,18 @@ public class BottomBar : MonoBehaviour
     {
         queueMenu.SetActive(false);
         EventHub.OnTick -= UpdateQueue;
+        queueOpen = false;
     }
 
+    public void CheckQueue()
+    {
+        queueAmount.text = ScheduledEvent.activeEvents.Count > 0 ? ScheduledEvent.activeEvents.Count.ToString() : "";
+    }
     public void CheckNotifications()
     {
-        reportsNotificationBlinker.SetActive(NotificationCenter.I.notifications.Where(x => !x.viewed).Count() > 0);
+        var notifications = NotificationCenter.I.notifications.Where(x => !x.viewed);
+        reportsNotificationBlinker.SetActive(notifications.Count() > 0);
+        reportAmount.text = notifications.Count() > 0 ? notifications.Count().ToString() : "";
     }
     public void OpenMenu()
     {
@@ -136,6 +149,7 @@ public class BottomBar : MonoBehaviour
             CloseMenu();
             return;
         }
+        reportsOpen = true;
         reports.ForEach(x => Destroy(x));
         reports.Clear();
         for (int i = 0; i < NotificationCenter.Count(); ++i)
@@ -177,9 +191,11 @@ public class BottomBar : MonoBehaviour
     {
         OpenMenu();
         reportView.SetActive(false);
+        
     }
     public void CloseMenu()
     {
+        reportsOpen = false;    
         reportsMenu.SetActive(false);
     }
 }

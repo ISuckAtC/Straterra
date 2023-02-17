@@ -28,7 +28,7 @@ public class QueueSideBar : MonoBehaviour
             for (int i = 0; i < unitProduction.Count; ++i)
             {
                 ScheduledUnitProductionEvent productionEvent = unitProduction[i];
-                qText += productionEvent.amount + " " + UnitDefinition.I[productionEvent.unitId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft - 1) + "\n";
+                qText += productionEvent.amount + " " + UnitDefinition.I[productionEvent.unitId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft) + "\n";
             }
             line = true;
         }
@@ -41,7 +41,7 @@ public class QueueSideBar : MonoBehaviour
             {
                 ScheduledTownBuildEvent productionEvent = townBuilding[i];
                 TownBuilding definition = TownBuildingDefinition.I[productionEvent.townBuildingId];
-                qText += definition.name + " LV" + (definition.level - 1) + "->" + definition.level + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft - 1) + "\n";
+                qText += definition.name + " LV" + (definition.level - 1) + "->" + definition.level + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft) + "\n";
             }
             line = true;
         }
@@ -53,7 +53,7 @@ public class QueueSideBar : MonoBehaviour
             for (int i = 0; i < mapBuilding.Count; ++i)
             {
                 ScheduledMapBuildEvent productionEvent = mapBuilding[i];
-                qText += MapBuildingDefinition.I[productionEvent.buildingId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft - 1) + "\n";
+                qText += MapBuildingDefinition.I[productionEvent.buildingId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft) + "\n";
             }
         }
 
