@@ -363,7 +363,11 @@ public class OverworldController : MonoBehaviour
     {
         if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
         if (Grid._instance.tiles[position].tileType == 1) throw new Exception("Tiletype 1 is water. No buildings can be built on water.");
-        
+        if (Grid._instance.tiles[position].tileType == 255)
+        {
+            Debug.Log("Tried to construct building on construction");
+            return;
+        }
         MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
         
         

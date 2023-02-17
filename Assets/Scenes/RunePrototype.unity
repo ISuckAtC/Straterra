@@ -15189,7 +15189,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 27, y: -25}
+  m_AnchoredPosition: {x: 27, y: -155}
   m_SizeDelta: {x: 501.23, y: 750}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1287732064
@@ -16678,7 +16678,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: a3cec3a6535896d49a896f497d3e8b9b, type: 2}
   tilemap: {fileID: 2075945052}
   overlayMap: {fileID: 373919092}
 --- !u!114 &1415235159
@@ -24845,9 +24845,9 @@ RectTransform:
   m_Father: {fileID: 1221880316}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -100, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 89, y: 94}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &91216762484424826
