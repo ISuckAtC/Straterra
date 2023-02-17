@@ -107,7 +107,7 @@ public class GameMaster : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            MenuHireTroops();
+            //MenuHireTroops();
         }
         #endregion
     }
