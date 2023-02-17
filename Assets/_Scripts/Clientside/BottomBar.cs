@@ -38,6 +38,7 @@ public class BottomBar : MonoBehaviour
     public void Start()
     {
         EventHub.OnTick += CheckNotifications;
+        EventHub.OnTick += CheckQueue;
     }
     public void OpenArmyTab()
     {

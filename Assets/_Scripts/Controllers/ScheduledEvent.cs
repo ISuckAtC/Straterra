@@ -47,7 +47,7 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
 {
     public int unitId;
     public int amount;
-    public ScheduledUnitProductionEvent(int secondsTotal, int unitId, int amount, int owner, bool runImmediately = true) : base(secondsTotal, owner, runImmediately)
+    public  ScheduledUnitProductionEvent(int secondsTotal, int unitId, int amount, int owner, bool runImmediately = true) : base(secondsTotal, owner, runImmediately)
     {
         this.unitId = unitId;
         this.amount = amount;
