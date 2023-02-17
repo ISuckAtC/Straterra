@@ -27,6 +27,10 @@ public class BottomBar : MonoBehaviour
     private List<GameObject> reports = new List<GameObject>();
 
     private bool worldView = false;
+
+    private bool armyOpen = false;
+    private bool queueOpen = false;
+    private bool reportsOpen = false;
     
     public void Start()
     {
@@ -34,6 +38,11 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenArmyTab()
     {
+        if (armyOpen)
+        {
+            CloseArmyTab();
+            return;
+        }
         armyMenu.SetActive(true);
         string armytext = "";
         int[] amounts = GameManager.PlayerUnitAmounts;
@@ -71,6 +80,11 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenQueue()
     {
+        if (queueOpen)
+        {
+            CloseQueue();
+            return;
+        }
         queueMenu.SetActive(true);
         UpdateQueue();
         EventHub.OnTick += UpdateQueue;
@@ -117,6 +131,11 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenMenu()
     {
+        if (reportsOpen)
+        {
+            CloseMenu();
+            return;
+        }
         reports.ForEach(x => Destroy(x));
         reports.Clear();
         for (int i = 0; i < NotificationCenter.Count(); ++i)

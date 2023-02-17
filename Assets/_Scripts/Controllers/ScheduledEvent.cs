@@ -1,21 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ScheduledEvent
 {
     public static List<ScheduledEvent> activeEvents = new List<ScheduledEvent>();
     public int secondsLeft;
     public int secondsTotal;
+    public bool running;
     public int owner;
     
-    public ScheduledEvent(int secondsTotal, int owner)
+    public ScheduledEvent(int secondsTotal, int owner, bool runImmediately = true)
     {
         this.secondsTotal = secondsTotal;
         secondsLeft = secondsTotal;
         this.owner = owner; 
-        EventHub.OnTick += Tick;
+        if (runImmediately)
+        {
+            EventHub.OnTick += Tick;
+            running = true;
+        }
+        else
+        {
+            running = false;
+        }
         activeEvents.Add(this);
+    }
+    public void Run()
+    {
+        running = true;
+        EventHub.OnTick += Tick;
     }
     public void Tick()
     {
@@ -32,7 +47,7 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
 {
     public int unitId;
     public int amount;
-    public ScheduledUnitProductionEvent(int secondsTotal, int unitId, int amount, int owner) : base(secondsTotal, owner)
+    public ScheduledUnitProductionEvent(int secondsTotal, int unitId, int amount, int owner, bool runImmediately = true) : base(secondsTotal, owner, runImmediately)
     {
         this.unitId = unitId;
         this.amount = amount;
@@ -41,6 +56,11 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
     public override void Complete()
     {
         base.Complete();
+        List<ScheduledUnitProductionEvent> prodEvents = activeEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent) && !x.running).Cast<ScheduledUnitProductionEvent>().ToList();
+        if (prodEvents.Count > 0)
+        {
+            prodEvents[0].Run();
+        }
         GameManager.PlayerUnitAmounts[unitId] += amount;
         Debug.Log("Added " + amount + " " + UnitDefinition.I[unitId].name + " to army! (You now have " + GameManager.PlayerUnitAmounts[unitId] + " " + UnitDefinition.I[unitId].name + ")");
     }
@@ -193,6 +213,7 @@ public class ScheduledAttackEvent : ScheduledEvent
             {
                 ScheduledMoveArmyEvent moveArmy = new ScheduledMoveArmyEvent(10, result.remains, LocalData.SelfPlayer.cityLocation, destination, owner);
                 
+                Grid._instance.tiles[destination].army = Grid._instance.tiles[destination].army.Where(x => !x.dead).ToList();
 
                 message += "Your troops were victorious in location [" + destination + "]!\n\n";
                 message += "___________________________________\n";
