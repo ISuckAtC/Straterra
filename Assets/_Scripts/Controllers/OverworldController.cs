@@ -27,6 +27,7 @@ public class OverworldController : MonoBehaviour
     private byte buildingIndex;
 
     public Transform tileHighlight;
+    public Transform selectedTileHighlight;
 
     public UnityEngine.UI.GraphicRaycaster gr;
     
@@ -287,10 +288,13 @@ public class OverworldController : MonoBehaviour
             
             if (rrs.Count == 0 && Physics.Raycast(ray, out hit))
             {
-                
                 int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
                 //InfoScreen._instance.ToggleInfoScreen(false);
                 //InfoScreen._instance.ToggleInfoScreenResource(false);
+                
+                selectedTileHighlight.gameObject.SetActive(true);
+                selectedTileHighlight.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
+                
                 InfoScreen._instance.CloseInfoScreen();
                 InfoScreen._instance.CloseResourceInfoScreen();
                 InfoScreen._instance.CloseVillageInfoScreen();
@@ -300,6 +304,8 @@ public class OverworldController : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
+            selectedTileHighlight.gameObject.SetActive(false);
+            
             InfoScreen._instance.CloseInfoScreen();
             InfoScreen._instance.CloseResourceInfoScreen();
             InfoScreen._instance.CloseVillageInfoScreen();
