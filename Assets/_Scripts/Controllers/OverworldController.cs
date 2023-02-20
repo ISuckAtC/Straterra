@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.UIElements;
 
 public class OverworldController : MonoBehaviour
 {
@@ -28,18 +26,21 @@ public class OverworldController : MonoBehaviour
 
     public Transform tileHighlight;
     public Transform selectedTileHighlight;
-
+    public Transform buildMenu;
+    private int previousTile = 1;
     public UnityEngine.UI.GraphicRaycaster gr;
+    
+    
     
     void Start()
     {
         Grid.onReady += OnGridReady;
-
-
     }
 
     private void OnGridReady()
     {
+        selectedTileHighlight.transform.position = new Vector3Int(Grid._instance.width, 1, Grid._instance.height);
+
         cam = GetComponent<Camera>();
 
         holdCounter = holdDelay;
@@ -48,7 +49,7 @@ public class OverworldController : MonoBehaviour
 
         int startingposition = FindStartingPosition.FirstVillage();
         
-        PlaceBuilding(1, startingposition, LocalData.SelfPlayer.playerId);
+        PlaceBuilding(1);
 
         Vector2 cameraposition = Grid._instance.GetPosition(startingposition);
         
@@ -62,29 +63,14 @@ public class OverworldController : MonoBehaviour
         
         
         int enemyposition = FindStartingPosition.FirstVillage();
-        PlaceBuilding(1, enemyposition, 5);
+        PlaceOtherBuilding(1, 5);
 
-        List<Group> enemyArmy = new List<Group>();
-
-        enemyArmy.Add(new Group(5, 1));
-        enemyArmy.Add(new Group(5, 2));
-        enemyArmy.Add(new Group(5, 3));
-
-        Grid._instance.tiles[enemyposition].army = enemyArmy;
+        
 
         
         enemyposition = FindStartingPosition.FirstVillage();
-        PlaceBuilding(1, enemyposition, 6);
+        PlaceOtherBuilding(1, 6);
 
-        List<Group> enemyArmy2 = new List<Group>();
-
-        enemyArmy2.Add(new Group(100000001, 1));
-        enemyArmy2.Add(new Group(10001, 2));
-        enemyArmy2.Add(new Group(501, 3));
-        enemyArmy2.Add(new Group(205, 0));
-
-
-        Grid._instance.tiles[enemyposition].army = enemyArmy2;
         
         
         
@@ -230,6 +216,10 @@ public class OverworldController : MonoBehaviour
                 else if (zoom > 119.9f)
                     zoom = 119.9f;
 
+                float buildScale = zoom * 0.025f;
+            
+                buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+                
                 cam.orthographicSize = zoom;
             }
         }
@@ -242,6 +232,10 @@ public class OverworldController : MonoBehaviour
             if (zoom <= 2.1f)
                 zoom = 2.1f;
 
+            float buildScale = zoom * 0.025f;
+            
+            buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+            
             cam.orthographicSize = zoom;
         }
 
@@ -253,6 +247,10 @@ public class OverworldController : MonoBehaviour
             if (zoom >= 119.9f)
                 zoom = 119.9f;
 
+            float buildScale = zoom * 0.025f;
+            
+            buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+            
             cam.orthographicSize = zoom;
         }
 
@@ -262,7 +260,7 @@ public class OverworldController : MonoBehaviour
             {
                 int position = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
 
-                PlaceBuilding(buildingIndex, position, LocalData.SelfPlayer.playerId);
+                PlaceBuilding(buildingIndex);
             }
         }
 
@@ -291,6 +289,17 @@ public class OverworldController : MonoBehaviour
                 int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
                 //InfoScreen._instance.ToggleInfoScreen(false);
                 //InfoScreen._instance.ToggleInfoScreenResource(false);
+                if (id == previousTile)
+                {
+                    buildMenu.gameObject.SetActive(true);
+                    buildMenu.transform.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
+                    
+                }
+                else
+                {
+                    buildMenu.gameObject.SetActive(false);
+                    previousTile = id;
+                }
                 
                 selectedTileHighlight.gameObject.SetActive(true);
                 selectedTileHighlight.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
@@ -305,6 +314,8 @@ public class OverworldController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             selectedTileHighlight.gameObject.SetActive(false);
+           
+            buildMenu.gameObject.SetActive(false);
             
             InfoScreen._instance.CloseInfoScreen();
             InfoScreen._instance.CloseResourceInfoScreen();
@@ -359,8 +370,11 @@ public class OverworldController : MonoBehaviour
         }
         
     }
-    public void PlaceBuilding(byte buildingId, int position, int owner)
+    public void PlaceBuilding(int buildingId)
     {
+        Vector2Int selectedPosition = new Vector2Int(64, 64);
+        int position = Grid._instance.GetIdByVec(selectedPosition);
+        
         if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
         if (Grid._instance.tiles[position].tileType == 1) throw new Exception("Tiletype 1 is water. No buildings can be built on water.");
         if (Grid._instance.tiles[position].tileType == 255)
@@ -369,6 +383,9 @@ public class OverworldController : MonoBehaviour
             return;
         }
         MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
+
+        
+        
         
         
         int foodCost = mapBuilding.foodCost;
@@ -385,6 +402,75 @@ public class OverworldController : MonoBehaviour
             return;
         }
                                                                                                         // BUG Remove division later
+        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, (byte)buildingId, position, LocalData.SelfPlayer.playerId);
+        
+        GameManager.PlayerFood -= mapBuilding.foodCost;
+        GameManager.PlayerWood -= mapBuilding.woodCost;
+        GameManager.PlayerMetal -= mapBuilding.metalCost;
+        GameManager.PlayerOrder -= mapBuilding.orderCost;
+        
+        
+        
+        Debug.Log("" + mapBuilding.name + " was placed in location " + position);
+        
+        
+    }
+    
+    public void PlaceOtherBuilding(byte buildingId, int owner)
+    {
+        Vector2Int selectedPosition = new Vector2Int(UnityEngine.Random.Range(1, Grid._instance.width -1), UnityEngine.Random.Range(1, Grid._instance.height -1));
+        int position = Grid._instance.GetIdByVec(selectedPosition);
+        
+        if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
+        if (Grid._instance.tiles[position].tileType == 1) throw new Exception("Tiletype 1 is water. No buildings can be built on water.");
+        if (Grid._instance.tiles[position].tileType == 255)
+        {
+            Debug.Log("Tried to construct building on construction");
+            return;
+        }
+        MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
+
+        if (owner == 5)
+        {
+            List<Group> enemyArmy = new List<Group>();
+
+            enemyArmy.Add(new Group(5, 1));
+            enemyArmy.Add(new Group(5, 2));
+            enemyArmy.Add(new Group(5, 3));
+
+            Grid._instance.tiles[position].army = enemyArmy;
+        }
+
+        if (owner == 6)
+        {
+            List<Group> enemyArmy2 = new List<Group>();
+
+            enemyArmy2.Add(new Group(100000001, 1));
+            enemyArmy2.Add(new Group(10001, 2));
+            enemyArmy2.Add(new Group(501, 3));
+            enemyArmy2.Add(new Group(205, 0));
+
+
+            Grid._instance.tiles[position].army = enemyArmy2;
+        }
+
+        
+        
+        
+        int foodCost = mapBuilding.foodCost;
+        int woodCost = mapBuilding.woodCost;
+        int metalCost = mapBuilding.metalCost;
+        int orderCost = mapBuilding.orderCost;
+
+        if (foodCost > GameManager.PlayerFood ||
+            woodCost > GameManager.PlayerWood ||
+            metalCost > GameManager.PlayerMetal ||
+            orderCost > GameManager.PlayerOrder)
+        {
+            Debug.LogWarning("Not enough resources");
+            return;
+        }
+        // BUG Remove division later
         ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, buildingId, position, owner);
         
         GameManager.PlayerFood -= mapBuilding.foodCost;

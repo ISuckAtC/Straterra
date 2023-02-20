@@ -8785,7 +8785,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 702508001}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1415235157}
+        m_TargetAssemblyTypeName: OverworldController, Assembly-CSharp
+        m_MethodName: PlaceBuilding
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 100
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &702508001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9806,7 +9818,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 849741235}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1415235157}
+        m_TargetAssemblyTypeName: OverworldController, Assembly-CSharp
+        m_MethodName: PlaceBuilding
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 10
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &849741235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16138,6 +16162,7 @@ MonoBehaviour:
   holdDelay: 0.2
   tileHighlight: {fileID: 2011529520}
   selectedTileHighlight: {fileID: 760085804}
+  buildMenu: {fileID: 1281086703}
   gr: {fileID: 1221880313}
 --- !u!114 &1415235158
 MonoBehaviour:
@@ -17061,7 +17086,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1426789600}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1415235157}
+        m_TargetAssemblyTypeName: OverworldController, Assembly-CSharp
+        m_MethodName: PlaceBuilding
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 30
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1426789600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18679,7 +18716,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1558700875}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1415235157}
+        m_TargetAssemblyTypeName: OverworldController, Assembly-CSharp
+        m_MethodName: PlaceBuilding
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 110
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1558700875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22174,7 +22223,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1826289508}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1415235157}
+        m_TargetAssemblyTypeName: OverworldController, Assembly-CSharp
+        m_MethodName: PlaceBuilding
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 20
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1826289508
 MonoBehaviour:
   m_ObjectHideFlags: 0
