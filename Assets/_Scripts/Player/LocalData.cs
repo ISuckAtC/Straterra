@@ -32,6 +32,10 @@ public static class LocalData
                 System.Array.Fill<byte?>(p.cityBuildingSlots, null);
                 p.cityBuildingSlots[0] = 0;
                 p.cityBuildingSlots[1] = 3;
+                p.cityBuildingSlots[2] = 6;
+                p.cityBuildingSlots[3] = 9;
+                p.cityBuildingSlots[4] = 12;
+                p.cityBuildingSlots[5] = 15;
 
                 p.archerLevel = 1;
                 p.cavalryLevel = 1;

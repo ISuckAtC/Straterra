@@ -18,10 +18,11 @@ public class CityPlayer : MonoBehaviour
     [Header("BuildingMenus")]
     public GameObject townHall;
     public GameObject barracks;
+    public GameObject smithy;
     public GameObject academy;
     public GameObject temple;
     public GameObject workshop;
-    public GameObject smithy;
+
     public GameObject marketplace;
     public GameObject stockpile;
 
@@ -73,6 +74,42 @@ public class CityPlayer : MonoBehaviour
                         menu.slotId = i;
                         break;
                     }
+                case TownBuildingType.academy:
+                    {
+                        UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
+                        button.onClick.AddListener(OpenAcademy);
+                        BuildingMenu menu = academy.GetComponent<BuildingMenu>();
+                        menu.id = id;
+                        menu.slotId = i;
+                        break;
+                    }
+                case TownBuildingType.smithy:
+                    {
+                        UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
+                        button.onClick.AddListener(OpenSmithy);
+                        BuildingMenu menu = smithy.GetComponent<BuildingMenu>();
+                        menu.id = id;
+                        menu.slotId = i;
+                        break;
+                    }
+                case TownBuildingType.temple:
+                    {
+                        UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
+                        button.onClick.AddListener(OpenTemple);
+                        BuildingMenu menu = temple.GetComponent<BuildingMenu>();
+                        menu.id = id;
+                        menu.slotId = i;
+                        break;
+                    }
+                case TownBuildingType.workshop:
+                    {
+                        UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
+                        button.onClick.AddListener(OpenWorkshop);
+                        BuildingMenu menu = workshop.GetComponent<BuildingMenu>();
+                        menu.id = id;
+                        menu.slotId = i;
+                        break;
+                    }
             }
         }
     }
@@ -96,10 +133,28 @@ public class CityPlayer : MonoBehaviour
             barracksMenu.level.text = "Lv. " + TownBuildingDefinition.I[barracksMenu.id].level;
             buildingsInterfaces.Add(barracks);
         }
-        if (academy) buildingsInterfaces.Add(academy);
-        if (temple) buildingsInterfaces.Add(temple);
-        if (workshop) buildingsInterfaces.Add(workshop);
         if (smithy) buildingsInterfaces.Add(smithy);
+        {
+            BuildingMenu smithyMenu = smithy.GetComponent<BuildingMenu>();
+            smithyMenu.title.text = TownBuildingDefinition.I[smithyMenu.id].name.ToUpper();
+            smithyMenu.level.text = "Lv. " + TownBuildingDefinition.I[smithyMenu.id].level;
+            buildingsInterfaces.Add(smithy);
+        }
+        if (academy) buildingsInterfaces.Add(academy);
+        {
+            BuildingMenu academyMenu = academy.GetComponent<BuildingMenu>();
+            academyMenu.title.text = TownBuildingDefinition.I[academyMenu.id].name.ToUpper();
+            academyMenu.level.text = "Lv. " + TownBuildingDefinition.I[academyMenu.id].level;
+            buildingsInterfaces.Add(academy);
+        }
+        if (temple) buildingsInterfaces.Add(temple);
+        {
+            BuildingMenu templeMenu = temple.GetComponent<BuildingMenu>();
+            templeMenu.title.text = TownBuildingDefinition.I[templeMenu.id].name.ToUpper();
+            templeMenu.level.text = "Lv. " + TownBuildingDefinition.I[templeMenu.id].level;
+            buildingsInterfaces.Add(temple);
+        }
+        if (workshop) buildingsInterfaces.Add(workshop);
         if (marketplace) buildingsInterfaces.Add(marketplace);
         if (stockpile) buildingsInterfaces.Add(stockpile);
     }
