@@ -21,7 +21,11 @@ public enum TownBuildingType
 {
     townhall,
     barracks,
+    smithy,
+    academy,
     temple,
+    workshop,
+    stockpile,
     wall
 }
 
@@ -112,6 +116,50 @@ public class TownBuildingDefinition
         barracks2.level = 2;
         barracks2.maxLevel = 2;
         townBuildings[4] = barracks2;
+
+        TownBuilding smithy1 = new TownBuilding(); //UNEDITED VALUES
+        smithy1.id = 6;
+        smithy1.type = TownBuildingType.smithy;
+        smithy1.buildingTime = 5;
+        smithy1.name = "Smithy";
+        smithy1.health = 1000;
+        smithy1.woodCost = 200;
+        smithy1.level = 1;
+        smithy1.maxLevel = 2;
+        townBuildings[6] = smithy1;
+
+        TownBuilding academy1 = new TownBuilding(); //UNEDITED VALUES
+        academy1.id = 9;
+        academy1.type = TownBuildingType.academy;
+        academy1.buildingTime = 5;
+        academy1.name = "Academy";
+        academy1.health = 1000;
+        academy1.woodCost = 200;
+        academy1.level = 1;
+        academy1.maxLevel = 2;
+        townBuildings[9] = academy1;
+
+        TownBuilding temple1 = new TownBuilding(); //UNEDITED VALUES
+        temple1.id = 12;
+        temple1.type = TownBuildingType.temple;
+        temple1.buildingTime = 5;
+        temple1.name = "Temple";
+        temple1.health = 1000;
+        temple1.woodCost = 200;
+        temple1.level = 1;
+        temple1.maxLevel = 2;
+        townBuildings[12] = temple1;
+
+        TownBuilding workshop1 = new TownBuilding(); //UNEDITED VALUES
+        workshop1.id = 15;
+        workshop1.type = TownBuildingType.temple;
+        workshop1.buildingTime = 5;
+        workshop1.name = "Workshop";
+        workshop1.health = 1000;
+        workshop1.woodCost = 200;
+        workshop1.level = 1;
+        workshop1.maxLevel = 2;
+        townBuildings[15] = workshop1;
 
         
         return townBuildings;
