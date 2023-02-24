@@ -29,7 +29,8 @@ public class OverworldController : MonoBehaviour
     public Transform buildMenu;
     private int previousTile = 1;
     public UnityEngine.UI.GraphicRaycaster gr;
-    
+
+    private Vector2 playerVillagePosition;
     
     
     void Start()
@@ -49,8 +50,10 @@ public class OverworldController : MonoBehaviour
 
         int startingposition = FindStartingPosition.FirstVillage();
         
-        PlaceBuilding(1/*, startingposition*/);
+        //PlaceBuildingOnSelectedTile(1/*, startingposition*/);
 
+        PlaceOtherBuilding(1, 1);
+        
         Vector2 cameraposition = Grid._instance.GetPosition(startingposition);
         
         transform.position = new Vector3(cameraposition.x, 98f, cameraposition.y);
@@ -296,7 +299,7 @@ public class OverworldController : MonoBehaviour
             {
                 int position = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
 
-                PlaceBuilding(buildingIndex/*, position*/);
+                PlaceBuildingOnSelectedTile(buildingIndex/*, position*/);
             }
         }
 
@@ -322,30 +325,32 @@ public class OverworldController : MonoBehaviour
             
             if (rrs.Count == 0 && Physics.Raycast(ray, out hit))
             {
-
-                int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
-                //InfoScreen._instance.ToggleInfoScreen(false);
-                //InfoScreen._instance.ToggleInfoScreenResource(false);
-                if (id == previousTile)
+                if (hit.transform.CompareTag("Ground"))
                 {
-                    buildMenu.gameObject.SetActive(true);
-                    buildMenu.transform.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
+                    int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
+                    //InfoScreen._instance.ToggleInfoScreen(false);
+                    //InfoScreen._instance.ToggleInfoScreenResource(false);
+                    if (id == previousTile)
+                    {
+                        buildMenu.gameObject.SetActive(true);
+                        buildMenu.transform.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
                     
+                    }
+                    else
+                    {
+                        //buildMenu.gameObject.SetActive(false);
+                        previousTile = id;
+                    }
+                
+                    selectedTileHighlight.gameObject.SetActive(true);
+                    selectedTileHighlight.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
+                
+                    InfoScreen._instance.CloseInfoScreen();
+                    InfoScreen._instance.CloseResourceInfoScreen();
+                    InfoScreen._instance.CloseVillageInfoScreen();
+                
+                    CheckTile(id);
                 }
-                else
-                {
-                    //buildMenu.gameObject.SetActive(false);
-                    previousTile = id;
-                }
-                
-                selectedTileHighlight.gameObject.SetActive(true);
-                selectedTileHighlight.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
-                
-                InfoScreen._instance.CloseInfoScreen();
-                InfoScreen._instance.CloseResourceInfoScreen();
-                InfoScreen._instance.CloseVillageInfoScreen();
-                
-                CheckTile(id);
             }
         }
         if (Input.GetKeyUp(KeyCode.Mouse1))
@@ -358,6 +363,11 @@ public class OverworldController : MonoBehaviour
             InfoScreen._instance.CloseResourceInfoScreen();
             InfoScreen._instance.CloseVillageInfoScreen();
             //InfoScreen._instance.ToggleInfoScreen(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            transform.position = new Vector3(playerVillagePosition.x, transform.position.y, playerVillagePosition.y);
         }
     }
 
@@ -407,10 +417,13 @@ public class OverworldController : MonoBehaviour
         }
         
     }
-    public void PlaceBuilding(int buildingId/*, int selectedPosition = 0*/)
+    public void PlaceBuildingOnSelectedTile(int buildingId/*, int selectedPosition = 0*/)
     {
+        /*
         Vector2Int asdf = new Vector2Int((int)selectedTileHighlight.position.x, (int)selectedTileHighlight.position.z);
         int selectedPosition = Grid._instance.GetIdByVec(asdf);
+        */
+        int selectedPosition = Grid._instance.GetIdByVec(new Vector2Int((int)selectedTileHighlight.transform.position.x, (int)selectedTileHighlight.transform.position.z));
         
         if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
         if (Grid._instance.tiles[selectedPosition].tileType == 1) throw new Exception("Tiletype 1 is water. No buildings can be built on water.");
@@ -463,6 +476,11 @@ public class OverworldController : MonoBehaviour
         }
         MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
 
+        if (owner == 1)
+        {
+            playerVillagePosition = Grid._instance.GetPosition(position);
+        }
+        
         if (owner == 5)
         {
             List<Group> enemyArmy = new List<Group>();

@@ -161,6 +161,16 @@ public class TownBuildingDefinition
         workshop1.maxLevel = 2;
         townBuildings[15] = workshop1;
 
+        TownBuilding workshop2 = new TownBuilding(); //UNEDITED VALUES
+        workshop1.id = 16;
+        workshop1.type = TownBuildingType.temple;
+        workshop1.buildingTime = 5;
+        workshop1.name = "Workshop";
+        workshop1.health = 1000;
+        workshop1.woodCost = 200;
+        workshop1.level = 1;
+        workshop1.maxLevel = 2;
+        townBuildings[16] = workshop1;
         
         return townBuildings;
     }
