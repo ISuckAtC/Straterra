@@ -66,11 +66,11 @@ public class BuildingMenu : MonoBehaviour
             metalCost > GameManager.PlayerMetal ||
             orderCost > GameManager.PlayerOrder)
         {
-            upgradeConfirmButton.GetComponent<Image>().color = Color.red;
+            upgradeConfirmButton.GetComponent<Image>().color = new Color(0.3f, 0.05f, 0.05f);
         }
         else
         {
-            upgradeConfirmButton.GetComponent<Image>().color = Color.green;
+            upgradeConfirmButton.GetComponent<Image>().color = new Color(0.05f, 0.4f, 0.05f);
         }
 
         costsText1.text = foodCost.ToString();

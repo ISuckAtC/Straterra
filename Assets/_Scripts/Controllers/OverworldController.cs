@@ -49,7 +49,7 @@ public class OverworldController : MonoBehaviour
 
         int startingposition = FindStartingPosition.FirstVillage();
         
-        PlaceBuilding(1);
+        PlaceBuilding(1/*, startingposition*/);
 
         Vector2 cameraposition = Grid._instance.GetPosition(startingposition);
         
@@ -141,6 +141,9 @@ public class OverworldController : MonoBehaviour
         {
             holding = true;
             transform.position -= new Vector3(cam.orthographicSize * moveSpeedTap, 0f, 0f);
+            
+            if (transform.position.x < 0f)
+                transform.position = new Vector3(0f, transform.position.y, transform.position.z);
         }
         if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow))
             holding = false;
@@ -150,6 +153,9 @@ public class OverworldController : MonoBehaviour
         {
             holding = true;
             transform.position += new Vector3(cam.orthographicSize * moveSpeedTap, 0f, 0f);
+            
+            if (transform.position.x > Grid._instance.width)
+                transform.position = new Vector3(Grid._instance.width, transform.position.y, transform.position.z);
         }
         if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow))
             holding = false;
@@ -159,6 +165,9 @@ public class OverworldController : MonoBehaviour
         {
             holding = true;
             transform.position += new Vector3(0f, 0f, cam.orthographicSize * moveSpeedTap);
+            
+            if (transform.position.z > Grid._instance.height)
+                transform.position = new Vector3(transform.position.x, transform.position.y, Grid._instance.height);
         }
         if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.UpArrow))
             holding = false;
@@ -168,6 +177,9 @@ public class OverworldController : MonoBehaviour
         {
             holding = true;
             transform.position -= new Vector3(0f, 0f, cam.orthographicSize * moveSpeedTap);
+            
+            if (transform.position.z < 0f)
+                transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
         }
         if (Input.GetKeyUp(KeyCode.S) || Input.GetKeyUp(KeyCode.DownArrow))
             holding = false;
@@ -182,27 +194,51 @@ public class OverworldController : MonoBehaviour
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
                 transform.position -= new Vector3(movementAmount, 0f, 0f) * cam.orthographicSize * moveSpeedHold * Time.deltaTime;
+
+                if (transform.position.x < 0f)
+                    transform.position = new Vector3(0f, transform.position.y, transform.position.z);
             }
 
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
                 transform.position += new Vector3(movementAmount, 0f, 0f) * cam.orthographicSize * moveSpeedHold * Time.deltaTime;
+
+                if (transform.position.x > Grid._instance.width)
+                    transform.position = new Vector3(Grid._instance.width, transform.position.y, transform.position.z);
             }
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 transform.position += new Vector3(0f, 0f, movementAmount) * cam.orthographicSize * moveSpeedHold * Time.deltaTime;
+                
+                if (transform.position.z > Grid._instance.height)
+                    transform.position = new Vector3(transform.position.x, transform.position.y, Grid._instance.height);
             }
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
                 transform.position -= new Vector3(0f, 0f, movementAmount) * cam.orthographicSize * moveSpeedHold * Time.deltaTime;
+                
+                if (transform.position.z < 0f)
+                    transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
             }
         }
 
+        
+        
+        
         if (Input.GetKey(KeyCode.Mouse2))
         {
             transform.position -= new Vector3(Input.GetAxisRaw("Mouse X"), 0f, Input.GetAxisRaw("Mouse Y")) * 2f;
+            
+            if (transform.position.x < 0f)
+                transform.position = new Vector3(0f, transform.position.y, transform.position.z);
+            if (transform.position.x > Grid._instance.width)
+                transform.position = new Vector3(Grid._instance.width, transform.position.y, transform.position.z);
+            if (transform.position.z > Grid._instance.height)
+                transform.position = new Vector3(transform.position.x, transform.position.y, Grid._instance.height);
+            if (transform.position.z < 0f)
+                transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
         }
 
         if (Input.mouseScrollDelta.y != 0f)
@@ -260,7 +296,7 @@ public class OverworldController : MonoBehaviour
             {
                 int position = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
 
-                PlaceBuilding(buildingIndex);
+                PlaceBuilding(buildingIndex/*, position*/);
             }
         }
 
@@ -286,6 +322,7 @@ public class OverworldController : MonoBehaviour
             
             if (rrs.Count == 0 && Physics.Raycast(ray, out hit))
             {
+
                 int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
                 //InfoScreen._instance.ToggleInfoScreen(false);
                 //InfoScreen._instance.ToggleInfoScreenResource(false);
@@ -297,7 +334,7 @@ public class OverworldController : MonoBehaviour
                 }
                 else
                 {
-                    buildMenu.gameObject.SetActive(false);
+                    //buildMenu.gameObject.SetActive(false);
                     previousTile = id;
                 }
                 
@@ -370,24 +407,20 @@ public class OverworldController : MonoBehaviour
         }
         
     }
-    public void PlaceBuilding(int buildingId)
+    public void PlaceBuilding(int buildingId/*, int selectedPosition = 0*/)
     {
-        Vector2Int selectedPosition = new Vector2Int(64, 64);
-        int position = Grid._instance.GetIdByVec(selectedPosition);
+        Vector2Int asdf = new Vector2Int((int)selectedTileHighlight.position.x, (int)selectedTileHighlight.position.z);
+        int selectedPosition = Grid._instance.GetIdByVec(asdf);
         
         if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
-        if (Grid._instance.tiles[position].tileType == 1) throw new Exception("Tiletype 1 is water. No buildings can be built on water.");
-        if (Grid._instance.tiles[position].tileType == 255)
+        if (Grid._instance.tiles[selectedPosition].tileType == 1) throw new Exception("Tiletype 1 is water. No buildings can be built on water.");
+        if (Grid._instance.tiles[selectedPosition].tileType == 255)
         {
             Debug.Log("Tried to construct building on construction");
             return;
         }
         MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
 
-        
-        
-        
-        
         int foodCost = mapBuilding.foodCost;
         int woodCost = mapBuilding.woodCost;
         int metalCost = mapBuilding.metalCost;
@@ -402,7 +435,7 @@ public class OverworldController : MonoBehaviour
             return;
         }
                                                                                                         // BUG Remove division later
-        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, (byte)buildingId, position, LocalData.SelfPlayer.playerId);
+        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, (byte)buildingId, selectedPosition, LocalData.SelfPlayer.playerId);
         
         GameManager.PlayerFood -= mapBuilding.foodCost;
         GameManager.PlayerWood -= mapBuilding.woodCost;
@@ -411,7 +444,7 @@ public class OverworldController : MonoBehaviour
         
         
         
-        Debug.Log("" + mapBuilding.name + " was placed in location " + position);
+        Debug.Log("" + mapBuilding.name + " was placed in location " + selectedPosition);
         
         
     }
