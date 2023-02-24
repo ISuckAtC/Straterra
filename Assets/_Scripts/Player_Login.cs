@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using System.Threading.Tasks;
+using System.Threading;
+public class Player_Login : MonoBehaviour
+{
+    public TMP_InputField input_Password;    //Player types their password here to login.
+    public Button button_Confirm;     //To send the the data to server?
+
+    public string a;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    public void ServerCheck()     //Calls functions from network.
+    {
+        //Debug.Log(input_Password.text);
+        Task.Run<string>(async () =>
+       {
+           return await Network.CreateUser("testplayer", input_Password.text);
+
+       }).ContinueWith<string>(result =>
+       {
+
+           Debug.Log("CreateUser response: " + result.Result);
+           return Network.GetSessionToken(input_Password.text).Result;
+       }).ContinueWith(result =>
+       {
+           Debug.Log("GetSessionToken response: " + result.Result);
+       });
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
