@@ -21,7 +21,7 @@ public class HoverController : MonoBehaviour
     private int hoverSizeY;
     private int xOffset;
     private int yOffset;
-    
+
     void Start()
     {
         hoverWindow.SetActive(false);
@@ -29,11 +29,9 @@ public class HoverController : MonoBehaviour
         hoverSizeX = (int)(hoverWindow.GetComponent<RectTransform>().sizeDelta.x / 2) + 10;
         hoverSizeY = (int)(hoverWindow.GetComponent<RectTransform>().sizeDelta.y / 2) + 10;
 
-        
-        
+
         xOffset = hoverSizeX;
         yOffset = hoverSizeY;
-
     }
 
     void FixedUpdate()
@@ -55,10 +53,24 @@ public class HoverController : MonoBehaviour
 
         gr.Raycast(ped, rrs);
 
-        if (rrs.Count > 0 && rrs[0].gameObject.layer == 8)
+        
+        if (rrs.Count > 0)
         {
-            // Canvas hover
-            FoundHit(rrs[0].gameObject.GetComponent<Hover>());
+            for (int i = 0; i < rrs.Count; i++)
+            {
+                if (rrs[i].gameObject.layer == 8)
+                {
+                    // Canvas hover
+                    FoundHit(rrs[i].gameObject.GetComponent<Hover>());
+                    break;
+                }
+                else if (i == rrs.Count - 1)
+                {
+                    Toggle(false);
+                    
+                    Debug.Log("Disabled here.");
+                }
+            }
         }
         else if (rrs.Count == 0 && Physics.Raycast(ray, out hit))
         {
@@ -79,7 +91,7 @@ public class HoverController : MonoBehaviour
 
         if (hoverWindow.activeSelf)
         {
-            SetOffset();    
+            SetOffset();
             ((RectTransform)hoverWindow.transform).position = new Vector3(Input.mousePosition.x + xOffset, Input.mousePosition.y + yOffset, 0);
         }
     }
@@ -96,25 +108,25 @@ public class HoverController : MonoBehaviour
         else
             yOffset = -hoverSizeY;
     }
-    
+
     private void FoundHit(Hover hover)
     {
         ((RectTransform)hoverWindow.transform).position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
 
-            headerText.text = hover.headerText;
-            bodyText.text = hover.bodyText;
+        headerText.text = hover.headerText;
+        bodyText.text = hover.bodyText;
 
-            Toggle(true);
-        }
-
-        private void Toggle(bool enable)
-        {
-            if (enable)
-            {
-                hoverWindow.SetActive(true);
-                return;
-            }
-
-            hoverWindow.SetActive(false);
-        }
+        Toggle(true);
     }
+
+    private void Toggle(bool enable)
+    {
+        if (enable)
+        {
+            hoverWindow.SetActive(true);
+            return;
+        }
+
+        hoverWindow.SetActive(false);
+    }
+}
