@@ -106,6 +106,8 @@ public class BattleSim
 // Average runtime 0.00033663ms
     public static (bool attackerWon, List<Group> unitsLeft) Fight(List<Group> defender, List<Group> attacker, bool verbose = false)
     {
+        defender = defender.OrderBy(x => x.unitId).Reverse().ToList();
+        attacker = attacker.OrderBy(x => x.unitId).Reverse().ToList();
         int leftRange = 0;
         for (int i = 0; i < defender.Count; ++i) 
         {
@@ -146,6 +148,18 @@ public class BattleSim
         }
 
         all = all.OrderBy<Group, float>(x => (UnitDefinition.I[x.unitId].speed + (x.right ? 0.5f : 0))).Reverse().ToList();
+
+        if (verbose)
+        {
+            string listOrder = "All list order\n\n";
+            for (int i = 0; i < all.Count; ++i) 
+            {
+                Group group = all[i];
+                listOrder += group.unitId + " | " + group.right + "\n";
+            }
+            UnityEngine.Debug.Log(listOrder);
+
+        }
 
         bool combat = true;
         int turn = 0;
