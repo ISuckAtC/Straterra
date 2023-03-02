@@ -53,13 +53,14 @@ public class HoverController : MonoBehaviour
 
         gr.Raycast(ped, rrs);
 
-        
+
         if (rrs.Count > 0)
         {
             for (int i = 0; i < rrs.Count; i++)
             {
                 if (rrs[i].gameObject.layer == 8)
                 {
+                    rrs[i].gameObject.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
                     // Canvas hover
                     FoundHit(rrs[i].gameObject.GetComponent<Hover>());
                     break;
@@ -67,7 +68,7 @@ public class HoverController : MonoBehaviour
                 else if (i == rrs.Count - 1)
                 {
                     Toggle(false);
-                    
+
                     Debug.Log("Disabled here.");
                 }
             }
