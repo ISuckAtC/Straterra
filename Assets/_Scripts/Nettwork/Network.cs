@@ -5,6 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 public class Network
 {
+    // Storing the token for the players id.
+    public static string tokenIdentity;
+
     // Ensures that http client is created if it doesn't exist already.
     private static HttpClient httpClient;    
     private static bool initialized = false;
@@ -36,6 +39,8 @@ public class Network
 
     public static async Task<string> GetSessionToken(string password)
     {
+        //When you call gettoken automaticly set static token when the method is called.
+        //Insert the static token get thingy here.
         HttpResponseMessage message = await HttpClient.GetAsync("http://localhost:6969/login?" + password);
         return await message.Content.ReadAsStringAsync();
     }
