@@ -8,81 +8,113 @@ using TMPro;
 
 public class HoverController : MonoBehaviour
 {
-    private UnityEngine.UI.GraphicRaycaster gr;
+    public UnityEngine.UI.GraphicRaycaster gr;
 
     public GameObject hoverWindow;
 
     public TMP_Text headerText;
-    public TMP_Text breadText;
-    
+    public TMP_Text bodyText;
+
+    public Vector3 mousePos;
+
+    private int hoverSizeX;
+    private int hoverSizeY;
+    private int xOffset;
+    private int yOffset;
     
     void Start()
     {
-        
-    }
-
-    void Update()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << 8))
-        {
-            if (RaycastAll() != null)
-            {
-                if (!hoverWindow.activeSelf)
-                {
-                    Hover hover = RaycastAll();
-                    
-                    
-                }
-            }
-        }
-        else
-        {
-            
-        }
-    }
-
-    private void Toggle(bool enable)
-    {
-        if (enable)
-        {
-            hoverWindow.SetActive(true);
-            return;
-        }
-        
         hoverWindow.SetActive(false);
+
+        hoverSizeX = (int)(hoverWindow.GetComponent<RectTransform>().sizeDelta.x / 2) + 10;
+        hoverSizeY = (int)(hoverWindow.GetComponent<RectTransform>().sizeDelta.y / 2) + 10;
+
+        
+        
+        xOffset = hoverSizeX;
+        yOffset = hoverSizeY;
+
     }
-    
-    private Hover RaycastAll()
+
+    void FixedUpdate()
+    {
+        mousePos = Input.mousePosition;
+        RaycastAll();
+    }
+
+
+    private void RaycastAll()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        
+
         PointerEventData ped = new PointerEventData(EventSystem.current);
         ped.position = Input.mousePosition;
 
         List<RaycastResult> rrs = new List<RaycastResult>();
-            
+
         gr.Raycast(ped, rrs);
 
-        if (rrs.Count > 0 && rrs[0].gameObject.GetComponent<Hover>() != null)
+        if (rrs.Count > 0 && rrs[0].gameObject.layer == 8)
         {
             // Canvas hover
-            return rrs[0].gameObject.GetComponent<Hover>();
-
+            FoundHit(rrs[0].gameObject.GetComponent<Hover>());
         }
         else if (rrs.Count == 0 && Physics.Raycast(ray, out hit))
         {
             // Worldspace hover
-            if (hit.transform.GetComponent<Hover>() != null)
+            if (hit.transform.gameObject.layer == 8) //GetComponent<Hover>() != null)
             {
-                return hit.transform.GetComponent<Hover>();
+                FoundHit(hit.transform.GetComponent<Hover>());
+            }
+            else
+            {
+                Toggle(false);
             }
         }
+        else
+        {
+            Toggle(false);
+        }
 
-        return null;
+        if (hoverWindow.activeSelf)
+        {
+            SetOffset();    
+            ((RectTransform)hoverWindow.transform).position = new Vector3(Input.mousePosition.x + xOffset, Input.mousePosition.y + yOffset, 0);
+        }
+    }
+
+    private void SetOffset()
+    {
+        if (Input.mousePosition.x > Screen.width - (hoverSizeX * 2))
+            xOffset = -hoverSizeX;
+        else
+            xOffset = hoverSizeX;
+
+        if (Input.mousePosition.y < hoverSizeY * 2)
+            yOffset = hoverSizeY;
+        else
+            yOffset = -hoverSizeY;
     }
     
-}
+    private void FoundHit(Hover hover)
+    {
+        ((RectTransform)hoverWindow.transform).position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+
+            headerText.text = hover.headerText;
+            bodyText.text = hover.bodyText;
+
+            Toggle(true);
+        }
+
+        private void Toggle(bool enable)
+        {
+            if (enable)
+            {
+                hoverWindow.SetActive(true);
+                return;
+            }
+
+            hoverWindow.SetActive(false);
+        }
+    }

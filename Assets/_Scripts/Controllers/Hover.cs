@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Hover : MonoBehaviour
 {
-    public int id;
-
     public string headerText;
+    [TextArea(3,10)]
     public string bodyText;
+
+    public void SetBodyText()
+    {
+        // everything ois fucked and thers literasly no hope
+    }
 }
