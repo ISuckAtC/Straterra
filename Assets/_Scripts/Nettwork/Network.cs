@@ -47,6 +47,10 @@ public class Network
     }
 
 
-                                                              
+    public static async Task<string> GetSelfUser()
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getSelfPlayer?" + tokenIdentity);
+        return await message.Content.ReadAsStringAsync();
+    }                                              
 }
 

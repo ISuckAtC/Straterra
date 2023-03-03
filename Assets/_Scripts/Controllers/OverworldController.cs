@@ -447,8 +447,8 @@ public class OverworldController : MonoBehaviour
         {
             Debug.LogWarning("Not enough resources");
 
-            Image resourceImage;
-            resourceImage.CrossFadeColor(Color.white);
+            //Image resourceImage;
+            //resourceImage.CrossFadeColor(Color.white);
             return;
         }
                                                                                                         // BUG Remove division later
