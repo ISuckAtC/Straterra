@@ -1167,6 +1167,7 @@ MonoBehaviour:
   headerText: {fileID: 1029324866}
   bodyText: {fileID: 2035416886}
   mousePos: {x: 0, y: 0, z: 0}
+  buttonAlpha: 0
 --- !u!1 &58595833
 GameObject:
   m_ObjectHideFlags: 0
@@ -33018,6 +33019,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a987417329b722641b682144d57e1d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foodImage: {fileID: 0}
+  woodImage: {fileID: 0}
+  metalImage: {fileID: 0}
+  orderImage: {fileID: 0}
 --- !u!114 &1415235157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33625,8 +33630,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d91c31a3823b2f4ab9690571445fb80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 128
-  height: 128
+  width: 512
+  height: 512
   gamePlane: {fileID: 1795489984}
 --- !u!81 &1415235161
 AudioListener:
@@ -43170,7 +43175,7 @@ MonoBehaviour:
   temple: {fileID: 1766176045}
   workshop: {fileID: 1874679834418663350, guid: 0b5f17fb73c451e488d5549cd8143b71, type: 3}
   marketplace: {fileID: 0}
-  stockpile: {fileID: 0}
+  warehouse: {fileID: 0}
   trainingMenu: {fileID: 758036532}
   trainingTitle: {fileID: 258241328}
   trainingInput: {fileID: 105179602}
@@ -43179,6 +43184,7 @@ MonoBehaviour:
   trainingWoodcost: {fileID: 691722729}
   trainingMetalcost: {fileID: 608639169}
   trainingTime: {fileID: 1903840043}
+  unitFullbodyArt: {fileID: 0}
 --- !u!1 &1743067033
 GameObject:
   m_ObjectHideFlags: 0

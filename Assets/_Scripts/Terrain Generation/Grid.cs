@@ -47,8 +47,8 @@ public class Grid : MonoBehaviour
         int size = width * height;
 
         // Resize and reposition underlying plane (needed for raycast)
-        gamePlane.transform.position = new Vector3(width / 2f, -0.1f, height / 2f);
-        gamePlane.transform.localScale = new Vector3(width / 10f, 1f, height / 10f);
+        gamePlane.transform.position = new Vector3(width / 2f - 0.5f, -0.1f, height / 2f - 0.5f);
+        gamePlane.transform.localScale = new Vector3((width / 10f) - 0.2f, 1f, (height / 10f) - 0.2f);
         
         pos = new Vector2[size];
         tiles = new Tile[size];
