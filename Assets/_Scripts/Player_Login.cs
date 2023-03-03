@@ -32,13 +32,36 @@ public class Player_Login : MonoBehaviour
            return Network.GetSessionToken(input_Password.text).Result;
        }).ContinueWith(result =>
        {
+            
            Debug.Log("GetSessionToken response: " + result.Result);
        });
+    }
+
+    public void Login()
+    {
+        Task.Run<string>(async () =>
+        {
+            return await Network.GetSessionToken(input_Password.text);
+        }).ContinueWith(result => 
+        {
+            string token = result.Result;
+            Debug.Log(token);
+            if (token != "ERROR")
+            {
+                Network.tokenIdentity = token;
+                LocalData.LoadSelfPlayerOnline();
+                // load game scene
+            }
+        });
+        
+        
+       
+        return;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

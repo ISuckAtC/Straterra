@@ -43,6 +43,7 @@ public class Network
         //When you call gettoken automaticly set static token when the method is called.
         //Insert the static token get thingy here.
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/login?" + password);
+        if ((int)message.StatusCode != 0) return "ERROR";
         return await message.Content.ReadAsStringAsync();
     }
 

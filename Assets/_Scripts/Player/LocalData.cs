@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 public static class LocalData
 {
     private static int? selfUserId;
@@ -18,6 +19,15 @@ public static class LocalData
     }
 
     private static Player? selfPlayer;
+    public static async void LoadSelfPlayerOnline()
+    {
+        Player p = new Player();
+
+        string selfUserJson = await Network.GetSelfUser();
+    
+
+        selfPlayer = p;
+    }
     public static Player SelfPlayer
     {
         get
@@ -25,6 +35,7 @@ public static class LocalData
             if (selfPlayer != null) return selfPlayer.Value;
             else
             {
+
                 // Default testing values
                 Player p = new Player();
 
@@ -44,7 +55,7 @@ public static class LocalData
                 p.swordLevel = 1;
                 p.spearmanLevel = 1;
 
-                p.playerId = 0;
+                p.id = 0;
 
                 selfPlayer = p;
                 return selfPlayer.Value;

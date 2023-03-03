@@ -225,7 +225,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 95090325}
         m_TargetAssemblyTypeName: Player_Login, Assembly-CSharp
-        m_MethodName: ServerCheck
+        m_MethodName: Login
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
