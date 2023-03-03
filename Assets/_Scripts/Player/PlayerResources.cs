@@ -23,7 +23,7 @@ public class PlayerResources
     public int population;
 
     public int[] unitAmounts;
-
+    
 
     public PlayerResources(int food, int wood, int metal, int chaos, int population, int[] unitAmounts)
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,10 @@ public class CityPlayer : MonoBehaviour
     [Header("Static UI")]
     
     public TopBar topBar;
-    
 
+    private bool[] slots = new bool[8];
+    private bool[] buildings = new bool[8];
+    
     [Header("Buildings")]
     public Transform[] buildingSlots;
     public GameObject[] buildingPrefabs;
@@ -43,6 +46,24 @@ public class CityPlayer : MonoBehaviour
         topBar.Order = GameManager.PlayerOrder;
     }
 
+    public void Build(int building, int slot)
+    {
+        // Check if building is not built and slot is available.
+        if (slots[slot]) throw new Exception("Slot taken by another building.");
+        if (buildings[building]) throw new Exception("Your village already contains this building.");
+
+        
+        // Reserve slot for building.
+        slots[slot] = true;
+        buildings[building] = true;
+
+        
+        // Add building to queue menu.
+        // Create building after queue finished.
+        // Run loadbuildings again?
+
+    }
+    
     public void LoadBuildings()
     {
         for (int i = 0; i < 8; ++i)
