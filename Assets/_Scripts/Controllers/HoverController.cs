@@ -17,6 +17,8 @@ public class HoverController : MonoBehaviour
 
     public Vector3 mousePos;
 
+    [Range (0, 1)] public float buttonAlpha;
+
     private int hoverSizeX;
     private int hoverSizeY;
     private int xOffset;
@@ -60,7 +62,8 @@ public class HoverController : MonoBehaviour
             {
                 if (rrs[i].gameObject.layer == 8)
                 {
-                    rrs[i].gameObject.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.5f;
+                    rrs[i].gameObject.GetComponent<Image>().alphaHitTestMinimumThreshold = buttonAlpha;
+                    
                     // Canvas hover
                     FoundHit(rrs[i].gameObject.GetComponent<Hover>());
                     break;

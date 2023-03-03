@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class OverworldController : MonoBehaviour
 {
@@ -445,6 +446,9 @@ public class OverworldController : MonoBehaviour
             orderCost > GameManager.PlayerOrder)
         {
             Debug.LogWarning("Not enough resources");
+
+            Image resourceImage;
+            resourceImage.CrossFadeColor(Color.white);
             return;
         }
                                                                                                         // BUG Remove division later

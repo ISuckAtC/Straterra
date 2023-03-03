@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class CityPlayer : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class CityPlayer : MonoBehaviour
     public GameObject workshop;
 
     public GameObject marketplace;
-    public GameObject stockpile;
+    public GameObject warehouse;
 
     private List<GameObject> buildingsInterfaces;
 
@@ -110,6 +111,15 @@ public class CityPlayer : MonoBehaviour
                         menu.slotId = i;
                         break;
                     }
+                case TownBuildingType.warehouse:
+                    {
+                        UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
+                        button.onClick.AddListener(OpenWareHouse);
+                        BuildingMenu menu = warehouse.GetComponent<BuildingMenu>();
+                        menu.id = id;
+                        menu.slotId = i;
+                        break;
+                    }
             }
         }
     }
@@ -133,30 +143,42 @@ public class CityPlayer : MonoBehaviour
             barracksMenu.level.text = "Lv. " + TownBuildingDefinition.I[barracksMenu.id].level;
             buildingsInterfaces.Add(barracks);
         }
-        if (smithy) buildingsInterfaces.Add(smithy);
+        if (smithy)
         {
             BuildingMenu smithyMenu = smithy.GetComponent<BuildingMenu>();
             smithyMenu.title.text = TownBuildingDefinition.I[smithyMenu.id].name.ToUpper();
             smithyMenu.level.text = "Lv. " + TownBuildingDefinition.I[smithyMenu.id].level;
             buildingsInterfaces.Add(smithy);
         }
-        if (academy) buildingsInterfaces.Add(academy);
+        if (academy)
         {
             BuildingMenu academyMenu = academy.GetComponent<BuildingMenu>();
             academyMenu.title.text = TownBuildingDefinition.I[academyMenu.id].name.ToUpper();
             academyMenu.level.text = "Lv. " + TownBuildingDefinition.I[academyMenu.id].level;
             buildingsInterfaces.Add(academy);
         }
-        if (temple) buildingsInterfaces.Add(temple);
+        if (temple)
         {
             BuildingMenu templeMenu = temple.GetComponent<BuildingMenu>();
             templeMenu.title.text = TownBuildingDefinition.I[templeMenu.id].name.ToUpper();
             templeMenu.level.text = "Lv. " + TownBuildingDefinition.I[templeMenu.id].level;
             buildingsInterfaces.Add(temple);
         }
-        if (workshop) buildingsInterfaces.Add(workshop);
+        if (workshop)
+        {
+            BuildingMenu workshopMenu = workshop.GetComponent<BuildingMenu>();
+            workshopMenu.title.text = TownBuildingDefinition.I[workshopMenu.id].name.ToUpper();
+            workshopMenu.level.text = "Lv. " + TownBuildingDefinition.I[workshopMenu.id].level;
+            buildingsInterfaces.Add(workshop);
+        }
         if (marketplace) buildingsInterfaces.Add(marketplace);
-        if (stockpile) buildingsInterfaces.Add(stockpile);
+        if (warehouse)
+        {
+            BuildingMenu warehouseMenu = workshop.GetComponent<BuildingMenu>();
+            warehouseMenu.title.text = TownBuildingDefinition.I[warehouseMenu.id].name.ToUpper();
+            warehouseMenu.level.text = "Lv. " + TownBuildingDefinition.I[warehouseMenu.id].level;
+            buildingsInterfaces.Add(warehouse);
+        }
     }
 
     // General button methods
@@ -193,14 +215,15 @@ public class CityPlayer : MonoBehaviour
     {
         buildingsInterfaces.ForEach(x => x.SetActive(x == marketplace));
     }
-    public void OpenStockpile()
+    public void OpenWareHouse()
     {
-        buildingsInterfaces.ForEach(x => x.SetActive(x == stockpile));
+        buildingsInterfaces.ForEach(x => x.SetActive(x == warehouse));
     }
     #endregion
 
     #region Townhall
     [Header("TownHall")]
+
 
 
 
@@ -216,6 +239,7 @@ public class CityPlayer : MonoBehaviour
     public TMPro.TMP_Text trainingWoodcost;
     public TMPro.TMP_Text trainingMetalcost;
     public TMPro.TMP_Text trainingTime;
+    public Image unitFullbodyArt;
 
     private Unit trainingUnit;
     public void OpenTrainingMenu(int id)
@@ -250,6 +274,10 @@ public class CityPlayer : MonoBehaviour
         trainingSlider.minValue = 0;
         trainingSlider.maxValue = maxAmount;
         trainingMenu.SetActive(true);
+        
+        Sprite unitImage = Resources.Load<Sprite>(trainingUnit.spritePath);
+        unitFullbodyArt.sprite = unitImage;
+        Debug.Log(trainingUnit.spritePath);
         OnTrainingInputChanged();
     }
     public void OnTrainingSliderChanged()

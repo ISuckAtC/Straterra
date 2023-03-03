@@ -87,6 +87,7 @@ public class BuildingMenu : MonoBehaviour
         upgradeMenu.SetActive(false);
     }
 
+    
     public void Upgrade()
     {
         TownBuilding building = TownBuildingDefinition.I[id];
@@ -107,7 +108,13 @@ public class BuildingMenu : MonoBehaviour
             orderCost > GameManager.PlayerOrder)
         {
             Debug.LogWarning("Not enough resources");
+            if (foodCost > GameManager.PlayerFood)
+            {
+                //GameManager.LackingResources("Food");
+            }
             return;
+
+            
         }
 
         GameManager.PlayerFood -= foodCost;

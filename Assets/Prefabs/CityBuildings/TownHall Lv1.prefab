@@ -101,7 +101,8 @@ GameObject:
   - component: {fileID: 1874679834418663346}
   - component: {fileID: 1874679834418663347}
   - component: {fileID: 1874679834418663344}
-  m_Layer: 5
+  - component: {fileID: 5514197111564070652}
+  m_Layer: 8
   m_Name: TownHall Lv1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,6 +225,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5514197111564070652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874679834418663350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headerText: Town Hall
+  bodyText: Lv1 building, Governs town buildings' max level
 --- !u!1 &4278943307589940430
 GameObject:
   m_ObjectHideFlags: 0

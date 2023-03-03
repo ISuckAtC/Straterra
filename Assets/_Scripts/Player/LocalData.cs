@@ -36,6 +36,8 @@ public static class LocalData
                 p.cityBuildingSlots[3] = 9;
                 p.cityBuildingSlots[4] = 12;
                 p.cityBuildingSlots[5] = 15;
+                p.cityBuildingSlots[6] = 18;
+
 
                 p.archerLevel = 1;
                 p.cavalryLevel = 1;

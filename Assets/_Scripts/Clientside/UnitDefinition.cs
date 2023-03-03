@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public struct Unit
 {
@@ -24,6 +25,7 @@ public struct Unit
     public int woodCost;
     public int metalCost;
     public int orderCost;
+    public string spritePath;
 
     public int GetBonusDamage(UnitType targetType)
     {
@@ -93,6 +95,7 @@ public class UnitDefinition
         archer.foodCost = 40;
         archer.woodCost = 50;
         archer.metalCost = 5;
+        archer.spritePath = "Sprites/Army/Img_Archer_Lvl_1";
         units[0] = archer;
 
         Unit cavalry = new Unit();
@@ -112,6 +115,7 @@ public class UnitDefinition
         cavalry.counterBonus = 0;
         cavalry.foodCost = 200;
         cavalry.metalCost = 50;
+        cavalry.spritePath = "Sprites/Army/Img_Cavalry_Lvl_1";
         units[1] = cavalry;
 
        // cavalry.bonusDamage.Add(UnitType.INFANTRY, 2);
@@ -133,6 +137,7 @@ public class UnitDefinition
         swordsman.counterBonus = 0;
         swordsman.foodCost = 50;
         swordsman.metalCost = 10;
+        swordsman.spritePath = "Sprites/Army/Img_Swordman_Lvl_1";
         units[2] = swordsman;
 
         Unit spearman = new Unit();
@@ -152,6 +157,7 @@ public class UnitDefinition
         spearman.counterBonus = 0;
         spearman.foodCost = 30;
         spearman.woodCost = 20;
+        spearman.spritePath = "Sprites/Army/Img_Spearman_Lvl_1";
 
         spearman.bonusDamage.Add(UnitType.CAVALRY, 10);
 
