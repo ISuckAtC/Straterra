@@ -20,7 +20,7 @@ public class Player_Login : MonoBehaviour
 
     public void ServerCheck()     //Calls functions from network.
     {
-        //Debug.Log(input_Password.text);
+        Debug.Log(input_Password.text);
         Task.Run<string>(async () =>
        {
            return await Network.CreateUser("testplayer", input_Password.text);

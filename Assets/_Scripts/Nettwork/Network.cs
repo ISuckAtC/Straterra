@@ -24,9 +24,10 @@ public class Network
                                                            
     public static async Task<string> CreateUser(string username, string password)
     {
+        UnityEngine.Debug.Log("aa");
         try
         {
-            HttpResponseMessage responseMessage = await HttpClient.GetAsync("http://localhost:6969/createPlayer?" + username + "&" + password);
+            HttpResponseMessage responseMessage = await HttpClient.GetAsync("http://18.216.109.151:80/createPlayer?" + username + "&" + password);
             return await responseMessage.Content.ReadAsStringAsync();
         }
         catch (Exception e)
@@ -41,7 +42,7 @@ public class Network
     {
         //When you call gettoken automaticly set static token when the method is called.
         //Insert the static token get thingy here.
-        HttpResponseMessage message = await HttpClient.GetAsync("http://localhost:6969/login?" + password);
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/login?" + password);
         return await message.Content.ReadAsStringAsync();
     }
 
