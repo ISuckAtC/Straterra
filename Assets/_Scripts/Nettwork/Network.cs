@@ -48,7 +48,7 @@ public class Network
 
     public static async Task<string> GetSelfUser()
     {
-        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getSelfPlayer?" + tokenIdentity);
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getSelfUser?" + tokenIdentity);
         return await message.Content.ReadAsStringAsync();
     }   
     
@@ -97,6 +97,18 @@ public class Network
     }
 
 
+    public static async Task<string> GetVillageBuilding(int id)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getVillageBuilding?" + tokenIdentity + "&" + id);
+        
+        return await message.Content.ReadAsStringAsync();
+    }
 
+    public static async Task<string> GetBattleReport(int id)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getBattleReport?" + tokenIdentity + "&" + id);
+
+        return await message.Content.ReadAsStringAsync();
+    }
 }
 
