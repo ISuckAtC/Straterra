@@ -40,8 +40,6 @@ public class Network
 
     public static async Task<string> GetSessionToken(string password)
     {
-        //When you call gettoken automaticly set static token when the method is called.
-        //Insert the static token get thingy here.
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/login?" + password);
         if ((int)message.StatusCode != 0) return "ERROR";
         return await message.Content.ReadAsStringAsync();
@@ -52,6 +50,53 @@ public class Network
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getSelfPlayer?" + tokenIdentity);
         return await message.Content.ReadAsStringAsync();
-    }                                              
+    }   
+    
+    public static async Task<bool> TrainUnit(int id, int amount, int flags)
+    {            
+        // Send TrainUnit information to server. The parameters are seperated by "&" and sent to the server.
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/trainUnit?" + tokenIdentity + "&" + id + "&" + amount + "&" + flags);
+      
+        // We verify that what we got from the server is a bool. Tryparse return false if it isn't a bool.
+        if (bool.TryParse(await message.Content.ReadAsStringAsync(), out bool parse))
+        {
+            // When we know that the value we got from the server is in fact a bool, we can simply return it.
+            return parse;
+        }
+
+        // If the parse fails we assume the method failed serverside.
+        return false;
+    }
+
+    public static async Task<string> GetMapTile(int id)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getMapTile?" + tokenIdentity + "&" + id);
+
+        return await message.Content.ReadAsStringAsync();
+    }
+
+    public static async Task<string> GetMap()
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getMap?" + tokenIdentity);
+
+        return await message.Content.ReadAsStringAsync();
+    }
+
+    public static async Task<string> GetVillage(int id)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getVillage?" + tokenIdentity + "&" + id);
+
+        return await message.Content.ReadAsStringAsync();
+    }
+
+    public static async Task<string> GetUser(int id)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getUser?" + tokenIdentity + "&" + id);
+
+        return await message.Content.ReadAsStringAsync();
+    }
+
+
+
 }
 
