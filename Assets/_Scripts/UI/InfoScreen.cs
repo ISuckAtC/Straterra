@@ -139,7 +139,7 @@ public class InfoScreen : MonoBehaviour
     {
         int owner = Grid._instance.tiles[id].owner;
 
-        attackButton.transform.parent.gameObject.SetActive(owner != LocalData.SelfPlayer.id);
+        attackButton.transform.parent.gameObject.SetActive(owner != LocalData.SelfPlayer.userId);
 
         
         

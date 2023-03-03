@@ -1,10 +1,11 @@
 public struct Player
 {
-    public int id;
-    public string name;
+    public int userId;
+    public string userName;
     public int cityLocation;
-    public byte?[] cityBuildingSlots;
+    public byte[] citySlots;
     public int color;
+    public int allianceId;
     public byte swordLevel;
     public byte archerLevel;
     public byte cavalryLevel;

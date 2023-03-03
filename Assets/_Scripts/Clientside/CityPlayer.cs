@@ -48,8 +48,8 @@ public class CityPlayer : MonoBehaviour
         for (int i = 0; i < 8; ++i)
         {
             if (buildingSlots[i].childCount > 0) Destroy(buildingSlots[i].GetChild(0).gameObject);
-            if (LocalData.SelfPlayer.cityBuildingSlots[i] == null) return;
-            int id = LocalData.SelfPlayer.cityBuildingSlots[i].Value;
+            //if (LocalData.SelfPlayer.citySlots[i] == null) return;
+            int id = LocalData.SelfPlayer.citySlots[i];
             GameObject buildingObject = Instantiate(buildingPrefabs[id], buildingSlots[i].position, Quaternion.identity);
             buildingObject.transform.parent = buildingSlots[i];
 
@@ -321,7 +321,7 @@ public class CityPlayer : MonoBehaviour
         Debug.Log(trainingUnit.trainingTime + " | " + trainingUnit.trainingTime * amount);
 
         bool currentEvents = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Count() > 0;
-        new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfPlayer.id, !currentEvents);
+        new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfPlayer.userId, !currentEvents);
         CloseTrainingMenu();
     }
     #endregion
