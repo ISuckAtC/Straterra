@@ -45,7 +45,7 @@ public class Player_Login : MonoBehaviour
         }).ContinueWith(result => 
         {
             string token = result.Result;
-            Debug.Log(token);
+            Debug.Log("token is = " + token);
             if (token != "ERROR")
             {
                 Network.tokenIdentity = token;
