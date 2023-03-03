@@ -41,7 +41,7 @@ public class Network
     public static async Task<string> GetSessionToken(string password)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/login?" + password);
-        if ((int)message.StatusCode != 0) return "ERROR";
+        if (message.StatusCode != HttpStatusCode.OK) return "ERROR";
         return await message.Content.ReadAsStringAsync();
     }
 
