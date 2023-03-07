@@ -30,7 +30,7 @@ public static class LocalData
         Player p = UnityEngine.JsonUtility.FromJson<Player>(selfUserJson);
   
         UnityEngine.Debug.Log(p.userName + " | " + p.userId);
-        UnityEngine.Debug.Log(p.citySlots[5]);
+        UnityEngine.Debug.Log(p.cityBuildingSlots[5]);
         
 
         selfPlayer = p;
@@ -50,17 +50,18 @@ public static class LocalData
                 // Default testing values
                 Player p = new Player();
 
-                p.citySlots = new byte[8];
-                System.Array.Fill<byte>(p.citySlots, 0);
-                p.citySlots[0] = 0;
-                p.citySlots[1] = 3;
-                p.citySlots[2] = 6;
-                p.citySlots[3] = 9;
-                p.citySlots[4] = 12;
-                p.citySlots[5] = 15;
-                p.citySlots[6] = 18;
-
-
+                p.cityBuildingSlots = new byte[8];
+                System.Array.Fill<byte>(p.cityBuildingSlots, 255);
+                /*
+                p.cityBuildingSlots[0] = 0;
+                p.cityBuildingSlots[1] = 3;
+                p.cityBuildingSlots[2] = 6;
+                p.cityBuildingSlots[3] = 9;
+                p.cityBuildingSlots[4] = 12;
+                p.cityBuildingSlots[5] = 15;
+                p.cityBuildingSlots[6] = 18;
+                p.cityBuildingSlots[7] = 255;
+   */
                 p.archerLevel = 1;
                 p.cavalryLevel = 1;
                 p.swordLevel = 1;

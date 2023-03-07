@@ -71,8 +71,6 @@ public class HoverController : MonoBehaviour
                 else if (i == rrs.Count - 1)
                 {
                     Toggle(false);
-
-                    Debug.Log("Disabled here.");
                 }
             }
         }
@@ -95,12 +93,12 @@ public class HoverController : MonoBehaviour
 
         if (hoverWindow.activeSelf)
         {
-            SetOffset();
+            SetOffsetAndSize();
             ((RectTransform)hoverWindow.transform).position = new Vector3(Input.mousePosition.x + xOffset, Input.mousePosition.y + yOffset, 0);
         }
     }
 
-    private void SetOffset()
+    private void SetOffsetAndSize()
     {
         if (Input.mousePosition.x > Screen.width - (hoverSizeX * 2))
             xOffset = -hoverSizeX;
@@ -120,6 +118,8 @@ public class HoverController : MonoBehaviour
         headerText.text = hover.headerText;
         bodyText.text = hover.bodyText;
 
+        
+        
         Toggle(true);
     }
 
