@@ -30,9 +30,9 @@ public class OverworldController : MonoBehaviour
     public Transform buildMenu;
     private int previousTile = 1;
     public UnityEngine.UI.GraphicRaycaster gr;
-
-    private Vector2 playerVillagePosition;
     
+    private Vector2 playerVillagePosition;
+    public UnityEngine.Tilemaps.TileBase flag;
     
     void Start()
     {
@@ -50,7 +50,8 @@ public class OverworldController : MonoBehaviour
         cam.orthographicSize = zoom;
 
         int startingposition = FindStartingPosition.FirstVillage();
-        
+        Vector2Int vPos = Grid._instance.GetPosition(startingposition);
+        PlaceTiles._instance.DiplomacyMap.SetTile(new Vector3Int( vPos.x, vPos.y, 0), flag);
         //PlaceBuildingOnSelectedTile(1/*, startingposition*/);
 
         PlaceOtherBuilding(1, 1, startingposition);

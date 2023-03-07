@@ -33119,7 +33119,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1400830159}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33888,6 +33888,7 @@ MonoBehaviour:
   selectedTileHighlight: {fileID: 760085804}
   buildMenu: {fileID: 1281086703}
   gr: {fileID: 1221880313}
+  flag: {fileID: 11400000, guid: f43ec2662fbdbd641beab9a6ac30482c, type: 2}
 --- !u!114 &1415235158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34430,7 +34431,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf7b00fc31fd8954694fa4f7d94fa449, type: 2}
   tilemap: {fileID: 2075945052}
   overlayMap: {fileID: 373919092}
-  DiplomacyMap: {fileID: 0}
+  DiplomacyMap: {fileID: 1400830162}
 --- !u!114 &1415235159
 MonoBehaviour:
   m_ObjectHideFlags: 0
