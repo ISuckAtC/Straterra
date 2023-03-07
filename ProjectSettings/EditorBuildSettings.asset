@@ -11,7 +11,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/RuneTesting.unity
     guid: 6cf899658fb2b2d44927f65bd4d728af
+  - enabled: 0
+    path: Assets/Scenes/Login.unity
+    guid: 31558e0165986a542a22c0f443c09663
   - enabled: 1
+    path: Assets/Scenes/RunErikPrototype.unity
+    guid: 916461db32f51fc40bf586db0509ff99
+  - enabled: 0
     path: Assets/Scenes/RunePrototype.unity
     guid: 38533db079ed46146b36fef42b96d7f2
   m_configObjects: {}

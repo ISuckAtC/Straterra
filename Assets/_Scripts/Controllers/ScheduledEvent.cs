@@ -80,7 +80,7 @@ public class ScheduledTownBuildEvent : ScheduledEvent
     {
         base.Complete();
 
-        LocalData.SelfPlayer.cityBuildingSlots[slot] = townBuildingId;
+        LocalData.SelfPlayer.citySlots[slot] = townBuildingId;
         
         CityPlayer.cityPlayer.LoadBuildings();
         CityPlayer.cityPlayer.LoadBuildingInterfaces();

@@ -439,7 +439,7 @@ public class CityPlayer : MonoBehaviour
         Debug.Log(trainingUnit.trainingTime + " | " + trainingUnit.trainingTime * amount);
 
         bool currentEvents = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Count() > 0;
-        new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfPlayer.id, !currentEvents);
+        new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfPlayer.userId, !currentEvents);
         CloseTrainingMenu();
     }
     #endregion

@@ -30,9 +30,9 @@ public class OverworldController : MonoBehaviour
     public Transform buildMenu;
     private int previousTile = 1;
     public UnityEngine.UI.GraphicRaycaster gr;
-
-    private Vector2 playerVillagePosition;
     
+    private Vector2 playerVillagePosition;
+    public UnityEngine.Tilemaps.TileBase flag;
     
     void Start()
     {
@@ -50,10 +50,11 @@ public class OverworldController : MonoBehaviour
         cam.orthographicSize = zoom;
 
         int startingposition = FindStartingPosition.FirstVillage();
-        
+        Vector2Int vPos = Grid._instance.GetPosition(startingposition);
+        PlaceTiles._instance.DiplomacyMap.SetTile(new Vector3Int( vPos.x, vPos.y, 0), flag);
         //PlaceBuildingOnSelectedTile(1/*, startingposition*/);
 
-        PlaceOtherBuilding(1, 1);
+        PlaceOtherBuilding(1, 1, startingposition);
         
         Vector2 cameraposition = Grid._instance.GetPosition(startingposition);
         
@@ -67,13 +68,13 @@ public class OverworldController : MonoBehaviour
         
         
         int enemyposition = FindStartingPosition.FirstVillage();
-        PlaceOtherBuilding(1, 5);
+        PlaceOtherBuilding(1, 5, enemyposition);
 
         
 
         
         enemyposition = FindStartingPosition.FirstVillage();
-        PlaceOtherBuilding(1, 6);
+        PlaceOtherBuilding(1, 6, enemyposition);
 
         
         
@@ -388,7 +389,7 @@ public class OverworldController : MonoBehaviour
         if (army.Count > 0)
         {
             Debug.Log("Scheduling attack");
-            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(5, army, position, LocalData.SelfPlayer.cityLocation, LocalData.SelfPlayer.id);
+            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(5, army, position, LocalData.SelfPlayer.cityLocation, LocalData.SelfPlayer.userId);
         }
     }
 
@@ -449,7 +450,7 @@ public class OverworldController : MonoBehaviour
             return;
         }
                                                                                                         // BUG Remove division later
-        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, (byte)buildingId, selectedPosition, LocalData.SelfPlayer.id);
+        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, (byte)buildingId, selectedPosition, LocalData.SelfPlayer.userId);
         
         GameManager.PlayerFood -= mapBuilding.foodCost;
         GameManager.PlayerWood -= mapBuilding.woodCost;
@@ -463,10 +464,10 @@ public class OverworldController : MonoBehaviour
         
     }
     
-    public void PlaceOtherBuilding(byte buildingId, int owner)
+    public void PlaceOtherBuilding(byte buildingId, int owner, int position)
     {
-        Vector2Int selectedPosition = new Vector2Int(UnityEngine.Random.Range(1, Grid._instance.width -1), UnityEngine.Random.Range(1, Grid._instance.height -1));
-        int position = Grid._instance.GetIdByVec(selectedPosition);
+        //Vector2Int selectedPosition = new Vector2Int(UnityEngine.Random.Range(1, Grid._instance.width -1), UnityEngine.Random.Range(1, Grid._instance.height -1));
+        //int position = Grid._instance.GetIdByVec(selectedPosition);
         
         if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
         if (Grid._instance.tiles[position].tileType == 1) throw new Exception("Tiletype 1 is water. No buildings can be built on water.");

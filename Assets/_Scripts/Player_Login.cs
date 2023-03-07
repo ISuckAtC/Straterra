@@ -5,12 +5,15 @@ using UnityEngine.UI;
 using TMPro;
 using System.Threading.Tasks;
 using System.Threading;
+using UnityEngine.SceneManagement;
 public class Player_Login : MonoBehaviour
 {
     public TMP_InputField input_Password;    //Player types their password here to login.
     public Button button_Confirm;     //To send the the data to server?
 
     public string a;
+
+    private bool loadScene;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +42,7 @@ public class Player_Login : MonoBehaviour
 
     public void Login()
     {
+        GameObject thisObject = gameObject;
         Task.Run<string>(async () =>
         {
             return await Network.GetSessionToken(input_Password.text);
@@ -50,8 +54,13 @@ public class Player_Login : MonoBehaviour
             {
                 Network.tokenIdentity = token;
                 LocalData.LoadSelfPlayerOnline();
+
                 // load game scene
+                loadScene = true;
+                
+                
             }
+
         });
         
         
@@ -62,6 +71,10 @@ public class Player_Login : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (loadScene)
+        {
+            loadScene = false;
+            SceneManager.LoadScene("RunErikPrototype", LoadSceneMode.Single);
+        }
     }
 }
