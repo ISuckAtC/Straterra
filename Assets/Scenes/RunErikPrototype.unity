@@ -27498,7 +27498,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -217, y: 45}
+  m_AnchoredPosition: {x: -1173, y: 45}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1154352890
@@ -33659,6 +33659,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a987417329b722641b682144d57e1d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foodImage: {fileID: 0}
+  woodImage: {fileID: 0}
+  metalImage: {fileID: 0}
+  orderImage: {fileID: 0}
 --- !u!114 &1415235157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33965,7 +33969,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3f1da380d47c544cb4a4f3a3eb8d09b, type: 2}
   buildingTiles:
   - {fileID: 11400000, guid: af0a504f7a816b44faeea1602cbc43fd, type: 2}
-  - {fileID: 11400000, guid: 2d2331cb96d86374fbbfe3e0b092e268, type: 2}
+  - {fileID: 11400000, guid: 673d12731988ba7439c19362275c9c55, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
