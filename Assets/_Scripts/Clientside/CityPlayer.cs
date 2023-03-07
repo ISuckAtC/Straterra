@@ -9,12 +9,12 @@ public class CityPlayer : MonoBehaviour
 {
     public static CityPlayer cityPlayer;
     [Header("Static UI")]
-    
+
     public TopBar topBar;
 
     private bool[] slots = new bool[8];
     private bool[] buildings = new bool[8];
-    
+
     [Header("Buildings")]
     public Transform[] buildingSlots;
     public GameObject[] buildingPrefabs;
@@ -32,7 +32,7 @@ public class CityPlayer : MonoBehaviour
 
     private List<GameObject> buildingsInterfaces;
 
-    
+
 
     public void Start()
     {
@@ -40,8 +40,8 @@ public class CityPlayer : MonoBehaviour
         LoadBuildings();
         LoadBuildingInterfaces();
 
-        topBar.Food =  GameManager.PlayerFood;
-        topBar.Wood =  GameManager.PlayerWood;
+        topBar.Food = GameManager.PlayerFood;
+        topBar.Wood = GameManager.PlayerWood;
         topBar.Metal = GameManager.PlayerMetal;
         topBar.Order = GameManager.PlayerOrder;
     }
@@ -52,18 +52,18 @@ public class CityPlayer : MonoBehaviour
         if (slots[slot]) throw new Exception("Slot taken by another building.");
         if (buildings[building]) throw new Exception("Your village already contains this building.");
 
-        
+
         // Reserve slot for building.
         slots[slot] = true;
         buildings[building] = true;
 
-        
+
         // Add building to queue menu.
         // Create building after queue finished.
         // Run loadbuildings again?
 
     }
-    
+
     public void LoadBuildings()
     {
         for (int i = 0; i < 8; ++i)
@@ -154,6 +154,7 @@ public class CityPlayer : MonoBehaviour
             Debug.Log("Changing townhall name: " + TownBuildingDefinition.I[townhallMenu.id].name);
             townhallMenu.title.text = TownBuildingDefinition.I[townhallMenu.id].name.ToUpper();
             townhallMenu.level.text = "Lv. " + TownBuildingDefinition.I[townhallMenu.id].level;
+            townhallMenu.nextLevel.sprite = buildingPrefabs[townhallMenu.id + 1].GetComponent<Image>().sprite;
             buildingsInterfaces.Add(townHall);
         }
         if (barracks)
@@ -162,6 +163,7 @@ public class CityPlayer : MonoBehaviour
             BuildingMenu barracksMenu = barracks.GetComponent<BuildingMenu>();
             barracksMenu.title.text = TownBuildingDefinition.I[barracksMenu.id].name.ToUpper();
             barracksMenu.level.text = "Lv. " + TownBuildingDefinition.I[barracksMenu.id].level;
+            barracksMenu.nextLevel.sprite = buildingPrefabs[barracksMenu.id + 1].GetComponent<Image>().sprite;
             buildingsInterfaces.Add(barracks);
         }
         if (smithy)
@@ -169,6 +171,7 @@ public class CityPlayer : MonoBehaviour
             BuildingMenu smithyMenu = smithy.GetComponent<BuildingMenu>();
             smithyMenu.title.text = TownBuildingDefinition.I[smithyMenu.id].name.ToUpper();
             smithyMenu.level.text = "Lv. " + TownBuildingDefinition.I[smithyMenu.id].level;
+            smithyMenu.nextLevel.sprite = buildingPrefabs[smithyMenu.id + 1].GetComponent<Image>().sprite;
             buildingsInterfaces.Add(smithy);
         }
         if (academy)
@@ -176,6 +179,7 @@ public class CityPlayer : MonoBehaviour
             BuildingMenu academyMenu = academy.GetComponent<BuildingMenu>();
             academyMenu.title.text = TownBuildingDefinition.I[academyMenu.id].name.ToUpper();
             academyMenu.level.text = "Lv. " + TownBuildingDefinition.I[academyMenu.id].level;
+            academyMenu.nextLevel.sprite = buildingPrefabs[academyMenu.id + 1].GetComponent<Image>().sprite;
             buildingsInterfaces.Add(academy);
         }
         if (temple)
@@ -183,6 +187,7 @@ public class CityPlayer : MonoBehaviour
             BuildingMenu templeMenu = temple.GetComponent<BuildingMenu>();
             templeMenu.title.text = TownBuildingDefinition.I[templeMenu.id].name.ToUpper();
             templeMenu.level.text = "Lv. " + TownBuildingDefinition.I[templeMenu.id].level;
+            templeMenu.nextLevel.sprite = buildingPrefabs[templeMenu.id + 1].GetComponent<Image>().sprite;
             buildingsInterfaces.Add(temple);
         }
         if (workshop)
@@ -190,14 +195,23 @@ public class CityPlayer : MonoBehaviour
             BuildingMenu workshopMenu = workshop.GetComponent<BuildingMenu>();
             workshopMenu.title.text = TownBuildingDefinition.I[workshopMenu.id].name.ToUpper();
             workshopMenu.level.text = "Lv. " + TownBuildingDefinition.I[workshopMenu.id].level;
+            workshopMenu.nextLevel.sprite = buildingPrefabs[workshopMenu.id + 1].GetComponent<Image>().sprite;
             buildingsInterfaces.Add(workshop);
         }
-        if (marketplace) buildingsInterfaces.Add(marketplace);
+        if (marketplace)
+        {
+            BuildingMenu marketplaceMenu = marketplace.GetComponent<BuildingMenu>();
+            marketplaceMenu.title.text = TownBuildingDefinition.I[marketplaceMenu.id].name.ToUpper();
+            marketplaceMenu.level.text = "Lv. " + TownBuildingDefinition.I[marketplaceMenu.id].level;
+            marketplaceMenu.nextLevel.sprite = buildingPrefabs[marketplaceMenu.id + 1].GetComponent<Image>().sprite;
+            buildingsInterfaces.Add(marketplace);
+        }
         if (warehouse)
         {
-            BuildingMenu warehouseMenu = workshop.GetComponent<BuildingMenu>();
+            BuildingMenu warehouseMenu = warehouse.GetComponent<BuildingMenu>();
             warehouseMenu.title.text = TownBuildingDefinition.I[warehouseMenu.id].name.ToUpper();
             warehouseMenu.level.text = "Lv. " + TownBuildingDefinition.I[warehouseMenu.id].level;
+            warehouseMenu.nextLevel.sprite = buildingPrefabs[warehouseMenu.id + 1].GetComponent<Image>().sprite;
             buildingsInterfaces.Add(warehouse);
         }
     }
@@ -295,7 +309,7 @@ public class CityPlayer : MonoBehaviour
         trainingSlider.minValue = 0;
         trainingSlider.maxValue = maxAmount;
         trainingMenu.SetActive(true);
-        
+
         Sprite unitImage = Resources.Load<Sprite>(trainingUnit.spritePath);
         unitFullbodyArt.sprite = unitImage;
         Debug.Log(trainingUnit.spritePath);
@@ -325,14 +339,30 @@ public class CityPlayer : MonoBehaviour
         int woodCost = amount * trainingUnit.woodCost;
         int metalCost = amount * trainingUnit.metalCost;
         int orderCost = amount * trainingUnit.orderCost;
-        if (foodCost > GameManager.PlayerFood ||
-            woodCost > GameManager.PlayerWood ||
+        if (foodCost >  GameManager.PlayerFood ||
+            woodCost >  GameManager.PlayerWood ||
             metalCost > GameManager.PlayerMetal ||
             orderCost > GameManager.PlayerOrder)
         {
-            Debug.LogWarning("Not enough resources");
+            if (foodCost > GameManager.PlayerFood)
+            {
+                GameManager.I.LackingResources("Food");
+            }
+            if (woodCost > GameManager.PlayerWood)
+            {
+                GameManager.I.LackingResources("Wood");
+            }
+            if (metalCost > GameManager.PlayerMetal)
+            {
+                GameManager.I.LackingResources("Metal");
+            }
+            if (orderCost > GameManager.PlayerOrder)
+            {
+                GameManager.I.LackingResources("Order");
+            }
             return;
         }
+
 
         GameManager.PlayerFood -= foodCost;
         GameManager.PlayerWood -= woodCost;

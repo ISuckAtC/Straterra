@@ -440,12 +440,27 @@ public class OverworldController : MonoBehaviour
         int metalCost = mapBuilding.metalCost;
         int orderCost = mapBuilding.orderCost;
 
-        if (foodCost > GameManager.PlayerFood ||
-            woodCost > GameManager.PlayerWood ||
+        if (foodCost >  GameManager.PlayerFood ||
+            woodCost >  GameManager.PlayerWood ||
             metalCost > GameManager.PlayerMetal ||
             orderCost > GameManager.PlayerOrder)
         {
-            Debug.LogWarning("Not enough resources");
+            if (foodCost > GameManager.PlayerFood)
+            {
+                GameManager.I.LackingResources("Food");
+            }
+            if (woodCost > GameManager.PlayerWood)
+            {
+                GameManager.I.LackingResources("Wood");
+            }
+            if (metalCost > GameManager.PlayerMetal)
+            {
+                GameManager.I.LackingResources("Metal");
+            }
+            if (orderCost > GameManager.PlayerOrder)
+            {
+                GameManager.I.LackingResources("Order");
+            }
             return;
         }
                                                                                                         // BUG Remove division later
@@ -501,7 +516,6 @@ public class OverworldController : MonoBehaviour
             enemyArmy2.Add(new Group(10001, 2));
             enemyArmy2.Add(new Group(501, 3));
             enemyArmy2.Add(new Group(205, 0));
-
 
             Grid._instance.tiles[position].army = enemyArmy2;
         }
