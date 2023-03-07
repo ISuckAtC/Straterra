@@ -183,7 +183,7 @@ public class TownBuildingDefinition
         warehouse1.maxLevel = 2;
         townBuildings[18] = warehouse1;
 
-        
+
         return townBuildings;
     }
 }

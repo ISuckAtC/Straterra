@@ -3,7 +3,7 @@ public struct Player
     public int id;
     public string name;
     public int cityLocation;
-    public byte?[] cityBuildingSlots;
+    public byte[] cityBuildingSlots;
     public int color;
     public byte swordLevel;
     public byte archerLevel;
