@@ -30,7 +30,7 @@ public static class LocalData
         Player p = UnityEngine.JsonUtility.FromJson<Player>(selfUserJson);
   
         UnityEngine.Debug.Log(p.userName + " | " + p.userId);
-        UnityEngine.Debug.Log(p.citySlots[5]);
+        UnityEngine.Debug.Log(p.cityBuildingSlots[5]);
         
 
         selfPlayer = p;

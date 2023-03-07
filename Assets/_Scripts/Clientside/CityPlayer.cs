@@ -32,9 +32,7 @@ public class CityPlayer : MonoBehaviour
     public GameObject warehouse;
 
     private List<GameObject> buildingsInterfaces;
-
-    //public Sprite constructionSprite;
-
+    
     private int selectedSlot;
     
     
@@ -325,9 +323,7 @@ public class CityPlayer : MonoBehaviour
         CityPlayer.cityPlayer.topBar.Metal = GameManager.PlayerMetal;
         CityPlayer.cityPlayer.topBar.Order = GameManager.PlayerOrder;
 
-        ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[id].buildingTime, (byte)id, selectedSlot, LocalData.SelfPlayer.id);
-
-        buildingSlots[selectedSlot].GetComponentInChildren<Image>().sprite = constructionSprite;
+        ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[id].buildingTime, (byte)id, selectedSlot, LocalData.SelfPlayer.userId);
 
         LocalData.SelfPlayer.cityBuildingSlots[selectedSlot] = 254;
         
