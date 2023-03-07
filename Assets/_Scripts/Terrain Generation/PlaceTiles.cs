@@ -24,6 +24,7 @@ public class PlaceTiles : MonoBehaviour
     
     public Tilemap tilemap;
     public Tilemap overlayMap;
+    public Tilemap DiplomacyMap;
     
     // Relative values to set tile color correctly
     private float maxHeight = 0f;
