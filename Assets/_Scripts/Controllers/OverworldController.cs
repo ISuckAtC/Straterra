@@ -53,7 +53,7 @@ public class OverworldController : MonoBehaviour
         
         //PlaceBuildingOnSelectedTile(1/*, startingposition*/);
 
-        PlaceOtherBuilding(1, 1);
+        PlaceOtherBuilding(1, 1, startingposition);
         
         Vector2 cameraposition = Grid._instance.GetPosition(startingposition);
         
@@ -67,13 +67,13 @@ public class OverworldController : MonoBehaviour
         
         
         int enemyposition = FindStartingPosition.FirstVillage();
-        PlaceOtherBuilding(1, 5);
+        PlaceOtherBuilding(1, 5, enemyposition);
 
         
 
         
         enemyposition = FindStartingPosition.FirstVillage();
-        PlaceOtherBuilding(1, 6);
+        PlaceOtherBuilding(1, 6, enemyposition);
 
         
         
@@ -463,10 +463,10 @@ public class OverworldController : MonoBehaviour
         
     }
     
-    public void PlaceOtherBuilding(byte buildingId, int owner)
+    public void PlaceOtherBuilding(byte buildingId, int owner, int position)
     {
-        Vector2Int selectedPosition = new Vector2Int(UnityEngine.Random.Range(1, Grid._instance.width -1), UnityEngine.Random.Range(1, Grid._instance.height -1));
-        int position = Grid._instance.GetIdByVec(selectedPosition);
+        //Vector2Int selectedPosition = new Vector2Int(UnityEngine.Random.Range(1, Grid._instance.width -1), UnityEngine.Random.Range(1, Grid._instance.height -1));
+        //int position = Grid._instance.GetIdByVec(selectedPosition);
         
         if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
         if (Grid._instance.tiles[position].tileType == 1) throw new Exception("Tiletype 1 is water. No buildings can be built on water.");
