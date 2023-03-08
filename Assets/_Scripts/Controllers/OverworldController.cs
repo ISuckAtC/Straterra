@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class OverworldController : MonoBehaviour
 {
@@ -66,22 +67,47 @@ public class OverworldController : MonoBehaviour
 
         LocalData.SelfPlayer = selfPlayer;
         
-        
+        /*
         int enemyposition = FindStartingPosition.FirstVillage();
         PlaceOtherBuilding(1, 5, enemyposition);
-
-        
-
         
         enemyposition = FindStartingPosition.FirstVillage();
         PlaceOtherBuilding(1, 6, enemyposition);
+*/
+        //List<List<Group>> armies = new List<List<Group>>();
+        
+        for (int i = 10; i < Grid._instance.width / 4; i++)
+        {
+            int enemyposition = FindStartingPosition.FirstVillage();
+            
+            PlaceOtherBuilding(1, i, enemyposition);
 
-        
-        
+            Grid._instance.tiles[enemyposition].army = RandomEnemy();
+        }
         
         building = 1;
         buildingIndex = 10;
 
+    }
+    
+    private List<Group> RandomEnemy()
+    {
+        float bias1 = Random.Range(0.001f, 3f);
+        float bias2 = Random.Range(0f, 1f);
+        float str = bias1 * bias2;
+        
+        List<Group> army = new List<Group>();
+        
+        for (int i = 0; i < Random.Range(1, 5); i++)
+        {
+            int amount = Random.Range(0, 10000);
+            amount = (int)(amount * str);
+            
+            army.Add(new Group(amount, i));
+        }
+
+
+        return army;
     }
 
     void Update()
@@ -433,12 +459,25 @@ public class OverworldController : MonoBehaviour
         int selectedPosition = Grid._instance.GetIdByVec(new Vector2Int((int)selectedTileHighlight.transform.position.x, (int)selectedTileHighlight.transform.position.z));
         
         if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
-        if (Grid._instance.tiles[selectedPosition].tileType == 1) throw new Exception("Tiletype 1 is water. No buildings can be built on water.");
-        if (Grid._instance.tiles[selectedPosition].tileType == 255)
+        if (Grid._instance.tiles[selectedPosition].tileType == 1)
         {
-            Debug.Log("Tried to construct building on construction");
+            Debug.LogWarning("Tiletype 1 is water. No buildings can be built on water.");
+            
+            
+            
             return;
         }
+        if (Grid._instance.tiles[selectedPosition].tileType == 255)
+        {
+            Debug.LogWarning("Tried to construct building on construction");
+            return;
+        }
+        if (Mathf.Abs(playerVillagePosition.x - selectedTileHighlight.transform.position.x) > 8 || Mathf.Abs(playerVillagePosition.y - selectedTileHighlight.transform.position.z) > 8)
+        {
+            Debug.LogWarning("Building too far away from Village!");
+            return;
+        }
+        
         MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
 
         int foodCost = mapBuilding.foodCost;
@@ -503,29 +542,6 @@ public class OverworldController : MonoBehaviour
             playerVillagePosition = Grid._instance.GetPosition(position);
         }
         
-        if (owner == 5)
-        {
-            List<Group> enemyArmy = new List<Group>();
-
-            enemyArmy.Add(new Group(5, 1));
-            enemyArmy.Add(new Group(5, 2));
-            enemyArmy.Add(new Group(5, 3));
-
-            Grid._instance.tiles[position].army = enemyArmy;
-        }
-
-        if (owner == 6)
-        {
-            List<Group> enemyArmy2 = new List<Group>();
-
-            enemyArmy2.Add(new Group(100000001, 1));
-            enemyArmy2.Add(new Group(10001, 2));
-            enemyArmy2.Add(new Group(501, 3));
-            enemyArmy2.Add(new Group(205, 0));
-
-            Grid._instance.tiles[position].army = enemyArmy2;
-        }
-
         
         
         
