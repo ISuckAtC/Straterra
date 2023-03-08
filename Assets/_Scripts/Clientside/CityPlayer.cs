@@ -312,14 +312,23 @@ public class CityPlayer : MonoBehaviour
             metalCost > GameManager.PlayerMetal ||
             orderCost > GameManager.PlayerOrder)
         {
-            Debug.LogWarning("Not enough resources");
             if (foodCost > GameManager.PlayerFood)
             {
-                //GameManager.LackingResources("Food");
+                GameManager.I.LackingResources("Food");
+            }
+            if (woodCost > GameManager.PlayerWood)
+            {
+                GameManager.I.LackingResources("Wood");
+            }
+            if (metalCost > GameManager.PlayerMetal)
+            {
+                GameManager.I.LackingResources("Metal");
+            }
+            if (orderCost > GameManager.PlayerOrder)
+            {
+                GameManager.I.LackingResources("Order");
             }
             return;
-
-            
         }
 
         GameManager.PlayerFood -= foodCost;

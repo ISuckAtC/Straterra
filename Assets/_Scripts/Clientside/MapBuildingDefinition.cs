@@ -143,9 +143,9 @@ public class MapBuildingDefinition
         MapBuilding wood1 = new MapBuilding();
         wood1.type = MapBuildingType.wood;
         wood1.buildingTime = 200;
-        wood1.foodCost = 0;
+        wood1.foodCost = 300;
         wood1.metalCost = 0;
-        wood1.woodCost = 300;
+        wood1.woodCost = 0;
         wood1.health = 5000;
         wood1.id = 20;
         wood1.level = 1;
