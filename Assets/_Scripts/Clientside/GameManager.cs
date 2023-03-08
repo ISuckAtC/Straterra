@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviour
         if (instance != null) throw new System.Exception("Duplicate GameManager");
         instance = this;
 
+        Screen.SetResolution(1920, 1080, FullScreenMode.MaximizedWindow, 60);
+
 #if UNITY_EDITOR
         QualitySettings.vSyncCount = 0; // VSync must be disabled
         Application.targetFrameRate = 60;
