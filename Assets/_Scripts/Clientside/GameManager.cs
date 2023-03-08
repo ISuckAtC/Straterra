@@ -100,48 +100,36 @@ public class GameManager : MonoBehaviour
         //Debug.Log("F: " + PlayerFood + " | W: " + PlayerWood + " | M: " + PlayerMetal);
     }
 
-    public Image foodImage;
-    public Image woodImage;
-    public Image metalImage;
-    public Image orderImage;
+    public Animation foodImage;
+    public Animation woodImage;
+    public Animation metalImage;
+    public Animation orderImage;
     public void LackingResources(string resourceName)
     {
         switch (resourceName)
         {
             case "Food":
             {
-                Color foodColor = foodImage.color;
-                foodColor.b = 0.5f;
-                foodColor.g = 0.5f;
-                foodImage.color = foodColor;
-                foodImage.CrossFadeColor(Color.white, 2f, false, false);
+                foodImage.Stop();
+                foodImage.Play();
                 break;
             }
             case "Wood":
             {
-                Color woodColor = woodImage.color;
-                woodColor.b = 0.5f;
-                woodColor.g = 0.5f;
-                woodImage.color = woodColor;
-                woodImage.CrossFadeColor(Color.white, 2f, false, false);
+                woodImage.Stop();
+                woodImage.Play();
                 break;
             }
             case "Metal":
             {
-                Color metalColor = metalImage.color;
-                metalColor.b = 0.5f;
-                metalColor.g = 0.5f;
-                metalImage.color = metalColor;
-                metalImage.CrossFadeColor(Color.white, 2f, false, false);
+                metalImage.Stop();
+                metalImage.Play();
                 break;
             }
             case "Order":
             {
-                Color orderColor = orderImage.color;
-                orderColor.b = 0.5f;
-                orderColor.g = 0.5f;
-                orderImage.color = orderColor;
-                orderImage.CrossFadeColor(Color.white, 2f, false, false);
+                orderImage.Stop();
+                orderImage.Play();
                 break;
             }
         }

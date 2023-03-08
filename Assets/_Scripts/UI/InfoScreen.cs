@@ -138,8 +138,8 @@ public class InfoScreen : MonoBehaviour
     public void UpdateInfoScreenVillage(int id)
     {
         int owner = Grid._instance.tiles[id].owner;
-
-        attackButton.transform.parent.gameObject.SetActive(owner != LocalData.SelfPlayer.userId);
+        //Debug.LogError("TOWNBOYS " + Grid._instance.tiles[id].owner + "+++++++" + LocalData.SelfPlayer.userId);
+        attackButton.transform.parent.gameObject.SetActive(owner-1 != LocalData.SelfPlayer.userId);
 
         
         
@@ -174,7 +174,7 @@ public class InfoScreen : MonoBehaviour
                 resourceTypeText.text = "Farm";
                 
                 tileImage.sprite = PlaceTiles._instance.buildingTiles[buildingType].sprite;
-                resourceBreadText.text = "The Farm is functioning like normal.";
+                resourceBreadText.text = "Producing Food";
                 
                 healthSlider.maxValue =  MapBuildingDefinition.I[buildingType].health;
                 healthSlider.value =  MapBuildingDefinition.I[buildingType].health;
@@ -191,7 +191,7 @@ public class InfoScreen : MonoBehaviour
                 
                 
                 tileImage.sprite = PlaceTiles._instance.buildingTiles[buildingType].sprite;
-                resourceBreadText.text = "The Mine is functioning like normal.";
+                resourceBreadText.text = "Producing Wood";
                 
                 healthSlider.maxValue =  MapBuildingDefinition.I[buildingType].health;
                 healthSlider.value =  MapBuildingDefinition.I[buildingType].health;
@@ -208,7 +208,7 @@ public class InfoScreen : MonoBehaviour
                 
                 
                 tileImage.sprite = PlaceTiles._instance.buildingTiles[buildingType].sprite;
-                resourceBreadText.text = "The Logging Camp is functioning like normal.";
+                resourceBreadText.text = "Producing Metal";
                 
                 healthSlider.maxValue =  MapBuildingDefinition.I[buildingType].health;
                 healthSlider.value =  MapBuildingDefinition.I[buildingType].health;
@@ -264,6 +264,8 @@ public class InfoScreen : MonoBehaviour
         {
             tileArmyText.transform.parent.gameObject.SetActive(false);
             tileArmyText.text = "";
+
+
         }
         
 
