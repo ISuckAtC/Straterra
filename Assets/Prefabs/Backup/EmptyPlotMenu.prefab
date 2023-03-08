@@ -3431,7 +3431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6259628371469850960
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3484,13 +3484,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 255
-  slotId: 3
+  slotId: 7
   clickAwayButton: {fileID: 6259628372167954012}
   background: {fileID: 6259628371322264148}
   border: {fileID: 6259628372254219011}
   title: {fileID: 6259628370374672564}
   level: {fileID: 0}
   upgradeButton: {fileID: 6259628370915345980}
+  nextLevel: {fileID: 0}
   upgradeMenu: {fileID: 6259628372117476465}
   upgradeClickAwayButton: {fileID: 6259628371602510235}
   upgradeBackground: {fileID: 6259628370395201768}
