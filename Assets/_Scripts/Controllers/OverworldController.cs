@@ -41,6 +41,7 @@ public class OverworldController : MonoBehaviour
 
     private void OnGridReady()
     {
+        
         selectedTileHighlight.transform.position = new Vector3Int(Grid._instance.width, 1, Grid._instance.height);
 
         cam = GetComponent<Camera>();
@@ -55,6 +56,8 @@ public class OverworldController : MonoBehaviour
         //PlaceBuildingOnSelectedTile(1/*, startingposition*/);
 
         PlaceOtherBuilding(1, 1, startingposition);
+
+        DarkShrine ds = new DarkShrine(startingposition / 2, 1.5f, 1f, 0.05f);
         
         Vector2 cameraposition = Grid._instance.GetPosition(startingposition);
         
