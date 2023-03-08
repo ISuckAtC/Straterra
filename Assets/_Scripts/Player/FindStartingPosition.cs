@@ -75,7 +75,10 @@ public class FindStartingPosition //: MonoBehaviour
         bool forest = CheckType(3, forestNeed, startPosition);
         bool mount = CheckType(5, mountainNeed, startPosition);
         
-        if (water && grass && mount && forest)
+        if (water && grass && mount && forest && 
+            Grid._instance.tiles[Grid._instance.GetIdByInt(startPosition.x, startPosition.y)].tileType != 0 && 
+            Grid._instance.tiles[Grid._instance.GetIdByInt(startPosition.x, startPosition.y)].tileType != 1 && 
+            Grid._instance.tiles[Grid._instance.GetIdByInt(startPosition.x, startPosition.y)].owner == 0)
             return true;
         return false;
 

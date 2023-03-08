@@ -61,6 +61,7 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
         {
             prodEvents[0].Run();
         }
+        if (owner == LocalData.SelfPlayer.userId) DarkShrine.MADEFIRSTUNIT = true;
         GameManager.PlayerUnitAmounts[unitId] += amount;
         Debug.Log("Added " + amount + " " + UnitDefinition.I[unitId].name + " to army! (You now have " + GameManager.PlayerUnitAmounts[unitId] + " " + UnitDefinition.I[unitId].name + ")");
     }
@@ -81,6 +82,13 @@ public class ScheduledTownBuildEvent : ScheduledEvent
         base.Complete();
 
         LocalData.SelfPlayer.cityBuildingSlots[slot] = townBuildingId;
+
+        if (townBuildingId == 1)
+        {
+            ResourceData.foodGatheringRate += (int)(10);
+            ResourceData.woodGatheringRate += (int)(10);
+            ResourceData.metalGatheringRate += (int)(10);
+        }
         
         CityPlayer.cityPlayer.LoadBuildings();
         CityPlayer.cityPlayer.LoadBuildingInterfaces();
@@ -204,6 +212,10 @@ public class ScheduledAttackEvent : ScheduledEvent
         this.army = army;
         this.destination = destination;
         this.origin = origin;
+        if (destination == LocalData.SelfPlayer.cityLocation)
+        {
+            NotificationCenter.Add("INCOMING ATTACK", "An attack is incoming from tile position " + origin + "\nPlease prepare an army to defend your village!");
+        }
     }
 
     public override void Complete()
@@ -212,11 +224,38 @@ public class ScheduledAttackEvent : ScheduledEvent
 
         List<Group> enemyArmy = Grid._instance.tiles[destination].army;
 
-        if (enemyArmy != null && enemyArmy.Count > 0)
+        string message = "";
+
+        if (owner == 666)
         {
             (bool attackerWon, List<Group> remains) result = BattleSim.Fight(enemyArmy, army);
 
-            string message = "";
+            if (result.attackerWon)
+            {        
+                Grid._instance.tiles[destination].army = Grid._instance.tiles[destination].army.Where(x => !x.dead).ToList();
+
+                message += "Your troops were defeated at home!\n\n";
+                message += "___________________________________\n";
+            }
+            else
+            {
+                message += "Your troops managed to defend at home!\n";
+                message += "___________________________________\n";
+                message += "Remaining army:\n\n";
+
+                for (int i = 0; i < result.remains.Count; ++i)
+                {
+                    message += UnitDefinition.I[result.remains[i].unitId].name + " (" + result.remains[i].count + ")\n";
+                }
+            }
+
+
+            NotificationCenter.Add("DEFENCE REPORT", message);
+        }
+
+        if (enemyArmy != null && enemyArmy.Count > 0)
+        {
+            (bool attackerWon, List<Group> remains) result = BattleSim.Fight(enemyArmy, army);
 
             if (result.attackerWon)
             {
