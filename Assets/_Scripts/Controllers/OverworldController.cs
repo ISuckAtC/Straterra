@@ -466,18 +466,22 @@ public class OverworldController : MonoBehaviour
         {
             Debug.LogWarning("Tiletype 1 is water. No buildings can be built on water.");
             
-            
+            SplashText.Splash("You cannot build on water.");
             
             return;
         }
         if (Grid._instance.tiles[selectedPosition].tileType == 255)
         {
             Debug.LogWarning("Tried to construct building on construction");
+            
+            SplashText.Splash("A building is already being constructed here.");
             return;
         }
         if (Mathf.Abs(playerVillagePosition.x - selectedTileHighlight.transform.position.x) > 8 || Mathf.Abs(playerVillagePosition.y - selectedTileHighlight.transform.position.z) > 8)
         {
             Debug.LogWarning("Building too far away from Village!");
+            
+            SplashText.Splash("Too far from your Village.");
             return;
         }
         
