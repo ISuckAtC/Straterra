@@ -2764,22 +2764,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2604632544090656053, guid: 1e8f0eba7ca7cf4438ffe91f89959520, type: 3}
   m_PrefabInstance: {fileID: 2604632544640609930}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &93989190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 93989186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headerText: Metal
-  bodyText: 'Current metal amount
-
-'
 --- !u!111 &93989194
 Animation:
   m_ObjectHideFlags: 0
@@ -2791,7 +2775,6 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   - {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
@@ -19201,20 +19184,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2604632543236691186, guid: 1e8f0eba7ca7cf4438ffe91f89959520, type: 3}
   m_PrefabInstance: {fileID: 2604632544640609930}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &615430826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 615430822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headerText: Order
-  bodyText: Order is gained from your Path
 --- !u!111 &615430830
 Animation:
   m_ObjectHideFlags: 0
@@ -19226,7 +19195,6 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   - {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
@@ -39437,20 +39405,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2604632544349361040, guid: 1e8f0eba7ca7cf4438ffe91f89959520, type: 3}
   m_PrefabInstance: {fileID: 2604632544640609930}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1213739942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1213739937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headerText: Food
-  bodyText: Current food amount
 --- !u!111 &1213739946
 Animation:
   m_ObjectHideFlags: 0
@@ -39462,7 +39416,6 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   - {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
@@ -45189,10 +45142,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a987417329b722641b682144d57e1d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foodImage: {fileID: 0}
+  foodImage: {fileID: 1213739946}
   woodImage: {fileID: 1901235936}
-  metalImage: {fileID: 0}
-  orderImage: {fileID: 0}
+  metalImage: {fileID: 93989194}
+  orderImage: {fileID: 615430830}
 --- !u!114 &1415235157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63637,20 +63590,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2604632544376247396, guid: 1e8f0eba7ca7cf4438ffe91f89959520, type: 3}
   m_PrefabInstance: {fileID: 2604632544640609930}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1901235932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1901235928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  headerText: Wood
-  bodyText: Current wood amount
 --- !u!111 &1901235936
 Animation:
   m_ObjectHideFlags: 0
@@ -63662,7 +63601,6 @@ Animation:
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   - {fileID: 7400000, guid: 6906bbe9829c122488679257abfed66f, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
