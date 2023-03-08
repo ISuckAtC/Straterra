@@ -5,8 +5,7 @@ using UnityEngine;
 public class SplashText : MonoBehaviour
 {
     static public SplashText I;
-    public float splashDuration;
-    public TMPro.TMP_Text text;
+    private TMPro.TMP_Text text;
     public float fadeTime;
     private float currentFade;
 
@@ -20,6 +19,7 @@ public class SplashText : MonoBehaviour
     {
         if (I) Destroy(this);
         I = this;
+        text = GetComponent<TMPro.TMP_Text>();
     }
     // Update is called once per frame
     void Update()

@@ -20,6 +20,7 @@ public class DarkShrine
         Vector2Int vPos = Grid._instance.GetPosition(position);
         PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(vPos.x, vPos.y, 1), PlaceTiles._instance.buildingTiles[250]);
         EventHub.OnTick += Update;
+        Debug.Log("DarkShrine Created");
     }
     public static bool MADEFIRSTUNIT;
     static int[] allowedUnits = {0, 1, 2, 3};
@@ -45,6 +46,8 @@ public class DarkShrine
                 if (speed < lowestSpeed) lowestSpeed = speed;
                 army.Add(unitGroup);
             }
+
+            Debug.Log("DarkShrine launching attack");
 
             ScheduledAttackEvent attackEvent = new ScheduledAttackEvent((int)Vector2Int.Distance(Grid._instance.GetPosition(position), Grid._instance.GetPosition(LocalData.SelfPlayer.cityLocation)) * lowestSpeed, army, LocalData.SelfPlayer.cityLocation, position, 666);
         }
