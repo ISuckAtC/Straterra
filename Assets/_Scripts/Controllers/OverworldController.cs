@@ -369,7 +369,7 @@ public class OverworldController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            transform.position = new Vector3(playerVillagePosition.x, transform.position.y, playerVillagePosition.y);
+            FocusOnVillage();
         }
     }
 
@@ -393,6 +393,11 @@ public class OverworldController : MonoBehaviour
         }
     }
 
+    public void FocusOnVillage()
+    {
+        transform.position = new Vector3(playerVillagePosition.x, transform.position.y, playerVillagePosition.y);
+    }
+    
     private void CheckTile(int id)
     {
         byte buildingType = Grid._instance.tiles[id].building;
