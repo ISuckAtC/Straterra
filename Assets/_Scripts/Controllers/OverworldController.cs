@@ -474,7 +474,7 @@ public class OverworldController : MonoBehaviour
         {
             Debug.LogWarning("Tried to construct building on construction");
             
-            SplashText.Splash("A building is already being constructed here.");
+            SplashText.Splash("A building is already here.");
             return;
         }
         if (Mathf.Abs(playerVillagePosition.x - selectedTileHighlight.transform.position.x) > 8 || Mathf.Abs(playerVillagePosition.y - selectedTileHighlight.transform.position.z) > 8)

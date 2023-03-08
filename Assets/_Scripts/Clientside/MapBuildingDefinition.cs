@@ -44,7 +44,13 @@ public class MapBuildingDefinition
     {
         get
         {
-            if (MapBuildingDefinitions[index] == null) throw new System.Exception("MapBuilding ID [" + index + "] not defined");
+            if (MapBuildingDefinitions[index] == null)
+            {
+                SplashText.Splash("This building is currently not available.");
+                throw new System.Exception("MapBuilding ID [" + index + "] not defined");
+                
+                
+            }
                 return MapBuildingDefinitions[index].Value;
         }
     }

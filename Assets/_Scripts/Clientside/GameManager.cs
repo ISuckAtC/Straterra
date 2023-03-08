@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static Color PlayerColor = new Color(0.5f, 0.3f, 0.5f, 0.8f);
+    public static Color PlayerColor = new Color(0.3f, 1.0f, 0.3f, 0.8f);
 
     public static int[] PlayerUnitAmounts { get => I.playerResources.unitAmounts; }
 
@@ -112,24 +112,28 @@ public class GameManager : MonoBehaviour
         {
             case "Food":
             {
+                SplashText.Splash("You're lacking Food.");
                 foodImage.Stop();
                 foodImage.Play();
                 break;
             }
             case "Wood":
             {
+                SplashText.Splash("You're lacking Wood.");
                 woodImage.Stop();
                 woodImage.Play();
                 break;
             }
             case "Metal":
             {
+                SplashText.Splash("You're lacking Metal.");
                 metalImage.Stop();
                 metalImage.Play();
                 break;
             }
             case "Order":
             {
+                SplashText.Splash("You're lacking Order.");
                 orderImage.Stop();
                 orderImage.Play();
                 break;
