@@ -9,6 +9,10 @@ public class SplashText : MonoBehaviour
     public float fadeTime;
     private float currentFade;
 
+    private float eVal;
+    
+    public AnimationCurve fadeCurve;
+    
     public static void Splash(string message)
     {
         I.text.text = message;
@@ -20,13 +24,21 @@ public class SplashText : MonoBehaviour
         if (I) Destroy(this);
         I = this;
         text = GetComponent<TMPro.TMP_Text>();
+        //fadeCurve = gameObject.AddComponent<AnimationCurve>();
+            //GetComponent<AnimationCurve>();
     }
+    
     // Update is called once per frame
     void Update()
     {
+        eVal = currentFade / fadeTime;
+
         Color color = text.color;
-        color.a = ((1f / fadeTime) * currentFade);
+        color.a = (fadeCurve.Evaluate(eVal));
         text.color = color;
-        currentFade -= Time.deltaTime;
+        if (currentFade > 0.01f)
+            currentFade -= Time.deltaTime;
+        else
+            currentFade = 0.0001f;
     }
 }
