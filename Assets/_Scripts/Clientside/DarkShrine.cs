@@ -28,7 +28,7 @@ public class DarkShrine
     public void Update()
     {
         if (!MADEFIRSTUNIT) return;
-        power += powerCreep * Time.deltaTime;
+        power += powerCreep;
         Debug.Log(power + " | " + aggro);
         if (Random.Range(0f, 100f) < aggro)
         {
@@ -56,7 +56,7 @@ public class DarkShrine
         }
         else
         {
-            aggro += aggressiveness * Time.deltaTime;
+            aggro += aggressiveness;
         }
     }
 }
