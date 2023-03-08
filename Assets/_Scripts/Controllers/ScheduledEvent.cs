@@ -63,6 +63,13 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
         }
         if (owner == LocalData.SelfPlayer.userId) DarkShrine.MADEFIRSTUNIT = true;
         GameManager.PlayerUnitAmounts[unitId] += amount;
+        List<Group> localArmy = new List<Group>();
+        for (int i = 0; i < GameManager.PlayerUnitAmounts.Length; ++i)
+        {
+            if (GameManager.PlayerUnitAmounts[i] > 0) localArmy.Add(new Group(GameManager.PlayerUnitAmounts[i], i));
+        }
+        Grid._instance.tiles[LocalData.SelfPlayer.cityLocation].army = localArmy;
+
         Debug.Log("Added " + amount + " " + UnitDefinition.I[unitId].name + " to army! (You now have " + GameManager.PlayerUnitAmounts[unitId] + " " + UnitDefinition.I[unitId].name + ")");
     }
 }
@@ -83,11 +90,13 @@ public class ScheduledTownBuildEvent : ScheduledEvent
 
         LocalData.SelfPlayer.cityBuildingSlots[slot] = townBuildingId;
 
-        if (townBuildingId == 1)
+        Debug.Log("Created building has id " + townBuildingId);
+
+        if (townBuildingId == 0)
         {
-            ResourceData.foodGatheringRate += (int)(10);
-            ResourceData.woodGatheringRate += (int)(10);
-            ResourceData.metalGatheringRate += (int)(10);
+            ResourceData.foodGatheringRate += (int)(1000);
+            ResourceData.woodGatheringRate += (int)(1000);
+            ResourceData.metalGatheringRate += (int)(1000);
         }
         
         CityPlayer.cityPlayer.LoadBuildings();
@@ -214,7 +223,8 @@ public class ScheduledAttackEvent : ScheduledEvent
         this.origin = origin;
         if (destination == LocalData.SelfPlayer.cityLocation)
         {
-            NotificationCenter.Add("INCOMING ATTACK", "An attack is incoming from tile position " + origin + "\nPlease prepare an army to defend your village!");
+            SplashText.Splash("INCOMING ATTACK (check reports)");
+            NotificationCenter.Add("INCOMING ATTACK", "An attack is incoming from tile position " + origin + " in " + secondsTotal + " seconds!" + "\nPlease prepare an army to defend your village!");
         }
     }
 
@@ -232,7 +242,7 @@ public class ScheduledAttackEvent : ScheduledEvent
 
             if (result.attackerWon)
             {        
-                Grid._instance.tiles[destination].army = Grid._instance.tiles[destination].army.Where(x => !x.dead).ToList();
+                Grid._instance.tiles[destination].army = null;
 
                 message += "Your troops were defeated at home!\n\n";
                 message += "___________________________________\n";
@@ -247,10 +257,18 @@ public class ScheduledAttackEvent : ScheduledEvent
                 {
                     message += UnitDefinition.I[result.remains[i].unitId].name + " (" + result.remains[i].count + ")\n";
                 }
+                Grid._instance.tiles[destination].army = Grid._instance.tiles[destination].army.Where(x => !x.dead).ToList();
+                for (int i = 0; i < GameManager.PlayerUnitAmounts.Length; ++i) 
+                {
+                    int index = Grid._instance.tiles[destination].army.FindIndex(0, Grid._instance.tiles[destination].army.Count, x => x.unitId == i);
+                    if (index > -1) GameManager.PlayerUnitAmounts[i] = Grid._instance.tiles[destination].army[index].count;
+                    else GameManager.PlayerUnitAmounts[i] = 0;
+                }
             }
 
 
             NotificationCenter.Add("DEFENCE REPORT", message);
+            return;
         }
 
         if (enemyArmy != null && enemyArmy.Count > 0)

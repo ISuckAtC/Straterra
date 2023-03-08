@@ -17,6 +17,7 @@ public class DarkShrine
         this.aggressiveness = aggressiveness;
         this.power = power;
         this.powerCreep = powerCreep;
+        this.aggro = 20;
         Vector2Int vPos = Grid._instance.GetPosition(position);
         PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(vPos.x, vPos.y, 1), PlaceTiles._instance.buildingTiles[250]);
         EventHub.OnTick += Update;
@@ -28,6 +29,7 @@ public class DarkShrine
     {
         if (!MADEFIRSTUNIT) return;
         power += powerCreep * Time.deltaTime;
+        Debug.Log(power + " | " + aggro);
         if (Random.Range(0f, 100f) < aggro)
         {
             aggro = 0;
@@ -48,8 +50,9 @@ public class DarkShrine
             }
 
             Debug.Log("DarkShrine launching attack");
-
-            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent((int)Vector2Int.Distance(Grid._instance.GetPosition(position), Grid._instance.GetPosition(LocalData.SelfPlayer.cityLocation)) * lowestSpeed, army, LocalData.SelfPlayer.cityLocation, position, 666);
+            int travelTime = (int)Vector2Int.Distance(Grid._instance.GetPosition(position), Grid._instance.GetPosition(LocalData.SelfPlayer.cityLocation)) * lowestSpeed;
+            travelTime /= 2;
+            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(travelTime, army, LocalData.SelfPlayer.cityLocation, position, 666);
         }
         else
         {

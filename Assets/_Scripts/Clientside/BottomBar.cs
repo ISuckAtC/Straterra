@@ -161,7 +161,7 @@ public class BottomBar : MonoBehaviour
             RectTransform rectTransform = reports[i].GetComponent<RectTransform>();
             rectTransform.parent = reportContentParent;
 
-            rectTransform.localPosition = new Vector3(0, (rectTransform.sizeDelta.y + 5) * i, 0);
+            rectTransform.localPosition = new Vector3(0, -(rectTransform.sizeDelta.y + 5) * i, 0);
             rectTransform.offsetMax = new Vector2(0, rectTransform.offsetMax.y);
 
             
