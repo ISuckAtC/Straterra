@@ -39,6 +39,7 @@ public static class LocalData
             UnityEngine.Debug.LogError(e.Message + "\n\n" + e.StackTrace + "\n");
         }
     }
+
     public static Player SelfPlayer
     {
         get
