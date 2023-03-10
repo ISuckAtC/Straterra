@@ -110,5 +110,21 @@ public class Network
 
         return await message.Content.ReadAsStringAsync();
     }
+
+    public static async Task<string> GetResources(int playerId)   
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getResources?" + tokenIdentity + "&" + playerId);
+
+        return await message.Content.ReadAsStringAsync();
+    }
+
+    // Have no buildings that require branch. Need update when that gets implemented.
+    public static async Task<string> UpgradeBuilding(int id)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/upgradeBuilding?" + tokenIdentity + "&" + id);
+
+        return await message.Content.ReadAsStringAsync();
+    }
+
 }
 
