@@ -25,7 +25,7 @@ public class Network
             return httpClient;
         }
     }
-                                                           
+    
     public static async Task<string> CreateUser(string username, string password)
     {
         UnityEngine.Debug.Log("aa");

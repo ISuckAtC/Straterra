@@ -33,7 +33,8 @@ public class NotificationCenter
     public static void Add(string title, string message)
     {
         Debug.Log("NOTIFICATION MESSAGE\n_________________\n\n" + message);
-        I.notifications.Add((title, message, false));
+        I.notifications.Insert(0, (title,message,false));
+        //I.notifications.Add((title, message, false));
     }
     public static void Remove(int index)
     {

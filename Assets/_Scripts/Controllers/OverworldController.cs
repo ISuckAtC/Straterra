@@ -80,6 +80,13 @@ public class OverworldController : MonoBehaviour
 */
         //List<List<Group>> armies = new List<List<Group>>();
         
+        PlaceTestVillage(5);
+        PlaceTestVillage(6);
+        PlaceTestVillage(7);
+        PlaceTestVillage(8);
+        
+        
+        /*
         for (int i = 10; i < Grid._instance.width / 4; i++)
         {
             int enemyposition = FindStartingPosition.FirstVillage();
@@ -88,6 +95,7 @@ public class OverworldController : MonoBehaviour
 
             Grid._instance.tiles[enemyposition].army = RandomEnemy();
         }
+        */
         
         building = 1;
         buildingIndex = 10;
@@ -426,6 +434,15 @@ public class OverworldController : MonoBehaviour
     public void FocusOnVillage()
     {
         transform.position = new Vector3(playerVillagePosition.x, transform.position.y, playerVillagePosition.y);
+
+        zoom = 10f;
+        
+        float buildScale = zoom * 0.025f;
+            
+        buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+            
+        cam.orthographicSize = zoom;
+        
     }
     
     private void CheckTile(int id)
@@ -577,6 +594,44 @@ public class OverworldController : MonoBehaviour
         
         
         Debug.Log("" + mapBuilding.name + " was placed in location " + position);
+        
+        
+    }
+    
+     public void PlaceTestVillage(int owner)
+    {
+        //Vector2Int selectedPosition = new Vector2Int(UnityEngine.Random.Range(1, Grid._instance.width -1), UnityEngine.Random.Range(1, Grid._instance.height -1));
+        //int position = Grid._instance.GetIdByVec(selectedPosition);
+        
+        MapBuilding mapBuilding = MapBuildingDefinition.I[1];
+        
+        int position;// = Grid._instance.GetIdByVec(vecPos);
+
+        if (owner == 5)
+        {
+            position = Grid._instance.GetIdByVec(new Vector2Int(57,77));
+        }    
+        else if (owner == 6)
+        {
+            position = Grid._instance.GetIdByVec(new Vector2Int(64,71));
+        }
+        else if (owner == 7)
+        {
+            position = Grid._instance.GetIdByVec(new Vector2Int(50,66));
+        }
+        else if (owner == 8)
+        {
+            position = Grid._instance.GetIdByVec(new Vector2Int(75, 62));
+        }
+        else
+            position = 12876;
+        
+        Debug.Log("Village " + owner + " was created at position " + position);
+        
+        Grid._instance.tiles[position].army = RandomEnemy();
+        
+        // BUG Remove division later
+        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[1].buildingTime / 10, 1, position, owner);
         
         
     }

@@ -70,6 +70,7 @@ public class InfoScreen : MonoBehaviour
         
         attackButton.onClick.AddListener(delegate { OverworldController.AttackWithAll(position); });
     }
+    
     public void CloseVillageInfoScreen()
     {
         villageInfoScreen.SetActive(false);
@@ -141,6 +142,7 @@ public class InfoScreen : MonoBehaviour
         //Debug.LogError("TOWNBOYS " + Grid._instance.tiles[id].owner + "+++++++" + LocalData.SelfPlayer.userId);
         attackButton.transform.parent.gameObject.SetActive(owner-1 != LocalData.SelfPlayer.userId);
 
+        string info = Network.GetUser(id);
         
         
         // Village
