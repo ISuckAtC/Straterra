@@ -52,7 +52,7 @@ public class Network
     public static async Task<string> GetSelfUser()
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getSelfUser?" + tokenIdentity);
-        return await message.Content.ReadAsStringAsync();
+        return JsonUtility.FromJson<string>(await message.Content.ReadAsStringAsync());
     }   
     
     public static async Task<bool> TrainUnit(int id, int amount, int flags)
@@ -61,14 +61,13 @@ public class Network
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/trainUnit?" + tokenIdentity + "&" + id + "&" + amount + "&" + flags);
       
         // We verify that what we got from the server is a bool. Tryparse return false if it isn't a bool.
-        if (bool.TryParse(await message.Content.ReadAsStringAsync(), out bool parse))
-        {
+        
             // When we know that the value we got from the server is in fact a bool, we can simply return it.
-            return parse;
-        }
+            return JsonUtility.FromJson<bool>(await message.Content.ReadAsStringAsync());
+
+
 
         // If the parse fails we assume the method failed serverside.
-        return false;
     }
 
     public static async Task<string> GetMapTile(int id)
