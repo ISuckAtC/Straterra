@@ -24,7 +24,7 @@ public class QueueSideBar : MonoBehaviour
 
         if (unitProduction.Count > 0)
         {
-            qText += "Unit Production\n";
+            qText += "Units: \n";
             for (int i = 0; i < unitProduction.Count; ++i)
             {
                 ScheduledUnitProductionEvent productionEvent = unitProduction[i];
@@ -36,7 +36,7 @@ public class QueueSideBar : MonoBehaviour
         if (townBuilding.Count > 0)
         {
             if (line) qText += "_______________________________________\n";
-            qText += "City Building Construction\n";
+            qText += "City Buildings: \n";
             for (int i = 0; i < townBuilding.Count; ++i)
             {
                 ScheduledTownBuildEvent productionEvent = townBuilding[i];
@@ -49,7 +49,7 @@ public class QueueSideBar : MonoBehaviour
         if (mapBuilding.Count > 0)
         {
             if (line) qText += "_______________________________________\n";
-            qText += "Map Building Construction\n";
+            qText += "Map Buildins: \n";
             for (int i = 0; i < mapBuilding.Count; ++i)
             {
                 ScheduledMapBuildEvent productionEvent = mapBuilding[i];

@@ -157,6 +157,15 @@ public class CityPlayer : MonoBehaviour
                         menu.slotId = i;
                         break;
                     }
+                    case TownBuildingType.marketplace:
+                    {
+                        UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
+                        button.onClick.AddListener(OpenMarketPlace);
+                        BuildingMenu menu = marketplace.GetComponent<BuildingMenu>();
+                        menu.id = id;
+                        menu.slotId = i;
+                        break;
+                    }
             }
         }
     }
