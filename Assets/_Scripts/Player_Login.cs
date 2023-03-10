@@ -57,8 +57,6 @@ public class Player_Login : MonoBehaviour
 
                 // load game scene
                 loadScene = true;
-                
-                
             }
 
         });
