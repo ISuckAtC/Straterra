@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using UnityEngine;
+using NetworkStructs;
 
 public class Network
 {
@@ -49,13 +50,13 @@ public class Network
     }
 
 
-    public static async Task<string> GetSelfUser()
+    public static async Task<SelfUser> GetSelfUser()
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getSelfUser?" + tokenIdentity);
-        return JsonUtility.FromJson<string>(await message.Content.ReadAsStringAsync());
+        return JsonUtility.FromJson<SelfUser>(await message.Content.ReadAsStringAsync());
     }   
     
-    public static async Task<bool> TrainUnit(int id, int amount, int flags)
+    public static async Task<ActionResult> TrainUnit(int id, int amount, int flags)
     {            
         // Send TrainUnit information to server. The parameters are seperated by "&" and sent to the server.
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/trainUnit?" + tokenIdentity + "&" + id + "&" + amount + "&" + flags);
@@ -63,69 +64,75 @@ public class Network
         // We verify that what we got from the server is a bool. Tryparse return false if it isn't a bool.
         
             // When we know that the value we got from the server is in fact a bool, we can simply return it.
-            return JsonUtility.FromJson<bool>(await message.Content.ReadAsStringAsync());
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
 
 
 
         // If the parse fails we assume the method failed serverside.
     }
+    public static async Task<Player[]> GetUsers()
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getUsers?" + tokenIdentity);
 
-    public static async Task<string> GetMapTile(int id)
+        return JsonUtility.FromJson<Player[]>(await message.Content.ReadAsStringAsync());
+    }
+
+    public static async Task<MapTile> GetMapTile(int id)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getMapTile?" + tokenIdentity + "&" + id);
 
-        return await message.Content.ReadAsStringAsync();
+        return JsonUtility.FromJson<MapTile>(await message.Content.ReadAsStringAsync());
     }
 
-    public static async Task<string> GetMap()
+    public static async Task<MapTile[]> GetMap()
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getMap?" + tokenIdentity);
 
-        return await message.Content.ReadAsStringAsync();
+        return JsonUtility.FromJson<MapTile[]>(await message.Content.ReadAsStringAsync());
     }
 
-    public static async Task<string> GetVillage(int id)
+    public static async Task<Village> GetVillage(int id)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getVillage?" + tokenIdentity + "&" + id);
 
-        return await message.Content.ReadAsStringAsync();
+        return JsonUtility.FromJson<Village>(await message.Content.ReadAsStringAsync());
     }
 
-    public static async Task<string> GetUser(int id)
+    public static async Task<User> GetUser(int id)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getUser?" + tokenIdentity + "&" + id);
 
-        return await message.Content.ReadAsStringAsync();
+        return JsonUtility.FromJson<User>(await message.Content.ReadAsStringAsync());
     }
 
 
-    public static async Task<string> GetVillageBuilding(int id)
+    public static async Task<VillageBuilding> GetVillageBuilding(int id)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getVillageBuilding?" + tokenIdentity + "&" + id);
         
-        return await message.Content.ReadAsStringAsync();
+        return JsonUtility.FromJson<VillageBuilding>(await message.Content.ReadAsStringAsync());
     }
 
-    public static async Task<string> GetBattleReport(int id)
+    public static async Task<BattleReport> GetBattleReport(int id)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getBattleReport?" + tokenIdentity + "&" + id);
 
-        return await message.Content.ReadAsStringAsync();
+        return JsonUtility.FromJson<BattleReport>(await message.Content.ReadAsStringAsync());
     }
 
-    public static async Task<(int food, int wood, int metal, int order)> GetResources(int playerId)   
+    public static async Task<NetworkStructs.Resources> GetResources(int playerId)   
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getResources?" + tokenIdentity + "&" + playerId);
 
-        return JsonUtility.FromJson<(int food, int wood, int metal, int order)>(await message.Content.ReadAsStringAsync());
+        return JsonUtility.FromJson<NetworkStructs.Resources>(await message.Content.ReadAsStringAsync());
     }
 
     // Have no buildings that require branch. Need update when that gets implemented.
-    public static async Task<string> UpgradeBuilding(int id)
+    public static async Task<VillageBuilding> UpgradeBuilding(int id)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/upgradeBuilding?" + tokenIdentity + "&" + id);
 
-        return await message.Content.ReadAsStringAsync();
+        return JsonUtility.FromJson<VillageBuilding>(await message.Content.ReadAsStringAsync());
     }
 
 }

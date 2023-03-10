@@ -110,18 +110,4 @@ public class ResourceData
 
         return order;
     }
-
-    public static async void GetResourceInfo()
-    {
-        try
-        {
-        string selfUserJson = await Network.GetSelfUser();
-        Player p = UnityEngine.JsonUtility.FromJson<Player>(selfUserJson);
-        
-        //selfPlayer = p;
-        } catch (System.Exception e)
-        {
-            UnityEngine.Debug.LogError(e.Message + "\n\n" + e.StackTrace + "\n");
-        }
-    }
 }

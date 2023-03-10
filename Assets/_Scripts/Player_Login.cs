@@ -18,10 +18,7 @@ public class Player_Login : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string message = "{\"bbbb\":\"true\",\"aaaa\":\"true\"}";
-        Debug.Log(message);
-        var value = JsonUtility.FromJson<(bool bbbb, bool aaaa)>(message);
-        Debug.Log(value.bbbb);
+        
     }
 
     public void ServerCheck()     //Calls functions from network.
