@@ -65,9 +65,15 @@ public class OverworldController : MonoBehaviour
             PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), PlaceTiles._instance.buildingTiles[1]);
             //PlaceTiles._instance.DiplomacyMap.SetColor(new Color();
 
+            
+            
             if (user.userId == LocalData.SelfUser.userId)
             {
-                PlaceTiles._instance.DiplomacyMap.SetTile(new Vector3Int(pos.x, pos.y, 1), flag);                
+                PlaceTiles._instance.DiplomacyMap.SetTile(new Vector3Int(pos.x, pos.y, 1), flag);  
+                
+                playerVillagePosition = Grid._instance.GetPosition(LocalData.SelfUser.cityLocation);
+
+                FocusOnVillage();
             }
 
             
@@ -506,7 +512,6 @@ public class OverworldController : MonoBehaviour
         int selectedPosition = Grid._instance.GetIdByVec(asdf);
         */
         int selectedPosition = Grid._instance.GetIdByVec(new Vector2Int((int)selectedTileHighlight.transform.position.x, (int)selectedTileHighlight.transform.position.z));
-        Vector2Int villagePos = Grid._instance.GetPosition(LocalData.SelfUser.cityLocation);
         
         
         if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
@@ -525,7 +530,7 @@ public class OverworldController : MonoBehaviour
             SplashText.Splash("A building is already here.");
             return;
         }
-        if (Mathf.Abs(villagePos.x - selectedTileHighlight.transform.position.x) > 8 || Mathf.Abs(villagePos.y - selectedTileHighlight.transform.position.z) > 8)
+        if (Mathf.Abs(playerVillagePosition.x - selectedTileHighlight.transform.position.x) > 8 || Mathf.Abs(playerVillagePosition.y - selectedTileHighlight.transform.position.z) > 8)
         {
             Debug.LogWarning("Building too far away from Village!");
             

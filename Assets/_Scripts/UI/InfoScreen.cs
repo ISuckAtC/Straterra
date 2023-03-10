@@ -2,9 +2,14 @@
 //using System.Collections;
 //using System.Collections.Generic;
 //using Mono.Cecil;
+
+using System.Threading.Tasks;
+using NetworkStructs;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditorInternal.Profiling;
+
 //using UnityEditor.Tilemaps;
 
 public class InfoScreen : MonoBehaviour
@@ -33,11 +38,16 @@ public class InfoScreen : MonoBehaviour
 
     
     public TMP_Text playerNameText;
-    public TMP_Text villagePositionText;
+    public TMP_Text villageCoordinateText;
+    public TMP_Text villageResourceText;
+    public TMP_Text villageAllianceText;
+    public TMP_Text villageBuildingsText;
     public TMP_Text tileArmyText;
     public Button attackButton;
     //public Image villageImage;
 
+    private ActionQueue aq;
+    
     void Start()
     {
         if (_instance == null)
@@ -48,6 +58,8 @@ public class InfoScreen : MonoBehaviour
         {
             Destroy(this);
         }
+
+        aq = GetComponent<ActionQueue>();
 
         infoScreen.SetActive(false);
     }
@@ -140,21 +152,74 @@ public class InfoScreen : MonoBehaviour
     {
         int owner = Grid._instance.tiles[id].owner;
         //Debug.LogError("TOWNBOYS " + Grid._instance.tiles[id].owner + "+++++++" + LocalData.SelfUser.userId);
-        attackButton.transform.parent.gameObject.SetActive(owner-1 != LocalData.SelfUser.userId);
+        
+        
+        if (owner == LocalData.SelfUser.userId)
+        {
+            attackButton.transform.parent.gameObject.SetActive(false);
+            
+        }
+        else
+        {
+            attackButton.transform.parent.gameObject.SetActive(true);
+
+            playerNameText.text = Network.allUsers.Find(x => x.userId == owner).name;
+
+            coordinateText.text = "" + id;
+            
+            Task.Run<NetworkStructs.Resources>(async () =>
+            {
+                return await Network.GetResources(owner);
+            }).ContinueWith(async resources =>
+            {
+                NetworkStructs.Resources res = resources.Result;
+                aq.queue.Add(() =>
+                {
+                    villageResourceText.text =
+                        "Food:  " + res.food + "\n" +
+                        "Wood:  " + res.wood + "\n" +
+                        "Metal: " + res.metal + "\n" +
+                        "Order: " + res.order;
+                });
+            });
+
+            Task.Run<NetworkStructs.User>(async () =>
+            {
+                return await Network.GetUser(owner);
+            }).ContinueWith(async _user =>
+            {
+                string buildings = "";
+                
+                NetworkStructs.User user = _user.Result;
+
+                for (int i = 0; i < user.cityBuildingSlots.Length; i++)
+                {
+                    if (user.cityBuildingSlots[i] == 255)
+                        continue;
+                    TownBuilding building = TownBuildingDefinition.I[user.cityBuildingSlots[i]];
+                    buildings += building.name + " Lv " + building.level + "\n";
+                }
+                
+                aq.queue.Add(() =>
+                {
+                    villageBuildingsText.text = buildings;
+                });
+            });
+            
+        }
+        
+        
+        /*
+        public TMP_Text playerNameText;
+        public TMP_Text villageCoordinateText;
+        public TMP_Text villageResourceText;
+        public TMP_Text villageAllianceText;
+        public TMP_Text villageBuildingsText;
+        public TMP_Text tileArmyText;
+        public Button attackButton;
+         */
 
         //string info = Network.GetUser(id);
-        
-        
-        // Village
-        Vector2 idSplit = Grid._instance.GetPosition(id);
-        //tileTypeText.text = "Player Village" /*server.GetPlayerName(id) + "'s Village" */;
-
-        if (owner == 0)
-            playerNameText.text = "Your Village."; //+ Grid._instance.tiles[id].owner;
-        else
-            playerNameText.text = "" + Grid._instance.tiles[id].owner;
-        
-        villagePositionText.text = "ID: " + id + "   (" + idSplit.x + ", " + idSplit.y + ")";
 
     }
 
