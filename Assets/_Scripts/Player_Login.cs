@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Threading.Tasks;
 using System.Threading;
+using NetworkStructs;
 using UnityEngine.SceneManagement;
 public class Player_Login : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class Player_Login : MonoBehaviour
     {
         
     }
-
+/*
     public void ServerCheck()     //Calls functions from network.
     {
         Debug.Log(input_Password.text);
@@ -39,21 +40,26 @@ public class Player_Login : MonoBehaviour
            Debug.Log("GetSessionToken response: " + result.Result);
        });
     }
-
+*/
     public void Login()
     {
         GameObject thisObject = gameObject;
-        Task.Run<string>(async () =>
+        Task.Run<NetworkStructs.ActionResult>(async () =>
         {
             return await Network.GetSessionToken(input_Password.text);
-        }).ContinueWith(result => 
+        }).ContinueWith(async result =>
         {
-            string token = result.Result;
-            Debug.Log("token is = " + token);
-            if (token != "ERROR")
+            var res = result.Result;
+            if (!res.success)
             {
-                Network.tokenIdentity = token;
-                LocalData.LoadSelfPlayerOnline();
+                Debug.LogError(res.message);
+            }
+            
+            else
+            {
+                Debug.Log("token is = " + res.message);
+                Network.tokenIdentity = res.message;
+                await LocalData.LoadSelfPlayerOnline();
 
                 // load game scene
                 loadScene = true;

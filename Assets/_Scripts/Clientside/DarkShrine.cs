@@ -50,9 +50,9 @@ public class DarkShrine
             }
 
             Debug.Log("DarkShrine launching attack");
-            int travelTime = (int)Vector2Int.Distance(Grid._instance.GetPosition(position), Grid._instance.GetPosition(LocalData.SelfPlayer.cityLocation)) * lowestSpeed;
+            int travelTime = (int)Vector2Int.Distance(Grid._instance.GetPosition(position), Grid._instance.GetPosition(LocalData.SelfUser.cityLocation)) * lowestSpeed;
             travelTime /= 2;
-            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(travelTime, army, LocalData.SelfPlayer.cityLocation, position, 666);
+            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(travelTime, army, LocalData.SelfUser.cityLocation, position, 666);
         }
         else
         {

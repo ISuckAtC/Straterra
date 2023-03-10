@@ -3,6 +3,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+
+
 
 using UnityEngine;
 using NetworkStructs;
@@ -11,6 +14,7 @@ public class Network
 {
     // Storing the token for the players id.
     public static string tokenIdentity;
+    public static List<NetworkStructs.User> allUsers;
 
     // Ensures that http client is created if it doesn't exist already.
     private static HttpClient httpClient;    
@@ -42,18 +46,18 @@ public class Network
         
     }
 
-    public static async Task<string> GetSessionToken(string password)
+    public static async Task<ActionResult> GetSessionToken(string password)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/login?" + password);
-        if (message.StatusCode != HttpStatusCode.OK) return "ERROR";
-        return JsonUtility.FromJson<string>(await message.Content.ReadAsStringAsync());
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 
 
-    public static async Task<SelfUser> GetSelfUser()
+    public static async Task<User> GetSelfUser()
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getSelfUser?" + tokenIdentity);
-        return JsonUtility.FromJson<SelfUser>(await message.Content.ReadAsStringAsync());
+        Debug.Log(await message.Content.ReadAsStringAsync());
+        return JsonUtility.FromJson<User>(await message.Content.ReadAsStringAsync());
     }   
     
     public static async Task<ActionResult> TrainUnit(int id, int amount, int flags)
@@ -70,11 +74,11 @@ public class Network
 
         // If the parse fails we assume the method failed serverside.
     }
-    public static async Task<Player[]> GetUsers()
+    public static async Task<UserGroup> GetUsers()
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getUsers?" + tokenIdentity);
-
-        return JsonUtility.FromJson<Player[]>(await message.Content.ReadAsStringAsync());
+        Debug.Log(await message.Content.ReadAsStringAsync());
+        return JsonUtility.FromJson<UserGroup>(await message.Content.ReadAsStringAsync());
     }
 
     public static async Task<MapTile> GetMapTile(int id)
@@ -123,7 +127,7 @@ public class Network
     public static async Task<NetworkStructs.Resources> GetResources(int playerId)   
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getResources?" + tokenIdentity + "&" + playerId);
-
+        Debug.Log(await message.Content.ReadAsStringAsync());
         return JsonUtility.FromJson<NetworkStructs.Resources>(await message.Content.ReadAsStringAsync());
     }
 

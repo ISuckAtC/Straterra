@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using NetworkStructs;
+using UnityEditorInternal.Profiling;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -50,27 +52,53 @@ public class OverworldController : MonoBehaviour
         holdCounter = holdDelay;
 
         cam.orthographicSize = zoom;
+        
+        for (int i = 0; i < Network.allUsers.Count; ++i)
+        {
+            User user = Network.allUsers[i];
 
-        int startingposition = FindStartingPosition.FirstVillage();
-        Vector2Int vPos = Grid._instance.GetPosition(startingposition);
-        PlaceTiles._instance.DiplomacyMap.SetTile(new Vector3Int( vPos.x, vPos.y, 0), flag);
-        //PlaceBuildingOnSelectedTile(1/*, startingposition*/);
+            Grid._instance.tiles[user.cityLocation].owner = user.userId;
+            Grid._instance.tiles[user.cityLocation].building = 1;
 
-        PlaceOtherBuilding(1, 1, startingposition);
+            Vector2Int pos = Grid._instance.GetPosition(user.cityLocation);
 
+            PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), PlaceTiles._instance.buildingTiles[1]);
+            //PlaceTiles._instance.DiplomacyMap.SetColor(new Color();
+
+            if (user.userId == LocalData.SelfUser.userId)
+            {
+                PlaceTiles._instance.DiplomacyMap.SetTile(new Vector3Int(pos.x, pos.y, 1), flag);                
+            }
+
+            
+            
+
+        }
+        
+        /*
         DarkShrine ds = new DarkShrine(startingposition / 2, 0.05f, 1f, 0.5f);
         SplashText.Splash("WELCOME");
         
         Vector2 cameraposition = Grid._instance.GetPosition(startingposition);
         
         transform.position = new Vector3(cameraposition.x, 98f, cameraposition.y);
+
         
-        Player selfPlayer = LocalData.SelfPlayer;
+        int startingposition = FindStartingPosition.FirstVillage();
+        Vector2Int vPos = Grid._instance.GetPosition(startingposition);
+        PlaceTiles._instance.DiplomacyMap.SetTile(new Vector3Int( vPos.x, vPos.y, 0), flag);
+        //PlaceBuildingOnSelectedTile(1/*, startingposition*//*);
+
+        PlaceOtherBuilding(1, 1, startingposition);
+
+
+        
+        Player selfPlayer = LocalData.SelfUser;
         
         selfPlayer.cityLocation = startingposition;
 
-        LocalData.SelfPlayer = selfPlayer;
-        
+        LocalData.SelfUser = selfPlayer;
+        */
         /*
         int enemyposition = FindStartingPosition.FirstVillage();
         PlaceOtherBuilding(1, 5, enemyposition);
@@ -80,10 +108,10 @@ public class OverworldController : MonoBehaviour
 */
         //List<List<Group>> armies = new List<List<Group>>();
         
-        PlaceTestVillage(5);
-        PlaceTestVillage(6);
-        PlaceTestVillage(7);
-        PlaceTestVillage(8);
+        //PlaceTestVillage(5);
+        //PlaceTestVillage(6);
+        //PlaceTestVillage(7);
+        //PlaceTestVillage(8);
         
         
         /*
@@ -427,7 +455,7 @@ public class OverworldController : MonoBehaviour
         if (army.Count > 0)
         {
             Debug.Log("Scheduling attack");
-            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(5, army, position, LocalData.SelfPlayer.cityLocation, LocalData.SelfPlayer.userId);
+            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(5, army, position, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
         }
     }
 
@@ -478,6 +506,8 @@ public class OverworldController : MonoBehaviour
         int selectedPosition = Grid._instance.GetIdByVec(asdf);
         */
         int selectedPosition = Grid._instance.GetIdByVec(new Vector2Int((int)selectedTileHighlight.transform.position.x, (int)selectedTileHighlight.transform.position.z));
+        Vector2Int villagePos = Grid._instance.GetPosition(LocalData.SelfUser.cityLocation);
+        
         
         if (buildingId == 0) throw new Exception("A building id of 0 means no building. This method should not be called if building id is 0.");
         if (Grid._instance.tiles[selectedPosition].tileType == 1)
@@ -495,7 +525,7 @@ public class OverworldController : MonoBehaviour
             SplashText.Splash("A building is already here.");
             return;
         }
-        if (Mathf.Abs(playerVillagePosition.x - selectedTileHighlight.transform.position.x) > 8 || Mathf.Abs(playerVillagePosition.y - selectedTileHighlight.transform.position.z) > 8)
+        if (Mathf.Abs(villagePos.x - selectedTileHighlight.transform.position.x) > 8 || Mathf.Abs(villagePos.y - selectedTileHighlight.transform.position.z) > 8)
         {
             Debug.LogWarning("Building too far away from Village!");
             
@@ -534,7 +564,7 @@ public class OverworldController : MonoBehaviour
             return;
         }
                                                                                                         // BUG Remove division later
-        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, (byte)buildingId, selectedPosition, LocalData.SelfPlayer.userId);
+        ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, (byte)buildingId, selectedPosition, LocalData.SelfUser.userId);
         
         GameManager.PlayerFood -= mapBuilding.foodCost;
         GameManager.PlayerWood -= mapBuilding.woodCost;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TopBar : MonoBehaviour
 {
     [SerializeField]
-    private TMPro.TextMeshProUGUI foodText;
+    private TMPro.TMP_Text foodText;
     [SerializeField]
     private TMPro.TextMeshProUGUI woodText;
     [SerializeField]
@@ -15,34 +15,52 @@ public class TopBar : MonoBehaviour
     [SerializeField]
     private TMPro.TextMeshProUGUI chaosText;
 
+    private bool foodDirty;
+    private bool woodDirty;
+    private bool metalDirty;
+    private bool orderDirty;
+
+    private int food;
+    private int wood;
+    private int metal;
+    private int order;
+    
     public static TopBar I;
 
     public int Food 
     {
         set
         {
-            foodText.text = NumConverter.GetConvertedAmount(value);
+            foodDirty = true;
+            food = value;
+            //foodText.text = NumConverter.GetConvertedAmount(value);
         }
     }
     public int Wood 
     {
         set
         {
-            woodText.text = NumConverter.GetConvertedAmount(value);
+            woodDirty = true;
+            wood = value;
+            //woodText.text = NumConverter.GetConvertedAmount(value);
         }
     }
     public int Metal 
     {
         set
         {
-            metalText.text = NumConverter.GetConvertedAmount(value);
+            metalDirty = true;
+            metal = value;
+            //metalText.text = NumConverter.GetConvertedAmount(value);
         }
     }
     public int Order 
     {
         set
         {
-            orderText.text = NumConverter.GetConvertedAmount(value);
+            orderDirty = true;
+            order = value;
+            //orderText.text = NumConverter.GetConvertedAmount(value);
         }
     }
     public int Chaos 
@@ -57,5 +75,29 @@ public class TopBar : MonoBehaviour
     {
         if (I != null) throw new System.Exception("Another topbar detected");
         I = this;
+    }
+
+    public void Update()
+    {
+        if (foodDirty)
+        {
+            foodDirty = false;
+            foodText.text = NumConverter.GetConvertedAmount(food);
+        }
+        if (woodDirty)
+        {
+            woodDirty = false;
+            woodText.text = NumConverter.GetConvertedAmount(wood);
+        }
+        if (metalDirty)
+        {
+            metalDirty = false;
+            metalText.text = NumConverter.GetConvertedAmount(metal);
+        }
+        if (orderDirty)
+        {
+            orderDirty = false;
+            orderText.text = NumConverter.GetConvertedAmount(order);
+        }
     }
 }

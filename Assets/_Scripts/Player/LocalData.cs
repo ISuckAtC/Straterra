@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using NetworkStructs;
+using System.Linq;
+using UnityEngine;
 
 
 public static class LocalData
@@ -18,38 +21,43 @@ public static class LocalData
         }
     }
 
-    private static Player? selfPlayer;
+    private static NetworkStructs.User? selfUser;
 
 
-    public static async void LoadSelfPlayerOnline()
+    public static async System.Threading.Tasks.Task LoadSelfPlayerOnline()
     {
         try
         {
-        string selfUserJson = await Network.GetSelfUser();
-        UnityEngine.Debug.Log("json is = " + selfUserJson);
-        Player p = UnityEngine.JsonUtility.FromJson<Player>(selfUserJson);
-  
-        UnityEngine.Debug.Log(p.userName + " | " + p.userId);
-        UnityEngine.Debug.Log(p.cityBuildingSlots[5]);
-        
+            var u = await Network.GetSelfUser();
 
-        selfPlayer = p;
+        UnityEngine.Debug.Log(u.name + " | " + u.userId);
+        UnityEngine.Debug.Log(u.cityBuildingSlots[5]);
+
+
+        selfUser = u;
+
+        var users = await Network.GetUsers();
+        
+        Debug.Log(users.players[0].name);
+
+        Network.allUsers = users.players.ToList();
+
         } catch (System.Exception e)
         {
             UnityEngine.Debug.LogError(e.Message + "\n\n" + e.StackTrace + "\n");
         }
     }
 
-    public static Player SelfPlayer
+    public static NetworkStructs.User SelfUser
     {
         get
         {
-            if (selfPlayer != null) return selfPlayer.Value;
+            if (selfUser != null) return selfUser.Value;
             else
             {
 
                 // Default testing values
-                Player p = new Player();
+                NetworkStructs.User p = new NetworkStructs.User();
 
                 p.cityBuildingSlots = new byte[8];
                 System.Array.Fill<byte>(p.cityBuildingSlots, 255);
@@ -70,13 +78,13 @@ public static class LocalData
 
                 p.userId = 0;
 
-                selfPlayer = p;
-                return selfPlayer.Value;
+                selfUser = p;
+                return selfUser.Value;
             }
         }
         set
         {
-            selfPlayer = value;
+            selfUser = value;
         }
     }
 }

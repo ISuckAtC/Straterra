@@ -61,14 +61,14 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
         {
             prodEvents[0].Run();
         }
-        if (owner == LocalData.SelfPlayer.userId) DarkShrine.MADEFIRSTUNIT = true;
+        if (owner == LocalData.SelfUser.userId) DarkShrine.MADEFIRSTUNIT = true;
         GameManager.PlayerUnitAmounts[unitId] += amount;
         List<Group> localArmy = new List<Group>();
         for (int i = 0; i < GameManager.PlayerUnitAmounts.Length; ++i)
         {
             if (GameManager.PlayerUnitAmounts[i] > 0) localArmy.Add(new Group(GameManager.PlayerUnitAmounts[i], i));
         }
-        Grid._instance.tiles[LocalData.SelfPlayer.cityLocation].army = localArmy;
+        Grid._instance.tiles[LocalData.SelfUser.cityLocation].army = localArmy;
 
         Debug.Log("Added " + amount + " " + UnitDefinition.I[unitId].name + " to army! (You now have " + GameManager.PlayerUnitAmounts[unitId] + " " + UnitDefinition.I[unitId].name + ")");
     }
@@ -88,7 +88,7 @@ public class ScheduledTownBuildEvent : ScheduledEvent
     {
         base.Complete();
 
-        LocalData.SelfPlayer.cityBuildingSlots[slot] = townBuildingId;
+        LocalData.SelfUser.cityBuildingSlots[slot] = townBuildingId;
 
         Debug.Log("Created building has id " + townBuildingId);
 
@@ -221,7 +221,7 @@ public class ScheduledAttackEvent : ScheduledEvent
         this.army = army;
         this.destination = destination;
         this.origin = origin;
-        if (destination == LocalData.SelfPlayer.cityLocation)
+        if (destination == LocalData.SelfUser.cityLocation)
         {
             SplashText.Splash("INCOMING ATTACK (check reports)");
             NotificationCenter.Add("INCOMING ATTACK", "An attack is incoming from tile position " + origin + " in " + secondsTotal + " seconds!" + "\nPlease prepare an army to defend your village!");
@@ -277,7 +277,7 @@ public class ScheduledAttackEvent : ScheduledEvent
 
             if (result.attackerWon)
             {
-                ScheduledMoveArmyEvent moveArmy = new ScheduledMoveArmyEvent(10, result.remains, LocalData.SelfPlayer.cityLocation, destination, owner);
+                ScheduledMoveArmyEvent moveArmy = new ScheduledMoveArmyEvent(10, result.remains, LocalData.SelfUser.cityLocation, destination, owner);
                 
                 Grid._instance.tiles[destination].army = Grid._instance.tiles[destination].army.Where(x => !x.dead).ToList();
 

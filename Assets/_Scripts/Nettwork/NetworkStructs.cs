@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+
+
 namespace NetworkStructs
 {
     public struct ActionResult
@@ -5,6 +8,7 @@ namespace NetworkStructs
         public bool success;
         public string message;
     }
+    
 
     public struct MapTile
     {
@@ -19,26 +23,24 @@ namespace NetworkStructs
         public float orderAmount;
         public float corruptionProgress;
     }
-
-    public struct User
+    [System.Serializable]
+    public struct UserGroup
     {
-        public string playerName;
-        public byte playerLevel;
-        public int playerColor;
-        public int allianceId;
-        public int cityLocation;
-        public string playerAvatar;
+        public User[] players;
     }
-
-    public struct SelfUser
+    [System.Serializable]
+    public struct User
     {
         public int userId;
         public string name;
-        public int playerColor;
-        public int allianceId;
         public int cityLocation;
-        public byte[] citySlots;
-        public string playerAvatar;
+        public byte[] cityBuildingSlots;
+        public int color;
+        public int allianceId;
+        public byte swordLevel;
+        public byte archerLevel;
+        public byte cavalryLevel;
+        public byte spearmanLevel;
     }
 
     public struct VillageBuilding
@@ -50,7 +52,8 @@ namespace NetworkStructs
     {
         public int reportId;
     }
-
+    
+    [System.Serializable]
     public struct Resources
     {
         public int food;

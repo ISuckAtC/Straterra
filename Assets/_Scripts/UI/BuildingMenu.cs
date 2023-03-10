@@ -137,7 +137,7 @@ public class BuildingMenu : MonoBehaviour
         CityPlayer.cityPlayer.topBar.Metal = GameManager.PlayerMetal;
         CityPlayer.cityPlayer.topBar.Order = GameManager.PlayerOrder;
 
-        ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[nextId].buildingTime, (byte)nextId, slotId, LocalData.SelfPlayer.userId);
+        ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[nextId].buildingTime, (byte)nextId, slotId, LocalData.SelfUser.userId);
 
         CloseUpgradeMenu();
         CityPlayer.cityPlayer.CloseMenus();

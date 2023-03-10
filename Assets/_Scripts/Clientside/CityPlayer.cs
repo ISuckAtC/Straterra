@@ -69,8 +69,8 @@ public class CityPlayer : MonoBehaviour
         for (int i = 0; i < 8; ++i)
         {
             if (buildingSlots[i].childCount > 0) Destroy(buildingSlots[i].GetChild(0).gameObject);
-            //if (LocalData.SelfPlayer.cityBuildingSlots[i] == null) return;
-            int id = LocalData.SelfPlayer.cityBuildingSlots[i];
+            //if (LocalData.SelfUser.cityBuildingSlots[i] == null) return;
+            int id = LocalData.SelfUser.cityBuildingSlots[i];
             GameObject buildingObject = Instantiate(buildingPrefabs[id], buildingSlots[i].position, Quaternion.identity);
             buildingObject.transform.parent = buildingSlots[i];
 
@@ -350,9 +350,9 @@ public class CityPlayer : MonoBehaviour
         CityPlayer.cityPlayer.topBar.Metal = GameManager.PlayerMetal;
         CityPlayer.cityPlayer.topBar.Order = GameManager.PlayerOrder;
 
-        ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[id].buildingTime, (byte)id, selectedSlot, LocalData.SelfPlayer.userId);
+        ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[id].buildingTime, (byte)id, selectedSlot, LocalData.SelfUser.userId);
 
-        LocalData.SelfPlayer.cityBuildingSlots[selectedSlot] = 254;
+        LocalData.SelfUser.cityBuildingSlots[selectedSlot] = 254;
         
         CityPlayer.cityPlayer.CloseMenus();
         CityPlayer.cityPlayer.LoadBuildings();
@@ -477,7 +477,7 @@ public class CityPlayer : MonoBehaviour
         Debug.Log(trainingUnit.trainingTime + " | " + trainingUnit.trainingTime * amount);
 
         bool currentEvents = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Count() > 0;
-        new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfPlayer.userId, !currentEvents);
+        new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfUser.userId, !currentEvents);
         CloseTrainingMenu();
     }
     #endregion

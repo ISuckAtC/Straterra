@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -82,7 +83,7 @@ public class GameManager : MonoBehaviour
         int[] unitAmounts = new int[256];
         Array.Fill(unitAmounts, 0);
 
-        playerResources = new PlayerResources(1000, 500, 300, 0, 1000, unitAmounts);
+        playerResources = new PlayerResources(0, 0, 0, 0, 1000, unitAmounts);
 
         EventHub.OnTick += AddResources;
     }
@@ -90,6 +91,28 @@ public class GameManager : MonoBehaviour
 
     public void AddResources()
     {
+        Task.Run<NetworkStructs.Resources>(async () =>
+        {
+            return await Network.GetResources(LocalData.SelfUser.userId);
+        }).ContinueWith(async result =>
+        {
+            Debug.Log("Adding resources");
+            var res = result.Result;
+            try
+            {
+                PlayerFood = res.food;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e.Message + "\n\n" + e.StackTrace + "\n");
+            }
+            
+            PlayerWood = res.wood;
+            PlayerMetal = res.metal;
+            PlayerOrder = res.order;
+            Debug.Log("Done adding resources");
+        });
+        return;
         // Food
         PlayerFood += ResourceData.GetFoodTickValue();
 

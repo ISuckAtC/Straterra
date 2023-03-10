@@ -139,10 +139,10 @@ public class InfoScreen : MonoBehaviour
     public void UpdateInfoScreenVillage(int id)
     {
         int owner = Grid._instance.tiles[id].owner;
-        //Debug.LogError("TOWNBOYS " + Grid._instance.tiles[id].owner + "+++++++" + LocalData.SelfPlayer.userId);
-        attackButton.transform.parent.gameObject.SetActive(owner-1 != LocalData.SelfPlayer.userId);
+        //Debug.LogError("TOWNBOYS " + Grid._instance.tiles[id].owner + "+++++++" + LocalData.SelfUser.userId);
+        attackButton.transform.parent.gameObject.SetActive(owner-1 != LocalData.SelfUser.userId);
 
-        string info = Network.GetUser(id);
+        //string info = Network.GetUser(id);
         
         
         // Village
