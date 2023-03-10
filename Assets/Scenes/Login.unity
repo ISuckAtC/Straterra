@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 95090327}
   - component: {fileID: 95090326}
   - component: {fileID: 95090325}
+  - component: {fileID: 95090329}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -178,7 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input_Password: {fileID: 634686230}
   button_Confirm: {fileID: 95090326}
-  a: 
+  a: sfdhjhsd
 --- !u!114 &95090326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,6 +274,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95090323}
   m_CullTransparentMesh: 1
+--- !u!114 &95090329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95090323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7f5d0557f899a4dba21960d1fc6372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &142579147
 GameObject:
   m_ObjectHideFlags: 0

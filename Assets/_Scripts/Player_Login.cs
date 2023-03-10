@@ -14,6 +14,9 @@ public class Player_Login : MonoBehaviour
 
     public string a;
 
+    private ActionQueue q;
+    private TMPro.TMP_Text ttt;
+
     private bool loadScene;
 
     // Start is called before the first frame update
@@ -43,6 +46,7 @@ public class Player_Login : MonoBehaviour
 */
     public void Login()
     {
+        q = GetComponent<ActionQueue>();
         GameObject thisObject = gameObject;
         Task.Run<NetworkStructs.ActionResult>(async () =>
         {
@@ -54,6 +58,8 @@ public class Player_Login : MonoBehaviour
             {
                 Debug.LogError(res.message);
             }
+
+            
             
             else
             {
