@@ -58,7 +58,7 @@ public class OverworldController : MonoBehaviour
 
         PlaceOtherBuilding(1, 1, startingposition);
 
-        DarkShrine ds = new DarkShrine(startingposition / 2, 1.5f, 1f, 0.5f);
+        DarkShrine ds = new DarkShrine(startingposition / 2, 0.05f, 1f, 0.5f);
         SplashText.Splash("WELCOME");
         
         Vector2 cameraposition = Grid._instance.GetPosition(startingposition);
