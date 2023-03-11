@@ -116,6 +116,13 @@ public class Network
         
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
+    
+    public static async Task<ActionResult> CreateVillageBuilding(int id, byte slot)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/createBuilding?" + tokenIdentity + "&" + id + "&" + slot);
+        
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+    }
 
     public static async Task<ActionResult> GetBattleReport(int id)
     {

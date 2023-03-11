@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine.UI;
 using System.Threading;
 using System.Threading.Tasks;
@@ -324,6 +325,8 @@ public class CityPlayer : MonoBehaviour
             metalCost > GameManager.PlayerMetal ||
             orderCost > GameManager.PlayerOrder)
         {
+            SplashText.Splash("Not enough resources.");
+            
             if (foodCost > GameManager.PlayerFood)
             {
                 GameManager.I.LackingResources("Food");
@@ -343,16 +346,31 @@ public class CityPlayer : MonoBehaviour
             return;
         }
 
-        GameManager.PlayerFood -= foodCost;
-        GameManager.PlayerWood -= woodCost;
-        GameManager.PlayerMetal -= metalCost;
-        GameManager.PlayerOrder -= orderCost;
-
-        CityPlayer.cityPlayer.topBar.Food =  GameManager.PlayerFood;
-        CityPlayer.cityPlayer.topBar.Wood =  GameManager.PlayerWood;
-        CityPlayer.cityPlayer.topBar.Metal = GameManager.PlayerMetal;
-        CityPlayer.cityPlayer.topBar.Order = GameManager.PlayerOrder;
-
+        /*
+         
+            Task.Run<NetworkStructs.Resources>(async () =>
+            {
+                return await Network.GetResources(owner);
+            }).ContinueWith(async resources =>
+            {
+                NetworkStructs.Resources res = resources.Result;
+                aq.queue.Add(() =>
+                {
+                    villageResourceText.text =
+                        "Food:  " + res.food + "\n" +
+                        "Wood:  " + res.wood + "\n" +
+                        "Metal: " + res.metal + "\n" +
+                        "Order: " + res.order;
+                });
+            });
+         
+         */
+        
+        //Task.Run<NetworkStructs.ActionResult>(async () =>
+        //{
+            
+        //}
+        
         ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[id].buildingTime, (byte)id, selectedSlot, LocalData.SelfUser.userId);
 
         LocalData.SelfUser.cityBuildingSlots[selectedSlot] = 254;
