@@ -182,7 +182,7 @@ public class InfoScreen : MonoBehaviour
                         "Order: " + res.order;
                 });
             });
-
+            
             Task.Run<NetworkStructs.User>(async () =>
             {
                 return await Network.GetUser(owner);
