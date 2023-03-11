@@ -8,7 +8,30 @@ namespace NetworkStructs
         public bool success;
         public string message;
     }
-    
+
+    public enum ScheduledEventType
+    {
+        Generic,
+        UnitProduction,
+        TownBuilding
+    }
+
+    [System.Serializable]
+    public struct SerializableScheduledEvent
+    {
+        public int secondsLeft;
+        public int type;
+        public int unitId;
+        public int amount;
+        public int buildingId;
+        public int buildingSlot;
+    }
+
+    [System.Serializable]
+    public struct ScheduledEventGroup
+    {
+        public SerializableScheduledEvent[] events;
+    }
 
     public struct MapTile
     {
@@ -23,11 +46,13 @@ namespace NetworkStructs
         public float orderAmount;
         public float corruptionProgress;
     }
+
     [System.Serializable]
     public struct UserGroup
     {
         public User[] players;
     }
+
     [System.Serializable]
     public struct User
     {

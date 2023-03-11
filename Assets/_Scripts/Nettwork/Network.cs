@@ -110,18 +110,18 @@ public class Network
     }
 
 
-    public static async Task<VillageBuilding> GetVillageBuilding(int id)
+    public static async Task<ActionResult> GetVillageBuilding(int id)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getVillageBuilding?" + tokenIdentity + "&" + id);
         
-        return JsonUtility.FromJson<VillageBuilding>(await message.Content.ReadAsStringAsync());
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 
-    public static async Task<BattleReport> GetBattleReport(int id)
+    public static async Task<ActionResult> GetBattleReport(int id)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getBattleReport?" + tokenIdentity + "&" + id);
 
-        return JsonUtility.FromJson<BattleReport>(await message.Content.ReadAsStringAsync());
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 
     public static async Task<NetworkStructs.Resources> GetResources(int playerId)   
@@ -132,11 +132,25 @@ public class Network
     }
 
     // Have no buildings that require branch. Need update when that gets implemented.
-    public static async Task<VillageBuilding> UpgradeBuilding(int id)
+    public static async Task<ActionResult> UpgradeBuilding(int id)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/upgradeBuilding?" + tokenIdentity + "&" + id);
 
-        return JsonUtility.FromJson<VillageBuilding>(await message.Content.ReadAsStringAsync());
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+    }
+
+    public static async Task<ActionResult> ConstructMapBuilding(int id)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/constructMapBuilding?" + tokenIdentity + "&" + id);
+
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+    }
+    
+    public static async Task<ScheduledEventGroup> GetScheduledEvents()
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getScheduledEvents?" + tokenIdentity);
+
+        return JsonUtility.FromJson<ScheduledEventGroup>(await message.Content.ReadAsStringAsync());
     }
 
 }

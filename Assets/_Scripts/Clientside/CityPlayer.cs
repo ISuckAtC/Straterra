@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using System.Threading;
+using System.Threading.Tasks;
+
 
 public class CityPlayer : MonoBehaviour
 {
@@ -481,4 +484,23 @@ public class CityPlayer : MonoBehaviour
         CloseTrainingMenu();
     }
     #endregion
+
+    // Only to debug ScheduledEventGroup.
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Task.Run<NetworkStructs.ScheduledEventGroup>(async () => 
+            {
+                return await Network.GetScheduledEvents();
+            }).ContinueWith (result =>
+            {
+                var group = result.Result;
+                for (int i = 0; i < group.events.Length; i++)
+                {
+                    Debug.Log(group.events[i].type);
+                }
+            });
+        }
+    }
 }
