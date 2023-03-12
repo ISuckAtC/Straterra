@@ -152,7 +152,9 @@ public class InfoScreen : MonoBehaviour
     {
         int owner = Grid._instance.tiles[id].owner;
         //Debug.LogError("TOWNBOYS " + Grid._instance.tiles[id].owner + "+++++++" + LocalData.SelfUser.userId);
-        
+
+        //villageCoordinateText.text = Grid._instance.GetPosition(id).ToString();
+        villageCoordinateText.text = "Pathless";
         
         if (owner == LocalData.SelfUser.userId)
         {
@@ -229,7 +231,7 @@ public class InfoScreen : MonoBehaviour
         int buildingType = Grid._instance.tiles[id].building;
         int owner = Grid._instance.tiles[id].owner;
         
-        tileTypeText.text = Network.allUsers[owner].name;
+        coordinateText.text = Network.allUsers.Find(x => x.userId == owner).name;
         
         switch (buildingType)
         {
