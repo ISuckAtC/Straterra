@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using NetworkStructs;
 using UnityEditorInternal.Profiling;
 using UnityEngine;
@@ -39,9 +40,13 @@ public class OverworldController : MonoBehaviour
     private Vector2 playerVillagePosition;
     public UnityEngine.Tilemaps.TileBase flag;
 
+    private ActionQueue aq;
+    
     void Start()
     {
         Grid.onReady += OnGridReady;
+
+        aq = GetComponent<ActionQueue>();
     }
 
     private void OnGridReady()
@@ -580,6 +585,7 @@ public class OverworldController : MonoBehaviour
 
         MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
 
+        
         int foodCost = mapBuilding.foodCost;
         int woodCost = mapBuilding.woodCost;
         int metalCost = mapBuilding.metalCost;
@@ -608,14 +614,34 @@ public class OverworldController : MonoBehaviour
             }
             return;
         }
+        
+        Task.Run<NetworkStructs.ActionResult>(async () => 
+        {
+            return await Network.CreateMapBuilding(buildingId, selectedPosition);
+        }).ContinueWith(async result =>
+        {
+            NetworkStructs.ActionResult res = await result;
+            aq.queue.Add(() =>
+            {
+                if (!res.success)
+                {
+                    Debug.LogError("Mapbuilding failed: " + res.message);
+                }
+            });
+        });
+        
+        
+        
+        
         // BUG Remove division later
+        /*
         ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, (byte)buildingId, selectedPosition, LocalData.SelfUser.userId);
 
         GameManager.PlayerFood -= mapBuilding.foodCost;
         GameManager.PlayerWood -= mapBuilding.woodCost;
         GameManager.PlayerMetal -= mapBuilding.metalCost;
         GameManager.PlayerOrder -= mapBuilding.orderCost;
-
+        */
 
         Debug.Log("" + mapBuilding.name + " was placed in location " + selectedPosition);
     }
