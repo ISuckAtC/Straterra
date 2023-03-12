@@ -60,10 +60,10 @@ public class Network
         return JsonUtility.FromJson<User>(await message.Content.ReadAsStringAsync());
     }   
     
-    public static async Task<ActionResult> TrainUnit(int id, int amount, int flags)
+    public static async Task<ActionResult> CreateUnits(int id, int amount, int flags)
     {            
         // Send TrainUnit information to server. The parameters are seperated by "&" and sent to the server.
-        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/trainUnit?" + tokenIdentity + "&" + id + "&" + amount);
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/createUnits?" + tokenIdentity + "&" + id + "&" + amount);
       
         // We verify that what we got from the server is a bool. Tryparse return false if it isn't a bool.
         
