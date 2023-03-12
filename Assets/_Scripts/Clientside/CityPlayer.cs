@@ -495,7 +495,7 @@ public class CityPlayer : MonoBehaviour
 
         Task.Run<NetworkStructs.ActionResult>(async () => 
         {
-            return await Network.TrainUnit(trainingUnit.id, amount, 0);
+            return await Network.CreateUnits(trainingUnit.id, amount, 0);
         }).ContinueWith(async result =>
         {
             NetworkStructs.ActionResult res = await result;
