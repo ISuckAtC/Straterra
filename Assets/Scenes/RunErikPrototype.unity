@@ -37647,7 +37647,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1148855231}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.074074075
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -46241,8 +46241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d91c31a3823b2f4ab9690571445fb80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 1024
-  height: 1024
+  width: 128
+  height: 128
   gamePlane: {fileID: 1795489984}
 --- !u!81 &1415235161
 AudioListener:

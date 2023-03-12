@@ -74,6 +74,8 @@ public class OverworldController : MonoBehaviour
         File.WriteAllLines(@"C:\Users\Rune\Straterra\Assets\MapInformation.txt", lines);
         */
 
+        
+        
         selectedTileHighlight.transform.position = new Vector3Int(Grid._instance.width, 1, Grid._instance.height);
 
         cam = GetComponent<Camera>();
@@ -155,6 +157,25 @@ public class OverworldController : MonoBehaviour
         }
         */
 
+        //int enemyposition = FindStartingPosition.FirstVillage();
+        //PlaceOtherBuilding(1, 6, enemyposition);
+        
+        //List<List<Group>> armies = new List<List<Group>>();
+
+        //PlaceTestVillage(5);
+        //PlaceTestVillage(6);
+        //PlaceTestVillage(7);
+        //PlaceTestVillage(8);
+
+        int enemyposition = 4444; //FindStartingPosition.FirstVillage();
+            
+        PlaceOtherBuilding(1, 33, enemyposition);
+
+        Grid._instance.tiles[enemyposition].army = RandomEnemy();
+
+        
+        
+        
         building = 1;
         buildingIndex = 10;
     }
@@ -461,6 +482,8 @@ public class OverworldController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            NumConverter.GetConvertedTimeStamp(new DateTime(2013, 1, 1));
+            
             FocusOnVillage();
         }
     }

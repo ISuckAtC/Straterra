@@ -134,7 +134,7 @@ public class Network
     public static async Task<NetworkStructs.Resources> GetResources(int playerId)   
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getResources?" + tokenIdentity + "&" + playerId);
-        Debug.Log(await message.Content.ReadAsStringAsync());
+        //Debug.Log(await message.Content.ReadAsStringAsync());
         return JsonUtility.FromJson<NetworkStructs.Resources>(await message.Content.ReadAsStringAsync());
     }
 
@@ -146,9 +146,9 @@ public class Network
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 
-    public static async Task<ActionResult> ConstructMapBuilding(int id)
+    public static async Task<ActionResult> CreateMapBuilding(int id)
     {
-        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/constructMapBuilding?" + tokenIdentity + "&" + id);
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/createMapBuilding?" + tokenIdentity + "&" + id);
 
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }

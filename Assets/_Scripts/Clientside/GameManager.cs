@@ -62,6 +62,10 @@ public class GameManager : MonoBehaviour
             I.playerResources.chaos = value;
         }
     }
+    
+    public int timesAttacked = 0;
+    public int timesAttacking = 0;
+    public int timesDefended = 0;
 
     public static Color PlayerColor = new Color(0.3f, 1.0f, 0.3f, 0.8f);
 
@@ -96,7 +100,7 @@ public class GameManager : MonoBehaviour
             return await Network.GetResources(LocalData.SelfUser.userId);
         }).ContinueWith(async result =>
         {
-            Debug.Log("Adding resources");
+            //Debug.Log("Adding resources");
             var res = result.Result;
             try
             {
@@ -110,7 +114,7 @@ public class GameManager : MonoBehaviour
             PlayerWood = res.wood;
             PlayerMetal = res.metal;
             PlayerOrder = res.order;
-            Debug.Log("Done adding resources");
+            //Debug.Log("Done adding resources");
         });
         return;
         // Food

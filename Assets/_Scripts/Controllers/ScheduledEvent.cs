@@ -223,8 +223,10 @@ public class ScheduledAttackEvent : ScheduledEvent
         this.origin = origin;
         if (destination == LocalData.SelfUser.cityLocation)
         {
+            GameManager.I.timesAttacked++;
+            
             SplashText.Splash("INCOMING ATTACK (check reports)");
-            NotificationCenter.Add("INCOMING ATTACK", "An attack is incoming from tile position " + origin + " in " + secondsTotal + " seconds!" + "\nPlease prepare an army to defend your village!");
+            NotificationCenter.Add("INCOMING ATTACK " + GameManager.I.timesAttacked, "An attack is incoming from tile position " + origin + " in " + secondsTotal + " seconds!" + "\nPlease prepare an army to defend your village!");
         }
     }
 
@@ -265,9 +267,9 @@ public class ScheduledAttackEvent : ScheduledEvent
                     else GameManager.PlayerUnitAmounts[i] = 0;
                 }
             }
+            GameManager.I.timesDefended++;
 
-
-            NotificationCenter.Add("DEFENCE REPORT", message);
+            NotificationCenter.Add("DEFENCE REPORT " + GameManager.I.timesDefended, message);
             return;
         }
 
@@ -301,9 +303,9 @@ public class ScheduledAttackEvent : ScheduledEvent
                     message += UnitDefinition.I[result.remains[i].unitId].name + " (" + result.remains[i].count + ")\n";
                 }
             }
+            GameManager.I.timesAttacking++;// timesAttacking = 0;
 
-
-            NotificationCenter.Add("BATTLE REPORT", message);
+            NotificationCenter.Add("BATTLE REPORT " + GameManager.I.timesAttacking, message);
         }
     }
 }

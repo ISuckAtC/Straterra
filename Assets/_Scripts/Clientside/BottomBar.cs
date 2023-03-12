@@ -34,6 +34,8 @@ public class BottomBar : MonoBehaviour
     private bool armyOpen = false;
     private bool queueOpen = false;
     private bool reportsOpen = false;
+
+
     
     public void Start()
     {
@@ -153,6 +155,35 @@ public class BottomBar : MonoBehaviour
         reportsOpen = true;
         reports.ForEach(x => Destroy(x));
         reports.Clear();
+
+        for (int j = 0; j < NotificationCenter.Count(); j++)
+        {
+            reports.Add(Instantiate(reportPrefab, Vector3.zero, Quaternion.identity));
+        }
+        
+        for (int i = NotificationCenter.Count() - 1; i >= 0; i--)
+        {
+            //Debug.Log("Dealing with notification index " + i);
+            
+            RectTransform rectTransform = reports[i].GetComponent<RectTransform>();
+            rectTransform.parent = reportContentParent;
+
+            rectTransform.localPosition = new Vector3(0, -(rectTransform.sizeDelta.y + 5) * i, 0);
+            rectTransform.offsetMax = new Vector2(0, rectTransform.offsetMax.y);
+
+            int index = i; // most useful line
+
+            TMPro.TMP_Text[] texts = rectTransform.GetComponentsInChildren<TMPro.TMP_Text>();
+            
+            texts[0].text = NotificationCenter.Get(index).title;
+            texts[1].text = NumConverter.GetConvertedTimeStamp(NotificationCenter.Get(index).time);
+            
+            //rectTransform.GetComponentInChildren<TMPro.TMP_Text>().text = NotificationCenter.Get(index).title;
+            rectTransform.GetComponentInChildren<Button>().onClick.AddListener(delegate {OpenReport(index);});
+            
+        }
+        
+        /*
         for (int i = 0; i < NotificationCenter.Count(); ++i)
         {
             Debug.Log("Dealing with notification index " + i);
@@ -172,6 +203,7 @@ public class BottomBar : MonoBehaviour
             rectTransform.GetComponentInChildren<Button>().onClick.AddListener(delegate {OpenReport(index);});
             
         }
+        */
 
         reportsMenu.SetActive(true);
     }

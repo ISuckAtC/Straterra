@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,12 +13,12 @@ public class NotificationCenter
             if (instance == null) 
             {
                 instance = new NotificationCenter();
-                instance.notifications = new List<(string title, string content, bool viewed)>();
+                instance.notifications = new List<(string title, string content, DateTime time, bool viewed)>();
             }
             return instance;
         }
     }
-    public (string title, string content, bool viewed) this[int index]
+    public (string title, string content, DateTime time, bool viewed) this[int index]
     {
         get
         {
@@ -28,12 +29,12 @@ public class NotificationCenter
             notifications[index] = value;
         }
     }
-    public List<(string title, string content, bool viewed)> notifications;
+    public List<(string title, string content, DateTime time, bool viewed)> notifications;
 
     public static void Add(string title, string message)
     {
         Debug.Log("NOTIFICATION MESSAGE\n_________________\n\n" + message);
-        I.notifications.Insert(0, (title,message,false));
+        I.notifications.Insert(0, (title,message, DateTime.Now, false));
         //I.notifications.Add((title, message, false));
     }
     public static void Remove(int index)
@@ -41,7 +42,7 @@ public class NotificationCenter
         I.notifications.RemoveAt(index);
     }
 
-    public static (string title, string content, bool viewed) Get(int index)
+    public static (string title, string content, DateTime time, bool viewed) Get(int index)
     {
         return I.notifications[index];
     }

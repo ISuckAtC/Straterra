@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using UnityEngine;
 
 public static class NumConverter
@@ -25,9 +26,41 @@ public static class NumConverter
         output += seconds + " s";    
 
         return output;
-        
+
     }
-    
+
+    public static string GetConvertedTimeStamp(DateTime time)
+    {
+        DateTime currentTime = DateTime.Now;
+
+        if (time < currentTime.AddYears(-1))
+        {
+            string output = time.Day + "." + time.ToString("MMM", CultureInfo.InvariantCulture) + "." + time.Year;
+            
+            return output;
+        }
+        else if (time < currentTime.AddMonths(-1))
+        {
+            string output = time.Day + "." + time.ToString("MMM", CultureInfo.InvariantCulture);
+            
+            return output;
+        }
+        else if (time < currentTime.AddDays(-1))
+        {
+            string output = time.Day + "." + time.ToString("MMM", CultureInfo.InvariantCulture);
+            
+            return output;
+            
+        }
+        else
+        {
+            string output = "" + (currentTime.Hour - time.Hour) + "H:" + (currentTime.Minute - time.Minute + "M ago");
+            
+            return output;
+        }
+    }
+
+
     public static string GetConvertedAmount(int amount)
     {
         double val = 0;
