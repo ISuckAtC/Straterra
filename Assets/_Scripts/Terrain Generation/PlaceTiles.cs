@@ -45,7 +45,14 @@ public class PlaceTiles : MonoBehaviour
         }
     }
 
-   
+
+    public void CreateBuilding(int id, int position)
+    {
+        Vector2Int pos = Grid._instance.GetPosition(position);
+
+        overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), buildingTiles[id]);
+    }
+    
     public void ClearAllTiles()
     {
         for (int i = 0; i < Grid._instance.width; i++)

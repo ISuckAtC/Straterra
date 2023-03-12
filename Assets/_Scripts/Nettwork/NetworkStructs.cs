@@ -66,6 +66,14 @@ namespace NetworkStructs
         public byte archerLevel;
         public byte cavalryLevel;
         public byte spearmanLevel;
+        public MapBuilding[] buildingPositions;
+    }
+
+    [System.Serializable]
+    public struct MapBuilding
+    {
+        public int building;
+        public int position;
     }
 
     public struct VillageBuilding
