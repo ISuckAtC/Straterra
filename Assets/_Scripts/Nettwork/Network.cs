@@ -56,14 +56,14 @@ public class Network
     public static async Task<User> GetSelfUser()
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getSelfUser?" + tokenIdentity);
-        Debug.Log(await message.Content.ReadAsStringAsync());
+
         return JsonUtility.FromJson<User>(await message.Content.ReadAsStringAsync());
     }   
     
     public static async Task<ActionResult> TrainUnit(int id, int amount, int flags)
     {            
         // Send TrainUnit information to server. The parameters are seperated by "&" and sent to the server.
-        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/trainUnit?" + tokenIdentity + "&" + id + "&" + amount + "&" + flags);
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/trainUnit?" + tokenIdentity + "&" + id + "&" + amount);
       
         // We verify that what we got from the server is a bool. Tryparse return false if it isn't a bool.
         
@@ -116,13 +116,6 @@ public class Network
         
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
-    
-    public static async Task<ActionResult> CreateVillageBuilding(int id, byte slot)
-    {
-        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/createBuilding?" + tokenIdentity + "&" + id + "&" + slot);
-        
-        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
-    }
 
     public static async Task<ActionResult> GetBattleReport(int id)
     {
@@ -134,15 +127,14 @@ public class Network
     public static async Task<NetworkStructs.Resources> GetResources(int playerId)   
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getResources?" + tokenIdentity + "&" + playerId);
-        //Debug.Log(await message.Content.ReadAsStringAsync());
+
         return JsonUtility.FromJson<NetworkStructs.Resources>(await message.Content.ReadAsStringAsync());
     }
 
-    // Have no buildings that require branch. Need update when that gets implemented.
-    public static async Task<ActionResult> UpgradeBuilding(int id)
+    public static async Task<ActionResult> CreateTownBuilding(int id, byte slot)
     {
-        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/upgradeBuilding?" + tokenIdentity + "&" + id);
-
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/createTownBuilding?" + tokenIdentity + "&" + id + "&" + slot);
+        
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 
@@ -160,5 +152,18 @@ public class Network
         return JsonUtility.FromJson<ScheduledEventGroup>(await message.Content.ReadAsStringAsync());
     }
 
+    public static async Task<ActionResult> CreateUnits()
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/createUnits?" + tokenIdentity);
+
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+    }
+
+    public static async Task<UnitGroup> GetHomeUnits()
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getHomeUnits?" + tokenIdentity);
+
+        return JsonUtility.FromJson<UnitGroup>(await message.Content.ReadAsStringAsync());
+    }
 }
 

@@ -92,4 +92,18 @@ namespace NetworkStructs
         public int playerId;
         public byte[] buildings;
     }
+
+    [System.Serializable]
+    public struct UnitGroup
+    {
+        public Unit[] units;
+        
+    }
+    
+    [System.Serializable]
+    public struct Unit
+    {
+        public int unitId;
+        public int amount;
+    }
 }
