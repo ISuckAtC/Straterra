@@ -104,7 +104,7 @@ public class BottomBar : MonoBehaviour
             //worldButtonText.text = "HOME";
 
             PlaceTiles._instance.overlayMap.ClearAllTiles();
-            
+
             Task.Run<NetworkStructs.UserGroup>(
                 async () =>
                 {
@@ -122,6 +122,7 @@ public class BottomBar : MonoBehaviour
                                 NetworkStructs.User user = group.players[i];
                                 
                                 PlaceTiles._instance.CreateBuilding(1, user.cityLocation);
+                                Debug.Log("Created village " + user.cityLocation);
                                 Grid._instance.tiles[user.cityLocation].building = (byte)1;
                                 Grid._instance.tiles[user.cityLocation].owner = user.userId;
                                 
@@ -131,7 +132,7 @@ public class BottomBar : MonoBehaviour
 
                                     // Group.Players.buildingPositions has buildingid and buildingposition.
                                     PlaceTiles._instance.CreateBuilding(tempBuilding.building, tempBuilding.position);
-
+    
                                     Grid._instance.tiles[tempBuilding.position].building = (byte)tempBuilding.building;
 
                                     Grid._instance.tiles[tempBuilding.position].owner = user.userId;
