@@ -33972,7 +33972,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f0a0d4d9c9af4f1419b1340e53083494, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d7640a055f3abe9428dd54b3405753e8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -45626,6 +45626,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a987417329b722641b682144d57e1d03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timesAttacked: 0
+  timesAttacking: 0
+  timesDefended: 0
   foodImage: {fileID: 1213739946}
   woodImage: {fileID: 1901235936}
   metalImage: {fileID: 93989194}
@@ -77580,7 +77583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headerText: 'Warehouse cost:'
+  headerText: 'Warehouse - visual only -:'
   bodyText: 10 Wood
 --- !u!224 &6259628370401648469
 RectTransform:
@@ -77983,7 +77986,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headerText: 'Marketplace cost:'
+  headerText: 'Marketplace - visual only -:'
   bodyText: '200 Food &
 
     200 Wood &
@@ -78119,10 +78122,10 @@ RectTransform:
   m_Father: {fileID: 6259628372368367653}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 87.5, y: -322.5}
-  m_SizeDelta: {x: 175, y: 175}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6259628370540723576
 CanvasRenderer:
@@ -78213,7 +78216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headerText: 'Temple cost:'
+  headerText: 'Temple - visual only -:'
   bodyText: 200 Wood
 --- !u!224 &6259628370552981368
 RectTransform:
@@ -78364,10 +78367,10 @@ RectTransform:
   m_Father: {fileID: 6259628372368367653}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 637.5, y: -87.5}
-  m_SizeDelta: {x: 175, y: 175}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6259628370571162798
 CanvasRenderer:
@@ -79015,10 +79018,10 @@ RectTransform:
   m_Father: {fileID: 6259628372368367653}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 362.5, y: -87.5}
-  m_SizeDelta: {x: 175, y: 175}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &6259628370885218244
 RectTransform:
@@ -79038,7 +79041,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 115, y: 115}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6259628370885218245
 GameObject:
@@ -79087,7 +79090,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 58d8bcf7fecf95e46a42c733892145de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a3404e44586a4e84f83e3daef49017e8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -79109,7 +79112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headerText: 'Workshop cost:'
+  headerText: 'Workshop - visual only -:'
   bodyText: 200 Wood
 --- !u!224 &6259628370924444332
 RectTransform:
@@ -79333,7 +79336,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headerText: 'Smithy cost:'
+  headerText: 'Smithy - visual only -:'
   bodyText: 200 Wood
 --- !u!114 &6259628370953135504
 MonoBehaviour:
@@ -79956,7 +79959,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &6259628371057136250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81496,10 +81499,10 @@ RectTransform:
   m_Father: {fileID: 6259628372368367653}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 87.5, y: -87.5}
-  m_SizeDelta: {x: 175, y: 175}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6259628371612159254
 MonoBehaviour:
@@ -81741,7 +81744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headerText: 'Town Hall  cost:'
+  headerText: 'Town Hall cost:'
   bodyText: 50 Wood
 --- !u!224 &6259628372007585284
 RectTransform:
@@ -82066,10 +82069,10 @@ RectTransform:
   m_Father: {fileID: 6259628372368367653}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 912.5, y: -87.5}
-  m_SizeDelta: {x: 175, y: 175}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6259628372032128775
 GameObject:
@@ -82601,7 +82604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  headerText: 'Academy cost:'
+  headerText: 'Academy - visual only -:'
   bodyText: '200 Wood &
 
     100 Metal'
@@ -83083,10 +83086,10 @@ RectTransform:
   m_Father: {fileID: 6259628372368367653}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 912.5, y: -322.5}
-  m_SizeDelta: {x: 175, y: 175}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6259628372195942649
 GameObject:
@@ -83565,10 +83568,10 @@ RectTransform:
   m_Father: {fileID: 6259628372368367653}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 637.5, y: -322.5}
-  m_SizeDelta: {x: 175, y: 175}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6259628372313936829
 GameObject:
@@ -83998,10 +84001,10 @@ RectTransform:
   m_Father: {fileID: 6259628372368367653}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 362.5, y: -322.5}
-  m_SizeDelta: {x: 175, y: 175}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6259628372455831058
 CanvasRenderer:
