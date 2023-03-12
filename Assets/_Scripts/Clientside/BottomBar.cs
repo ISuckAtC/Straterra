@@ -102,6 +102,62 @@ public class BottomBar : MonoBehaviour
             mapUI.SetActive(true);
             cityPlayer.SetActive(false);
             //worldButtonText.text = "HOME";
+
+            PlaceTiles._instance.overlayMap.ClearAllTiles();
+
+            Task.Run<NetworkStructs.UserGroup>(
+                async () =>
+                {
+                    return await Network.GetUsers();
+                }).ContinueWith(
+                async userValues =>
+                {
+                    NetworkStructs.UserGroup group = await userValues;
+
+                    aQ.queue.Add(
+                        () =>
+                        {
+                            for (int i = 0; i < group.players.Length; i++)
+                            {
+                                NetworkStructs.User user = group.players[i];
+                                
+                                PlaceTiles._instance.CreateBuilding(1, user.cityLocation);
+                                Debug.Log("Created village " + user.cityLocation);
+                                Grid._instance.tiles[user.cityLocation].building = (byte)1;
+                                Grid._instance.tiles[user.cityLocation].owner = user.userId;
+                                
+                                for (int j = 0; j < user.buildingPositions.Length; j++)
+                                {
+                                    NetworkStructs.MapBuilding tempBuilding = user.buildingPositions[j];
+
+                                    // Group.Players.buildingPositions has buildingid and buildingposition.
+                                    PlaceTiles._instance.CreateBuilding(tempBuilding.building, tempBuilding.position);
+    
+                                    Grid._instance.tiles[tempBuilding.position].building = (byte)tempBuilding.building;
+
+                                    Grid._instance.tiles[tempBuilding.position].owner = user.userId;
+                                }
+                            }
+                        });
+                });
+                /*
+        Task.Run<NetworkStructs.ActionResult>(async () => 
+        {
+            return await Network.CreateMapBuilding(buildingId, selectedPosition);
+        }).ContinueWith(async result =>
+        {
+            NetworkStructs.ActionResult res = await result;
+            aq.queue.Add(() =>
+            {
+                if (!res.success)
+                {
+                    Debug.LogError("Mapbuilding failed: " + res.message);
+                }
+            });
+        });
+                 */
+                
+                
             worldView = true;
         }
     }

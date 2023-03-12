@@ -157,7 +157,8 @@ public class InfoScreen : MonoBehaviour
         if (owner == LocalData.SelfUser.userId)
         {
             attackButton.transform.parent.gameObject.SetActive(false);
-            
+            playerNameText.text = Network.allUsers.Find(x => x.userId == owner).name;
+            coordinateText.text = "" + id;
         }
         else
         {
@@ -227,7 +228,7 @@ public class InfoScreen : MonoBehaviour
     {
         int buildingType = Grid._instance.tiles[id].building;
         int owner = Grid._instance.tiles[id].owner;
-        
+        tileTypeText.text = Network.allUsers[owner].name;
         switch (buildingType)
         {
             // All buildings have levels. For starting we will have level 1, 2 and 3
