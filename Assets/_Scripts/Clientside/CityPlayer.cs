@@ -37,9 +37,12 @@ public class CityPlayer : MonoBehaviour
 
     private List<GameObject> buildingsInterfaces;
     private int selectedSlot;
+
+    private ActionQueue aq;
     
     public void Start()
     {
+        aq = GetComponent<ActionQueue>();
         cityPlayer = this;
         LoadBuildings();
         LoadBuildingInterfaces();
@@ -490,6 +493,22 @@ public class CityPlayer : MonoBehaviour
             return;
         }
 
+        Task.Run<NetworkStructs.ActionResult>(async () => 
+        {
+            return await Network.TrainUnit(trainingUnit.id, amount, 0);
+        }).ContinueWith(async result =>
+        {
+            NetworkStructs.ActionResult res = await result;
+            aq.queue.Add(() =>
+            {
+                if (!res.success)
+                {
+                    Debug.LogError("Training troops failed: " + res.message);
+                }
+            });
+        });
+
+        /*
         GameManager.PlayerFood -= foodCost;
         GameManager.PlayerWood -= woodCost;
         GameManager.PlayerMetal -= metalCost;
@@ -499,6 +518,7 @@ public class CityPlayer : MonoBehaviour
 
         bool currentEvents = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Count() > 0;
         new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfUser.userId, !currentEvents);
+        */
         CloseTrainingMenu();
     }
     #endregion
