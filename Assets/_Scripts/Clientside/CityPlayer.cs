@@ -349,34 +349,32 @@ public class CityPlayer : MonoBehaviour
             return;
         }
 
-        /*
-         
-            Task.Run<NetworkStructs.Resources>(async () =>
+
+            Task.Run<NetworkStructs.ActionResult>(async () =>
             {
-                return await Network.GetResources(owner);
+                return await Network.CreateTownBuilding(building.id, (byte)selectedSlot);
             }).ContinueWith(async resources =>
             {
-                NetworkStructs.Resources res = resources.Result;
-                aq.queue.Add(() =>
+                NetworkStructs.ActionResult res = await resources;
+                if (res.success)
                 {
-                    villageResourceText.text =
-                        "Food:  " + res.food + "\n" +
-                        "Wood:  " + res.wood + "\n" +
-                        "Metal: " + res.metal + "\n" +
-                        "Order: " + res.order;
+                    aq.queue.Add(() =>
+                {
+                    LocalData.SelfUser.cityBuildingSlots[selectedSlot] = 254;
                 });
+                }
+                
             });
          
-         */
         
         //Task.Run<NetworkStructs.ActionResult>(async () =>
         //{
             
         //}
         
-        ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[id].buildingTime, (byte)id, selectedSlot, LocalData.SelfUser.userId);
+        //ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[id].buildingTime, (byte)id, selectedSlot, LocalData.SelfUser.userId);
 
-        LocalData.SelfUser.cityBuildingSlots[selectedSlot] = 254;
+        //LocalData.SelfUser.cityBuildingSlots[selectedSlot] = 254;
         
         CityPlayer.cityPlayer.CloseMenus();
         CityPlayer.cityPlayer.LoadBuildings();
