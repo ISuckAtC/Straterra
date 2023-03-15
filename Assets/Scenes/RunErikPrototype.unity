@@ -58028,6 +58028,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1731830722}
   - component: {fileID: 1731830723}
+  - component: {fileID: 1731830724}
   m_Layer: 5
   m_Name: PlayerVillage
   m_TagString: Untagged
@@ -58356,6 +58357,18 @@ MonoBehaviour:
   trainingMetalcost: {fileID: 608639169}
   trainingTime: {fileID: 1903840043}
   unitFullbodyArt: {fileID: 1657081329}
+--- !u!114 &1731830724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731830721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7f5d0557f899a4dba21960d1fc6372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1733591094
 GameObject:
   m_ObjectHideFlags: 0
