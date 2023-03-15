@@ -31,6 +31,7 @@ public class InfoScreen : MonoBehaviour
     public TMP_Text resourceTypeText;
     public Slider healthSlider;
     public TMP_Text healthText;
+    public TMP_Text resourceCoordinateText;
     public Slider efficiencySlider;
     public TMP_Text efficiencyText;
     public TMP_Text resourceBreadText;
@@ -152,7 +153,9 @@ public class InfoScreen : MonoBehaviour
     {
         int owner = Grid._instance.tiles[id].owner;
         //Debug.LogError("TOWNBOYS " + Grid._instance.tiles[id].owner + "+++++++" + LocalData.SelfUser.userId);
-        
+
+        //villageCoordinateText.text = Grid._instance.GetPosition(id).ToString();
+        villageCoordinateText.text = "Pathless";
         
         if (owner == LocalData.SelfUser.userId)
         {
@@ -228,8 +231,8 @@ public class InfoScreen : MonoBehaviour
     {
         int buildingType = Grid._instance.tiles[id].building;
         int owner = Grid._instance.tiles[id].owner;
-        
-        tileTypeText.text = Network.allUsers[owner].name;
+
+        resourceCoordinateText.text = "Lvl 1";//Network.allUsers.Find(x => x.userId == owner).name;
         
         switch (buildingType)
         {

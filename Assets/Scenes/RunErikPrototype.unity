@@ -46221,6 +46221,7 @@ MonoBehaviour:
   resourceTypeText: {fileID: 1937235423}
   healthSlider: {fileID: 1918242386}
   healthText: {fileID: 1250514234}
+  resourceCoordinateText: {fileID: 1870639211}
   efficiencySlider: {fileID: 765009670}
   efficiencyText: {fileID: 342957249}
   resourceBreadText: {fileID: 313433594}

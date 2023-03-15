@@ -172,11 +172,11 @@ public class OverworldController : MonoBehaviour
         //PlaceTestVillage(7);
         //PlaceTestVillage(8);
 
-        int enemyposition = 4444; //FindStartingPosition.FirstVillage();
+        //int enemyposition = 4444; //FindStartingPosition.FirstVillage();
             
-        PlaceOtherBuilding(1, 33, enemyposition);
+        //PlaceOtherBuilding(1, 33, enemyposition);
 
-        Grid._instance.tiles[enemyposition].army = RandomEnemy();
+        //Grid._instance.tiles[enemyposition].army = RandomEnemy();
 
         
         
