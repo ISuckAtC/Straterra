@@ -95,6 +95,18 @@ public class BottomBar : MonoBehaviour
             cityPlayer.SetActive(true);
             //worldButtonText.text = "WORLD";
             worldView = false;
+
+            Task.Run<NetworkStructs.User>(async () => {
+                return await Network.GetSelfUser();
+            }).ContinueWith(async selfUserUpdate => {
+                NetworkStructs.User suu = await selfUserUpdate;
+                LocalData.SelfUser = suu;
+                aQ.queue.Add(() => {
+                    CityPlayer cp = cityPlayer.GetComponent<CityPlayer>();
+                    cp.LoadBuildings();
+                    cp.LoadBuildingInterfaces();
+                });
+            });
         }
         else
         {

@@ -363,6 +363,9 @@ public class CityPlayer : MonoBehaviour
             {
                 LocalData.SelfUser.cityBuildingSlots[selectedSlot] = 254;
                 Debug.Log("DATA IN SLOT " + selectedSlot + " IS " + LocalData.SelfUser.cityBuildingSlots[selectedSlot]);
+                CityPlayer.cityPlayer.CloseMenus();
+                CityPlayer.cityPlayer.LoadBuildings();
+                CityPlayer.cityPlayer.LoadBuildingInterfaces();
             });
             }
 
@@ -378,9 +381,6 @@ public class CityPlayer : MonoBehaviour
 
         //LocalData.SelfUser.cityBuildingSlots[selectedSlot] = 254;
 
-        CityPlayer.cityPlayer.CloseMenus();
-        CityPlayer.cityPlayer.LoadBuildings();
-        CityPlayer.cityPlayer.LoadBuildingInterfaces();
     }
 
     #endregion
