@@ -186,7 +186,7 @@ public class CityPlayer : MonoBehaviour
             townhallMenu.title.text = TownBuildingDefinition.I[townhallMenu.id].name.ToUpper();
             townhallMenu.level.text = "Lv. " + TownBuildingDefinition.I[townhallMenu.id].level;
             if (TownBuildingDefinition.I[townhallMenu.id].level < 3) 
-                townhallMenu.nextLevel.sprite = buildingPrefabs[townhallMenu.id + 1].GetComponentInChildren<Image>().sprite;
+                townhallMenu.nextLevel.sprite = buildingPrefabs[townhallMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 townhallMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(townHall);
@@ -199,7 +199,7 @@ public class CityPlayer : MonoBehaviour
             barracksMenu.title.text = TownBuildingDefinition.I[barracksMenu.id].name.ToUpper();
             barracksMenu.level.text = "Lv. " + TownBuildingDefinition.I[barracksMenu.id].level;
             if (TownBuildingDefinition.I[barracksMenu.id].level < 3) 
-                barracksMenu.nextLevel.sprite = buildingPrefabs[barracksMenu.id + 1].GetComponentInChildren<Image>().sprite;
+                barracksMenu.nextLevel.sprite = buildingPrefabs[barracksMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 barracksMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(barracks);
@@ -211,7 +211,7 @@ public class CityPlayer : MonoBehaviour
             smithyMenu.title.text = TownBuildingDefinition.I[smithyMenu.id].name.ToUpper();
             smithyMenu.level.text = "Lv. " + TownBuildingDefinition.I[smithyMenu.id].level;
             if (TownBuildingDefinition.I[smithyMenu.id].level < 3) 
-                smithyMenu.nextLevel.sprite = buildingPrefabs[smithyMenu.id + 1].GetComponent<Image>().sprite;
+                smithyMenu.nextLevel.sprite = buildingPrefabs[smithyMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 smithyMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(smithy);
@@ -223,7 +223,7 @@ public class CityPlayer : MonoBehaviour
             academyMenu.title.text = TownBuildingDefinition.I[academyMenu.id].name.ToUpper();
             academyMenu.level.text = "Lv. " + TownBuildingDefinition.I[academyMenu.id].level;
             if (TownBuildingDefinition.I[academyMenu.id].level < 3) 
-                academyMenu.nextLevel.sprite = buildingPrefabs[academyMenu.id + 1].GetComponent<Image>().sprite;
+                academyMenu.nextLevel.sprite = buildingPrefabs[academyMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 academyMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(academy);
@@ -235,7 +235,7 @@ public class CityPlayer : MonoBehaviour
             templeMenu.title.text = TownBuildingDefinition.I[templeMenu.id].name.ToUpper();
             templeMenu.level.text = "Lv. " + TownBuildingDefinition.I[templeMenu.id].level;
             if (TownBuildingDefinition.I[templeMenu.id].level < 3) 
-                templeMenu.nextLevel.sprite = buildingPrefabs[templeMenu.id + 1].GetComponent<Image>().sprite;
+                templeMenu.nextLevel.sprite = buildingPrefabs[templeMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 templeMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(temple);
@@ -247,7 +247,7 @@ public class CityPlayer : MonoBehaviour
             workshopMenu.title.text = TownBuildingDefinition.I[workshopMenu.id].name.ToUpper();
             workshopMenu.level.text = "Lv. " + TownBuildingDefinition.I[workshopMenu.id].level;
             if (TownBuildingDefinition.I[workshopMenu.id].level < 3) 
-                workshopMenu.nextLevel.sprite = buildingPrefabs[workshopMenu.id + 1].GetComponent<Image>().sprite;
+                workshopMenu.nextLevel.sprite = buildingPrefabs[workshopMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 workshopMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(workshop);
@@ -259,7 +259,7 @@ public class CityPlayer : MonoBehaviour
             marketplaceMenu.title.text = TownBuildingDefinition.I[marketplaceMenu.id].name.ToUpper();
             marketplaceMenu.level.text = "Lv. " + TownBuildingDefinition.I[marketplaceMenu.id].level;
             if (TownBuildingDefinition.I[marketplaceMenu.id].level < 3) 
-                marketplaceMenu.nextLevel.sprite = buildingPrefabs[marketplaceMenu.id + 1].GetComponent<Image>().sprite;
+                marketplaceMenu.nextLevel.sprite = buildingPrefabs[marketplaceMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 marketplaceMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(marketplace);
@@ -271,7 +271,7 @@ public class CityPlayer : MonoBehaviour
             warehouseMenu.title.text = TownBuildingDefinition.I[warehouseMenu.id].name.ToUpper();
             warehouseMenu.level.text = "Lv. " + TownBuildingDefinition.I[warehouseMenu.id].level;
             if (TownBuildingDefinition.I[warehouseMenu.id].level < 3) 
-                warehouseMenu.nextLevel.sprite = buildingPrefabs[warehouseMenu.id + 1].GetComponent<Image>().sprite;
+                warehouseMenu.nextLevel.sprite = buildingPrefabs[warehouseMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 warehouseMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(warehouse);
