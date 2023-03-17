@@ -5,7 +5,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using NetworkStructs;
-using UnityEditorInternal.Profiling;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -49,8 +48,30 @@ public class OverworldController : MonoBehaviour
         aq = GetComponent<ActionQueue>();
     }
 
+    private int nga = 0;
     private void OnGridReady()
     {
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(58,69)));
+        nga++;
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(74,69)));
+        nga++;
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(71,77)));
+        nga++;
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(58,63)));
+        nga++;
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(77,66)));
+        nga++;
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(97,58)));
+        nga++;
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(47,59)));
+        nga++;
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(45,81)));
+        nga++;
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(65,86)));
+        nga++;
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(84,82)));
+        nga++;
+
         /*
         string fileName = "";
         if (File.Exists(fileName))
