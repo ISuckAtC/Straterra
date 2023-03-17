@@ -61,9 +61,6 @@ public class Player_Login : MonoBehaviour
             {
                 Debug.LogError(res.message);
             }
-
-            
-            
             else
             {
                 Debug.Log("token is = " + res.message);
