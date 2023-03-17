@@ -418,9 +418,98 @@ public class CityPlayer : MonoBehaviour
     #endregion
     #region Warehouse
     [Header("Warehouse")]
+    public Color activeButton;
+    public Color inactiveButton;
+    public Color activeBackground;
+    public Color inactiveBackground;
+    public Color activeTextColor;
+    public Image[] levelBackgrounds;
+    public Image[] buttonBackgrounds;
+    public Text[] buttonTexts;
     int foodLimit;
     int woodLimit;
     int metalLimit;
+
+
+
+    
+
+    
+    
+    public void UpgradeResourceLimit(int i)
+    {
+        /*
+        0-3 = foodLimit == 1000;
+        4-7 = Wood
+        8-11 = Metal
+        */
+
+
+        switch (i)
+        {
+            case 0:
+            foodLimit = 1000;
+            buttonBackgrounds[i].color = activeButton;
+            buttonTexts[i].color = activeTextColor;
+
+            break;
+            
+            case 1:
+            foodLimit = 2000;
+
+            break;
+            
+            case 2:
+            foodLimit = 4000;
+
+            break;
+            
+            case 3:
+            foodLimit = 8000;
+
+            break;
+            
+            case 4:
+            woodLimit = 1000;
+
+            break;
+            
+            case 5:
+            woodLimit = 2000;
+
+            break;
+            
+            case 6:
+            woodLimit = 4000;
+
+            break;
+            
+            case 7:
+            woodLimit = 8000;
+
+            break;
+            
+            case 8:
+            metalLimit = 1000;
+
+            break;
+            
+            case 9:
+            metalLimit = 2000;
+
+            break;
+            
+            case 10:
+            metalLimit = 4000;
+
+            break;
+
+            case 11:
+            metalLimit = 8000;
+
+            break;
+        }
+    }
 
     // Limit == Warehouse Level * something
 
