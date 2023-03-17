@@ -24992,7 +24992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &608701815
 RectTransform:
   m_ObjectHideFlags: 0
@@ -75115,6 +75115,14 @@ MonoBehaviour:
   emptyPlot: {fileID: 6259628371057136248}
   marketplace: {fileID: 2115161504}
   warehouse: {fileID: 585900447}
+  activeButton: {r: 0, g: 0, b: 0, a: 0}
+  inactiveButton: {r: 0, g: 0, b: 0, a: 0}
+  activeBackground: {r: 0, g: 0, b: 0, a: 0}
+  inactiveBackground: {r: 0, g: 0, b: 0, a: 0}
+  activeTextColor: {r: 0, g: 0, b: 0, a: 0}
+  levelBackgrounds: []
+  buttonBackgrounds: []
+  buttonTexts: []
   trainingMenu: {fileID: 758036532}
   trainingTitle: {fileID: 258241328}
   trainingInput: {fileID: 105179602}
