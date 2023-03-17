@@ -21,10 +21,13 @@ namespace NetworkStructs
     {
         public int secondsLeft;
         public int type;
+        public int owner;
         public int unitId;
         public int amount;
         public int buildingId;
         public int buildingSlot;
+        public int position;
+        public bool running;
     }
 
     [System.Serializable]

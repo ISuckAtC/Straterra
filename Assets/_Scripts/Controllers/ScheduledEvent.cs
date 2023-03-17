@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class ScheduledEvent
 {
     public static List<ScheduledEvent> activeEvents = new List<ScheduledEvent>();
+    public static List<ScheduledEvent> tempEvents = new List<ScheduledEvent>();
     public int secondsLeft;
     public int secondsTotal;
     public bool running;
@@ -25,7 +27,9 @@ public class ScheduledEvent
         {
             running = false;
         }
+
         activeEvents.Add(this);
+
     }
     public void Run()
     {
@@ -40,6 +44,51 @@ public class ScheduledEvent
     {
         EventHub.OnTick -= Tick;
         activeEvents.Remove(this);
+    }
+    public static void UpdateScheduledEvents()
+    {
+        Task.Run<NetworkStructs.ScheduledEventGroup>(async () => 
+        {
+            return await Network.GetScheduledEvents();
+        }).ContinueWith(async result =>
+        {
+            NetworkStructs.ScheduledEventGroup events = await result;
+            tempEvents = new List<ScheduledEvent>();
+            for (int i = 0; i < events.events.Length; ++i)
+            {
+                NetworkStructs.SerializableScheduledEvent sEvent = events.events[i];
+                switch (sEvent.type)
+                {
+                    case 0:
+                    {
+                        
+                        break;
+                    }
+                    case 1:
+                    {
+                        tempEvents.Add(new ScheduledUnitProductionEvent(sEvent.secondsLeft, sEvent.unitId, sEvent.amount, sEvent.owner, sEvent.running));
+                        break;
+                    }
+                    case 2:
+                    {
+                        tempEvents.Add(new ScheduledTownBuildEvent(sEvent.secondsLeft, (byte)sEvent.buildingId, sEvent.buildingSlot, sEvent.owner));
+                        // town
+                        break;
+                    }
+                    case 3:
+                    {
+                        tempEvents.Add(new ScheduledMapBuildEvent(sEvent.secondsLeft, (byte)sEvent.buildingId, sEvent.position, sEvent.owner));
+                        // map
+                        break;
+                    }
+                }
+
+                GameManager.aq.queue.Add(() =>
+                {
+                    activeEvents = new List<ScheduledEvent>(tempEvents);
+                });
+            }
+        });
     }
 }
 
@@ -126,38 +175,6 @@ public class ScheduledMapBuildEvent : ScheduledEvent
     public override void Complete()
     {
         base.Complete();
-
-        Grid._instance.tiles[position].building = buildingId;
-        Grid._instance.tiles[position].owner = owner;
-        Vector2Int pos = Grid._instance.GetPosition(position);
-
-        PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), PlaceTiles._instance.buildingTiles[buildingId]);
-
-        MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
-        
-        switch (mapBuilding.type)
-        {
-            case MapBuildingType.farm:
-                {
-                    ResourceData.foodGatheringRate += (int)(mapBuilding.baseProduction * Grid._instance.tiles[position].foodAmount);
-                    
-                    break;
-                }
-            
-            case MapBuildingType.wood:
-                {
-                    ResourceData.woodGatheringRate += (int)(mapBuilding.baseProduction * Grid._instance.tiles[position].woodAmount);
-                    
-                    break;
-                }
-            
-            case MapBuildingType.mine:
-                {
-                    ResourceData.metalGatheringRate += (int)(mapBuilding.baseProduction * Grid._instance.tiles[position].metalAmount);
-                    
-                    break;
-                }
-        }
     }
 }
 

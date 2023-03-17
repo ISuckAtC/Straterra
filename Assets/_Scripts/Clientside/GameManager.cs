@@ -71,10 +71,13 @@ public class GameManager : MonoBehaviour
 
     public static int[] PlayerUnitAmounts { get => I.playerResources.unitAmounts; }
 
+    public static ActionQueue aq;
+
     void Start()
     {
         if (instance != null) throw new System.Exception("Duplicate GameManager");
         instance = this;
+        aq = GetComponent<ActionQueue>();
 
         Screen.SetResolution(1920, 1080, FullScreenMode.MaximizedWindow, 60);
 

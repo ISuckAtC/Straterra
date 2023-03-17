@@ -648,6 +648,10 @@ public class OverworldController : MonoBehaviour
                 {
                     Debug.LogError("Mapbuilding failed: " + res.message);
                 }
+                else
+                {
+                    ScheduledEvent.UpdateScheduledEvents();
+                }
             });
         });
         
