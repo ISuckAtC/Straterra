@@ -739,10 +739,10 @@ public class CityPlayer : MonoBehaviour
   
     //templePathUI is a parent with all nessesery elements to select path.
    public GameObject pathSelection;
-   public Image templeFireUI;
-   public Image templeEarthUI;
-   public Image templeWaterUI;
-   public Image templeLightUI;
+   public GameObject templeFireUI;
+   public GameObject templeEarthUI;
+   public GameObject templeWaterUI;
+   public GameObject templeLightUI;
     public void SelectPath()
     {
         pathSelection.SetActive(true);
@@ -750,20 +750,19 @@ public class CityPlayer : MonoBehaviour
 
     public void FirePath()
     {
-        templeFireUI.enabled = true;
-    }
-    public void EarthPath()
+        templeFireUI.SetActive(true);
+    }    public void EarthPath()
     {
-        templeEarthUI.enabled = true;
+        templeEarthUI.SetActive(true);
     }
     public void WaterPath()
     {
-        templeWaterUI.enabled = true;
+        templeWaterUI.SetActive(true);
 
     }
     public void LightPath()
     {
-        templeLightUI.enabled = true;
+        templeLightUI.SetActive(true);
 
     }
     #endregion
