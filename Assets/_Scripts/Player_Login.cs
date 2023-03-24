@@ -18,7 +18,8 @@ public class Player_Login : MonoBehaviour
     private TMPro.TMP_Text ttt;
 
     private bool loadScene;
-
+    private string sceneName = "RunErikPrototype";
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -78,13 +79,18 @@ public class Player_Login : MonoBehaviour
         return;
     }
 
+    public void SetSceneName(string sceneName)
+    {
+        this.sceneName = sceneName;
+    }
+    
     // Update is called once per frame
     void Update()
     {
         if (loadScene)
         {
             loadScene = false;
-            SceneManager.LoadScene("RunErikPrototype", LoadSceneMode.Single);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         }
     }
 }
