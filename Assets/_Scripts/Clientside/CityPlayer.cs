@@ -242,6 +242,41 @@ public class CityPlayer : MonoBehaviour
                 templeMenu.nextLevel.sprite = buildingPrefabs[templeMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 templeMenu.nextLevel.sprite = null;
+
+            switch (LocalData.SelfUser.path)
+            {
+                case 0:
+                {
+                    SelectPath();
+                    break;
+                }
+                 case 1:
+                {
+                    FirePath();
+                    break;
+                }
+                 case 2:
+                {
+                    EarthPath();
+                    break;
+                }
+                 case 3:
+                {
+                    WaterPath();
+                    break;
+                }
+                 case 4:
+                {
+                    LightPath();
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+
+
             buildingsInterfaces.Add(temple);
         }
         
@@ -695,6 +730,41 @@ public class CityPlayer : MonoBehaviour
         new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfUser.userId, !currentEvents);
         */
         CloseTrainingMenu();
+    }
+    #endregion
+
+    #region PathUI
+   //First time opening the temple, one is presented with the selection of paths.
+   //Second time and thereafter one is always presented with the the players choice.
+  
+    //templePathUI is a parent with all nessesery elements to select path.
+   public GameObject pathSelection;
+   public Image templeFireUI;
+   public Image templeEarthUI;
+   public Image templeWaterUI;
+   public Image templeLightUI;
+    public void SelectPath()
+    {
+        pathSelection.SetActive(true);
+    }
+
+    public void FirePath()
+    {
+        templeFireUI.enabled = true;
+    }
+    public void EarthPath()
+    {
+        templeEarthUI.enabled = true;
+    }
+    public void WaterPath()
+    {
+        templeWaterUI.enabled = true;
+
+    }
+    public void LightPath()
+    {
+        templeLightUI.enabled = true;
+
     }
     #endregion
 

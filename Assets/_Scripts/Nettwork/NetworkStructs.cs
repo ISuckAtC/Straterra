@@ -62,6 +62,7 @@ namespace NetworkStructs
         public int userId;
         public string name;
         public int cityLocation;
+        public int path;
         public byte[] cityBuildingSlots;
         public int color;
         public int allianceId;
