@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using NetworkStructs;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,8 +15,12 @@ public class OverworldController : MonoBehaviour
 {
     public float movementAmount;
 
-    private float zoom = 50f;
+    private static float zoom = 50f;
     public float zoomAmount;
+    
+    public delegate void OnReadyDelegate();
+
+    public static event OnReadyDelegate onReady;
 
 
     private Camera cam;
@@ -204,8 +209,25 @@ public class OverworldController : MonoBehaviour
         
         building = 1;
         buildingIndex = 10;
+
+        onReady.Invoke();
     }
 
+    public static void MoveTo(int index)
+    {
+        Vector2Int position = Grid._instance.GetPosition(index);
+        Camera.main.transform.position = new Vector3(position.x, Camera.main.transform.position.y, position.y);
+
+        zoom = 10f;
+
+        float buildScale = zoom * 0.025f;
+
+        // BUG
+        //buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+
+        Camera.main.orthographicSize = zoom;
+    }
+    
     private List<Group> RandomEnemy()
     {
         float bias1 = Random.Range(0.001f, 3f);
