@@ -12,12 +12,12 @@ public class ScheduledEvent
     public int secondsTotal;
     public bool running;
     public int owner;
-    
+
     public ScheduledEvent(int secondsTotal, int owner, bool runImmediately = true)
     {
         this.secondsTotal = secondsTotal;
         secondsLeft = secondsTotal;
-        this.owner = owner; 
+        this.owner = owner;
         if (runImmediately)
         {
             EventHub.OnTick += Tick;
@@ -47,47 +47,49 @@ public class ScheduledEvent
     }
     public static void UpdateScheduledEvents()
     {
-        Task.Run<NetworkStructs.ScheduledEventGroup>(async () => 
+        Task.Run<NetworkStructs.ScheduledEventGroup>(async () =>
         {
             return await Network.GetScheduledEvents();
         }).ContinueWith(async result =>
         {
             NetworkStructs.ScheduledEventGroup events = await result;
             tempEvents = new List<ScheduledEvent>();
-            for (int i = 0; i < events.events.Length; ++i)
-            {
-                NetworkStructs.SerializableScheduledEvent sEvent = events.events[i];
-                switch (sEvent.type)
-                {
-                    case 0:
-                    {
-                        
-                        break;
-                    }
-                    case 1:
-                    {
-                        tempEvents.Add(new ScheduledUnitProductionEvent(sEvent.secondsLeft, sEvent.unitId, sEvent.amount, sEvent.owner, sEvent.running));
-                        break;
-                    }
-                    case 2:
-                    {
-                        tempEvents.Add(new ScheduledTownBuildEvent(sEvent.secondsLeft, (byte)sEvent.buildingId, sEvent.buildingSlot, sEvent.owner));
-                        // town
-                        break;
-                    }
-                    case 3:
-                    {
-                        tempEvents.Add(new ScheduledMapBuildEvent(sEvent.secondsLeft, (byte)sEvent.buildingId, sEvent.position, sEvent.owner));
-                        // map
-                        break;
-                    }
-                }
 
-                GameManager.aq.queue.Add(() =>
+            GameManager.aq.queue.Add(() =>
                 {
+                    for (int i = 0; i < events.events.Length; ++i)
+                    {
+                        NetworkStructs.SerializableScheduledEvent sEvent = events.events[i];
+                        switch (sEvent.type)
+                        {
+                            case 0:
+                                {
+
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    tempEvents.Add(new ScheduledUnitProductionEvent(sEvent.secondsLeft, sEvent.unitId, sEvent.amount, sEvent.owner, sEvent.running));
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    tempEvents.Add(new ScheduledTownBuildEvent(sEvent.secondsLeft, (byte)sEvent.buildingId, sEvent.buildingSlot, sEvent.owner));
+                                    // town
+                                    break;
+                                }
+                            case 3:
+                                {
+                                    tempEvents.Add(new ScheduledMapBuildEvent(sEvent.secondsLeft, (byte)sEvent.buildingId, sEvent.position, sEvent.owner));
+                                    // map
+                                    break;
+                                }
+                        }
+
+
+                    }
                     activeEvents = new List<ScheduledEvent>(tempEvents);
                 });
-            }
         });
     }
 }
@@ -96,7 +98,7 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
 {
     public int unitId;
     public int amount;
-    public  ScheduledUnitProductionEvent(int secondsTotal, int unitId, int amount, int owner, bool runImmediately = true) : base(secondsTotal, owner, runImmediately)
+    public ScheduledUnitProductionEvent(int secondsTotal, int unitId, int amount, int owner, bool runImmediately = true) : base(secondsTotal, owner, runImmediately)
     {
         this.unitId = unitId;
         this.amount = amount;
@@ -147,7 +149,7 @@ public class ScheduledTownBuildEvent : ScheduledEvent
             ResourceData.woodGatheringRate += (int)(1000);
             ResourceData.metalGatheringRate += (int)(1000);
         }
-        
+
         CityPlayer.cityPlayer.LoadBuildings();
         CityPlayer.cityPlayer.LoadBuildingInterfaces();
     }
@@ -164,17 +166,42 @@ public class ScheduledMapBuildEvent : ScheduledEvent
         if (runImmediately)
         {
             // Set to construction site
-            Grid._instance.tiles[position].tileType = 255;
+            Grid._instance.tiles[position].building = 254;
+            Grid._instance.tiles[position].owner = owner;
             Vector2Int pos = Grid._instance.GetPosition(position);
-            PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), PlaceTiles._instance.buildingTiles[255]);
+            PlaceTiles._instance.CreateBuilding(254, position);
+            //PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), PlaceTiles._instance.buildingTiles[254]);
 
             running = true;
+            //Debug.Log(pos);
         }
     }
 
     public override void Complete()
     {
         base.Complete();
+        Task.Run(async () => 
+        {
+            return await Network.GetSelfUser();
+        }).ContinueWith(async result => 
+        {
+            NetworkStructs.User selfUser = await result;
+            if (selfUser.buildingPositions.Any(x => x.position == position && x.building != 254))
+            {
+                GameManager.aq.queue.Add(() => 
+                {
+                    Grid._instance.tiles[position].building = buildingId;
+                    PlaceTiles._instance.CreateBuilding(buildingId, position);
+                });
+            }
+            else
+            {
+                GameManager.aq.queue.Add(() => 
+                {
+                    ScheduledEvent.UpdateScheduledEvents();
+                });
+            }
+        });
     }
 }
 
@@ -195,8 +222,8 @@ public class ScheduledMoveArmyEvent : ScheduledEvent
         base.Complete();
 
         Debug.Log("Scheduled Move Event Completed");
-        
-        if (Grid._instance.tiles[destination].building == 0) 
+
+        if (Grid._instance.tiles[destination].building == 0)
         {
             Debug.Log("Tried to move troops to a tile with no buildings");
             if (Grid._instance.tiles[destination].building != 0)
@@ -241,7 +268,7 @@ public class ScheduledAttackEvent : ScheduledEvent
         if (destination == LocalData.SelfUser.cityLocation)
         {
             GameManager.I.timesAttacked++;
-            
+
             SplashText.Splash("INCOMING ATTACK (check reports)");
             NotificationCenter.Add("INCOMING ATTACK " + GameManager.I.timesAttacked, "An attack is incoming from tile position " + origin + " in " + secondsTotal + " seconds!" + "\nPlease prepare an army to defend your village!");
         }
@@ -260,7 +287,7 @@ public class ScheduledAttackEvent : ScheduledEvent
             (bool attackerWon, List<Group> remains) result = BattleSim.Fight(enemyArmy, army);
 
             if (result.attackerWon)
-            {        
+            {
                 Grid._instance.tiles[destination].army = null;
 
                 message += "Your troops were defeated at home!\n\n";
@@ -277,7 +304,7 @@ public class ScheduledAttackEvent : ScheduledEvent
                     message += UnitDefinition.I[result.remains[i].unitId].name + " (" + result.remains[i].count + ")\n";
                 }
                 Grid._instance.tiles[destination].army = Grid._instance.tiles[destination].army.Where(x => !x.dead).ToList();
-                for (int i = 0; i < GameManager.PlayerUnitAmounts.Length; ++i) 
+                for (int i = 0; i < GameManager.PlayerUnitAmounts.Length; ++i)
                 {
                     int index = Grid._instance.tiles[destination].army.FindIndex(0, Grid._instance.tiles[destination].army.Count, x => x.unitId == i);
                     if (index > -1) GameManager.PlayerUnitAmounts[i] = Grid._instance.tiles[destination].army[index].count;
@@ -297,7 +324,7 @@ public class ScheduledAttackEvent : ScheduledEvent
             if (result.attackerWon)
             {
                 ScheduledMoveArmyEvent moveArmy = new ScheduledMoveArmyEvent(10, result.remains, LocalData.SelfUser.cityLocation, destination, owner);
-                
+
                 Grid._instance.tiles[destination].army = Grid._instance.tiles[destination].army.Where(x => !x.dead).ToList();
 
                 message += "Your troops were victorious in location [" + destination + "]!\n\n";

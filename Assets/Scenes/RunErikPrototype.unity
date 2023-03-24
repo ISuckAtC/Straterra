@@ -59921,7 +59921,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: cf7b00fc31fd8954694fa4f7d94fa449, type: 2}
   - {fileID: 11400000, guid: cf7b00fc31fd8954694fa4f7d94fa449, type: 2}
   tilemap: {fileID: 2075945052}
   overlayMap: {fileID: 373919092}

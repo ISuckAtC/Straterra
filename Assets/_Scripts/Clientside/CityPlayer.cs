@@ -51,9 +51,9 @@ public class CityPlayer : MonoBehaviour
         topBar.Metal = GameManager.PlayerMetal;
         topBar.Order = GameManager.PlayerOrder;
 
-        UpgradeResourceLimit(0);
-        UpgradeResourceLimit(4);
-        UpgradeResourceLimit(8);
+        //UpgradeResourceLimit(0);
+        //UpgradeResourceLimit(4);
+        //UpgradeResourceLimit(8);
     }
 
     public void Build(int building, int slot)
@@ -269,7 +269,7 @@ public class CityPlayer : MonoBehaviour
             buildingsInterfaces.Add(marketplace);
         }
 
-        if (warehouse)
+        if (false && warehouse)
         {
             BuildingMenu warehouseMenu = warehouse.GetComponent<BuildingMenu>();
             warehouseMenu.title.text = TownBuildingDefinition.I[warehouseMenu.id].name.ToUpper();
