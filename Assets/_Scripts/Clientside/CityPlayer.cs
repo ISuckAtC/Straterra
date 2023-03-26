@@ -30,7 +30,7 @@ public class CityPlayer : MonoBehaviour
     public GameObject temple;
     public GameObject workshop;
     public GameObject emptyPlot;
-    
+
     public GameObject marketplace;
     public GameObject warehouse;
 
@@ -38,7 +38,7 @@ public class CityPlayer : MonoBehaviour
     private int selectedSlot;
 
     private ActionQueue aq;
-    
+
     public void Start()
     {
         aq = GetComponent<ActionQueue>();
@@ -85,7 +85,7 @@ public class CityPlayer : MonoBehaviour
             buildingObject.transform.parent = buildingSlots[i];
 
             if (id == 254) continue;
-            
+
             Debug.Log("Building at slot " + i + " has id " + id);
 
             if (id == 255)
@@ -96,12 +96,12 @@ public class CityPlayer : MonoBehaviour
                 BuildingMenu menu = emptyPlot.GetComponent<BuildingMenu>();
                 menu.id = id;
                 menu.slotId = i;
-                
+
                 continue;
             }
-            
 
-            
+
+
             switch (TownBuildingDefinition.I[id].type)
             {
                 case TownBuildingType.barracks:
@@ -167,7 +167,7 @@ public class CityPlayer : MonoBehaviour
                         menu.slotId = i;
                         break;
                     }
-                    case TownBuildingType.marketplace:
+                case TownBuildingType.marketplace:
                     {
                         UnityEngine.UI.Button button = buildingObject.GetComponent<UnityEngine.UI.Button>();
                         button.onClick.AddListener(OpenMarketPlace);
@@ -189,103 +189,105 @@ public class CityPlayer : MonoBehaviour
             Debug.Log("Changing townhall name: " + TownBuildingDefinition.I[townhallMenu.id].name);
             townhallMenu.title.text = TownBuildingDefinition.I[townhallMenu.id].name.ToUpper();
             townhallMenu.level.text = "Lv. " + TownBuildingDefinition.I[townhallMenu.id].level;
-            if (TownBuildingDefinition.I[townhallMenu.id].level < 3) 
+            if (TownBuildingDefinition.I[townhallMenu.id].level < 3)
                 townhallMenu.nextLevel.sprite = buildingPrefabs[townhallMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 townhallMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(townHall);
         }
-        
+
         if (barracks)
         {
             trainingSlider.onValueChanged.AddListener(delegate { OnTrainingSliderChanged(); });
             BuildingMenu barracksMenu = barracks.GetComponent<BuildingMenu>();
             barracksMenu.title.text = TownBuildingDefinition.I[barracksMenu.id].name.ToUpper();
             barracksMenu.level.text = "Lv. " + TownBuildingDefinition.I[barracksMenu.id].level;
-            if (TownBuildingDefinition.I[barracksMenu.id].level < 3) 
+            if (TownBuildingDefinition.I[barracksMenu.id].level < 3)
                 barracksMenu.nextLevel.sprite = buildingPrefabs[barracksMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 barracksMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(barracks);
         }
-        
+
         if (smithy)
         {
             BuildingMenu smithyMenu = smithy.GetComponent<BuildingMenu>();
             smithyMenu.title.text = TownBuildingDefinition.I[smithyMenu.id].name.ToUpper();
             smithyMenu.level.text = "Lv. " + TownBuildingDefinition.I[smithyMenu.id].level;
-            if (TownBuildingDefinition.I[smithyMenu.id].level < 3) 
+            if (TownBuildingDefinition.I[smithyMenu.id].level < 3)
                 smithyMenu.nextLevel.sprite = buildingPrefabs[smithyMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 smithyMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(smithy);
         }
-        
+
         if (academy)
         {
             BuildingMenu academyMenu = academy.GetComponent<BuildingMenu>();
             academyMenu.title.text = TownBuildingDefinition.I[academyMenu.id].name.ToUpper();
             academyMenu.level.text = "Lv. " + TownBuildingDefinition.I[academyMenu.id].level;
-            if (TownBuildingDefinition.I[academyMenu.id].level < 3) 
+            if (TownBuildingDefinition.I[academyMenu.id].level < 3)
                 academyMenu.nextLevel.sprite = buildingPrefabs[academyMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 academyMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(academy);
         }
-        
+
         if (temple)
         {
             BuildingMenu templeMenu = temple.GetComponent<BuildingMenu>();
             templeMenu.title.text = TownBuildingDefinition.I[templeMenu.id].name.ToUpper();
             templeMenu.level.text = "Lv. " + TownBuildingDefinition.I[templeMenu.id].level;
-            if (TownBuildingDefinition.I[templeMenu.id].level < 3) 
+            if (TownBuildingDefinition.I[templeMenu.id].level < 3)
                 templeMenu.nextLevel.sprite = buildingPrefabs[templeMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 templeMenu.nextLevel.sprite = null;
 
+            /*  COMMENTED UNTIL TEMPLE IS MERGED
             switch (LocalData.SelfUser.path)
             {
                 case 0:
-                {
-                    SelectPath();
-                    break;
-                }
-                 case 1:
-                {
-                    FirePath();
-                    break;
-                }
-                 case 2:
-                {
-                    EarthPath();
-                    break;
-                }
-                 case 3:
-                {
-                    WaterPath();
-                    break;
-                }
-                 case 4:
-                {
-                    LightPath();
-                    break;
-                }
+                    {
+                        SelectPath();
+                        break;
+                    }
+                case 1:
+                    {
+                        FirePath();
+                        break;
+                    }
+                case 2:
+                    {
+                        EarthPath();
+                        break;
+                    }
+                case 3:
+                    {
+                        WaterPath();
+                        break;
+                    }
+                case 4:
+                    {
+                        LightPath();
+                        break;
+                    }
                 default:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
             }
+            */
 
 
             buildingsInterfaces.Add(temple);
         }
-        
+
         if (workshop)
         {
             BuildingMenu workshopMenu = workshop.GetComponent<BuildingMenu>();
             workshopMenu.title.text = TownBuildingDefinition.I[workshopMenu.id].name.ToUpper();
             workshopMenu.level.text = "Lv. " + TownBuildingDefinition.I[workshopMenu.id].level;
-            if (TownBuildingDefinition.I[workshopMenu.id].level < 3) 
+            if (TownBuildingDefinition.I[workshopMenu.id].level < 3)
                 workshopMenu.nextLevel.sprite = buildingPrefabs[workshopMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 workshopMenu.nextLevel.sprite = null;
@@ -297,7 +299,7 @@ public class CityPlayer : MonoBehaviour
             BuildingMenu marketplaceMenu = marketplace.GetComponent<BuildingMenu>();
             marketplaceMenu.title.text = TownBuildingDefinition.I[marketplaceMenu.id].name.ToUpper();
             marketplaceMenu.level.text = "Lv. " + TownBuildingDefinition.I[marketplaceMenu.id].level;
-            if (TownBuildingDefinition.I[marketplaceMenu.id].level < 3) 
+            if (TownBuildingDefinition.I[marketplaceMenu.id].level < 3)
                 marketplaceMenu.nextLevel.sprite = buildingPrefabs[marketplaceMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 marketplaceMenu.nextLevel.sprite = null;
@@ -312,7 +314,7 @@ public class CityPlayer : MonoBehaviour
             if (TownBuildingDefinition.I[warehouseMenu.id].level == 1)
             {
                 levelBackgrounds[0].color = activeBackground;
-                
+
                 levelBackgrounds[1].color = inactiveBackground;
                 levelBackgrounds[2].color = inactiveBackground;
 
@@ -344,13 +346,13 @@ public class CityPlayer : MonoBehaviour
                 buttonBackgrounds[11].transform.GetComponent<Button>().enabled = true;
             }
 
-            if (TownBuildingDefinition.I[warehouseMenu.id].level < 3) 
+            if (TownBuildingDefinition.I[warehouseMenu.id].level < 3)
                 warehouseMenu.nextLevel.sprite = buildingPrefabs[warehouseMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
                 warehouseMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(warehouse);
         }
-        
+
         if (emptyPlot)
         {
             BuildingMenu emptyPlotMenu = emptyPlot.GetComponent<BuildingMenu>();
@@ -411,10 +413,10 @@ public class CityPlayer : MonoBehaviour
     public void BuildBuilding(int id)
     {
         //TownBuildingDefinition.I[building].
-        
-        
+
+
         TownBuilding building = TownBuildingDefinition.I[id];
-        
+
         int foodCost = building.foodCost;
         int woodCost = building.woodCost;
         int metalCost = building.metalCost;
@@ -426,7 +428,7 @@ public class CityPlayer : MonoBehaviour
             orderCost > GameManager.PlayerOrder)
         {
             SplashText.Splash("Not enough resources.");
-            
+
             if (foodCost > GameManager.PlayerFood)
             {
                 GameManager.I.LackingResources("Food");
@@ -446,47 +448,47 @@ public class CityPlayer : MonoBehaviour
             return;
         }
 
-         
+
         Task.Run<NetworkStructs.ActionResult>(async () =>
             {
-            return await Network.CreateTownBuilding(building.id, (byte)selectedSlot);
+                return await Network.CreateTownBuilding(building.id, (byte)selectedSlot);
             }).ContinueWith(async resources =>
             {
-            NetworkStructs.ActionResult res = await resources;
-            Debug.Log(res.message);
-            if (res.success)
-            {
-                aq.queue.Add(() =>
+                NetworkStructs.ActionResult res = await resources;
+                Debug.Log(res.message);
+                if (res.success)
                 {
-                LocalData.SelfUser.cityBuildingSlots[selectedSlot] = 254;
-                Debug.Log("DATA IN SLOT " + selectedSlot + " IS " + LocalData.SelfUser.cityBuildingSlots[selectedSlot]);
-                CityPlayer.cityPlayer.CloseMenus();
-                CityPlayer.cityPlayer.LoadBuildings();
-                CityPlayer.cityPlayer.LoadBuildingInterfaces();
-                });
-            }
+                    aq.queue.Add(() =>
+                    {
+                        LocalData.SelfUser.cityBuildingSlots[selectedSlot] = 254;
+                        Debug.Log("DATA IN SLOT " + selectedSlot + " IS " + LocalData.SelfUser.cityBuildingSlots[selectedSlot]);
+                        CityPlayer.cityPlayer.CloseMenus();
+                        CityPlayer.cityPlayer.LoadBuildings();
+                        CityPlayer.cityPlayer.LoadBuildingInterfaces();
+                    });
+                }
 
             });
-         
-        
+
+
         //Task.Run<NetworkStructs.ActionResult>(async () =>
         //{
-            
+
         //}
-        
+
         //ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[id].buildingTime, (byte)id, selectedSlot, LocalData.SelfUser.userId);
 
         //LocalData.SelfUser.cityBuildingSlots[selectedSlot] = 254;
-        
+
     }
-    
+
     #endregion
-    
-    
+
+
     #region Townhall
     [Header("TownHall")]
 
-    
+
 
 
     #endregion
@@ -515,88 +517,88 @@ public class CityPlayer : MonoBehaviour
         switch (i)
         {
             case 0:
-            foodLimit = 1000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                foodLimit = 1000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
-            
+                break;
+
             case 1:
-            foodLimit = 2000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                foodLimit = 2000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
-            
+                break;
+
             case 2:
-            foodLimit = 4000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                foodLimit = 4000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
-            
+                break;
+
             case 3:
-            foodLimit = 8000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                foodLimit = 8000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
-            
+                break;
+
             case 4:
-            woodLimit = 1000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                woodLimit = 1000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
-            
+                break;
+
             case 5:
-            woodLimit = 2000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                woodLimit = 2000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
-            
+                break;
+
             case 6:
-            woodLimit = 4000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                woodLimit = 4000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
-            
+                break;
+
             case 7:
-            woodLimit = 8000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                woodLimit = 8000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
-            
+                break;
+
             case 8:
-            metalLimit = 1000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                metalLimit = 1000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
-            
+                break;
+
             case 9:
-            metalLimit = 2000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                metalLimit = 2000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
-            
+                break;
+
             case 10:
-            metalLimit = 4000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                metalLimit = 4000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
+                break;
 
             case 11:
-            metalLimit = 8000;
-            buttonBackgrounds[i].color = activeButton;
-            buttonTexts[i].color = activeTextColor;
+                metalLimit = 8000;
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
 
-            break;
+                break;
         }
     }
 
@@ -703,7 +705,7 @@ public class CityPlayer : MonoBehaviour
             return;
         }
 
-        Task.Run<NetworkStructs.ActionResult>(async () => 
+        Task.Run<NetworkStructs.ActionResult>(async () =>
         {
             return await Network.CreateUnits(trainingUnit.id, amount, 0);
         }).ContinueWith(async result =>
@@ -734,15 +736,17 @@ public class CityPlayer : MonoBehaviour
     #endregion
 
     #region PathUI
-   //First time opening the temple, one is presented with the selection of paths.
-   //Second time and thereafter one is always presented with the the players choice.
-  
+    //First time opening the temple, one is presented with the selection of paths.
+    //Second time and thereafter one is always presented with the the players choice.
+
     //templePathUI is a parent with all nessesery elements to select path.
-   public GameObject pathSelection;
-   public GameObject templeFireUI;
-   public GameObject templeEarthUI;
-   public GameObject templeWaterUI;
-   public GameObject templeLightUI;
+
+    /*   COMMENTED UNTIL TEMPLE IS MERGED
+    public GameObject pathSelection;
+    public GameObject templeFireUI;
+    public GameObject templeEarthUI;
+    public GameObject templeWaterUI;
+    public GameObject templeLightUI;
     public void SelectPath()
     {
         pathSelection.SetActive(true);
@@ -751,7 +755,8 @@ public class CityPlayer : MonoBehaviour
     public void FirePath()
     {
         templeFireUI.SetActive(true);
-    }    public void EarthPath()
+    }
+    public void EarthPath()
     {
         templeEarthUI.SetActive(true);
     }
@@ -765,6 +770,8 @@ public class CityPlayer : MonoBehaviour
         templeLightUI.SetActive(true);
 
     }
+
+    */
     #endregion
 
     // Only to debug ScheduledEventGroup.
@@ -772,7 +779,7 @@ public class CityPlayer : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            Task.Run<NetworkStructs.ScheduledEventGroup>(async () => 
+            Task.Run<NetworkStructs.ScheduledEventGroup>(async () =>
             {
                 return await Network.GetScheduledEvents();
             }).ContinueWith(result =>
