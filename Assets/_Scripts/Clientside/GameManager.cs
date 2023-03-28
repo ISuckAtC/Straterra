@@ -93,6 +93,12 @@ public class GameManager : MonoBehaviour
         playerResources = new PlayerResources(0, 0, 0, 0, 1000, unitAmounts);
 
         EventHub.OnTick += AddResources;
+
+
+        Task.Run(async () => 
+        {
+            await Network.GetScheduledEvents();
+        });
     }
 
 
@@ -104,7 +110,7 @@ public class GameManager : MonoBehaviour
         }).ContinueWith(async result =>
         {
             //Debug.Log("Adding resources");
-            var res = result.Result;
+            var res = await result;
             try
             {
                 PlayerFood = res.food;

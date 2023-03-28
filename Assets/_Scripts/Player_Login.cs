@@ -49,9 +49,10 @@ public class Player_Login : MonoBehaviour
     {
         q = GetComponent<ActionQueue>();
         GameObject thisObject = gameObject;
+        string pass = input_Password.text;
         Task.Run<NetworkStructs.ActionResult>(async () =>
         {
-            return await Network.GetSessionToken(input_Password.text);
+            return await Network.GetSessionToken(pass);
         }).ContinueWith(async result =>
         {
             var res = result.Result;
@@ -66,6 +67,7 @@ public class Player_Login : MonoBehaviour
             {
                 Debug.Log("token is = " + res.message);
                 Network.tokenIdentity = res.message;
+                Network.password = pass;
                 await LocalData.LoadSelfPlayerOnline();
 
                 // load game scene

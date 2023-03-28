@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class BuildingMenu : MonoBehaviour
 {
@@ -62,8 +64,8 @@ public class BuildingMenu : MonoBehaviour
         int metalCost = nextBuilding.metalCost;
         int orderCost = nextBuilding.orderCost;
 
-        if (foodCost >  GameManager.PlayerFood ||
-            woodCost >  GameManager.PlayerWood ||
+        if (foodCost > GameManager.PlayerFood ||
+            woodCost > GameManager.PlayerWood ||
             metalCost > GameManager.PlayerMetal ||
             orderCost > GameManager.PlayerOrder)
         {
@@ -77,7 +79,7 @@ public class BuildingMenu : MonoBehaviour
         costsText1.text = foodCost.ToString();
         costsText2.text = woodCost.ToString();
         costsText3.text = metalCost.ToString();
-        buildTime.text = building.buildingTime.ToString() + " seconds";
+        buildTime.text = nextBuilding.buildingTime.ToString() + " seconds";
 
         upgradeTitle.text = "UPGRADE " + building.name + " to level " + nextBuilding.level;
 
@@ -88,7 +90,7 @@ public class BuildingMenu : MonoBehaviour
         upgradeMenu.SetActive(false);
     }
 
-    
+
     public void Upgrade()
     {
         TownBuilding building = TownBuildingDefinition.I[id];
@@ -97,14 +99,14 @@ public class BuildingMenu : MonoBehaviour
         int nextId = id + 1;
 
         TownBuilding nextBuilding = TownBuildingDefinition.I[nextId];
-        
+
         int foodCost = nextBuilding.foodCost;
         int woodCost = nextBuilding.woodCost;
         int metalCost = nextBuilding.metalCost;
         int orderCost = nextBuilding.orderCost;
 
-        if (foodCost >  GameManager.PlayerFood ||
-            woodCost >  GameManager.PlayerWood ||
+        if (foodCost > GameManager.PlayerFood ||
+            woodCost > GameManager.PlayerWood ||
             metalCost > GameManager.PlayerMetal ||
             orderCost > GameManager.PlayerOrder)
         {
@@ -127,22 +129,27 @@ public class BuildingMenu : MonoBehaviour
             return;
         }
 
-        GameManager.PlayerFood -= foodCost;
-        GameManager.PlayerWood -= woodCost;
-        GameManager.PlayerMetal -= metalCost;
-        GameManager.PlayerOrder -= orderCost;
+        Task.Run<NetworkStructs.ActionResult>(async () =>
+            {
+                return await Network.CreateTownBuilding(nextBuilding.id, (byte)slotId);
+            }).ContinueWith(async resources =>
+            {
+                NetworkStructs.ActionResult res = await resources;
+                Debug.Log(res.message);
+                if (res.success)
+                {
+                    GameManager.aq.queue.Add(() =>
+                    {
+                        LocalData.SelfUser.cityBuildingSlots[slotId] = 254;
+                        new ScheduledTownBuildEvent(nextBuilding.buildingTime, (byte)nextBuilding.id, slotId, LocalData.SelfUser.userId);
+                        Debug.Log("DATA IN SLOT " + slotId + " IS " + LocalData.SelfUser.cityBuildingSlots[slotId]);
+                        CloseUpgradeMenu();
+                        CityPlayer.cityPlayer.CloseMenus();
+                        CityPlayer.cityPlayer.LoadBuildings();
+                        CityPlayer.cityPlayer.LoadBuildingInterfaces();
+                    });
+                }
 
-        CityPlayer.cityPlayer.topBar.Food =  GameManager.PlayerFood;
-        CityPlayer.cityPlayer.topBar.Wood =  GameManager.PlayerWood;
-        CityPlayer.cityPlayer.topBar.Metal = GameManager.PlayerMetal;
-        CityPlayer.cityPlayer.topBar.Order = GameManager.PlayerOrder;
-
-        ScheduledTownBuildEvent buildEvent = new ScheduledTownBuildEvent(TownBuildingDefinition.I[nextId].buildingTime, (byte)nextId, slotId, LocalData.SelfUser.userId);
-
-        CloseUpgradeMenu();
-        CityPlayer.cityPlayer.CloseMenus();
-        CityPlayer.cityPlayer.LoadBuildings();
-        CityPlayer.cityPlayer.LoadBuildingInterfaces();
-        
+            });
     }
 }

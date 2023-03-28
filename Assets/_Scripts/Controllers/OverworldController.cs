@@ -210,7 +210,7 @@ public class OverworldController : MonoBehaviour
         building = 1;
         buildingIndex = 10;
 
-        onReady.Invoke();
+        onReady?.Invoke();
     }
 
     public static void MoveTo(int index)

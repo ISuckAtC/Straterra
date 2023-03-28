@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace NetworkStructs
 {
+    public struct ErrorResult
+    {
+        public string error;
+    }
     public struct ActionResult
     {
         public bool success;

@@ -76,6 +76,7 @@ public class CityPlayer : MonoBehaviour
 
     public void LoadBuildings()
     {
+        Debug.Log("LOADBUILDINGS");
         for (int i = 0; i < 8; ++i)
         {
             if (buildingSlots[i].childCount > 0) Destroy(buildingSlots[i].GetChild(0).gameObject);
@@ -178,6 +179,7 @@ public class CityPlayer : MonoBehaviour
                     }
             }
         }
+        Debug.Log("DONE LOADBUILDINGS");
     }
 
     public void LoadBuildingInterfaces()
@@ -416,7 +418,7 @@ public class CityPlayer : MonoBehaviour
     public void BuildBuilding(int id)
     {
         //TownBuildingDefinition.I[building].
-
+        int lockedSlot = selectedSlot;
 
         TownBuilding building = TownBuildingDefinition.I[id];
 
@@ -451,10 +453,12 @@ public class CityPlayer : MonoBehaviour
             return;
         }
 
+        
+
 
         Task.Run<NetworkStructs.ActionResult>(async () =>
             {
-                return await Network.CreateTownBuilding(building.id, (byte)selectedSlot);
+                return await Network.CreateTownBuilding(building.id, (byte)lockedSlot);
             }).ContinueWith(async resources =>
             {
                 NetworkStructs.ActionResult res = await resources;
@@ -463,8 +467,9 @@ public class CityPlayer : MonoBehaviour
                 {
                     aq.queue.Add(() =>
                     {
-                        LocalData.SelfUser.cityBuildingSlots[selectedSlot] = 254;
-                        Debug.Log("DATA IN SLOT " + selectedSlot + " IS " + LocalData.SelfUser.cityBuildingSlots[selectedSlot]);
+                        LocalData.SelfUser.cityBuildingSlots[lockedSlot] = 254;
+                        new ScheduledTownBuildEvent(building.buildingTime, (byte)building.id, lockedSlot, LocalData.SelfUser.userId);
+                        Debug.Log("DATA IN SLOT " + lockedSlot + " IS " + LocalData.SelfUser.cityBuildingSlots[lockedSlot]);
                         CityPlayer.cityPlayer.CloseMenus();
                         CityPlayer.cityPlayer.LoadBuildings();
                         CityPlayer.cityPlayer.LoadBuildingInterfaces();
@@ -721,6 +726,11 @@ public class CityPlayer : MonoBehaviour
                 {
                     Debug.LogError("Training troops failed: " + res.message);
                 }
+                else
+                {
+                    new ScheduledUnitProductionEvent(trainingUnit.trainingTime, trainingUnit.id, amount, LocalData.SelfUser.userId, 
+                    ScheduledEvent.tempEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Count() == 0);
+                }
             });
         });
 
@@ -781,6 +791,7 @@ public class CityPlayer : MonoBehaviour
     // Only to debug ScheduledEventGroup.
     public void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.L))
         {
             Task.Run<NetworkStructs.ScheduledEventGroup>(async () =>
@@ -801,5 +812,6 @@ public class CityPlayer : MonoBehaviour
             Debug.Log("Resource cap is = " + foodLimit + "&" + woodLimit + "&" + metalLimit);
             UpgradeResourceLimit(1);
         }
+        */
     }
 }
