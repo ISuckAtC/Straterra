@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 public class EventHub : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class EventHub : MonoBehaviour
             return _instance;
         }
     }
-    
+
     public delegate void OnTickDelegate();
     private event OnTickDelegate onTick;
     public static event OnTickDelegate OnTick
@@ -23,14 +25,15 @@ public class EventHub : MonoBehaviour
         add { I.onTick += value; }
         remove { I.onTick -= value; }
     }
-    
+
     private int tick;
 
-    private const float tickMax = 1f;
-    private float tickTime = 0f;
-
+    private const int tickMax = 10000000;
+    private int tickTime = 0;
+    private long lastTime = 0;
     public const int ticksPerHour = (int)(3600 / tickMax);
-        
+    private ActionQueue aq;
+
     void Awake()
     {
         if (_instance != null)
@@ -39,10 +42,33 @@ public class EventHub : MonoBehaviour
         }
 
         _instance = this;
+
+        aq = GetComponent<ActionQueue>();
+
+        lastTime = Stopwatch.GetTimestamp();
+
+        Task.Run(async () =>
+        {
+            while (true)
+            {
+                await Task.Delay(100);
+                long nowTime = Stopwatch.GetTimestamp();
+                tickTime += (int)(nowTime - lastTime);
+                lastTime = nowTime;
+
+                if (tickTime >= tickMax)
+                {
+                    tickTime -= tickMax;
+
+                    aq.queue.Add(() => onTick?.Invoke());
+                }
+            }
+        });
     }
-    
+
     void Update()
     {
+        /*
         tickTime += Time.deltaTime;
 
         if (tickTime >= tickMax)
@@ -51,5 +77,6 @@ public class EventHub : MonoBehaviour
             
             onTick?.Invoke();
         }
+        */
     }
 }

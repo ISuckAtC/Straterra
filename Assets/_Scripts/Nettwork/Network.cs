@@ -14,10 +14,13 @@ public class Network
 {
     // Storing the token for the players id.
     public static string tokenIdentity;
+
+    // Storing the password for reconnection
+    public static string password;
     public static List<NetworkStructs.User> allUsers;
 
     // Ensures that http client is created if it doesn't exist already.
-    private static HttpClient httpClient;    
+    private static HttpClient httpClient;
     private static bool initialized = false;
     public static HttpClient HttpClient
     {
@@ -29,7 +32,7 @@ public class Network
             return httpClient;
         }
     }
-    
+
     public static async Task<string> CreateUser(string username, string password)
     {
         UnityEngine.Debug.Log("aa");
@@ -43,7 +46,7 @@ public class Network
             UnityEngine.Debug.LogError(e.Message + "\n\n" + e.StackTrace);
             throw;
         }
-        
+
     }
 
     public static async Task<ActionResult> GetSessionToken(string password)
@@ -58,16 +61,16 @@ public class Network
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getSelfUser?" + tokenIdentity);
 
         return JsonUtility.FromJson<User>(await message.Content.ReadAsStringAsync());
-    }   
-    
+    }
+
     public static async Task<ActionResult> CreateUnits(int id, int amount, int flags)
-    {            
+    {
         // Send TrainUnit information to server. The parameters are seperated by "&" and sent to the server.
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/createUnits?" + tokenIdentity + "&" + id + "&" + amount);
-      
+
         // We verify that what we got from the server is a bool. Tryparse return false if it isn't a bool.
-        
-            // When we know that the value we got from the server is in fact a bool, we can simply return it.
+
+        // When we know that the value we got from the server is in fact a bool, we can simply return it.
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
 
 
@@ -113,7 +116,7 @@ public class Network
     public static async Task<ActionResult> GetVillageBuilding(int id)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getVillageBuilding?" + tokenIdentity + "&" + id);
-        
+
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 
@@ -124,19 +127,55 @@ public class Network
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 
-    public static async Task<NetworkStructs.Resources> GetResources(int playerId)   
+    public static async Task<NetworkStructs.Resources> GetResources(int playerId)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getResources?" + tokenIdentity + "&" + playerId);
 
         //Debug.Log(await message.Content.ReadAsStringAsync());
 
-        return JsonUtility.FromJson<NetworkStructs.Resources>(await message.Content.ReadAsStringAsync());
+        string content = await message.Content.ReadAsStringAsync();
+
+        try
+        {
+            return JsonUtility.FromJson<NetworkStructs.Resources>(content);
+        }
+        catch (ArgumentException e)
+        {
+
+            Debug.LogError(e.Message + "\n\n" + e.StackTrace);
+
+            NetworkStructs.ErrorResult eRes = JsonUtility.FromJson<NetworkStructs.ErrorResult>(content);
+            if (eRes.error == "Session invalid")
+            {
+                // Attempt to relog
+                await Task.Run<NetworkStructs.ActionResult>(async () =>
+                {
+                    return await Network.GetSessionToken(password);
+                }).ContinueWith(async result =>
+                {
+                    var res = await result;
+                    if (!res.success)
+                    {
+                        Debug.LogError(res.message);
+                    }
+                    else
+                    {
+                        Debug.Log("token is = " + res.message);
+                        Network.tokenIdentity = res.message;
+                        await LocalData.LoadSelfPlayerOnline();
+
+                        Debug.Log("Relog successful");
+                    }
+                });
+            }
+        }
+        throw new Exception("GetResources Failed");
     }
 
     public static async Task<ActionResult> CreateTownBuilding(int id, byte slot)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/createTownBuilding?" + tokenIdentity + "&" + id + "&" + slot);
-        
+
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 
@@ -146,7 +185,7 @@ public class Network
 
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
-    
+
     public static async Task<ScheduledEventGroup> GetScheduledEvents()
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getScheduledEvents?" + tokenIdentity);

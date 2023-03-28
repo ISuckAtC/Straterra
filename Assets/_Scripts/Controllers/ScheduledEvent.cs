@@ -107,21 +107,10 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
     public override void Complete()
     {
         base.Complete();
-        List<ScheduledUnitProductionEvent> prodEvents = activeEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent) && !x.running).Cast<ScheduledUnitProductionEvent>().ToList();
-        if (prodEvents.Count > 0)
-        {
-            prodEvents[0].Run();
-        }
-        if (owner == LocalData.SelfUser.userId) DarkShrine.MADEFIRSTUNIT = true;
-        GameManager.PlayerUnitAmounts[unitId] += amount;
-        List<Group> localArmy = new List<Group>();
-        for (int i = 0; i < GameManager.PlayerUnitAmounts.Length; ++i)
-        {
-            if (GameManager.PlayerUnitAmounts[i] > 0) localArmy.Add(new Group(GameManager.PlayerUnitAmounts[i], i));
-        }
-        Grid._instance.tiles[LocalData.SelfUser.cityLocation].army = localArmy;
-
-        Debug.Log("Added " + amount + " " + UnitDefinition.I[unitId].name + " to army! (You now have " + GameManager.PlayerUnitAmounts[unitId] + " " + UnitDefinition.I[unitId].name + ")");
+        Task.Run(async () => {
+            await Task.Delay(1000);
+            UpdateScheduledEvents();
+        });
     }
 }
 
@@ -139,19 +128,30 @@ public class ScheduledTownBuildEvent : ScheduledEvent
     {
         base.Complete();
 
-        LocalData.SelfUser.cityBuildingSlots[slot] = townBuildingId;
-
-        Debug.Log("Created building has id " + townBuildingId);
-
-        if (townBuildingId == 0)
+        Task.Run(async () =>
         {
-            ResourceData.foodGatheringRate += (int)(1000);
-            ResourceData.woodGatheringRate += (int)(1000);
-            ResourceData.metalGatheringRate += (int)(1000);
-        }
+            await Task.Delay(1000);
+            return await Network.GetSelfUser();
+        }).ContinueWith(async result =>
+        {
+            var res = await result;
 
-        CityPlayer.cityPlayer.LoadBuildings();
-        CityPlayer.cityPlayer.LoadBuildingInterfaces();
+            // Building was completed
+            if (res.cityBuildingSlots[slot] == townBuildingId)
+            {
+                GameManager.aq.queue.Add(() =>
+                {
+                    LocalData.SelfUser.cityBuildingSlots[slot] = townBuildingId;
+                    CityPlayer.cityPlayer.LoadBuildings();
+                    CityPlayer.cityPlayer.LoadBuildingInterfaces();
+                });
+            }
+            else
+            {
+                // Building not done yet, refresh scheduledEvents
+                ScheduledEvent.UpdateScheduledEvents();
+            }
+        });
     }
 }
 
@@ -180,15 +180,17 @@ public class ScheduledMapBuildEvent : ScheduledEvent
     public override void Complete()
     {
         base.Complete();
-        Task.Run(async () => 
+        Task.Run(async () =>
         {
+            await Task.Delay(1000);
             return await Network.GetSelfUser();
-        }).ContinueWith(async result => 
+        }).ContinueWith(async result =>
         {
             NetworkStructs.User selfUser = await result;
+            LocalData.SelfUser = selfUser;
             if (selfUser.buildingPositions.Any(x => x.position == position && x.building != 254))
             {
-                GameManager.aq.queue.Add(() => 
+                GameManager.aq.queue.Add(() =>
                 {
                     Grid._instance.tiles[position].building = buildingId;
                     PlaceTiles._instance.CreateBuilding(buildingId, position);
@@ -196,10 +198,7 @@ public class ScheduledMapBuildEvent : ScheduledEvent
             }
             else
             {
-                GameManager.aq.queue.Add(() => 
-                {
-                    ScheduledEvent.UpdateScheduledEvents();
-                });
+                ScheduledEvent.UpdateScheduledEvents();
             }
         });
     }

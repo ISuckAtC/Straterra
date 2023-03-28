@@ -28,7 +28,7 @@ public static class LocalData
     {
         try
         {
-            var u = await Network.GetSelfUser();
+        var u = await Network.GetSelfUser();
 
         UnityEngine.Debug.Log(u.name + " | " + u.userId);
         UnityEngine.Debug.Log(u.cityBuildingSlots[5]);
