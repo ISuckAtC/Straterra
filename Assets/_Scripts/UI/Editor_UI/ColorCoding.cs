@@ -44,6 +44,11 @@ public class customHierarchy
                 backgroundColor = new Color(0.3f, 0.6f, 0.1f);
                 textColor = new Color(0.9f, 0.9f, 0.9f);
             }
+             else if (obj.name == "TempleMenu")
+            {
+                backgroundColor = new Color(0.6f, 0.6f, 0.1f);
+                textColor = new Color(0.9f, 0.9f, 0.9f);
+            }
             else if ((obj as GameObject).GetComponent<ColorInHierarchy>())
             {
                 // CREATE A C# SCRIPT "ColorInHierarchy" with a public color variable
