@@ -308,6 +308,8 @@ public class CityPlayer : MonoBehaviour
 
         if (false && warehouse)
         {
+
+            /*
             BuildingMenu warehouseMenu = warehouse.GetComponent<BuildingMenu>();
             warehouseMenu.title.text = TownBuildingDefinition.I[warehouseMenu.id].name.ToUpper();
             warehouseMenu.level.text = "Lv. " + TownBuildingDefinition.I[warehouseMenu.id].level;
@@ -351,6 +353,7 @@ public class CityPlayer : MonoBehaviour
             else
                 warehouseMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(warehouse);
+            */
         }
 
         if (emptyPlot)
@@ -513,7 +516,7 @@ public class CityPlayer : MonoBehaviour
         4-7 = Wood
         8-11 = Metal
         */
-
+        /*
         switch (i)
         {
             case 0:
@@ -600,6 +603,7 @@ public class CityPlayer : MonoBehaviour
 
                 break;
         }
+        */
     }
 
     // Limit == Warehouse Level * something
