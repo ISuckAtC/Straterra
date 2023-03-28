@@ -453,7 +453,7 @@ public class CityPlayer : MonoBehaviour
             return;
         }
 
-        
+
 
 
         Task.Run<NetworkStructs.ActionResult>(async () =>
@@ -625,6 +625,14 @@ public class CityPlayer : MonoBehaviour
     public TMPro.TMP_Text trainingWoodcost;
     public TMPro.TMP_Text trainingMetalcost;
     public TMPro.TMP_Text trainingTime;
+    public TMPro.TMP_Text statAttackMelee;
+    public TMPro.TMP_Text statAttackRanged;
+    public TMPro.TMP_Text statDefenceMelee;
+    public TMPro.TMP_Text statDefenceRanged;
+    public TMPro.TMP_Text statHealth;
+    public TMPro.TMP_Text statSpeed;
+    public TMPro.TMP_Text statRange;
+    
     public Image unitFullbodyArt;
 
     private Unit trainingUnit;
@@ -664,6 +672,13 @@ public class CityPlayer : MonoBehaviour
         Sprite unitImage = Resources.Load<Sprite>(trainingUnit.spritePath);
         unitFullbodyArt.sprite = unitImage;
         Debug.Log(trainingUnit.spritePath);
+        statAttackMelee.text = trainingUnit.meleeAttack.ToString();
+        statAttackRanged.text = trainingUnit.rangeAttack.ToString();
+        statDefenceMelee.text = trainingUnit.meleeDefence.ToString();
+        statDefenceRanged.text = trainingUnit.rangeDefence.ToString();
+        statHealth.text = trainingUnit.health.ToString();
+        statSpeed.text = trainingUnit.speed.ToString();
+        statRange.text = trainingUnit.range.ToString();
         OnTrainingInputChanged();
     }
     public void OnTrainingSliderChanged()
