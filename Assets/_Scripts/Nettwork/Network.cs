@@ -202,9 +202,31 @@ public class Network
 
     public static async Task<UnitGroup> GetHomeUnits()
     {
-        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getHomeUnits?" + tokenIdentity);
+        try
+        {
+            HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getHomeUnits?" + tokenIdentity);
 
-        return JsonUtility.FromJson<UnitGroup>(await message.Content.ReadAsStringAsync());
+            Debug.Log(await message.Content.ReadAsStringAsync());
+
+            return JsonUtility.FromJson<UnitGroup>(await message.Content.ReadAsStringAsync());
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.Message + "\n\n" + e.StackTrace);
+            throw;
+        }
+    }
+    public static async Task<ActionResult> AttackMapTile(int target, List<Group> army)
+    {
+        string armyString = "";
+        for (int i = 0; i < army.Count; ++i)
+        {
+            if (i > 0) armyString += ";";
+            armyString += army[i].unitId + ":" + army[i].count;
+        }
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/attackMapTile?" + tokenIdentity + "&" + target + "&" + armyString);
+
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 }
 

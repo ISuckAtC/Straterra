@@ -39,6 +39,8 @@ public class CityPlayer : MonoBehaviour
 
     private ActionQueue aq;
 
+    public int[] homeArmyAmount = new int[256];
+
     public void Start()
     {
         aq = GetComponent<ActionQueue>();
@@ -743,7 +745,7 @@ public class CityPlayer : MonoBehaviour
                 }
                 else
                 {
-                    new ScheduledUnitProductionEvent(trainingUnit.trainingTime, trainingUnit.id, amount, LocalData.SelfUser.userId, 
+                    new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfUser.userId, 
                     ScheduledEvent.tempEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Count() == 0);
                 }
             });

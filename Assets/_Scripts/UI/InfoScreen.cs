@@ -79,14 +79,16 @@ public class InfoScreen : MonoBehaviour
         villageInfoScreen.SetActive(true);
         
         CloseResourceInfoScreen();
-        
+        Debug.Log("OPENVILLAGEINFOSCREEN");
         attackButton.onClick.AddListener(delegate { OverworldController.AttackWithAll(position); });
+
+        //Debug.Log(attackButton.onClick.GetPersistentMethodName(0));
     }
     
     public void CloseVillageInfoScreen()
     {
         villageInfoScreen.SetActive(false);
-
+        Debug.Log("CLOSEVILLAGEINFOSCREEN");
         attackButton.onClick.RemoveAllListeners();
     }
     

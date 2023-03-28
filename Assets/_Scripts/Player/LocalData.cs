@@ -42,6 +42,18 @@ public static class LocalData
 
         Network.allUsers = users.players.ToList();
 
+        var units = await Network.GetHomeUnits();
+
+        System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
+
+        for (int i = 0; i < units.units.Length; ++i)
+        {
+            int id = units.units[i].unitId;
+            int amount = units.units[i].amount;
+
+            CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+        }
+
         } catch (System.Exception e)
         {
             UnityEngine.Debug.LogError(e.Message + "\n\n" + e.StackTrace + "\n");

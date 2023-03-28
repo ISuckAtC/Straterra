@@ -60,18 +60,20 @@ public class BottomBar : MonoBehaviour
         }).ContinueWith(async result =>
         {
             NetworkStructs.UnitGroup army = await result;
+            System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
+
+            for (int i = 0; i < army.units.Length; ++i)
+            {
+                int id = army.units[i].unitId;
+                int amount = army.units[i].amount;
+
+                CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+            }
             aQ.queue.Add(() =>
             {
-                int[] amounts = new int[256];
-                System.Array.Fill(amounts, 0);
-                for (int i = 0; i < army.units.Length; i++)
-                {
-                    amounts[army.units[i].unitId] = army.units[i].amount;
-                }
-
                 for (int i = 0; i < 256; ++i)
                 {
-                    int amount = amounts[i];
+                    int amount = CityPlayer.cityPlayer.homeArmyAmount[i];
                     if (amount > 0) armytext += UnitDefinition.I[i].name + ": " + NumConverter.GetConvertedAmount(amount) + "\n";
                 }
 
@@ -96,12 +98,15 @@ public class BottomBar : MonoBehaviour
             //worldButtonText.text = "WORLD";
             worldView = false;
 
-            Task.Run<NetworkStructs.User>(async () => {
+            Task.Run<NetworkStructs.User>(async () =>
+            {
                 return await Network.GetSelfUser();
-            }).ContinueWith(async selfUserUpdate => {
+            }).ContinueWith(async selfUserUpdate =>
+            {
                 NetworkStructs.User suu = await selfUserUpdate;
                 LocalData.SelfUser = suu;
-                aQ.queue.Add(() => {
+                aQ.queue.Add(() =>
+                {
                     CityPlayer cp = cityPlayer.GetComponent<CityPlayer>();
                     cp.LoadBuildings();
                     cp.LoadBuildingInterfaces();
@@ -132,19 +137,19 @@ public class BottomBar : MonoBehaviour
                             for (int i = 0; i < group.players.Length; i++)
                             {
                                 NetworkStructs.User user = group.players[i];
-                                
+
                                 PlaceTiles._instance.CreateBuilding(1, user.cityLocation);
                                 Debug.Log("Created village " + user.cityLocation);
                                 Grid._instance.tiles[user.cityLocation].building = (byte)1;
                                 Grid._instance.tiles[user.cityLocation].owner = user.userId;
-                                
+
                                 for (int j = 0; j < user.buildingPositions.Length; j++)
                                 {
                                     NetworkStructs.MapBuilding tempBuilding = user.buildingPositions[j];
 
                                     // Group.Players.buildingPositions has buildingid and buildingposition.
                                     PlaceTiles._instance.CreateBuilding(tempBuilding.building, tempBuilding.position);
-    
+
                                     Grid._instance.tiles[tempBuilding.position].building = (byte)tempBuilding.building;
 
                                     Grid._instance.tiles[tempBuilding.position].owner = user.userId;
@@ -152,24 +157,24 @@ public class BottomBar : MonoBehaviour
                             }
                         });
                 });
-                /*
-        Task.Run<NetworkStructs.ActionResult>(async () => 
+            /*
+    Task.Run<NetworkStructs.ActionResult>(async () => 
+    {
+        return await Network.CreateMapBuilding(buildingId, selectedPosition);
+    }).ContinueWith(async result =>
+    {
+        NetworkStructs.ActionResult res = await result;
+        aq.queue.Add(() =>
         {
-            return await Network.CreateMapBuilding(buildingId, selectedPosition);
-        }).ContinueWith(async result =>
-        {
-            NetworkStructs.ActionResult res = await result;
-            aq.queue.Add(() =>
+            if (!res.success)
             {
-                if (!res.success)
-                {
-                    Debug.LogError("Mapbuilding failed: " + res.message);
-                }
-            });
+                Debug.LogError("Mapbuilding failed: " + res.message);
+            }
         });
-                 */
-                
-                
+    });
+             */
+
+
             worldView = true;
         }
     }
@@ -247,11 +252,11 @@ public class BottomBar : MonoBehaviour
         {
             reports.Add(Instantiate(reportPrefab, Vector3.zero, Quaternion.identity));
         }
-        
+
         for (int i = NotificationCenter.Count() - 1; i >= 0; i--)
         {
             //Debug.Log("Dealing with notification index " + i);
-            
+
             RectTransform rectTransform = reports[i].GetComponent<RectTransform>();
             rectTransform.parent = reportContentParent;
 
@@ -261,15 +266,15 @@ public class BottomBar : MonoBehaviour
             int index = i; // most useful line
 
             TMPro.TMP_Text[] texts = rectTransform.GetComponentsInChildren<TMPro.TMP_Text>();
-            
+
             texts[0].text = NotificationCenter.Get(index).title;
             texts[1].text = NumConverter.GetConvertedTimeStamp(NotificationCenter.Get(index).time);
-            
+
             //rectTransform.GetComponentInChildren<TMPro.TMP_Text>().text = NotificationCenter.Get(index).title;
-            rectTransform.GetComponentInChildren<Button>().onClick.AddListener(delegate {OpenReport(index);});
-            
+            rectTransform.GetComponentInChildren<Button>().onClick.AddListener(delegate { OpenReport(index); });
+
         }
-        
+
         /*
         for (int i = 0; i < NotificationCenter.Count(); ++i)
         {

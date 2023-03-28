@@ -538,22 +538,37 @@ public class OverworldController : MonoBehaviour
 
     public static void AttackWithAll(int position)
     {
-        Debug.Log("Attacked tile has building type " + Grid._instance.tiles[position].building);
+        Debug.Log("Attacked tile at position " + position + " has building type " + Grid._instance.tiles[position].building);
         if (Grid._instance.tiles[position].building != 1) return;
+
+        int lockPosition = position;
         List<Group> army = new List<Group>();
-        for (int i = 0; i < GameManager.I.playerResources.unitAmounts.Length; ++i)
+
+        for (int i = 0; i < 256; ++i)
         {
-            if (GameManager.I.playerResources.unitAmounts[i] > 0)
+            int amount = CityPlayer.cityPlayer.homeArmyAmount[i];
+            if (amount > 0)
             {
-                army.Add(new Group(GameManager.I.playerResources.unitAmounts[i], i));
-                GameManager.I.playerResources.unitAmounts[i] = 0;
+                army.Add(new Group(amount, i));
             }
         }
-        if (army.Count > 0)
+
+        Task.Run(async () => 
         {
-            Debug.Log("Scheduling attack");
-            ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(5, army, position, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
-        }
+            return await Network.AttackMapTile(lockPosition, army);
+        }).ContinueWith(async res => 
+        {
+            var result = await res;
+
+            if (result.success)
+            {
+                ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(20, army, lockPosition, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
+            }
+            else
+            {
+                Debug.LogError(result.message);
+            }
+        });
     }
 
     public void FocusOnVillage()
@@ -657,10 +672,12 @@ public class OverworldController : MonoBehaviour
             }
             return;
         }
+
+        int lockedPosition = selectedPosition;
         
         Task.Run<NetworkStructs.ActionResult>(async () => 
         {
-            return await Network.CreateMapBuilding(buildingId, selectedPosition);
+            return await Network.CreateMapBuilding(buildingId, lockedPosition);
         }).ContinueWith(async result =>
         {
             NetworkStructs.ActionResult res = await result;
@@ -672,7 +689,7 @@ public class OverworldController : MonoBehaviour
                 }
                 else
                 {
-                    ScheduledEvent.UpdateScheduledEvents();
+                    new ScheduledMapBuildEvent(mapBuilding.buildingTime, (byte)mapBuilding.id, lockedPosition, LocalData.SelfUser.userId);
                 }
             });
         });
