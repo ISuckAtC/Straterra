@@ -245,7 +245,7 @@ public class CityPlayer : MonoBehaviour
             else
                 templeMenu.nextLevel.sprite = null;
 
-            /*  COMMENTED UNTIL TEMPLE IS MERGED
+            //  COMMENTED UNTIL TEMPLE IS MERGED
             switch (LocalData.SelfUser.path)
             {
                 case 0:
@@ -278,7 +278,7 @@ public class CityPlayer : MonoBehaviour
                         break;
                     }
             }
-            */
+            
 
 
             buildingsInterfaces.Add(temple);
@@ -770,7 +770,7 @@ public class CityPlayer : MonoBehaviour
 
     //templePathUI is a parent with all nessesery elements to select path.
 
-    /*   COMMENTED UNTIL TEMPLE IS MERGED
+       //COMMENTED UNTIL TEMPLE IS MERGED
     public GameObject pathSelection;
     public GameObject templeFireUI;
     public GameObject templeEarthUI;
@@ -783,24 +783,27 @@ public class CityPlayer : MonoBehaviour
 
     public void FirePath()
     {
-        templeFireUI.SetActive(true);
+        pathSelection.SetActive(false);
+        templeFireUI.SetActive(true);       
     }
     public void EarthPath()
     {
+        pathSelection.SetActive(false);
         templeEarthUI.SetActive(true);
     }
     public void WaterPath()
     {
+        pathSelection.SetActive(false);
         templeWaterUI.SetActive(true);
 
     }
     public void LightPath()
     {
+        pathSelection.SetActive(false);
         templeLightUI.SetActive(true);
-
     }
 
-    */
+    
     #endregion
 
     // Only to debug ScheduledEventGroup.
