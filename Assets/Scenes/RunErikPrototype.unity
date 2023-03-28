@@ -5029,10 +5029,10 @@ RectTransform:
   m_Father: {fileID: 637542662}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: -279}
-  m_SizeDelta: {x: 180, y: 62}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &115013796
 MonoBehaviour:
@@ -5497,6 +5497,7 @@ GameObject:
   - component: {fileID: 119556753}
   - component: {fileID: 119556755}
   - component: {fileID: 119556754}
+  - component: {fileID: 119556756}
   m_Layer: 8
   m_Name: Icon (1)
   m_TagString: Untagged
@@ -5562,6 +5563,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119556752}
   m_CullTransparentMesh: 1
+--- !u!114 &119556756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119556752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headerText: Damage (ranged)
+  bodyText: Damage dealt per hit </n> Ranged Combat
 --- !u!1 &120025987
 GameObject:
   m_ObjectHideFlags: 0
@@ -10295,10 +10310,10 @@ RectTransform:
   m_Father: {fileID: 637542662}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: -403}
-  m_SizeDelta: {x: 180, y: 62}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &252868944
 MonoBehaviour:
@@ -11400,6 +11415,7 @@ GameObject:
   - component: {fileID: 275870461}
   - component: {fileID: 275870463}
   - component: {fileID: 275870462}
+  - component: {fileID: 275870464}
   m_Layer: 8
   m_Name: Icon
   m_TagString: Untagged
@@ -11465,6 +11481,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 275870460}
   m_CullTransparentMesh: 1
+--- !u!114 &275870464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275870460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headerText: Defense (melee)
+  bodyText: Damage reduced per hit </n> Melee Combat
 --- !u!1 &281337097
 GameObject:
   m_ObjectHideFlags: 0
@@ -11782,6 +11812,7 @@ GameObject:
   - component: {fileID: 283936363}
   - component: {fileID: 283936365}
   - component: {fileID: 283936364}
+  - component: {fileID: 283936366}
   m_Layer: 8
   m_Name: Icon (1)
   m_TagString: Untagged
@@ -11847,6 +11878,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 283936362}
   m_CullTransparentMesh: 1
+--- !u!114 &283936366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283936362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headerText: Defense (ranged)
+  bodyText: Damage reduced per hit </n> Ranged Combat
 --- !u!1 &285678725
 GameObject:
   m_ObjectHideFlags: 0
@@ -18957,6 +19002,7 @@ GameObject:
   - component: {fileID: 432987517}
   - component: {fileID: 432987519}
   - component: {fileID: 432987518}
+  - component: {fileID: 432987520}
   m_Layer: 8
   m_Name: Icon
   m_TagString: Untagged
@@ -19022,6 +19068,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 432987516}
   m_CullTransparentMesh: 1
+--- !u!114 &432987520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432987516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headerText: Damage (ranged)
+  bodyText: Damage dealt per hit </n> Ranged Combat
 --- !u!1 &433617478
 GameObject:
   m_ObjectHideFlags: 0
@@ -19222,6 +19282,7 @@ GameObject:
   - component: {fileID: 438188711}
   - component: {fileID: 438188713}
   - component: {fileID: 438188712}
+  - component: {fileID: 438188714}
   m_Layer: 8
   m_Name: Icon
   m_TagString: Untagged
@@ -19287,6 +19348,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438188710}
   m_CullTransparentMesh: 1
+--- !u!114 &438188714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438188710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headerText: Health
+  bodyText: 'Hit Points
+
+'
 --- !u!1 &441142187
 GameObject:
   m_ObjectHideFlags: 0
@@ -21876,7 +21953,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -38072,10 +38149,10 @@ RectTransform:
   m_Father: {fileID: 637542662}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: -341}
-  m_SizeDelta: {x: 180, y: 62}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &888622017
 MonoBehaviour:
@@ -42041,6 +42118,7 @@ GameObject:
   - component: {fileID: 973244600}
   - component: {fileID: 973244602}
   - component: {fileID: 973244601}
+  - component: {fileID: 973244603}
   m_Layer: 8
   m_Name: Icon
   m_TagString: Untagged
@@ -42106,6 +42184,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973244599}
   m_CullTransparentMesh: 1
+--- !u!114 &973244603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973244599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headerText: Range
+  bodyText: Distance reached with ranged attack
 --- !u!1 &979081541
 GameObject:
   m_ObjectHideFlags: 0
@@ -47028,10 +47120,10 @@ RectTransform:
   m_Father: {fileID: 637542662}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: -155}
-  m_SizeDelta: {x: 180, y: 62}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1094686650
 MonoBehaviour:
@@ -53133,10 +53225,10 @@ RectTransform:
   m_Father: {fileID: 637542662}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: -31}
-  m_SizeDelta: {x: 180, y: 62}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1229598831
 MonoBehaviour:
@@ -54352,6 +54444,8 @@ GameObject:
   - component: {fileID: 1260197172}
   - component: {fileID: 1260197174}
   - component: {fileID: 1260197173}
+  - component: {fileID: 1260197176}
+  - component: {fileID: 1260197175}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -54417,6 +54511,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260197171}
   m_CullTransparentMesh: 1
+--- !u!114 &1260197175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260197171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 3
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
+--- !u!223 &1260197176
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260197171}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1268986771
 GameObject:
   m_ObjectHideFlags: 0
@@ -54851,6 +54983,7 @@ GameObject:
   - component: {fileID: 1277689711}
   - component: {fileID: 1277689713}
   - component: {fileID: 1277689712}
+  - component: {fileID: 1277689714}
   m_Layer: 8
   m_Name: Icon
   m_TagString: Untagged
@@ -54916,6 +55049,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277689710}
   m_CullTransparentMesh: 1
+--- !u!114 &1277689714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1277689710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headerText: Speed
+  bodyText: Distance travelled in one turn
 --- !u!1 &1278230716
 GameObject:
   m_ObjectHideFlags: 0
@@ -75693,6 +75840,13 @@ MonoBehaviour:
   trainingWoodcost: {fileID: 691722729}
   trainingMetalcost: {fileID: 608639169}
   trainingTime: {fileID: 1903840043}
+  statAttackMelee: {fileID: 1229598831}
+  statAttackRanged: {fileID: 1862832789}
+  statDefenceMelee: {fileID: 1094686650}
+  statDefenceRanged: {fileID: 2077338668}
+  statHealth: {fileID: 115013796}
+  statSpeed: {fileID: 888622017}
+  statRange: {fileID: 252868944}
   unitFullbodyArt: {fileID: 1657081329}
   pathSelection: {fileID: 1622642791}
   templeFireUI: {fileID: 1622642790}
@@ -81390,10 +81544,10 @@ RectTransform:
   m_Father: {fileID: 637542662}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: -93}
-  m_SizeDelta: {x: 180, y: 62}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1862832789
 MonoBehaviour:
@@ -82439,7 +82593,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -85952,6 +86106,7 @@ GameObject:
   - component: {fileID: 1962273565}
   - component: {fileID: 1962273567}
   - component: {fileID: 1962273566}
+  - component: {fileID: 1962273568}
   m_Layer: 8
   m_Name: Icon
   m_TagString: Untagged
@@ -86017,6 +86172,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962273564}
   m_CullTransparentMesh: 1
+--- !u!114 &1962273568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962273564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headerText: Damage (melee)
+  bodyText: Damage dealt per hit </n> Melee Combat
 --- !u!1 &1964618960
 GameObject:
   m_ObjectHideFlags: 0
@@ -86853,6 +87022,7 @@ GameObject:
   - component: {fileID: 1979038617}
   - component: {fileID: 1979038619}
   - component: {fileID: 1979038618}
+  - component: {fileID: 1979038620}
   m_Layer: 8
   m_Name: Icon
   m_TagString: Untagged
@@ -86918,6 +87088,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979038616}
   m_CullTransparentMesh: 1
+--- !u!114 &1979038620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979038616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedc68e3cbe75d64ea8ab3d4d623d166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headerText: Defense (ranged)
+  bodyText: Damage reduced per hit </n> Ranged Combat
 --- !u!1 &1981321095
 GameObject:
   m_ObjectHideFlags: 0
@@ -90667,10 +90851,10 @@ RectTransform:
   m_Father: {fileID: 637542662}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 90, y: -217}
-  m_SizeDelta: {x: 180, y: 62}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2077338668
 MonoBehaviour:
@@ -95422,7 +95606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1295481400883920690
 GameObject:
   m_ObjectHideFlags: 0
