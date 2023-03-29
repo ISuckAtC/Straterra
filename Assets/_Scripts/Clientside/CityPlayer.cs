@@ -53,9 +53,9 @@ public class CityPlayer : MonoBehaviour
         topBar.Metal = GameManager.PlayerMetal;
         topBar.Order = GameManager.PlayerOrder;
 
-        //UpgradeResourceLimit(0);
-        //UpgradeResourceLimit(4);
-        //UpgradeResourceLimit(8);
+        UpgradeResourceLimit(0);
+        UpgradeResourceLimit(4);
+        UpgradeResourceLimit(8);
     }
 
     public void Build(int building, int slot)
@@ -280,7 +280,7 @@ public class CityPlayer : MonoBehaviour
                         break;
                     }
             }
-            
+
 
 
             buildingsInterfaces.Add(temple);
@@ -310,10 +310,8 @@ public class CityPlayer : MonoBehaviour
             buildingsInterfaces.Add(marketplace);
         }
 
-        if (false && warehouse)
+        if (warehouse)
         {
-
-            /*
             BuildingMenu warehouseMenu = warehouse.GetComponent<BuildingMenu>();
             warehouseMenu.title.text = TownBuildingDefinition.I[warehouseMenu.id].name.ToUpper();
             warehouseMenu.level.text = "Lv. " + TownBuildingDefinition.I[warehouseMenu.id].level;
@@ -339,8 +337,11 @@ public class CityPlayer : MonoBehaviour
                 levelBackgrounds[2].color = inactiveBackground;
 
                 buttonBackgrounds[2].transform.GetComponent<Button>().enabled = true;
+                buttonBackgrounds[2].color = buyableButton;
                 buttonBackgrounds[6].transform.GetComponent<Button>().enabled = true;
+                buttonBackgrounds[6].color = buyableButton;
                 buttonBackgrounds[10].transform.GetComponent<Button>().enabled = true;
+                buttonBackgrounds[10].color = buyableButton;
             }
 
             else if (TownBuildingDefinition.I[warehouseMenu.id].level == 3)
@@ -348,8 +349,11 @@ public class CityPlayer : MonoBehaviour
                 levelBackgrounds[2].color = activeBackground;
 
                 buttonBackgrounds[3].transform.GetComponent<Button>().enabled = true;
+                buttonBackgrounds[3].color = buyableButton;
                 buttonBackgrounds[7].transform.GetComponent<Button>().enabled = true;
+                buttonBackgrounds[7].color = buyableButton;
                 buttonBackgrounds[11].transform.GetComponent<Button>().enabled = true;
+                buttonBackgrounds[11].color = buyableButton;
             }
 
             if (TownBuildingDefinition.I[warehouseMenu.id].level < 3)
@@ -357,7 +361,7 @@ public class CityPlayer : MonoBehaviour
             else
                 warehouseMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(warehouse);
-            */
+
         }
 
         if (emptyPlot)
@@ -504,17 +508,19 @@ public class CityPlayer : MonoBehaviour
     #endregion
     #region Warehouse
     [Header("Warehouse")]
+    public float exponentValue;
     public Color activeButton;
     public Color inactiveButton;
+    public Color buyableButton;
     public Color activeBackground;
     public Color inactiveBackground;
     public Color activeTextColor;
     public Image[] levelBackgrounds;
     public Image[] buttonBackgrounds;
     public TMPro.TMP_Text[] buttonTexts;
-    int foodLimit;
-    int woodLimit;
-    int metalLimit;
+    float foodLimit;
+    float woodLimit;
+    float metalLimit;
 
     public void UpgradeResourceLimit(int i)
     {
@@ -523,94 +529,111 @@ public class CityPlayer : MonoBehaviour
         4-7 = Wood
         8-11 = Metal
         */
-        /*
+        BuildingMenu warehouseMenu = warehouse.GetComponent<BuildingMenu>();
         switch (i)
         {
             case 0:
-                foodLimit = 1000;
+                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+3);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
 
             case 1:
-                foodLimit = 2000;
+                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
 
             case 2:
-                foodLimit = 4000;
+                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
 
             case 3:
-                foodLimit = 8000;
+                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
 
             case 4:
-                woodLimit = 1000;
+                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+3);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
 
             case 5:
-                woodLimit = 2000;
+                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
 
             case 6:
-                woodLimit = 4000;
+                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
 
             case 7:
-                woodLimit = 8000;
+                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
 
             case 8:
-                metalLimit = 1000;
+                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+3);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
 
             case 9:
-                metalLimit = 2000;
+                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
 
             case 10:
-                metalLimit = 4000;
+                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
 
             case 11:
-                metalLimit = 8000;
+                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
+
+                break;
+            
+            default:
+                Debug.LogError("Resource Upgrade wasn't correctly assigned");
 
                 break;
         }
-        */
+        Debug.LogError("Resource limits are = " + foodLimit + " " + woodLimit + " " + metalLimit);
     }
 
     // Limit == Warehouse Level * something
@@ -634,7 +657,7 @@ public class CityPlayer : MonoBehaviour
     public TMPro.TMP_Text statHealth;
     public TMPro.TMP_Text statSpeed;
     public TMPro.TMP_Text statRange;
-    
+
     public Image unitFullbodyArt;
 
     private Unit trainingUnit;
@@ -745,7 +768,7 @@ public class CityPlayer : MonoBehaviour
                 }
                 else
                 {
-                    new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfUser.userId, 
+                    new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfUser.userId,
                     ScheduledEvent.tempEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Count() == 0);
                 }
             });
@@ -772,7 +795,7 @@ public class CityPlayer : MonoBehaviour
 
     //templePathUI is a parent with all nessesery elements to select path.
 
-       //COMMENTED UNTIL TEMPLE IS MERGED
+    //COMMENTED UNTIL TEMPLE IS MERGED
     public GameObject pathSelection;
     public GameObject templeFireUI;
     public GameObject templeEarthUI;
@@ -786,7 +809,7 @@ public class CityPlayer : MonoBehaviour
     public void FirePath()
     {
         pathSelection.SetActive(false);
-        templeFireUI.SetActive(true);       
+        templeFireUI.SetActive(true);
     }
     public void EarthPath()
     {
@@ -805,7 +828,7 @@ public class CityPlayer : MonoBehaviour
         templeLightUI.SetActive(true);
     }
 
-    
+
     #endregion
 
     // Only to debug ScheduledEventGroup.
