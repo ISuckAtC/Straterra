@@ -228,5 +228,12 @@ public class Network
 
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
+
+    public static async Task<ActionResult> ChoosePath(int path)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/choosePath?" + tokenIdentity + "&" + path);
+
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+    }
 }
 

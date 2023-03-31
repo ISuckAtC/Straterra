@@ -291,7 +291,7 @@ public class CityPlayer : MonoBehaviour
             {
                 case 0:
                     {
-                        SelectPath();
+                        NoPath();
                         break;
                     }
                 case 1:
@@ -848,7 +848,7 @@ public class CityPlayer : MonoBehaviour
     public GameObject templeEarthUI;
     public GameObject templeWaterUI;
     public GameObject templeLightUI;
-    public void SelectPath()
+    public void NoPath()
     {
         pathSelection.SetActive(true);
     }
@@ -873,6 +873,29 @@ public class CityPlayer : MonoBehaviour
     {
         pathSelection.SetActive(false);
         templeLightUI.SetActive(true);
+    }
+
+    public void SelectPath(int path)
+    {
+        Task.Run(async () =>
+        {
+            return await Network.ChoosePath(path);
+        }).ContinueWith(async result =>
+        {
+            var res = await result;
+            if (res.success)
+            {
+                // Properties do not allow to modify members. Therefore we have to copy it and edit the copy then save it back.
+                NetworkStructs.User selfUserVariable = LocalData.SelfUser;
+                selfUserVariable.path = path;
+                LocalData.SelfUser = selfUserVariable;
+
+                aq.queue.Add(() =>
+                {
+                    LoadBuildingInterfaces();
+                });
+            }
+        });
     }
 
 

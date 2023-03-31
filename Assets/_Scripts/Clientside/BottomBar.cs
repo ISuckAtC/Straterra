@@ -93,6 +93,7 @@ public class BottomBar : MonoBehaviour
     {
         if (worldView)
         {
+           
             mapGrid.SetActive(false);
             mapUI.SetActive(false);
             cityPlayer.SetActive(true);

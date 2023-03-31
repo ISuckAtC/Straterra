@@ -22,39 +22,40 @@ public static class LocalData
     }
 
     private static NetworkStructs.User? selfUser;
-
+    
 
     public static async System.Threading.Tasks.Task LoadSelfPlayerOnline()
     {
         try
         {
-        var u = await Network.GetSelfUser();
+            var u = await Network.GetSelfUser();
 
-        UnityEngine.Debug.Log(u.name + " | " + u.userId);
-        UnityEngine.Debug.Log(u.cityBuildingSlots[5]);
+            UnityEngine.Debug.Log(u.name + " | " + u.userId);
+            UnityEngine.Debug.Log(u.cityBuildingSlots[5]);
 
 
-        selfUser = u;
+            selfUser = u;
 
-        var users = await Network.GetUsers();
-        
-        Debug.Log(users.players[0].name);
+            var users = await Network.GetUsers();
 
-        Network.allUsers = users.players.ToList();
+            Debug.Log(users.players[0].name);
 
-        var units = await Network.GetHomeUnits();
+            Network.allUsers = users.players.ToList();
 
-        System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
+            var units = await Network.GetHomeUnits();
 
-        for (int i = 0; i < units.units.Length; ++i)
-        {
-            int id = units.units[i].unitId;
-            int amount = units.units[i].amount;
+            System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
 
-            CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+            for (int i = 0; i < units.units.Length; ++i)
+            {
+                int id = units.units[i].unitId;
+                int amount = units.units[i].amount;
+
+                CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+            }
+
         }
-
-        } catch (System.Exception e)
+        catch (System.Exception e)
         {
             UnityEngine.Debug.LogError(e.Message + "\n\n" + e.StackTrace + "\n");
         }
