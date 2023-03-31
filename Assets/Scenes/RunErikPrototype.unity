@@ -34910,6 +34910,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2310969}
     - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
+      propertyPath: bArcherText
+      value: 
+      objectReference: {fileID: 78403811}
+    - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
       propertyPath: reportTitle
       value: 
       objectReference: {fileID: 597812513}
@@ -34917,6 +34921,18 @@ PrefabInstance:
       propertyPath: reportsMenu
       value: 
       objectReference: {fileID: 779985828}
+    - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
+      propertyPath: bCavalryText
+      value: 
+      objectReference: {fileID: 701045166}
+    - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
+      propertyPath: bSpearmanText
+      value: 
+      objectReference: {fileID: 1283822088}
+    - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
+      propertyPath: bSworsmanText
+      value: 
+      objectReference: {fileID: 414435885}
     - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
       propertyPath: reportContent
       value: 
