@@ -211,6 +211,45 @@ public class CityPlayer : MonoBehaviour
             else
                 barracksMenu.nextLevel.sprite = null;
             buildingsInterfaces.Add(barracks);
+                    Task.Run<NetworkStructs.UnitGroup>(async () =>
+        {
+            return await Network.GetHomeUnits();
+        }).ContinueWith(async result =>
+        {
+            NetworkStructs.UnitGroup army = await result;
+            System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
+
+            for (int i = 0; i < army.units.Length; ++i)
+            {
+                int id = army.units[i].unitId;
+                int amount = army.units[i].amount;
+
+                CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+            }
+            aq.queue.Add(() =>
+            {
+                for (int i = 0; i < 256; ++i)
+                {
+                    int amount = homeArmyAmount[i];
+                    if (UnitDefinition.I[i].name == "Swordsman")
+                    swrText += "Swordsmen: " + NumConverter.GetConvertedAmount(amount);
+
+                    if (UnitDefinition.I[i].name == "Archer")
+                    arcText += "Archers: " + NumConverter.GetConvertedAmount(amount);
+
+                    if (UnitDefinition.I[i].name == "Spearman")
+                    sprText += "Spearmen: " + NumConverter.GetConvertedAmount(amount);
+
+                    if (UnitDefinition.I[i].name == "Cavalry")
+                    cvlText += "Cavalry: " + NumConverter.GetConvertedAmount(amount);
+                }
+                
+                bSworsmanText.text = swrText;
+                bArcherText.text = arcText;
+                bSpearmanText.text = sprText;
+                bCavalryText.text = cvlText;
+            });
+        });
         }
 
         if (smithy)
@@ -533,7 +572,7 @@ public class CityPlayer : MonoBehaviour
         switch (i)
         {
             case 0:
-                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+3);
+                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 3);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -541,7 +580,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 1:
-                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
+                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -549,7 +588,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 2:
-                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
+                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -557,7 +596,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 3:
-                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
+                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -565,7 +604,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 4:
-                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+3);
+                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 3);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -573,7 +612,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 5:
-                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
+                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -581,7 +620,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 6:
-                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
+                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -589,7 +628,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 7:
-                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
+                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -597,7 +636,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 8:
-                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+3);
+                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 3);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -605,7 +644,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 9:
-                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
+                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -613,7 +652,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 10:
-                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
+                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -621,13 +660,13 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 11:
-                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level+4);
+                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
 
                 break;
-            
+
             default:
                 Debug.LogError("Resource Upgrade wasn't correctly assigned");
 
@@ -659,7 +698,15 @@ public class CityPlayer : MonoBehaviour
     public TMPro.TMP_Text statRange;
 
     public Image unitFullbodyArt;
+    public TMPro.TMP_Text bSworsmanText;
+    public TMPro.TMP_Text bArcherText;
+    public TMPro.TMP_Text bSpearmanText;
+    public TMPro.TMP_Text bCavalryText;
 
+    string swrText = "";
+    string arcText = "";
+    string sprText = "";
+    string cvlText = "";
     private Unit trainingUnit;
     public void OpenTrainingMenu(int id)
     {

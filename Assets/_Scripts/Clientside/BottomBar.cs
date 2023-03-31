@@ -27,11 +27,6 @@ public class BottomBar : MonoBehaviour
     public TMPro.TMP_Text reportTitle;
     public TMPro.TMP_Text reportContent;
     public GameObject reportPrefab;
-    public TMPro.TMP_Text bSworsmanText;
-    public TMPro.TMP_Text bArcherText;
-    public TMPro.TMP_Text bSpearmanText;
-    public TMPro.TMP_Text bCavalryText;
-
     private List<GameObject> reports = new List<GameObject>();
 
     private bool worldView = false;
@@ -58,10 +53,7 @@ public class BottomBar : MonoBehaviour
         armyMenu.SetActive(true);
         string armytext = "";
 
-        string swrText = "";
-        string arcText = "";
-        string sprText = "";
-        string cvlText = "";
+
 
         Task.Run<NetworkStructs.UnitGroup>(async () =>
         {
@@ -84,28 +76,11 @@ public class BottomBar : MonoBehaviour
                 {
                     int amount = CityPlayer.cityPlayer.homeArmyAmount[i];
                     if (amount > 0) armytext += UnitDefinition.I[i].name + ": " + NumConverter.GetConvertedAmount(amount) + "\n";
-
-                    if (UnitDefinition.I[i].name == "Swordsman")
-                    swrText += "Swordsmen: " + NumConverter.GetConvertedAmount(amount);
-
-                    if (UnitDefinition.I[i].name == "Archer")
-                    arcText += "Archers: " + NumConverter.GetConvertedAmount(amount);
-
-                    if (UnitDefinition.I[i].name == "Spearman")
-                    sprText += "Spearmen: " + NumConverter.GetConvertedAmount(amount);
-
-                    if (UnitDefinition.I[i].name == "Cavalry")
-                    cvlText += "Cavalry: " + NumConverter.GetConvertedAmount(amount);
                 }
 
                 armyText.text = armytext;
                 armyText.ForceMeshUpdate();
                 (armyText.transform.parent as RectTransform).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, armyText.renderedHeight);
-                
-                bSworsmanText.text = swrText;
-                bArcherText.text = arcText;
-                bSpearmanText.text = sprText;
-                bCavalryText.text = cvlText;
             });
         });
     }
