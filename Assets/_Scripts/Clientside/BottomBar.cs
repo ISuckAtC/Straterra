@@ -42,6 +42,12 @@ public class BottomBar : MonoBehaviour
         EventHub.OnTick += CheckQueue;
         aQ = GetComponent<ActionQueue>();
     }
+    public void CloseBottomMenus()
+    {
+        armyMenu.SetActive(false);
+        queueMenu.SetActive(false);
+        reportsMenu.SetActive(false);
+    }
     public void OpenArmyTab()
     {
         if (armyOpen)

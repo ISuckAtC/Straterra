@@ -494,20 +494,23 @@ public class OverworldController : MonoBehaviour
                     int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
                     //InfoScreen._instance.ToggleInfoScreen(false);
                     //InfoScreen._instance.ToggleInfoScreenResource(false);
-                    if (id == previousTile)
-                    {
+                    //if (id == previousTile) //Double Click removed
+                    
                         buildMenu.gameObject.SetActive(true);
                         buildMenu.transform.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
+
                         farmWindow.SetActive(false);
                         loggingCampWindow.SetActive(false);
                         mineWindow.SetActive(false);
                         rightSideBlocker.SetActive(false);
-                    }
+                    
+                    /*
                     else
                     {
                         //buildMenu.gameObject.SetActive(false);
                         previousTile = id;
                     }
+                    */
 
                     selectedTileHighlight.gameObject.SetActive(true);
                     selectedTileHighlight.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));

@@ -34,20 +34,53 @@ public class customHierarchy
                 backgroundColor = new Color(0.2f, 0.6f, 0.1f);
                 textColor = new Color(0.9f, 0.9f, 0.9f);
             }
-            else if((obj as GameObject).GetComponent<Canvas>())
+            else if ((obj as GameObject).GetComponent<Canvas>())
             {
                 backgroundColor = new Color(0.7f, 0.45f, 0.0f);
                 textColor = new Color(0.9f, 0.9f, 0.9f);
             }
-             else if (obj.name == "PlayerVillage")
+            else if (obj.name == "PlayerVillage")
             {
                 backgroundColor = new Color(0.3f, 0.6f, 0.1f);
                 textColor = new Color(0.9f, 0.9f, 0.9f);
             }
-             else if (obj.name == "TempleMenu")
+            else if (obj.name == "TownHallMenu")
+            {
+                backgroundColor = Color.blue;//new Color(0.6f, 0.6f, 0.1f);
+                textColor = new Color(0.9f, 0.9f, 0.9f);
+            }
+            else if (obj.name == "Barracks")
+            {
+                backgroundColor = new Color(0.78f, 0.49f, 0.07f);
+                textColor = new Color(0.9f, 0.9f, 0.9f);
+            }
+            else if (obj.name == "AcademyMenu")
+            {
+                backgroundColor = new Color(0.22f, 0.22f, 0.22f);
+                textColor = new Color(0.9f, 0.9f, 0.9f);
+            }
+            else if (obj.name == "SmithyMenu")
+            {
+                backgroundColor = new Color(0.22f, 0.22f, 0.22f);
+                textColor = new Color(0.9f, 0.9f, 0.9f);
+            }
+            else if (obj.name == "TempleMenu")
             {
                 backgroundColor = new Color(0.6f, 0.6f, 0.1f);
                 textColor = new Color(0.9f, 0.9f, 0.9f);
+            }
+            else if (obj.name == "WorkshopMenu")
+            {
+                backgroundColor = new Color(0.22f, 0.22f, 0.22f);
+                textColor = new Color(0.9f, 0.9f, 0.9f);
+            }
+            else if (obj.name == "MarketplaceMenu")
+            {
+                backgroundColor = new Color(0.22f, 0.22f, 0.22f);
+            }
+            else if (obj.name == "WarehouseMenu")
+            {
+                backgroundColor = new Color(0f, 0.4f, 0f);
             }
             else if ((obj as GameObject).GetComponent<ColorInHierarchy>())
             {
