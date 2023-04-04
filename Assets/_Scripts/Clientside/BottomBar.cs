@@ -29,6 +29,22 @@ public class BottomBar : MonoBehaviour
     public TMPro.TMP_Text reportTitle;
     public TMPro.TMP_Text reportContent;
     public GameObject reportPrefab;
+
+    public GameObject armyButton;
+    public Sprite armySpriteBasic;
+    public Sprite armySpriteHover;
+    public Sprite armySpriteSelected;
+
+    public GameObject queueButton;
+    public Sprite queueSpriteBasic;
+    public Sprite queueSpriteHover;
+    public Sprite queueSpriteSelected;
+
+    public GameObject reportsButton;
+    public Sprite reportsSpriteBasic;
+    public Sprite reportsSpriteHover;
+    public Sprite reportsSpriteSelected;
+    
     private List<GameObject> reports = new List<GameObject>();
 
     private bool worldView = false;
@@ -47,13 +63,23 @@ public class BottomBar : MonoBehaviour
     public void CloseBottomMenus()
     {
         armyMenu.SetActive(false);
+        armyOpen = false;
+        armyButton.GetComponent<Image>().sprite = armySpriteBasic;
+
         queueMenu.SetActive(false);
+        queueOpen = false;
+        queueButton.GetComponent<Image>().sprite = queueSpriteBasic;
+
         reportsMenu.SetActive(false);
+        reportsOpen = false;
+        reportsButton.GetComponent<Image>().sprite = reportsSpriteBasic;
     }
     public void OpenArmyTab()
     {
-        if (armyOpen)
+        armyButton.GetComponent<Image>().sprite = armySpriteSelected;
+        if (armyOpen) //Closes army
         {
+            armyButton.GetComponent<Image>().sprite = armySpriteBasic;
             CloseArmyTab();
             return;
         }
@@ -195,8 +221,10 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenQueue()
     {
+        queueButton.GetComponent<Image>().sprite = queueSpriteSelected;
         if (queueOpen)
         {
+            queueButton.GetComponent<Image>().sprite = queueSpriteBasic;
             CloseQueue();
             return;
         }
@@ -254,8 +282,10 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenMenu()
     {
+        reportsButton.GetComponent<Image>().sprite = reportsSpriteSelected;
         if (reportsOpen)
         {
+            reportsButton.GetComponent<Image>().sprite = reportsSpriteBasic;
             CloseMenu();
             return;
         }

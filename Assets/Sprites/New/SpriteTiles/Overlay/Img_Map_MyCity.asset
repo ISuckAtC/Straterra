@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Img_Map_MyCity
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 21300000, guid: ed241f571c470f142abbc02a79faa9c5, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0

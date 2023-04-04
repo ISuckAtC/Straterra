@@ -52,6 +52,7 @@ public class PlaceTiles : MonoBehaviour
             }
         }
         */
+        
     }
 
 
@@ -212,7 +213,7 @@ public class PlaceTiles : MonoBehaviour
         return (byte)result;
     }
 
-    private void ColorAllTiles()
+    public void ColorAllTiles()
     {
         for (int i = 0; i < Grid._instance.width; i++)
         {

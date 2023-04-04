@@ -124,12 +124,17 @@ public class OverworldController : MonoBehaviour
             Grid._instance.tiles[user.cityLocation].building = 1;
 
             Vector2Int pos = Grid._instance.GetPosition(user.cityLocation);
+            Vector3Int loc = new Vector3Int(pos.x, pos.y, 1);
 
-            PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), PlaceTiles._instance.buildingTiles[1]);
-            PlaceTiles._instance.overlayMap.SetTileFlags(new Vector3Int(pos.x, pos.y, 1), TileFlags.None);
-            //PlaceTiles._instance.DiplomacyMap.SetColor(new Color();
-            PlaceTiles._instance.overlayMap.SetColor(new Vector3Int(pos.x, pos.y, 1), new Color(Random.Range(0.3f, 1), Random.Range(0.3f, 1), Random.Range(0.3f, 1)));
-            
+
+            // Henrik please help, this color set shit will not work
+            PlaceTiles._instance.overlayMap.SetTile(loc, PlaceTiles._instance.buildingTiles[1]);
+            PlaceTiles._instance.overlayMap.SetTileFlags(loc, TileFlags.None);
+            PlaceTiles._instance.overlayMap.SetColor(loc, new Color(Random.Range(0.3f, 1), Random.Range(0.3f, 1), Random.Range(0.3f, 1)));
+
+            UnityEngine.Debug.LogWarning(PlaceTiles._instance.overlayMap.GetTileFlags(loc));//PlaceTiles._instance.overlayMap.GetColor(loc));
+            PlaceTiles._instance.overlayMap.RefreshTile(loc);
+
             if (user.userId == LocalData.SelfUser.userId)
             {
                 PlaceTiles._instance.DiplomacyMap.SetTile(new Vector3Int(pos.x, pos.y, 1), flag);
@@ -138,7 +143,9 @@ public class OverworldController : MonoBehaviour
 
                 FocusOnVillage();
             }
+
         }
+
 
         /*
         DarkShrine ds = new DarkShrine(startingposition / 2, 0.05f, 1f, 0.5f);
@@ -423,7 +430,7 @@ public class OverworldController : MonoBehaviour
 
                 float buildScale = zoom * 0.025f;
 
-                buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+                //buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
 
                 cam.orthographicSize = zoom;
             }
@@ -439,7 +446,7 @@ public class OverworldController : MonoBehaviour
 
             float buildScale = zoom * 0.025f;
 
-            buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+            //buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
 
             cam.orthographicSize = zoom;
         }
@@ -454,7 +461,7 @@ public class OverworldController : MonoBehaviour
 
             float buildScale = zoom * 0.025f;
 
-            buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+            //buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
 
             cam.orthographicSize = zoom;
         }
@@ -497,15 +504,15 @@ public class OverworldController : MonoBehaviour
                     //InfoScreen._instance.ToggleInfoScreen(false);
                     //InfoScreen._instance.ToggleInfoScreenResource(false);
                     //if (id == previousTile) //Double Click removed
-                    
-                        buildMenu.gameObject.SetActive(true);
-                        buildMenu.transform.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
 
-                        farmWindow.SetActive(false);
-                        loggingCampWindow.SetActive(false);
-                        mineWindow.SetActive(false);
-                        rightSideBlocker.SetActive(false);
-                    
+                    buildMenu.gameObject.SetActive(true);
+                    //buildMenu.transform.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
+
+                    farmWindow.SetActive(false);
+                    loggingCampWindow.SetActive(false);
+                    mineWindow.SetActive(false);
+                    rightSideBlocker.SetActive(false);
+
                     /*
                     else
                     {
@@ -588,7 +595,7 @@ public class OverworldController : MonoBehaviour
 
         float buildScale = zoom * 0.025f;
 
-        buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+        //buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
 
         cam.orthographicSize = zoom;
     }

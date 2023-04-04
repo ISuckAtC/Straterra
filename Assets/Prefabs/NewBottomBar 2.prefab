@@ -429,6 +429,18 @@ MonoBehaviour:
   reportTitle: {fileID: 0}
   reportContent: {fileID: 0}
   reportPrefab: {fileID: 3598321794234739567, guid: 1997a07f268ad6749a773bd4c39f67df, type: 3}
+  armyButton: {fileID: 3928638082255566014}
+  armySpriteBasic: {fileID: 21300000, guid: 4d4bdeca4a429ba4d8caf1acfbd2b5b1, type: 3}
+  armySpriteHover: {fileID: 21300000, guid: 23e5b8bad47a24b4cad1574b59f59738, type: 3}
+  armySpriteSelected: {fileID: 21300000, guid: 00e8b0290fc200343b0dbf6186a70429, type: 3}
+  queueButton: {fileID: 3928638081075986313}
+  queueSpriteBasic: {fileID: 21300000, guid: 8e1ac98e95175d247bb698133d74450b, type: 3}
+  queueSpriteHover: {fileID: 21300000, guid: 800338edf90d25949948aaf67f8aaf82, type: 3}
+  queueSpriteSelected: {fileID: 21300000, guid: 08c6586dde3fdde4f82712714ac5a219, type: 3}
+  reportsButton: {fileID: 3928638081657759834}
+  reportsSpriteBasic: {fileID: 21300000, guid: 77460ae214ac6e143b725f7fd95cfba1, type: 3}
+  reportsSpriteHover: {fileID: 21300000, guid: 81c650a9d323a5a4eb43d0efd28cd676, type: 3}
+  reportsSpriteSelected: {fileID: 21300000, guid: b084a6f7eedf5a543b3d518f705d5f48, type: 3}
 --- !u!114 &89035567927483771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -973,7 +985,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3928638081716908757
 RectTransform:
   m_ObjectHideFlags: 0

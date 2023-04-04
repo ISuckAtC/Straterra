@@ -65,6 +65,7 @@ public class Grid : MonoBehaviour
         UpdateTileInformation();
         
         onReady.Invoke();
+        PlaceTiles._instance.ColorAllTiles();
         
     }
 
