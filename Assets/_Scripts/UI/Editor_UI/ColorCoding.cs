@@ -9,7 +9,7 @@ using UnityEditor;
 #endif
 public class customHierarchy
 {
-
+/*
     private static Vector2 offset = new Vector2(20, 1);
 
     static customHierarchy()
@@ -107,4 +107,5 @@ public class customHierarchy
             }
         }
     }
+    */
 }

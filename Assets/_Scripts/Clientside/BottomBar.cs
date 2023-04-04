@@ -16,6 +16,8 @@ public class BottomBar : MonoBehaviour
     public GameObject queueMenu;
     public TMPro.TMP_Text queueText;
     public TMPro.TMP_Text worldButtonText;
+    public GameObject worldButton;
+    public GameObject townButton;
 
     public TMPro.TMP_Text queueAmount;
     public TMPro.TMP_Text reportAmount;
@@ -105,7 +107,10 @@ public class BottomBar : MonoBehaviour
             cityPlayer.SetActive(true);
             //worldButtonText.text = "WORLD";
             worldView = false;
+            townButton.SetActive(false);
+            worldButton.SetActive(true);
 
+            
             Task.Run<NetworkStructs.User>(async () =>
             {
                 return await Network.GetSelfUser();
@@ -127,6 +132,8 @@ public class BottomBar : MonoBehaviour
             mapUI.SetActive(true);
             cityPlayer.SetActive(false);
             //worldButtonText.text = "HOME";
+            worldButton.SetActive(false);
+            townButton.SetActive(true);
 
             PlaceTiles._instance.overlayMap.ClearAllTiles();
 

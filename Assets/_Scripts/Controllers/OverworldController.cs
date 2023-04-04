@@ -5,11 +5,12 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using NetworkStructs;
-using UnityEditor.Tilemaps;
+//using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using UnityEngine.Tilemaps;
 
 public class OverworldController : MonoBehaviour
 {
@@ -125,9 +126,10 @@ public class OverworldController : MonoBehaviour
             Vector2Int pos = Grid._instance.GetPosition(user.cityLocation);
 
             PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), PlaceTiles._instance.buildingTiles[1]);
+            PlaceTiles._instance.overlayMap.SetTileFlags(new Vector3Int(pos.x, pos.y, 1), TileFlags.None);
             //PlaceTiles._instance.DiplomacyMap.SetColor(new Color();
-
-
+            PlaceTiles._instance.overlayMap.SetColor(new Vector3Int(pos.x, pos.y, 1), new Color(Random.Range(0.3f, 1), Random.Range(0.3f, 1), Random.Range(0.3f, 1)));
+            
             if (user.userId == LocalData.SelfUser.userId)
             {
                 PlaceTiles._instance.DiplomacyMap.SetTile(new Vector3Int(pos.x, pos.y, 1), flag);

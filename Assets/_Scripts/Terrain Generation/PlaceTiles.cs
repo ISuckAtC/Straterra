@@ -43,6 +43,15 @@ public class PlaceTiles : MonoBehaviour
         {
             Destroy(this);
         }
+        /*
+        for(int i = 0; i<Grid._instance.width; i++)
+        {
+            for(int j = 0; j<Grid._instance.height; j++)
+            {
+                PlaceTiles._instance.overlayMap.SetTileFlags(new Vector3Int(i, j, 1), TileFlags.None);
+            }
+        }
+        */
     }
 
 

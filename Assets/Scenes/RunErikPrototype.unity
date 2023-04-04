@@ -39382,10 +39382,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2310969}
     - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: bArcherText
-      value: 
-      objectReference: {fileID: 78403811}
-    - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
       propertyPath: reportTitle
       value: 
       objectReference: {fileID: 597812513}
@@ -39393,18 +39389,6 @@ PrefabInstance:
       propertyPath: reportsMenu
       value: 
       objectReference: {fileID: 779985828}
-    - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: bCavalryText
-      value: 
-      objectReference: {fileID: 701045166}
-    - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: bSpearmanText
-      value: 
-      objectReference: {fileID: 1283822088}
-    - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: bSworsmanText
-      value: 
-      objectReference: {fileID: 414435885}
     - target: {fileID: 89035567927483764, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
       propertyPath: reportContent
       value: 
@@ -39501,38 +39485,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3928638081075986319, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: m_Navigation.m_Mode
+    - target: {fileID: 3928638081716908758, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3928638081075986319, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: m_SpriteState.m_SelectedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8e1ac98e95175d247bb698133d74450b, type: 3}
-    - target: {fileID: 3928638081657759832, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3928638081657759832, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: m_SpriteState.m_SelectedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 77460ae214ac6e143b725f7fd95cfba1, type: 3}
-    - target: {fileID: 3928638081716908756, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3928638081716908756, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: m_SpriteState.m_SelectedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 650663507f3a99642b02eda134821b59, type: 3}
-    - target: {fileID: 3928638082255566012, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3928638082255566012, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
-      propertyPath: m_SpriteState.m_SelectedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 4d4bdeca4a429ba4d8caf1acfbd2b5b1, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18c852d579c7e8b43a0882baa3558885, type: 3}
 --- !u!224 &1053159384 stripped
