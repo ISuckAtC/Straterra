@@ -20,7 +20,7 @@ public class Arrow : MonoBehaviour
     {
         Vector2 angle = villagePos - new Vector2(cam.position.x, cam.position.z);
 
-        Debug.Log("Angle: " + angle);
+        //Debug.Log("Angle: " + angle);
         
         transform.eulerAngles = new Vector3(0,0,angle.x);
     }

@@ -384,6 +384,7 @@ public class CityPlayer : MonoBehaviour
     }
     public void OpenBarracks()
     {
+
         trainArcherButton.onClick.RemoveAllListeners();
         trainSwordsmanButton.onClick.RemoveAllListeners();
         trainSpearmanButton.onClick.RemoveAllListeners();
@@ -394,46 +395,58 @@ public class CityPlayer : MonoBehaviour
         trainSpearmanButton.onClick.AddListener(delegate { OpenTrainingMenu(LocalData.SelfUser.spearmanLevel); });
         trainCavalryButton.onClick.AddListener(delegate { OpenTrainingMenu(LocalData.SelfUser.cavalryLevel); });
 
+
         buildingsInterfaces.ForEach(x => x.SetActive(x == barracks));
         Task.Run<NetworkStructs.UnitGroup>(async () =>
         {
-        return await Network.GetHomeUnits();
+            return await Network.GetHomeUnits();
         }).ContinueWith(async result =>
         {
-        NetworkStructs.UnitGroup army = await result;
-        System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
+            NetworkStructs.UnitGroup army = await result;
+            System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
 
-        for (int i = 0; i < army.units.Length; ++i)
-        {
-            int id = army.units[i].unitId;
-            int amount = army.units[i].amount;
+            for (int i = 0; i < army.units.Length; ++i)
+            {
+                int id = army.units[i].unitId;
+                int amount = army.units[i].amount;
 
-            CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
-        }
-        aq.queue.Add(() =>
-        {
-            for (int i = 0; i < 4; ++i)
-        {
-            int amount = homeArmyAmount[i];
-            if (UnitDefinition.I[i].name == "Swordsman")
-                swrText = "Swordsmen: " + NumConverter.GetConvertedAmount(amount);
+                CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+            }
+            aq.queue.Add(() =>
+            {
+                string swrText = "Swordsmen: 0*";
+                string arcText = "Archers: 0*";
+                string sprText = "Spearmen: 0*";
+                string cvlText = "Cavalry: 0*";
 
-            if (UnitDefinition.I[i].name == "Archer")
-                arcText = "Archers: " + NumConverter.GetConvertedAmount(amount);
+                for (int i = 0; i < 4; ++i)
+                {
+                    int amount = 0;
+                    for (int k = i * 10; k < (i+1) * 10; ++k)
+                    {
+                        amount += homeArmyAmount[k];
+                    }
 
-            if (UnitDefinition.I[i].name == "Spearman")
-                sprText = "Spearmen: " + NumConverter.GetConvertedAmount(amount);
+                    if (UnitDefinition.I[i*10].name == "Swordsman")
+                        swrText = "Swordsmen: " + NumConverter.GetConvertedAmount(amount);
+                    UnityEngine.Debug.LogError(swrText + " + " + arcText + sprText + cvlText);
 
-            if (UnitDefinition.I[i].name == "Cavalry")
-                cvlText = "Cavalry: " + NumConverter.GetConvertedAmount(amount);
-        }
+                    if (UnitDefinition.I[i*10].name == "Archer")
+                        arcText = "Archers: " + NumConverter.GetConvertedAmount(amount);
 
-        bSworsmanText.text = swrText;
-        bArcherText.text = arcText;
-        bSpearmanText.text = sprText;
-        bCavalryText.text = cvlText;
-    });
-});
+                    if (UnitDefinition.I[i*10].name == "Spearman")
+                        sprText = "Spearmen: " + NumConverter.GetConvertedAmount(amount);
+
+                    if (UnitDefinition.I[i*10].name == "Cavalry")
+                        cvlText = "Cavalry: " + NumConverter.GetConvertedAmount(amount);
+                }
+
+                bSworsmanText.text = swrText;
+                bArcherText.text = arcText;
+                bSpearmanText.text = sprText;
+                bCavalryText.text = cvlText;
+            });
+        });
     }
     public void OpenAcademy()
     {
@@ -740,10 +753,6 @@ public class CityPlayer : MonoBehaviour
     public Button openUpgradeUnitMenuButton;
     public Button upgradeUnitButton;
 
-    string swrText = "";
-    string arcText = "";
-    string sprText = "";
-    string cvlText = "";
     private Unit trainingUnit;
     private Unit upgradeUnit;
     private Unit nextUpgradeUnit;
@@ -752,6 +761,7 @@ public class CityPlayer : MonoBehaviour
     // How tf to change the id on the button?=?=
     public void OpenTrainingMenu(int id)
     {
+        Debug.Log("Opened training menu with id: " + id);
         trainingUnit = UnitDefinition.I[id];
         trainingTitle.text = trainingUnit.name;
 
@@ -806,9 +816,9 @@ public class CityPlayer : MonoBehaviour
     {
         if (!int.TryParse(trainingInput.text, out int a)) trainingInput.text = "0";
         int amount = int.Parse(trainingInput.text);
-        trainingFoodcost.text = (trainingUnit.foodCost * amount).ToString();
-        trainingWoodcost.text = (trainingUnit.woodCost * amount).ToString();
-        trainingMetalcost.text = (trainingUnit.metalCost * amount).ToString();
+        trainingFoodcost.text = (trainingUnit.foodCost * amount).ToString() + " / " + GameManager.PlayerFood;
+        trainingWoodcost.text = (trainingUnit.woodCost * amount).ToString() + " / " + GameManager.PlayerFood;
+        trainingMetalcost.text = (trainingUnit.metalCost * amount).ToString() + " / " + GameManager.PlayerFood;
         trainingTime.text = (trainingUnit.trainingTime * amount).ToString() + " seconds";
     }
     public void CloseTrainingMenu()
@@ -845,7 +855,7 @@ public class CityPlayer : MonoBehaviour
             }
             return;
         }
-
+        Debug.Log("Training unit is id: " + trainingUnit.id);
         Task.Run<NetworkStructs.ActionResult>(async () =>
         {
             return await Network.CreateUnits(trainingUnit.id, amount, 0);
@@ -882,7 +892,7 @@ public class CityPlayer : MonoBehaviour
     public void OpenUpgradeUnitMenu(int id)
     {
         upgradeUnit = UnitDefinition.I[id];
-
+        upgradeUnitButton.onClick.AddListener(delegate { UpgradeUnit(id); });
 
         statCurrentAttackMelee.text = upgradeUnit.meleeAttack.ToString();
         statCurrentAttackRanged.text = upgradeUnit.rangeAttack.ToString();
@@ -892,13 +902,13 @@ public class CityPlayer : MonoBehaviour
         statCurrentSpeed.text = upgradeUnit.speed.ToString();
         statCurrentRange.text = upgradeUnit.range.ToString();
         currentUnitUpgradeImage.sprite = Resources.Load<Sprite>(upgradeUnit.spritePath);
-        
-        nextUpgradeUnit = UnitDefinition.I[id + 1];        
+
+        nextUpgradeUnit = UnitDefinition.I[id + 1];
         upgradeCostFood.text = nextUpgradeUnit.upgradeFoodCost.ToString();
         upgradeCostWood.text = nextUpgradeUnit.upgradeWoodCost.ToString();
         upgradeCostMetal.text = nextUpgradeUnit.upgradeMetalCost.ToString();
         upgradeCostTime.text = nextUpgradeUnit.upgradeTime.ToString();
-        
+
         statNextAttackMelee.text = nextUpgradeUnit.meleeAttack.ToString();
         statNextAttackRanged.text = nextUpgradeUnit.rangeAttack.ToString();
         statNextDefenceMelee.text = nextUpgradeUnit.meleeDefence.ToString();
@@ -911,14 +921,15 @@ public class CityPlayer : MonoBehaviour
     }
 
     public void CloseUpgradeUnitMenu()
-    {  
+    {
         upgradeUnitMenu.SetActive(false);
     }
 
-    public void UpgradeUnit()
+    public void UpgradeUnit(int id)
     {
-        int id = upgradeUnit.id;
+        //int id = upgradeUnit.id;
         //if (trainingUnit.level >= UnitDefinition.I[id].maxLevel) return;
+
 
         int nextId = id + 1;
 

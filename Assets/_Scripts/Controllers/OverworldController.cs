@@ -142,6 +142,9 @@ public class OverworldController : MonoBehaviour
                 playerVillagePosition = Grid._instance.GetPosition(LocalData.SelfUser.cityLocation);
 
                 FocusOnVillage();
+                
+                Grid._instance.UpdateValidTiles(LocalData.SelfUser.cityLocation, GameManager.I.buildRange);
+
             }
 
         }
