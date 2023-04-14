@@ -45640,11 +45640,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1211644379266298985, guid: c8c549fc7db0d6248b3766556dfd7aec, type: 3}
       propertyPath: m_fontColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211644379266298985, guid: c8c549fc7db0d6248b3766556dfd7aec, type: 3}
+      propertyPath: m_fontColor.b
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1211644379266298985, guid: c8c549fc7db0d6248b3766556dfd7aec, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.8549237
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211644379266298985, guid: c8c549fc7db0d6248b3766556dfd7aec, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211644379266298985, guid: c8c549fc7db0d6248b3766556dfd7aec, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 16777215
+      value: 4278246143
       objectReference: {fileID: 0}
     - target: {fileID: 1211644379266298991, guid: c8c549fc7db0d6248b3766556dfd7aec, type: 3}
       propertyPath: m_Name
@@ -53913,6 +53925,7 @@ MonoBehaviour:
   timesAttacked: 0
   timesAttacking: 0
   timesDefended: 0
+  buildRange: 4
   foodImage: {fileID: 1213739946}
   woodImage: {fileID: 1901235936}
   metalImage: {fileID: 93989194}
