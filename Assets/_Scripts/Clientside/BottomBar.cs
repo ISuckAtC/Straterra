@@ -47,7 +47,7 @@ public class BottomBar : MonoBehaviour
     
     private List<GameObject> reports = new List<GameObject>();
 
-    private bool worldView = false;
+    public bool worldView = false;
 
     private bool armyOpen = false;
     private bool queueOpen = false;
