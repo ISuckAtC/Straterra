@@ -199,6 +199,12 @@ public class Network
 
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
+    public static async Task<ActionResult> UpgradeUnit(int id)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/upgradeUnit?" + tokenIdentity + "&" + id);
+
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+    }
 
     public static async Task<UnitGroup> GetHomeUnits()
     {

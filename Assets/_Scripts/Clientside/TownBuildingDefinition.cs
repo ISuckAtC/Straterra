@@ -102,7 +102,7 @@ public class TownBuildingDefinition
         townhall3.woodCost = 600;
         townhall3.level = 3;
         townhall3.maxLevel = 3;
-        townBuildings[1] = townhall3;
+        townBuildings[2] = townhall3;
 
         TownBuilding barracks1 = new TownBuilding();
         barracks1.id = 3;

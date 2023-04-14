@@ -384,6 +384,16 @@ public class CityPlayer : MonoBehaviour
     }
     public void OpenBarracks()
     {
+        trainArcherButton.onClick.RemoveAllListeners();
+        trainSwordsmanButton.onClick.RemoveAllListeners();
+        trainSpearmanButton.onClick.RemoveAllListeners();
+        trainCavalryButton.onClick.RemoveAllListeners();
+
+        trainArcherButton.onClick.AddListener(delegate { OpenTrainingMenu(LocalData.SelfUser.archerLevel); });
+        trainSwordsmanButton.onClick.AddListener(delegate { OpenTrainingMenu(LocalData.SelfUser.swordLevel); });
+        trainSpearmanButton.onClick.AddListener(delegate { OpenTrainingMenu(LocalData.SelfUser.spearmanLevel); });
+        trainCavalryButton.onClick.AddListener(delegate { OpenTrainingMenu(LocalData.SelfUser.cavalryLevel); });
+
         buildingsInterfaces.ForEach(x => x.SetActive(x == barracks));
         Task.Run<NetworkStructs.UnitGroup>(async () =>
         {
@@ -703,13 +713,43 @@ public class CityPlayer : MonoBehaviour
     public TMPro.TMP_Text bSpearmanText;
     public TMPro.TMP_Text bCavalryText;
 
+    public Image currentUnitUpgradeImage;
+    public Image nextUnitUpgradeImage;
+    public TMPro.TMP_Text upgradeCostFood;
+    public TMPro.TMP_Text upgradeCostWood;
+    public TMPro.TMP_Text upgradeCostMetal;
+    public TMPro.TMP_Text upgradeCostTime;
+    public TMPro.TMP_Text statCurrentAttackMelee;
+    public TMPro.TMP_Text statCurrentAttackRanged;
+    public TMPro.TMP_Text statCurrentDefenceMelee;
+    public TMPro.TMP_Text statCurrentDefenceRanged;
+    public TMPro.TMP_Text statCurrentHealth;
+    public TMPro.TMP_Text statCurrentSpeed;
+    public TMPro.TMP_Text statCurrentRange;
+    public TMPro.TMP_Text statNextAttackMelee;
+    public TMPro.TMP_Text statNextAttackRanged;
+    public TMPro.TMP_Text statNextDefenceMelee;
+    public TMPro.TMP_Text statNextDefenceRanged;
+    public TMPro.TMP_Text statNextHealth;
+    public TMPro.TMP_Text statNextSpeed;
+    public TMPro.TMP_Text statNextRange;
+    public Button trainArcherButton;
+    public Button trainSwordsmanButton;
+    public Button trainSpearmanButton;
+    public Button trainCavalryButton;
+    public Button openUpgradeUnitMenuButton;
+    public Button upgradeUnitButton;
+
     string swrText = "";
     string arcText = "";
     string sprText = "";
     string cvlText = "";
     private Unit trainingUnit;
+    private Unit upgradeUnit;
+    private Unit nextUpgradeUnit;
 
     public GameObject upgradeUnitMenu;
+    // How tf to change the id on the button?=?=
     public void OpenTrainingMenu(int id)
     {
         trainingUnit = UnitDefinition.I[id];
@@ -717,6 +757,9 @@ public class CityPlayer : MonoBehaviour
 
         trainingSlider.onValueChanged.AddListener(delegate { OnTrainingSliderChanged(); });
         trainingInput.onValueChanged.AddListener(delegate { OnTrainingInputChanged(); });
+
+        openUpgradeUnitMenuButton.onClick.RemoveAllListeners();
+        openUpgradeUnitMenuButton.onClick.AddListener(delegate { OpenUpgradeUnitMenu(id); });
 
         int maxAmount = int.MaxValue;
         if (trainingUnit.foodCost > 0)
@@ -836,14 +879,96 @@ public class CityPlayer : MonoBehaviour
         */
         CloseTrainingMenu();
     }
-    public void OpenUpgradeUnitMenu()
+    public void OpenUpgradeUnitMenu(int id)
     {
+        upgradeUnit = UnitDefinition.I[id];
+
+
+        statCurrentAttackMelee.text = upgradeUnit.meleeAttack.ToString();
+        statCurrentAttackRanged.text = upgradeUnit.rangeAttack.ToString();
+        statCurrentDefenceMelee.text = upgradeUnit.meleeDefence.ToString();
+        statCurrentDefenceRanged.text = upgradeUnit.rangeDefence.ToString();
+        statCurrentHealth.text = upgradeUnit.health.ToString();
+        statCurrentSpeed.text = upgradeUnit.speed.ToString();
+        statCurrentRange.text = upgradeUnit.range.ToString();
+        currentUnitUpgradeImage.sprite = Resources.Load<Sprite>(upgradeUnit.spritePath);
+        
+        nextUpgradeUnit = UnitDefinition.I[id + 1];        
+        upgradeCostFood.text = nextUpgradeUnit.upgradeFoodCost.ToString();
+        upgradeCostWood.text = nextUpgradeUnit.upgradeWoodCost.ToString();
+        upgradeCostMetal.text = nextUpgradeUnit.upgradeMetalCost.ToString();
+        upgradeCostTime.text = nextUpgradeUnit.upgradeTime.ToString();
+        
+        statNextAttackMelee.text = nextUpgradeUnit.meleeAttack.ToString();
+        statNextAttackRanged.text = nextUpgradeUnit.rangeAttack.ToString();
+        statNextDefenceMelee.text = nextUpgradeUnit.meleeDefence.ToString();
+        statNextDefenceRanged.text = nextUpgradeUnit.rangeDefence.ToString();
+        statNextHealth.text = nextUpgradeUnit.health.ToString();
+        statNextSpeed.text = nextUpgradeUnit.speed.ToString();
+        statNextRange.text = nextUpgradeUnit.range.ToString();
+        nextUnitUpgradeImage.sprite = Resources.Load<Sprite>(nextUpgradeUnit.spritePath);
         upgradeUnitMenu.SetActive(true);
     }
 
     public void CloseUpgradeUnitMenu()
     {  
         upgradeUnitMenu.SetActive(false);
+    }
+
+    public void UpgradeUnit()
+    {
+        int id = upgradeUnit.id;
+        //if (trainingUnit.level >= UnitDefinition.I[id].maxLevel) return;
+
+        int nextId = id + 1;
+
+        Unit nextUnit = UnitDefinition.I[nextId];
+
+        int foodCost = nextUnit.foodCost;
+        int woodCost = nextUnit.woodCost;
+        int metalCost = nextUnit.metalCost;
+        int orderCost = nextUnit.orderCost;
+
+        if (foodCost > GameManager.PlayerFood ||
+            woodCost > GameManager.PlayerWood ||
+            metalCost > GameManager.PlayerMetal ||
+            orderCost > GameManager.PlayerOrder)
+        {
+            if (foodCost > GameManager.PlayerFood)
+            {
+                GameManager.I.LackingResources("Food");
+            }
+            if (woodCost > GameManager.PlayerWood)
+            {
+                GameManager.I.LackingResources("Wood");
+            }
+            if (metalCost > GameManager.PlayerMetal)
+            {
+                GameManager.I.LackingResources("Metal");
+            }
+            if (orderCost > GameManager.PlayerOrder)
+            {
+                GameManager.I.LackingResources("Order");
+            }
+            return;
+        }
+
+        Task.Run<NetworkStructs.ActionResult>(async () =>
+            {
+                return await Network.UpgradeUnit(nextUnit.id);
+            }).ContinueWith(async resources =>
+            {
+                NetworkStructs.ActionResult res = await resources;
+                Debug.Log(res.message);
+                if (res.success)
+                {
+                    GameManager.aq.queue.Add(() =>
+                    {
+
+                    });
+                }
+
+            });
     }
     #endregion
 

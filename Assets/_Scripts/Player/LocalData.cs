@@ -33,8 +33,14 @@ public static class LocalData
             UnityEngine.Debug.Log(u.name + " | " + u.userId);
             UnityEngine.Debug.Log(u.cityBuildingSlots[5]);
 
+            u.archerLevel = 0;
+            u.cavalryLevel = 10;
+            u.swordLevel = 20;
+            u.spearmanLevel = 30;
 
             selfUser = u;
+
+            
 
             var users = await Network.GetUsers();
 

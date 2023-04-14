@@ -4900,7 +4900,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 20
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -5050,7 +5050,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -27457,7 +27457,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 705745282}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1731830723}
+        m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
+        m_MethodName: UpgradeUnit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &705745282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40105,7 +40117,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1731830723}
         m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
         m_MethodName: OpenUpgradeUnitMenu
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -46396,7 +46408,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 30
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -69291,6 +69303,32 @@ MonoBehaviour:
   bArcherText: {fileID: 607562461}
   bSpearmanText: {fileID: 249342868}
   bCavalryText: {fileID: 1080247242}
+  currentUnitUpgradeImage: {fileID: 912577830}
+  nextUnitUpgradeImage: {fileID: 1016983371}
+  upgradeCostFood: {fileID: 819474331}
+  upgradeCostWood: {fileID: 559626656}
+  upgradeCostMetal: {fileID: 463560977}
+  upgradeCostTime: {fileID: 1104469664}
+  statCurrentAttackMelee: {fileID: 300010130}
+  statCurrentAttackRanged: {fileID: 298152026}
+  statCurrentDefenceMelee: {fileID: 636396121}
+  statCurrentDefenceRanged: {fileID: 2114558746}
+  statCurrentHealth: {fileID: 1917596598}
+  statCurrentSpeed: {fileID: 1010985924}
+  statCurrentRange: {fileID: 630264930}
+  statNextAttackMelee: {fileID: 143079478}
+  statNextAttackRanged: {fileID: 1874897347}
+  statNextDefenceMelee: {fileID: 953626032}
+  statNextDefenceRanged: {fileID: 1278953213}
+  statNextHealth: {fileID: 1867331829}
+  statNextSpeed: {fileID: 1598146064}
+  statNextRange: {fileID: 33385608}
+  trainArcherButton: {fileID: 145252540}
+  trainSwordsmanButton: {fileID: 143901032}
+  trainSpearmanButton: {fileID: 1189156392}
+  trainCavalryButton: {fileID: 1764606368}
+  openUpgradeUnitMenuButton: {fileID: 1051561428}
+  upgradeUnitButton: {fileID: 705745281}
   upgradeUnitMenu: {fileID: 1354942957}
   pathSelection: {fileID: 1622642791}
   templeFireUI: {fileID: 1622642790}
@@ -70904,7 +70942,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 10
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -94284,7 +94322,7 @@ GameObject:
   - component: {fileID: 6259628371733729657}
   - component: {fileID: 6259628371733729662}
   - component: {fileID: 6259628371733729663}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
