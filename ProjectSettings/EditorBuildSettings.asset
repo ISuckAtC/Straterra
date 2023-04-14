@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/RuneMainScene.unity
     guid: e70c35feb319c9c40b0b8fb9518b8e49
   - enabled: 1
-    path: Assets/Scenes/Mikkel_2.unity
-    guid: 9316c205cd5dd9945845113c0af0c2d3
+    path: Assets/Scenes/Mikkel_3.unity
+    guid: 6eaaea2fa929d3945b87bf4c0661e0ef
   m_configObjects: {}
