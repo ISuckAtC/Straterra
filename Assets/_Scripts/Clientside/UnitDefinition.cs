@@ -105,8 +105,9 @@ public class UnitDefinition
         archer0.upgradeWoodCost = 0;
         archer0.upgradeMetalCost = 0;
         archer0.upgradeOrderCost = 0;
+        archer0.upgradeTime = 0;
         archer0.spritePath = "Sprites/Army/Img_Archer_Lvl_1";
-        archer0.upgradeTime = 153;
+        
         units[0] = archer0;
 
         Unit archer1 = new Unit();
@@ -132,8 +133,9 @@ public class UnitDefinition
         archer1.upgradeWoodCost = 100;
         archer1.upgradeMetalCost = 100;
         archer1.upgradeOrderCost = 0;
+        archer1.upgradeTime = 60;
         archer1.spritePath = "Sprites/Army/Img_Archer_Lvl_2";
-        archer1.upgradeTime = 153;
+        
         units[1] = archer1;
 
         Unit archer2 = new Unit();
@@ -155,6 +157,11 @@ public class UnitDefinition
         archer2.foodCost = 40;
         archer2.woodCost = 50;
         archer2.metalCost = 5;
+        archer2.upgradeFoodCost = 100;
+        archer2.upgradeWoodCost = 100;
+        archer2.upgradeMetalCost = 100;
+        archer2.upgradeOrderCost = 0;
+        archer2.upgradeTime = 60;
         archer2.spritePath = "Sprites/Army/Img_Archer_Lvl_3";
         units[2] = archer2;
 
@@ -177,6 +184,11 @@ public class UnitDefinition
         archer3.foodCost = 40;
         archer3.woodCost = 50;
         archer3.metalCost = 5;
+        archer3.upgradeFoodCost = 100;
+        archer3.upgradeWoodCost = 100;
+        archer3.upgradeMetalCost = 100;
+        archer3.upgradeOrderCost = 0;
+        archer3.upgradeTime = 60;
         archer3.spritePath = "Sprites/Army/Img_Archer_Lvl_4";
         units[3] = archer3;
 
@@ -199,6 +211,11 @@ public class UnitDefinition
         archer4.foodCost = 40;
         archer4.woodCost = 50;
         archer4.metalCost = 5;
+        archer4.upgradeFoodCost = 100;
+        archer4.upgradeWoodCost = 100;
+        archer4.upgradeMetalCost = 100;
+        archer4.upgradeOrderCost = 0;
+        archer4.upgradeTime = 60;
         archer4.spritePath = "Sprites/Army/Img_Archer_Lvl_5";
         units[4] = archer4;
 
@@ -221,6 +238,11 @@ public class UnitDefinition
         archer5.foodCost = 40;
         archer5.woodCost = 50;
         archer5.metalCost = 5;
+        archer5.upgradeFoodCost = 100;
+        archer5.upgradeWoodCost = 100;
+        archer5.upgradeMetalCost = 100;
+        archer5.upgradeOrderCost = 0;
+        archer5.upgradeTime = 60;
         archer5.spritePath = "Sprites/Army/Img_Archer_Lvl_6";
         units[5] = archer5;
         
@@ -243,6 +265,11 @@ public class UnitDefinition
         cavalry0.counterBonus = 0;
         cavalry0.foodCost = 200;
         cavalry0.metalCost = 50;
+        cavalry0.upgradeFoodCost = 100;
+        cavalry0.upgradeWoodCost = 100;
+        cavalry0.upgradeMetalCost = 100;
+        cavalry0.upgradeOrderCost = 0;
+        cavalry0.upgradeTime = 60;
         cavalry0.spritePath = "Sprites/Army/Img_Cavalry_Lvl_1";
         units[10] = cavalry0;
 
@@ -264,6 +291,11 @@ public class UnitDefinition
         cavalry1.counterBonus = 0;
         cavalry1.foodCost = 200;
         cavalry1.metalCost = 50;
+        cavalry1.upgradeFoodCost = 100;
+        cavalry1.upgradeWoodCost = 100;
+        cavalry1.upgradeMetalCost = 100;
+        cavalry1.upgradeOrderCost = 0;
+        cavalry1.upgradeTime = 60;
         cavalry1.spritePath = "Sprites/Army/Img_Cavalry_Lvl_2";
         units[11] = cavalry1;
 
@@ -285,6 +317,11 @@ public class UnitDefinition
         cavalry2.counterBonus = 0;
         cavalry2.foodCost = 200;
         cavalry2.metalCost = 50;
+        cavalry2.upgradeFoodCost = 100;
+        cavalry2.upgradeWoodCost = 100;
+        cavalry2.upgradeMetalCost = 100;
+        cavalry2.upgradeOrderCost = 0;
+        cavalry2.upgradeTime = 60;
         cavalry2.spritePath = "Sprites/Army/Img_Cavalry_Lvl_3";
         units[12] = cavalry2;
 
@@ -306,6 +343,11 @@ public class UnitDefinition
         cavalry3.counterBonus = 0;
         cavalry3.foodCost = 200;
         cavalry3.metalCost = 50;
+        cavalry3.upgradeFoodCost = 100;
+        cavalry3.upgradeWoodCost = 100;
+        cavalry3.upgradeMetalCost = 100;
+        cavalry3.upgradeOrderCost = 0;
+        cavalry3.upgradeTime = 60;
         cavalry3.spritePath = "Sprites/Army/Img_Cavalry_Lvl_4";
         units[13] = cavalry3;
 
@@ -327,6 +369,11 @@ public class UnitDefinition
         cavalry4.counterBonus = 0;
         cavalry4.foodCost = 200;
         cavalry4.metalCost = 50;
+        cavalry4.upgradeFoodCost = 100;
+        cavalry4.upgradeWoodCost = 100;
+        cavalry4.upgradeMetalCost = 100;
+        cavalry4.upgradeOrderCost = 0;
+        cavalry4.upgradeTime = 60;
         cavalry4.spritePath = "Sprites/Army/Img_Cavalry_Lvl_5";
         units[14] = cavalry4;
 
@@ -348,6 +395,11 @@ public class UnitDefinition
         cavalry5.counterBonus = 0;
         cavalry5.foodCost = 200;
         cavalry5.metalCost = 50;
+        cavalry5.upgradeFoodCost = 100;
+        cavalry5.upgradeWoodCost = 100;
+        cavalry5.upgradeMetalCost = 100;
+        cavalry5.upgradeOrderCost = 0;
+        cavalry5.upgradeTime = 60;
         cavalry5.spritePath = "Sprites/Army/Img_Cavalry_Lvl_6";
         units[15] = cavalry5;
 
@@ -371,6 +423,11 @@ public class UnitDefinition
         swordsman0.counterBonus = 0;
         swordsman0.foodCost = 50;
         swordsman0.metalCost = 10;
+        swordsman0.upgradeFoodCost = 100;
+        swordsman0.upgradeWoodCost = 100;
+        swordsman0.upgradeMetalCost = 100;
+        swordsman0.upgradeOrderCost = 0;
+        swordsman0.upgradeTime = 60;
         swordsman0.spritePath = "Sprites/Army/Img_Swordman_Lvl_1";
         units[20] = swordsman0;
 
@@ -392,6 +449,11 @@ public class UnitDefinition
         swordsman1.counterBonus = 0;
         swordsman1.foodCost = 50;
         swordsman1.metalCost = 10;
+        swordsman1.upgradeFoodCost = 100;
+        swordsman1.upgradeWoodCost = 100;
+        swordsman1.upgradeMetalCost = 100;
+        swordsman1.upgradeOrderCost = 0;
+        swordsman1.upgradeTime = 60;
         swordsman1.spritePath = "Sprites/Army/Img_Swordman_Lvl_2";
         units[21] = swordsman1;
 
@@ -413,6 +475,11 @@ public class UnitDefinition
         swordsman2.counterBonus = 0;
         swordsman2.foodCost = 50;
         swordsman2.metalCost = 10;
+        swordsman2.upgradeFoodCost = 100;
+        swordsman2.upgradeWoodCost = 100;
+        swordsman2.upgradeMetalCost = 100;
+        swordsman2.upgradeOrderCost = 0;
+        swordsman2.upgradeTime = 60;
         swordsman2.spritePath = "Sprites/Army/Img_Swordman_Lvl_3";
         units[22] = swordsman2;
 
@@ -434,6 +501,11 @@ public class UnitDefinition
         swordsman3.counterBonus = 0;
         swordsman3.foodCost = 50;
         swordsman3.metalCost = 10;
+        swordsman3.upgradeFoodCost = 100;
+        swordsman3.upgradeWoodCost = 100;
+        swordsman3.upgradeMetalCost = 100;
+        swordsman3.upgradeOrderCost = 0;
+        swordsman3.upgradeTime = 60;
         swordsman3.spritePath = "Sprites/Army/Img_Swordman_Lvl_4";
         units[23] = swordsman3;
 
@@ -455,6 +527,11 @@ public class UnitDefinition
         swordsman4.counterBonus = 0;
         swordsman4.foodCost = 50;
         swordsman4.metalCost = 10;
+        swordsman4.upgradeFoodCost = 100;
+        swordsman4.upgradeWoodCost = 100;
+        swordsman4.upgradeMetalCost = 100;
+        swordsman4.upgradeOrderCost = 0;
+        swordsman4.upgradeTime = 60;
         swordsman4.spritePath = "Sprites/Army/Img_Swordman_Lvl_5";
         units[24] = swordsman4;
 
@@ -476,6 +553,11 @@ public class UnitDefinition
         swordsman5.counterBonus = 0;
         swordsman5.foodCost = 50;
         swordsman5.metalCost = 10;
+        swordsman5.upgradeFoodCost = 100;
+        swordsman5.upgradeWoodCost = 100;
+        swordsman5.upgradeMetalCost = 100;
+        swordsman5.upgradeOrderCost = 0;
+        swordsman5.upgradeTime = 60;
         swordsman5.spritePath = "Sprites/Army/Img_Swordman_Lvl_6";
         units[25] = swordsman5;
 
@@ -497,6 +579,11 @@ public class UnitDefinition
         spearman0.counterBonus = 0;
         spearman0.foodCost = 30;
         spearman0.woodCost = 20;
+        spearman0.upgradeFoodCost = 100;
+        spearman0.upgradeWoodCost = 100;
+        spearman0.upgradeMetalCost = 100;
+        spearman0.upgradeOrderCost = 0;
+        spearman0.upgradeTime = 60;
         spearman0.spritePath = "Sprites/Army/Img_Spearman_Lvl_1";
         spearman0.bonusDamage.Add(UnitType.CAVALRY, 10);
         units[30] = spearman0;
@@ -519,6 +606,11 @@ public class UnitDefinition
         spearman1.counterBonus = 0;
         spearman1.foodCost = 30;
         spearman1.woodCost = 20;
+        spearman1.upgradeFoodCost = 100;
+        spearman1.upgradeWoodCost = 100;
+        spearman1.upgradeMetalCost = 100;
+        spearman1.upgradeOrderCost = 0;
+        spearman1.upgradeTime = 60;
         spearman1.spritePath = "Sprites/Army/Img_Spearman_Lvl_2";
         spearman1.bonusDamage.Add(UnitType.CAVALRY, 10);
         units[31] = spearman1;
@@ -541,6 +633,11 @@ public class UnitDefinition
         spearman2.counterBonus = 0;
         spearman2.foodCost = 30;
         spearman2.woodCost = 20;
+        spearman2.upgradeFoodCost = 100;
+        spearman2.upgradeWoodCost = 100;
+        spearman2.upgradeMetalCost = 100;
+        spearman2.upgradeOrderCost = 0;
+        spearman2.upgradeTime = 60;
         spearman2.spritePath = "Sprites/Army/Img_Spearman_Lvl_3";
         spearman2.bonusDamage.Add(UnitType.CAVALRY, 10);
         units[32] = spearman2;
@@ -563,6 +660,11 @@ public class UnitDefinition
         spearman3.counterBonus = 0;
         spearman3.foodCost = 30;
         spearman3.woodCost = 20;
+        spearman3.upgradeFoodCost = 100;
+        spearman3.upgradeWoodCost = 100;
+        spearman3.upgradeMetalCost = 100;
+        spearman3.upgradeOrderCost = 0;
+        spearman3.upgradeTime = 60;
         spearman3.spritePath = "Sprites/Army/Img_Spearman_Lvl_4";
         spearman3.bonusDamage.Add(UnitType.CAVALRY, 10);
         units[33] = spearman3;
@@ -585,6 +687,11 @@ public class UnitDefinition
         spearman4.counterBonus = 0;
         spearman4.foodCost = 30;
         spearman4.woodCost = 20;
+        spearman4.upgradeFoodCost = 100;
+        spearman4.upgradeWoodCost = 100;
+        spearman4.upgradeMetalCost = 100;
+        spearman4.upgradeOrderCost = 0;
+        spearman4.upgradeTime = 60;
         spearman4.spritePath = "Sprites/Army/Img_Spearman_Lvl_5";
         spearman4.bonusDamage.Add(UnitType.CAVALRY, 10);
         units[34] = spearman4;
@@ -607,6 +714,11 @@ public class UnitDefinition
         spearman5.counterBonus = 0;
         spearman5.foodCost = 30;
         spearman5.woodCost = 20;
+        spearman5.upgradeFoodCost = 100;
+        spearman5.upgradeWoodCost = 100;
+        spearman5.upgradeMetalCost = 100;
+        spearman5.upgradeOrderCost = 0;
+        spearman5.upgradeTime = 60;
         spearman5.spritePath = "Sprites/Army/Img_Spearman_Lvl_6";
         spearman5.bonusDamage.Add(UnitType.CAVALRY, 10);
         units[35] = spearman5;

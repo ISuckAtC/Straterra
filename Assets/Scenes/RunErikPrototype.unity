@@ -4892,19 +4892,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 143901033}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1731830723}
-        m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
-        m_MethodName: OpenTrainingMenu
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 20
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &143901033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5042,19 +5030,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 145252541}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1731830723}
-        m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
-        m_MethodName: OpenTrainingMenu
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &145252541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46400,19 +46376,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1189156393}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1731830723}
-        m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
-        m_MethodName: OpenTrainingMenu
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 30
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1189156393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70934,19 +70898,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1764606369}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1731830723}
-        m_TargetAssemblyTypeName: CityPlayer, Assembly-CSharp
-        m_MethodName: OpenTrainingMenu
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 10
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1764606369
 MonoBehaviour:
   m_ObjectHideFlags: 0
