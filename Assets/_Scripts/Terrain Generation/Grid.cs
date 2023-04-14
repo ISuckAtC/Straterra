@@ -24,6 +24,8 @@ public class Grid : MonoBehaviour
 
     private float startTime;
 
+    private int[] validTiles;
+    
     public delegate void OnReadyDelegate();
 
     public static event OnReadyDelegate onReady;
@@ -220,6 +222,58 @@ public class Grid : MonoBehaviour
         }
         
         _placeTiles.SetTiles();
+
+        /*
+        for (int i = 0; i < validTiles.Length; i++)
+        {
+            Vector2 x = GetPosition(validTiles[i]);
+            _placeTiles.tilemap.SetColor(new Vector3Int((int)x.x, (int)x.y, 1), Color.black); // = new Color(0.2f, 0.2f, 0.2f);
+        }
+        */
+    }
+
+    public void UpdateValidTiles(int position, int radius)
+    {
+        validTiles = GetTilesWithinDistance(position, radius);
+    }
+    
+    private int[] GetTilesWithinDistance(int position, int radius)
+    {
+        List<int> inrange = new List<int>();
+        Vector2Int start = GetPosition(position);
+        int startwidth, startheight, endwidth, endheight;
+        if (start.x - radius < 0) startwidth = 0;
+        else startwidth = start.x - radius;
+        if (start.x + radius > width) endwidth = width;
+        else endwidth = start.x + radius;
+        if (start.y - radius < 0) startheight = 0;
+        else startheight = start.y - radius;
+        if (start.y + radius > height) endheight = height;
+        else endheight = start.y + radius;
+        int valid = 0;
+        
+        for (int i = startwidth; i < endwidth; i++)
+        {
+            for (int j = startheight; j < endheight; j++)
+            {
+                float dx = start.x - (i);
+                float dy = start.y - (j);
+                float dist = Mathf.Sqrt(dx * dx + dy * dy);
+                
+                if (dist < radius)
+                {
+                    inrange.Add(GetIdByVec(new Vector2Int(i,j)));
+                    valid++;
+                }
+            }
+        }
+        
+        //for (int x = 0; x < inrange.Count; x++)
+        //    Debug.Log("Inrange id: " + inrange[x]);
+        
+        Debug.LogWarning("Valid tiles: " + valid);
+        
+        return inrange.ToArray();
     }
 
     
