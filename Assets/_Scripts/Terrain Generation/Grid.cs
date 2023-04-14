@@ -276,6 +276,31 @@ public class Grid : MonoBehaviour
         return inrange.ToArray();
     }
 
+    public int FindTileWithHighestResourceAmount(string type)
+    {
+
+        int highest = 0;
+
+        if (type == "Food" || type == "food")
+        {
+            for (int i = 0; i < validTiles.Length; i++) if (tiles[validTiles[i]].foodAmount > highest) highest = i;
+        }
+        else if (type == "Wood" || type == "wood")
+        {
+            for (int i = 0; i < validTiles.Length; i++) if (tiles[validTiles[i]].woodAmount > highest) highest = i;
+        }
+        else if (type == "Metal" || type == "metal")
+        {
+            for (int i = 0; i < validTiles.Length; i++) if (tiles[validTiles[i]].metalAmount > highest) highest = i;
+        }
+        else
+        {
+            Debug.LogError("Typo in resource name.");
+            return 0;
+        }
+
+        return validTiles[highest];
+    }
     
     public int GetIdAdjacent(int id, int x, int y)
     {
