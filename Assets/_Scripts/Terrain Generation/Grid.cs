@@ -300,6 +300,7 @@ public class Grid : MonoBehaviour
         }
 
         return validTiles[highest];
+
     }
     
     public int GetIdAdjacent(int id, int x, int y)
