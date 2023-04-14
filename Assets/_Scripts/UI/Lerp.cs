@@ -4,54 +4,21 @@ using UnityEngine;
 
 public class Lerp : MonoBehaviour
 {
-  public GameObject positionToMoveToA;
-  public GameObject positionToMoveToB;
-  public float time = 3;
-  
-    void Start()
+  public Transform positionToMoveToA;
+  public Transform positionToMoveToB;
+  public float scalar = 0;    //This is a float scalar for Lerp.
+    public float speed = 1f;
+
+    public void Update()
     {
+        scalar += Time.deltaTime * speed;
+        transform.position = Vector3.Lerp(positionToMoveToA.position, positionToMoveToB.position, Mathf.PingPong(scalar, 1f));
+
 
     }
 
-    public void Update() 
-    {
-        lerp();
-       // StartCoroutine(LerpPosition(positionToMoveToA.transform.position, 3));
-        
-    }
 
-   /* IEnumerator LerpPosition(Vector3 targetPosition, float duration)
-    {
-        float time = 0;
-        Vector3 startPosition = transform.position;
-        while (time < duration)
-        {
-            transform.position = Vector3.Lerp(positionToMoveToA.transform.position, positionToMoveToB.transform.position, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        //transform.position = targetPosition;
-        
-        if(transform.position == positionToMoveToB.transform.position)
-        {
-            transform.position = Vector3.Lerp(positionToMoveToB.transform.position, positionToMoveToA.transform.position, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        } 
 
-        if(transform.position == positionToMoveToA.transform.position)
-        {
-            transform.position = Vector3.Lerp(positionToMoveToA.transform.position, positionToMoveToB.transform.position, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        } 
 
-    } */
-
-    public void lerp()
-    {
-        transform.position = Vector3.Lerp(positionToMoveToA.transform.position, positionToMoveToB.transform.position, time);
-        time += Time.deltaTime;
-    }
 
 }
