@@ -763,9 +763,9 @@ public class CityPlayer : MonoBehaviour
     {
         if (!int.TryParse(trainingInput.text, out int a)) trainingInput.text = "0";
         int amount = int.Parse(trainingInput.text);
-        trainingFoodcost.text = (trainingUnit.foodCost * amount).ToString();
-        trainingWoodcost.text = (trainingUnit.woodCost * amount).ToString();
-        trainingMetalcost.text = (trainingUnit.metalCost * amount).ToString();
+        trainingFoodcost.text = (trainingUnit.foodCost * amount).ToString() + " / " + GameManager.PlayerFood;
+        trainingWoodcost.text = (trainingUnit.woodCost * amount).ToString() + " / " + GameManager.PlayerFood;
+        trainingMetalcost.text = (trainingUnit.metalCost * amount).ToString() + " / " + GameManager.PlayerFood;
         trainingTime.text = (trainingUnit.trainingTime * amount).ToString() + " seconds";
     }
     public void CloseTrainingMenu()
