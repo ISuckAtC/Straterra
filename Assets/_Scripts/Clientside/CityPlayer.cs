@@ -196,7 +196,7 @@ public class CityPlayer : MonoBehaviour
             if (TownBuildingDefinition.I[townhallMenu.id].level < 3)
                 townhallMenu.nextLevel.sprite = buildingPrefabs[townhallMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
-                townhallMenu.nextLevel.sprite = null;
+                townhallMenu.nextLevel.sprite = buildingPrefabs[townhallMenu.id].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             buildingsInterfaces.Add(townHall);
         }
 
@@ -209,7 +209,7 @@ public class CityPlayer : MonoBehaviour
             if (TownBuildingDefinition.I[barracksMenu.id].level < 3)
                 barracksMenu.nextLevel.sprite = buildingPrefabs[barracksMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
-                barracksMenu.nextLevel.sprite = null;
+                barracksMenu.nextLevel.sprite = buildingPrefabs[barracksMenu.id].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             buildingsInterfaces.Add(barracks);
         }
 
@@ -221,7 +221,7 @@ public class CityPlayer : MonoBehaviour
             if (TownBuildingDefinition.I[smithyMenu.id].level < 3)
                 smithyMenu.nextLevel.sprite = buildingPrefabs[smithyMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
-                smithyMenu.nextLevel.sprite = null;
+                smithyMenu.nextLevel.sprite = buildingPrefabs[smithyMenu.id].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             buildingsInterfaces.Add(smithy);
         }
 
@@ -233,7 +233,7 @@ public class CityPlayer : MonoBehaviour
             if (TownBuildingDefinition.I[academyMenu.id].level < 3)
                 academyMenu.nextLevel.sprite = buildingPrefabs[academyMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
-                academyMenu.nextLevel.sprite = null;
+                academyMenu.nextLevel.sprite = buildingPrefabs[academyMenu.id].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             buildingsInterfaces.Add(academy);
         }
 
@@ -245,7 +245,7 @@ public class CityPlayer : MonoBehaviour
             if (TownBuildingDefinition.I[templeMenu.id].level < 3)
                 templeMenu.nextLevel.sprite = buildingPrefabs[templeMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
-                templeMenu.nextLevel.sprite = null;
+                templeMenu.nextLevel.sprite = buildingPrefabs[templeMenu.id].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
 
             //  COMMENTED UNTIL TEMPLE IS MERGED
             switch (LocalData.SelfUser.path)
@@ -294,7 +294,7 @@ public class CityPlayer : MonoBehaviour
             if (TownBuildingDefinition.I[workshopMenu.id].level < 3)
                 workshopMenu.nextLevel.sprite = buildingPrefabs[workshopMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
-                workshopMenu.nextLevel.sprite = null;
+                workshopMenu.nextLevel.sprite = buildingPrefabs[workshopMenu.id].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             buildingsInterfaces.Add(workshop);
         }
 
@@ -306,7 +306,7 @@ public class CityPlayer : MonoBehaviour
             if (TownBuildingDefinition.I[marketplaceMenu.id].level < 3)
                 marketplaceMenu.nextLevel.sprite = buildingPrefabs[marketplaceMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
-                marketplaceMenu.nextLevel.sprite = null;
+                marketplaceMenu.nextLevel.sprite = buildingPrefabs[marketplaceMenu.id].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             buildingsInterfaces.Add(marketplace);
         }
 
@@ -359,7 +359,7 @@ public class CityPlayer : MonoBehaviour
             if (TownBuildingDefinition.I[warehouseMenu.id].level < 3)
                 warehouseMenu.nextLevel.sprite = buildingPrefabs[warehouseMenu.id + 1].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             else
-                warehouseMenu.nextLevel.sprite = null;
+                warehouseMenu.nextLevel.sprite = buildingPrefabs[warehouseMenu.id].transform.GetChild(0).GetComponentInChildren<Image>().sprite;
             buildingsInterfaces.Add(warehouse);
 
         }
