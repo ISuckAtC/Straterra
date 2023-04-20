@@ -26255,6 +26255,13 @@ MonoBehaviour:
   bottomBar: {fileID: 1282963316}
   currentEulerAngles: {x: 0, y: 0, z: 0}
   currentRotation: {x: 0, y: 0, z: 0, w: 0}
+  guidingText: {fileID: 565764722}
+  button_Farm: {fileID: 0}
+  button_LoggingCamp: {fileID: 0}
+  button_Mine: {fileID: 0}
+  clicked_Farm: 0
+  clicked_LoggingCamp: 0
+  clicked_Mine: 0
 --- !u!114 &681554854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68685,6 +68692,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 10
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 681554853}
+        m_TargetAssemblyTypeName: Tutorial, Assembly-CSharp
+        m_MethodName: FarmButtonCliked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
