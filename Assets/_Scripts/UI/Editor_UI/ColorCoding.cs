@@ -6,7 +6,7 @@ using UnityEditor;
 
 /// <summary> Sets a background color for this game object in the Unity Hierarchy window </summary>
 [UnityEditor.InitializeOnLoad]
-#endif
+
 public class customHierarchy
 {
 /*
@@ -109,3 +109,4 @@ public class customHierarchy
     }
     */
 }
+#endif
