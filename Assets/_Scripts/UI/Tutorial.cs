@@ -16,7 +16,7 @@ public class Tutorial : MonoBehaviour
     public BottomBar bottomBar;
     public Vector3 currentEulerAngles;
     public Quaternion currentRotation;
-   
+
 
     public TextMeshProUGUI guidingText;   // Instructions for the player in map view.
 
@@ -27,6 +27,7 @@ public class Tutorial : MonoBehaviour
 
     Transform currentPos;
     Transform moveToPos;
+    public Vector3[] rotations, positions;
 
     private void Start()
     {
@@ -35,10 +36,28 @@ public class Tutorial : MonoBehaviour
 
         int foodTile = Grid._instance.FindTileWithHighestResourceAmount("food");
         int woodTile = Grid._instance.FindTileWithHighestResourceAmount("wood");
-        int metalTile = Grid._instance.FindTileWithHighestResourceAmount("metal"); 
-        
+        int metalTile = Grid._instance.FindTileWithHighestResourceAmount("metal");
+
     }
-    
+
+
+    public void FlagComplete()
+    {
+        flag++;
+
+        TutorialStep(flag);
+    }
+
+    //
+    private void TutorialStep(int flag)
+    {
+        currentRotation.eulerAngles = rotations[flag];
+        transform.rotation = currentRotation;
+        transform.position = positions[flag];
+    }
+
+
+
     public void Update()
     {
         Vector2Int tilePosition = Grid._instance.GetPosition(foodTile);
@@ -80,22 +99,7 @@ public class Tutorial : MonoBehaviour
 
     }
 
-    public void FlagComplete()
-{
-    flag++;
 
-    TutorialStep(flag);
-}
-
-private void TutorialStep(int flag)
-{
-
-    //arrow.rotation = rotations[flag];
-
-
-    //arrow.position = positions[flag];
-
-}
 
 
 
