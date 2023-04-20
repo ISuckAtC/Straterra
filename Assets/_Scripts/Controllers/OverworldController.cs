@@ -5,11 +5,12 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using NetworkStructs;
-using UnityEditor.Tilemaps;
+//using UnityEditor.Tilemaps;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using UnityEngine.Tilemaps;
 
 public class OverworldController : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class OverworldController : MonoBehaviour
 
     private static float zoom = 50f;
     public float zoomAmount;
-    
+
     public delegate void OnReadyDelegate();
 
     public static event OnReadyDelegate onReady;
@@ -45,7 +46,7 @@ public class OverworldController : MonoBehaviour
     public UnityEngine.Tilemaps.TileBase flag;
 
     private ActionQueue aq;
-    
+
     void Start()
     {
         Grid.onReady += OnGridReady;
@@ -56,25 +57,25 @@ public class OverworldController : MonoBehaviour
     private int nga = 0;
     private void OnGridReady()
     {
-        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(58,69)));
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(58, 69)));
         nga++;
-        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(74,69)));
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(74, 69)));
         nga++;
-        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(71,77)));
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(71, 77)));
         nga++;
-        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(58,63)));
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(58, 63)));
         nga++;
-        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(77,66)));
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(77, 66)));
         nga++;
-        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(97,58)));
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(97, 58)));
         nga++;
-        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(47,59)));
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(47, 59)));
         nga++;
-        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(45,81)));
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(45, 81)));
         nga++;
-        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(65,86)));
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(65, 86)));
         nga++;
-        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(84,82)));
+        Debug.Log("NGA " + nga + " pos: " + Grid._instance.GetIdByVec(new Vector2(84, 82)));
         nga++;
 
         /*
@@ -105,8 +106,8 @@ public class OverworldController : MonoBehaviour
         File.WriteAllLines(@"C:\Users\Rune\Straterra\Assets\MapInformation.txt", lines);
         */
 
-        
-        
+
+
         selectedTileHighlight.transform.position = new Vector3Int(Grid._instance.width, 1, Grid._instance.height);
 
         cam = GetComponent<Camera>();
@@ -123,10 +124,16 @@ public class OverworldController : MonoBehaviour
             Grid._instance.tiles[user.cityLocation].building = 1;
 
             Vector2Int pos = Grid._instance.GetPosition(user.cityLocation);
+            Vector3Int loc = new Vector3Int(pos.x, pos.y, 1);
 
-            PlaceTiles._instance.overlayMap.SetTile(new Vector3Int(pos.x, pos.y, 1), PlaceTiles._instance.buildingTiles[1]);
-            //PlaceTiles._instance.DiplomacyMap.SetColor(new Color();
 
+            // Henrik please help, this color set shit will not work
+            PlaceTiles._instance.overlayMap.SetTile(loc, PlaceTiles._instance.buildingTiles[1]);
+            PlaceTiles._instance.overlayMap.SetTileFlags(loc, TileFlags.None);
+            PlaceTiles._instance.overlayMap.SetColor(loc, new Color(Random.Range(0.3f, 1), Random.Range(0.3f, 1), Random.Range(0.3f, 1)));
+
+            UnityEngine.Debug.LogWarning(PlaceTiles._instance.overlayMap.GetTileFlags(loc));//PlaceTiles._instance.overlayMap.GetColor(loc));
+            PlaceTiles._instance.overlayMap.RefreshTile(loc);
 
             if (user.userId == LocalData.SelfUser.userId)
             {
@@ -135,8 +142,13 @@ public class OverworldController : MonoBehaviour
                 playerVillagePosition = Grid._instance.GetPosition(LocalData.SelfUser.cityLocation);
 
                 FocusOnVillage();
+                
+                Grid._instance.UpdateValidTiles(LocalData.SelfUser.cityLocation, GameManager.I.buildRange);
+
             }
+
         }
+
 
         /*
         DarkShrine ds = new DarkShrine(startingposition / 2, 0.05f, 1f, 0.5f);
@@ -190,7 +202,7 @@ public class OverworldController : MonoBehaviour
 
         //int enemyposition = FindStartingPosition.FirstVillage();
         //PlaceOtherBuilding(1, 6, enemyposition);
-        
+
         //List<List<Group>> armies = new List<List<Group>>();
 
         //PlaceTestVillage(5);
@@ -199,14 +211,14 @@ public class OverworldController : MonoBehaviour
         //PlaceTestVillage(8);
 
         //int enemyposition = 4444; //FindStartingPosition.FirstVillage();
-            
+
         //PlaceOtherBuilding(1, 33, enemyposition);
 
         //Grid._instance.tiles[enemyposition].army = RandomEnemy();
 
-        
-        
-        
+
+
+
         building = 1;
         buildingIndex = 10;
 
@@ -227,7 +239,7 @@ public class OverworldController : MonoBehaviour
 
         Camera.main.orthographicSize = zoom;
     }
-    
+
     private List<Group> RandomEnemy()
     {
         float bias1 = Random.Range(0.001f, 3f);
@@ -421,7 +433,7 @@ public class OverworldController : MonoBehaviour
 
                 float buildScale = zoom * 0.025f;
 
-                buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+                //buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
 
                 cam.orthographicSize = zoom;
             }
@@ -437,7 +449,7 @@ public class OverworldController : MonoBehaviour
 
             float buildScale = zoom * 0.025f;
 
-            buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+            //buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
 
             cam.orthographicSize = zoom;
         }
@@ -452,7 +464,7 @@ public class OverworldController : MonoBehaviour
 
             float buildScale = zoom * 0.025f;
 
-            buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+            //buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
 
             cam.orthographicSize = zoom;
         }
@@ -494,16 +506,23 @@ public class OverworldController : MonoBehaviour
                     int id = Grid._instance.GetIdByVec(new Vector2(hit.point.x + PlaceTiles.tilePivot.x, hit.point.z + PlaceTiles.tilePivot.y));
                     //InfoScreen._instance.ToggleInfoScreen(false);
                     //InfoScreen._instance.ToggleInfoScreenResource(false);
-                    if (id == previousTile)
-                    {
-                        buildMenu.gameObject.SetActive(true);
-                        buildMenu.transform.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
-                    }
+                    //if (id == previousTile) //Double Click removed
+
+                    buildMenu.gameObject.SetActive(true);
+                    //buildMenu.transform.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
+
+                    farmWindow.SetActive(false);
+                    loggingCampWindow.SetActive(false);
+                    mineWindow.SetActive(false);
+                    rightSideBlocker.SetActive(false);
+
+                    /*
                     else
                     {
                         //buildMenu.gameObject.SetActive(false);
                         previousTile = id;
                     }
+                    */
 
                     selectedTileHighlight.gameObject.SetActive(true);
                     selectedTileHighlight.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
@@ -531,7 +550,7 @@ public class OverworldController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             NumConverter.GetConvertedTimeStamp(new DateTime(2013, 1, 1));
-            
+
             FocusOnVillage();
         }
     }
@@ -553,10 +572,10 @@ public class OverworldController : MonoBehaviour
             }
         }
 
-        Task.Run(async () => 
+        Task.Run(async () =>
         {
             return await Network.AttackMapTile(lockPosition, army);
-        }).ContinueWith(async res => 
+        }).ContinueWith(async res =>
         {
             var result = await res;
 
@@ -579,7 +598,7 @@ public class OverworldController : MonoBehaviour
 
         float buildScale = zoom * 0.025f;
 
-        buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
+        //buildMenu.localScale = new Vector3(buildScale, buildScale, buildScale);
 
         cam.orthographicSize = zoom;
     }
@@ -608,6 +627,43 @@ public class OverworldController : MonoBehaviour
             //InfoScreen._instance.ToggleInfoScreen(true);
         }
     }
+
+    public GameObject farmWindow;
+    public GameObject loggingCampWindow;
+    public GameObject mineWindow;
+    public GameObject rightSideBlocker;
+
+    public void OpenOverworldBuildingWindow(int buildingId)
+    {
+        // 0 = Farm
+        // 1 = Logging Camp
+        // 2 = Mine
+        rightSideBlocker.SetActive(true);
+        if (buildingId == 0)
+        {
+            loggingCampWindow.SetActive(false);
+            mineWindow.SetActive(false);
+
+            farmWindow.SetActive(true);
+        }
+
+        if (buildingId == 1)
+        {
+            farmWindow.SetActive(false);
+            mineWindow.SetActive(false);
+
+            loggingCampWindow.SetActive(true);
+        }
+
+        if (buildingId == 2)
+        {
+            farmWindow.SetActive(false);
+            loggingCampWindow.SetActive(false);
+
+            mineWindow.SetActive(true);
+        }
+    }
+
     public void PlaceBuildingOnSelectedTile(int buildingId /*, int selectedPosition = 0*/)
     {
         /*
@@ -643,7 +699,7 @@ public class OverworldController : MonoBehaviour
 
         MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
 
-        
+
         int foodCost = mapBuilding.foodCost;
         int woodCost = mapBuilding.woodCost;
         int metalCost = mapBuilding.metalCost;
@@ -674,8 +730,8 @@ public class OverworldController : MonoBehaviour
         }
 
         int lockedPosition = selectedPosition;
-        
-        Task.Run<NetworkStructs.ActionResult>(async () => 
+
+        Task.Run<NetworkStructs.ActionResult>(async () =>
         {
             return await Network.CreateMapBuilding(buildingId, lockedPosition);
         }).ContinueWith(async result =>
@@ -690,13 +746,14 @@ public class OverworldController : MonoBehaviour
                 else
                 {
                     new ScheduledMapBuildEvent(mapBuilding.buildingTime, (byte)mapBuilding.id, lockedPosition, LocalData.SelfUser.userId);
+                    buildMenu.gameObject.SetActive(false);
                 }
             });
         });
-        
-        
-        
-        
+
+
+
+
         // BUG Remove division later
         /*
         ScheduledEvent scheduleBuilding = new ScheduledMapBuildEvent(MapBuildingDefinition.I[buildingId].buildingTime / 10, (byte)buildingId, selectedPosition, LocalData.SelfUser.userId);

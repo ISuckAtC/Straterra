@@ -45,6 +45,7 @@ public class InfoScreen : MonoBehaviour
     public TMP_Text tileArmyText;
     public Button attackButton;
     //public Image villageImage;
+    public Button homeButton; //Button that takes you from Overworld to your own village screen.
 
     private ActionQueue aq;
     
@@ -76,6 +77,7 @@ public class InfoScreen : MonoBehaviour
 
     public void OpenVillageInfoScreen(int position)
     {
+       homeButton.interactable = (Grid._instance.tiles[position].owner == LocalData.SelfUser.userId);
         villageInfoScreen.SetActive(true);
         
         CloseResourceInfoScreen();

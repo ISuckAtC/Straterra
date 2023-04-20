@@ -199,6 +199,12 @@ public class Network
 
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
+    public static async Task<ActionResult> UpgradeUnit(int id)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/upgradeUnit?" + tokenIdentity + "&" + id);
+
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+    }
 
     public static async Task<UnitGroup> GetHomeUnits()
     {
@@ -225,6 +231,13 @@ public class Network
             armyString += army[i].unitId + ":" + army[i].count;
         }
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/attackMapTile?" + tokenIdentity + "&" + target + "&" + armyString);
+
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+    }
+
+    public static async Task<ActionResult> ChoosePath(int path)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/choosePath?" + tokenIdentity + "&" + path);
 
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }

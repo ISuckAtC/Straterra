@@ -16,6 +16,8 @@ public class BottomBar : MonoBehaviour
     public GameObject queueMenu;
     public TMPro.TMP_Text queueText;
     public TMPro.TMP_Text worldButtonText;
+    public GameObject worldButton;
+    public GameObject townButton;
 
     public TMPro.TMP_Text queueAmount;
     public TMPro.TMP_Text reportAmount;
@@ -28,9 +30,24 @@ public class BottomBar : MonoBehaviour
     public TMPro.TMP_Text reportContent;
     public GameObject reportPrefab;
 
+    public GameObject armyButton;
+    public Sprite armySpriteBasic;
+    public Sprite armySpriteHover;
+    public Sprite armySpriteSelected;
+
+    public GameObject queueButton;
+    public Sprite queueSpriteBasic;
+    public Sprite queueSpriteHover;
+    public Sprite queueSpriteSelected;
+
+    public GameObject reportsButton;
+    public Sprite reportsSpriteBasic;
+    public Sprite reportsSpriteHover;
+    public Sprite reportsSpriteSelected;
+    
     private List<GameObject> reports = new List<GameObject>();
 
-    private bool worldView = false;
+    public bool worldView = false;
 
     private bool armyOpen = false;
     private bool queueOpen = false;
@@ -43,16 +60,34 @@ public class BottomBar : MonoBehaviour
         EventHub.OnTick += CheckQueue;
         aQ = GetComponent<ActionQueue>();
     }
+    public void CloseBottomMenus()
+    {
+        armyMenu.SetActive(false);
+        armyOpen = false;
+        armyButton.GetComponent<Image>().sprite = armySpriteBasic;
+
+        queueMenu.SetActive(false);
+        queueOpen = false;
+        queueButton.GetComponent<Image>().sprite = queueSpriteBasic;
+
+        reportsMenu.SetActive(false);
+        reportsOpen = false;
+        reportsButton.GetComponent<Image>().sprite = reportsSpriteBasic;
+    }
     public void OpenArmyTab()
     {
-        if (armyOpen)
+        armyButton.GetComponent<Image>().sprite = armySpriteSelected;
+        if (armyOpen) //Closes army
         {
+            armyButton.GetComponent<Image>().sprite = armySpriteBasic;
             CloseArmyTab();
             return;
         }
         armyOpen = true;
         armyMenu.SetActive(true);
         string armytext = "";
+
+
 
         Task.Run<NetworkStructs.UnitGroup>(async () =>
         {
@@ -92,12 +127,16 @@ public class BottomBar : MonoBehaviour
     {
         if (worldView)
         {
+           
             mapGrid.SetActive(false);
             mapUI.SetActive(false);
             cityPlayer.SetActive(true);
             //worldButtonText.text = "WORLD";
             worldView = false;
+            townButton.SetActive(false);
+            worldButton.SetActive(true);
 
+            
             Task.Run<NetworkStructs.User>(async () =>
             {
                 return await Network.GetSelfUser();
@@ -119,6 +158,8 @@ public class BottomBar : MonoBehaviour
             mapUI.SetActive(true);
             cityPlayer.SetActive(false);
             //worldButtonText.text = "HOME";
+            worldButton.SetActive(false);
+            townButton.SetActive(true);
 
             PlaceTiles._instance.overlayMap.ClearAllTiles();
 
@@ -180,8 +221,10 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenQueue()
     {
+        queueButton.GetComponent<Image>().sprite = queueSpriteSelected;
         if (queueOpen)
         {
+            queueButton.GetComponent<Image>().sprite = queueSpriteBasic;
             CloseQueue();
             return;
         }
@@ -239,8 +282,10 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenMenu()
     {
+        reportsButton.GetComponent<Image>().sprite = reportsSpriteSelected;
         if (reportsOpen)
         {
+            reportsButton.GetComponent<Image>().sprite = reportsSpriteBasic;
             CloseMenu();
             return;
         }
