@@ -90,10 +90,10 @@ public class Tutorial : MonoBehaviour
 private void TutorialStep(int flag)
 {
 
-    arrow.rotation = rotations[flag];
+    //arrow.rotation = rotations[flag];
 
 
-    arrow.position = positions[flag];
+    //arrow.position = positions[flag];
 
 }
 
