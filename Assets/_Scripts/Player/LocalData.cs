@@ -32,6 +32,7 @@ public static class LocalData
 
             UnityEngine.Debug.Log(u.name + " | " + u.userId);
             UnityEngine.Debug.Log(u.cityBuildingSlots[5]);
+            UnityEngine.Debug.Log("archerlevel is:  " + u.archerLevel);
 
             selfUser = u;
 
