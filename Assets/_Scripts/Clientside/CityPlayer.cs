@@ -397,6 +397,15 @@ public class CityPlayer : MonoBehaviour
 
 
         buildingsInterfaces.ForEach(x => x.SetActive(x == barracks));
+
+        Task.Run<NetworkStructs.User>(async () => 
+        {
+            return await Network.GetSelfUser();
+        }).ContinueWith(async result => 
+        {
+            var res = await result;
+            LocalData.SelfUser = res;
+        });
         Task.Run<NetworkStructs.UnitGroup>(async () =>
         {
             return await Network.GetHomeUnits();
@@ -867,6 +876,7 @@ public class CityPlayer : MonoBehaviour
                 if (!res.success)
                 {
                     Debug.LogError("Training troops failed: " + res.message);
+                    GameManager.aq.queue.Add(() => SplashText.Splash(res.message));
                 }
                 else
                 {
@@ -892,6 +902,8 @@ public class CityPlayer : MonoBehaviour
     public void OpenUpgradeUnitMenu(int id)
     {
         upgradeUnit = UnitDefinition.I[id];
+
+        upgradeUnitButton.onClick.RemoveAllListeners();
         upgradeUnitButton.onClick.AddListener(delegate { UpgradeUnit(id); });
 
         statCurrentAttackMelee.text = upgradeUnit.meleeAttack.ToString();
@@ -978,7 +990,7 @@ public class CityPlayer : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError(res.message);
+                    GameManager.aq.queue.Add(() => SplashText.Splash(res.message));
                 }
 
             });

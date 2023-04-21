@@ -134,6 +134,13 @@ public class Network
         return JsonUtility.FromJson<NetworkStructs.ReportList>(await message.Content.ReadAsStringAsync());
     }
 
+    public static async Task<NetworkStructs.ActionResult> RemoveReport(int id)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/removeNotification?" + tokenIdentity + "&" + id);
+
+        return JsonUtility.FromJson<NetworkStructs.ActionResult>(await message.Content.ReadAsStringAsync());
+    }
+
     public static async Task<NetworkStructs.Resources> GetResources(int playerId)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getResources?" + tokenIdentity + "&" + playerId);
