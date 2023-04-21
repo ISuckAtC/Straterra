@@ -1057,6 +1057,8 @@ public class CityPlayer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             Task.Run<NetworkStructs.ScheduledEventGroup>(async () =>
+            Debug.Log("LLLLLL");
+            Task.Run<NetworkStructs.ScheduledEventGroup>(async () => 
             {
                 return await Network.GetScheduledEvents();
             }).ContinueWith(result =>

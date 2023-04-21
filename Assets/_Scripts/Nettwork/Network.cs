@@ -196,7 +196,7 @@ public class Network
     public static async Task<ScheduledEventGroup> GetScheduledEvents()
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getScheduledEvents?" + tokenIdentity);
-
+        Debug.Log(await message.Content.ReadAsStringAsync());
         return JsonUtility.FromJson<ScheduledEventGroup>(await message.Content.ReadAsStringAsync());
     }
 
