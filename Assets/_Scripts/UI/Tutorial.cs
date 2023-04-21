@@ -29,15 +29,32 @@ public class Tutorial : MonoBehaviour
     Transform moveToPos;
     public Vector3[] rotations, positions;
 
+    public Vector3 foodTilePosition;
+    public bool displayArrowOnFood = false;
+
     private void Start()
     {
         currentPos = positionToMoveToA;
         moveToPos = positionToMoveToB;
 
-        int foodTile = Grid._instance.FindTileWithHighestResourceAmount("food");
-        int woodTile = Grid._instance.FindTileWithHighestResourceAmount("wood");
-        int metalTile = Grid._instance.FindTileWithHighestResourceAmount("metal");
+        Grid.onReady += OnGridReady;
+    }
 
+    void OnGridReady()
+    {
+        foodTile = Grid._instance.FindTileWithHighestResourceAmount("food");
+        woodTile = Grid._instance.FindTileWithHighestResourceAmount("wood");
+        metalTile = Grid._instance.FindTileWithHighestResourceAmount("metal");
+
+
+
+
+        Vector2Int v2Pos = Grid._instance.GetPosition(foodTile);
+
+        foodTilePosition = PlaceTiles._instance.tilemap.CellToWorld(new Vector3Int(v2Pos.x, 0, v2Pos.y));
+
+
+        displayArrowOnFood = true;
     }
 
 
@@ -60,8 +77,7 @@ public class Tutorial : MonoBehaviour
 
     public void Update()
     {
-        Vector2Int tilePosition = Grid._instance.GetPosition(foodTile);
-        Vector3 newPositionInWorld = new Vector3(tilePosition.x, 0, tilePosition.y);
+        
 
         scalar += Time.deltaTime * speed;
         
@@ -71,7 +87,8 @@ public class Tutorial : MonoBehaviour
         //In map
         //Find the tile with the highest resource gain of given type.
 
-        Vector3 newPositionScreen = Camera.main.WorldToScreenPoint(newPositionInWorld);
+
+        
         if (!bottomBar.worldView)
         {
             currentEulerAngles = new Vector3(0, 0, 180);
@@ -85,21 +102,20 @@ public class Tutorial : MonoBehaviour
         {
             currentEulerAngles = new Vector3(0, 0, 90);
             currentRotation.eulerAngles = currentEulerAngles;
-            transform.rotation = currentRotation;
+            //transform.rotation = currentRotation;
 
             //transform.position = newPositionInWorld;
 
-            
+            if (displayArrowOnFood)
+            {
+                Vector3 newPositionScreen = Camera.main.WorldToScreenPoint(foodTilePosition);
+                transform.position = newPositionScreen;
+                Debug.Log(newPositionScreen);
+            }
 
-            Vector2Int v2Pos = Grid._instance.GetPosition(foodTile);
 
-            Vector3 worldPosition = PlaceTiles._instance.tilemap.CellToWorld(new Vector3Int(v2Pos.x, 0, v2Pos.y));
-
-            Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
-            
-            UnityEngine.Debug.LogError("tile position is vector3:  " + newPositionScreen + "!" + newPositionInWorld + " | " + tilePosition + " | " + foodTile);
-            currentPos.position = newPositionScreen + new Vector3(35, 0, 0);
-            moveToPos.position = newPositionScreen + new Vector3(50, 0, 0);
+            //currentPos.position = newPositionScreen + new Vector3(35, 0, 0);
+            //moveToPos.position = newPositionScreen + new Vector3(50, 0, 0);
                                                                           
             guidingText.text = "Construct a farm here.";
 

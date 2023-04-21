@@ -65,7 +65,8 @@ public class Grid : MonoBehaviour
         
         _heightmap.Setup();
         UpdateTileInformation();
-        
+        Grid._instance.UpdateValidTiles(LocalData.SelfUser.cityLocation, GameManager.I.buildRange);
+
         onReady.Invoke();
         PlaceTiles._instance.ColorAllTiles();
         
