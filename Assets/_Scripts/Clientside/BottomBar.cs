@@ -38,6 +38,7 @@ public class BottomBar : MonoBehaviour
     public TMPro.TMP_Text reportTitle;
     public TMPro.TMP_Text reportContent;
     public GameObject reportPrefab;
+    public Button deleteReportButton;
 
     public GameObject armyButton;
     public Sprite armySpriteBasic;
@@ -375,7 +376,9 @@ public class BottomBar : MonoBehaviour
                         texts[1].text = NumConverter.GetConvertedTimeStamp(NotificationCenter.Get(index).time);
 
                         //rectTransform.GetComponentInChildren<TMPro.TMP_Text>().text = NotificationCenter.Get(index).title;
-                        rectTransform.GetComponentInChildren<Button>().onClick.AddListener(delegate { OpenReport(index); });
+                        //rectTransform.GetComponentInChildren<Button>().onClick.AddListener(delegate { OpenReport(index); });
+                        rectTransform.GetChild(0).GetComponent<Button>().onClick.AddListener(delegate { OpenReport(index); });
+                        deleteReportButton.onClick.AddListener(delegate { RemoveReport(index); });
 
                     });
 
@@ -450,13 +453,31 @@ public class BottomBar : MonoBehaviour
     }
     public void RemoveReport(int index)
     {
-        NotificationCenter.Remove(index);
+        Task.Run<NetworkStructs.ActionResult>(async () => 
+        {
+            return await Network.RemoveReport(index);
+        }).ContinueWith(async result => 
+        {
+            var res = await result;
+            if (res.success)
+            {
+                aQ.queue.Add(() =>
+                {
+                    CloseReport();
+                    Destroy(reports[index]);
+                });
+                
+            }
+            else
+            {
+                Debug.Log(res.message);
+            }
+        });
     }
     public void CloseReport()
     {
         OpenMenu();
         reportView.SetActive(false);
-
     }
     public void CloseMenu()
     {
