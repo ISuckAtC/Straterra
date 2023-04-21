@@ -33,14 +33,7 @@ public static class LocalData
             UnityEngine.Debug.Log(u.name + " | " + u.userId);
             UnityEngine.Debug.Log(u.cityBuildingSlots[5]);
 
-            u.archerLevel = 0;
-            u.cavalryLevel = 10;
-            u.swordLevel = 20;
-            u.spearmanLevel = 30;
-
             selfUser = u;
-
-            
 
             var users = await Network.GetUsers();
 
@@ -49,6 +42,11 @@ public static class LocalData
             Network.allUsers = users.players.ToList();
 
             var units = await Network.GetHomeUnits();
+
+            if (CityPlayer.cityPlayer.homeArmyAmount == null)
+            {
+                CityPlayer.cityPlayer.homeArmyAmount = new int[256];
+            }
 
             System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
 

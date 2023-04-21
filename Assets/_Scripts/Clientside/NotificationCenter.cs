@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class NotificationCenter
 {
+    public static int unreads = 0;
     private static NotificationCenter instance = null;
     public static NotificationCenter I 
     {
@@ -37,9 +38,18 @@ public class NotificationCenter
         I.notifications.Insert(0, (title,message, DateTime.Now, false));
         //I.notifications.Add((title, message, false));
     }
+    public static void Add(string title, string message, DateTime timeStamp, bool viewed)
+    {
+        I.notifications.Insert(0, (title, message, timeStamp, viewed));
+    }
     public static void Remove(int index)
     {
         I.notifications.RemoveAt(index);
+    }
+
+    public static void Clear()
+    {
+        I.notifications.Clear();
     }
 
     public static (string title, string content, DateTime time, bool viewed) Get(int index)

@@ -127,6 +127,13 @@ public class Network
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 
+    public static async Task<NetworkStructs.ReportList> GetNotifications()
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getNotifications?" + tokenIdentity);
+
+        return JsonUtility.FromJson<NetworkStructs.ReportList>(await message.Content.ReadAsStringAsync());
+    }
+
     public static async Task<NetworkStructs.Resources> GetResources(int playerId)
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getResources?" + tokenIdentity + "&" + playerId);
@@ -240,6 +247,51 @@ public class Network
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/choosePath?" + tokenIdentity + "&" + path);
 
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+    }
+
+    public static async Task<NetworkStructs.NetworkUpdate> GetUpdate()
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getUpdate?" + tokenIdentity);
+
+        //Debug.Log(await message.Content.ReadAsStringAsync());
+
+        string content = await message.Content.ReadAsStringAsync();
+
+        try
+        {
+            return JsonUtility.FromJson<NetworkStructs.NetworkUpdate>(content);
+        }
+        catch (ArgumentException e)
+        {
+
+            Debug.LogError(e.Message + "\n\n" + e.StackTrace);
+
+            NetworkStructs.ErrorResult eRes = JsonUtility.FromJson<NetworkStructs.ErrorResult>(content);
+            if (eRes.error == "Session invalid")
+            {
+                // Attempt to relog
+                await Task.Run<NetworkStructs.ActionResult>(async () =>
+                {
+                    return await Network.GetSessionToken(password);
+                }).ContinueWith(async result =>
+                {
+                    var res = await result;
+                    if (!res.success)
+                    {
+                        Debug.LogError(res.message);
+                    }
+                    else
+                    {
+                        Debug.Log("token is = " + res.message);
+                        Network.tokenIdentity = res.message;
+                        await LocalData.LoadSelfPlayerOnline();
+
+                        Debug.Log("Relog successful");
+                    }
+                });
+            }
+        }
+        throw new Exception("GetUpdate Failed");
     }
 }
 

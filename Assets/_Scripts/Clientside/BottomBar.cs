@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 
 public class BottomBar : MonoBehaviour
 {
+    public static BottomBar I
+    {
+        get
+        {
+            if (!instance) throw new System.Exception("GameManager not present");
+            return instance;
+        }
+    }
+    private static BottomBar instance;
     public GameObject mapGrid;
     public GameObject mapUI;
     public GameObject cityPlayer;
@@ -44,7 +53,7 @@ public class BottomBar : MonoBehaviour
     public Sprite reportsSpriteBasic;
     public Sprite reportsSpriteHover;
     public Sprite reportsSpriteSelected;
-    
+
     private List<GameObject> reports = new List<GameObject>();
 
     public bool worldView = false;
@@ -54,9 +63,19 @@ public class BottomBar : MonoBehaviour
     private bool reportsOpen = false;
     ActionQueue aQ;
 
+    public void Awake()
+    {
+        if (instance != null)
+        {
+            throw new System.Exception("Duplicate BottomBar");
+            return;
+        }
+        instance = this;
+    }
+
     public void Start()
     {
-        EventHub.OnTick += CheckNotifications;
+        //EventHub.OnTick += CheckNotifications;
         EventHub.OnTick += CheckQueue;
         aQ = GetComponent<ActionQueue>();
     }
@@ -127,7 +146,7 @@ public class BottomBar : MonoBehaviour
     {
         if (worldView)
         {
-           
+
             mapGrid.SetActive(false);
             mapUI.SetActive(false);
             cityPlayer.SetActive(true);
@@ -136,7 +155,7 @@ public class BottomBar : MonoBehaviour
             townButton.SetActive(false);
             worldButton.SetActive(true);
 
-            
+
             Task.Run<NetworkStructs.User>(async () =>
             {
                 return await Network.GetSelfUser();
@@ -279,6 +298,27 @@ public class BottomBar : MonoBehaviour
         var notifications = NotificationCenter.I.notifications.Where(x => !x.viewed);
         reportsNotificationBlinker.SetActive(notifications.Count() > 0);
         reportAmount.text = notifications.Count() > 0 ? notifications.Count().ToString() : "";
+
+        Task.Run<NetworkStructs.ReportList>(async () =>
+            {
+                return await Network.GetNotifications();
+            }).ContinueWith(async notifications =>
+            {
+                NetworkStructs.ReportList rep = await notifications;
+                Debug.Log(rep.reports);
+                if (rep.reports.Length != 0)
+                {
+                    GameManager.aq.queue.Add(() =>
+                    {
+                        reportsNotificationBlinker.SetActive(rep.reports.Length > 0);
+                    });
+                }
+                else
+                {
+                    reportsNotificationBlinker.SetActive(false);
+                }
+
+            });
     }
     public void OpenMenu()
     {
@@ -293,6 +333,58 @@ public class BottomBar : MonoBehaviour
         reports.ForEach(x => Destroy(x));
         reports.Clear();
 
+        Task.Run<NetworkStructs.ReportList>(async () =>
+            {
+                return await Network.GetNotifications();
+            }).ContinueWith(async notifications =>
+            {
+                NetworkStructs.ReportList rep = await notifications;
+                Debug.Log(rep.reports);
+                NotificationCenter.Clear();
+
+                for (int j = 0; j < rep.reports.Length; j++)
+                {
+                    NetworkStructs.Report report = rep.reports[j];
+                    NotificationCenter.Add(report.title, report.content, System.DateTime.FromFileTimeUtc(report.time_created), report.viewed);
+
+                    GameManager.aq.queue.Add(() => 
+                    {
+                        reports.Add(Instantiate(reportPrefab, Vector3.zero, Quaternion.identity));
+                    });
+                }
+                for (int i = rep.reports.Length - 1; i >= 0; i--)
+                {
+                    int index = i; // most useful line
+
+                    GameManager.aq.queue.Add(() =>
+                    {
+                        
+                        Debug.Log("Dealing with notification index " + index);
+
+                        RectTransform rectTransform = reports[index].GetComponent<RectTransform>();
+                        rectTransform.parent = reportContentParent;
+
+                        rectTransform.localPosition = new Vector3(0, -(rectTransform.sizeDelta.y + 5) * index, 0);
+                        rectTransform.offsetMax = new Vector2(0, rectTransform.offsetMax.y);
+
+                        
+
+                        TMPro.TMP_Text[] texts = rectTransform.GetComponentsInChildren<TMPro.TMP_Text>();
+
+                        texts[0].text = NotificationCenter.Get(index).title;
+                        texts[1].text = NumConverter.GetConvertedTimeStamp(NotificationCenter.Get(index).time);
+
+                        //rectTransform.GetComponentInChildren<TMPro.TMP_Text>().text = NotificationCenter.Get(index).title;
+                        rectTransform.GetComponentInChildren<Button>().onClick.AddListener(delegate { OpenReport(index); });
+
+                    });
+
+                }
+
+
+            });
+
+        /*
         for (int j = 0; j < NotificationCenter.Count(); j++)
         {
             reports.Add(Instantiate(reportPrefab, Vector3.zero, Quaternion.identity));
@@ -320,7 +412,7 @@ public class BottomBar : MonoBehaviour
 
         }
 
-        /*
+        //
         for (int i = 0; i < NotificationCenter.Count(); ++i)
         {
             Debug.Log("Dealing with notification index " + i);

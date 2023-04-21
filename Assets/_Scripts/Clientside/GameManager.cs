@@ -106,25 +106,36 @@ public class GameManager : MonoBehaviour
 
     public void AddResources()
     {
-        Task.Run<NetworkStructs.Resources>(async () =>
+        Task.Run<NetworkStructs.NetworkUpdate>(async () =>
         {
-            return await Network.GetResources(LocalData.SelfUser.userId);
+            return await Network.GetUpdate();
         }).ContinueWith(async result =>
         {
             //Debug.Log("Adding resources");
-            var res = await result;
+            NetworkStructs.NetworkUpdate res = await result;
+
+            NotificationCenter.unreads = res.notifications;
+
+            // TODO actionqueue activate unread blinker
+            
+            aq.queue.Add(() => 
+            {
+                BottomBar.I.reportsNotificationBlinker.SetActive(NotificationCenter.unreads > 0);
+            });
+
+            NetworkStructs.Resources resources = res.resources;
             try
             {
-                PlayerFood = res.food;
+                PlayerFood = resources.food;
             }
             catch (System.Exception e)
             {
                 Debug.LogError(e.Message + "\n\n" + e.StackTrace + "\n");
             }
             
-            PlayerWood = res.wood;
-            PlayerMetal = res.metal;
-            PlayerOrder = res.order;
+            PlayerWood = resources.wood;
+            PlayerMetal = resources.metal;
+            PlayerOrder = resources.order;
             //Debug.Log("Done adding resources");
         });
         return;

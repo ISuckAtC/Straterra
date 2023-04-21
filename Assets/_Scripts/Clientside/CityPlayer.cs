@@ -970,13 +970,15 @@ public class CityPlayer : MonoBehaviour
             }).ContinueWith(async resources =>
             {
                 NetworkStructs.ActionResult res = await resources;
-                Debug.Log(res.message);
                 if (res.success)
                 {
-                    GameManager.aq.queue.Add(() =>
-                    {
-
-                    });
+                    Debug.LogError("upgraded troop: " + nextUnit.id);
+                    upgradeUnitMenu.SetActive(false);
+                    LocalData.SelfUser = await Network.GetSelfUser();
+                }
+                else
+                {
+                    Debug.LogError(res.message);
                 }
 
             });

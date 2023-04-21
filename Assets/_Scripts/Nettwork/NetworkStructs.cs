@@ -89,9 +89,19 @@ namespace NetworkStructs
         public int buildingId;
     }
 
-    public struct BattleReport
+    [System.Serializable]
+    public struct ReportList
     {
-        public int reportId;
+        public Report[] reports;
+    }
+
+    [System.Serializable]
+    public struct Report
+    {   
+        public string title;
+        public string content;
+        public long time_created;
+        public bool viewed;
     }
     
     [System.Serializable]
@@ -101,6 +111,13 @@ namespace NetworkStructs
         public int wood;
         public int metal;
         public int order;
+    }
+
+    [System.Serializable]
+    public struct NetworkUpdate
+    {
+        public Resources resources;
+        public int notifications;
     }
 
     public struct Village
