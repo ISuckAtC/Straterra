@@ -1057,6 +1057,8 @@ public class CityPlayer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             Task.Run<NetworkStructs.ScheduledEventGroup>(async () =>
+            Debug.Log("LLLLLL");
+            Task.Run<NetworkStructs.ScheduledEventGroup>(async () => 
             {
                 return await Network.GetScheduledEvents();
             }).ContinueWith(result =>
@@ -1065,6 +1067,11 @@ public class CityPlayer : MonoBehaviour
                 for (int i = 0; i < group.events.Length; i++)
                 {
                     Debug.Log(group.events[i].type);
+                    Debug.Log(group.events[i].buildingId);
+                    Debug.Log(group.events[i].buildingSlot);
+                    Debug.Log(group.events[i].unitId);
+                    Debug.Log(group.events[i].amount);
+                    Debug.Log(group.events[i].secondsLeft);
                 }
             });
         }
