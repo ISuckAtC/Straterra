@@ -64,8 +64,9 @@ public class Tutorial : MonoBehaviour
         Vector3 newPositionInWorld = new Vector3(tilePosition.x, 0, tilePosition.y);
 
         scalar += Time.deltaTime * speed;
-        //if(!bottomBar.worldView)
-        transform.position = Vector3.Lerp(currentPos.position, moveToPos.position, Mathf.PingPong(scalar, 1f));
+        
+        //The Lerping of the Arrow
+        //transform.position = Vector3.Lerp(currentPos.position, moveToPos.position, Mathf.PingPong(scalar, 1f));
 
         //In map
         //Find the tile with the highest resource gain of given type.
@@ -86,10 +87,20 @@ public class Tutorial : MonoBehaviour
             currentRotation.eulerAngles = currentEulerAngles;
             transform.rotation = currentRotation;
 
+            //transform.position = newPositionInWorld;
+
+            
+
+            Vector2Int v2Pos = Grid._instance.GetPosition(foodTile);
+
+            Vector3 worldPosition = PlaceTiles._instance.tilemap.CellToWorld(new Vector3Int(v2Pos.x, 0, v2Pos.y));
+
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
+            
             UnityEngine.Debug.LogError("tile position is vector3:  " + newPositionScreen + "!" + newPositionInWorld + " | " + tilePosition + " | " + foodTile);
             currentPos.position = newPositionScreen + new Vector3(35, 0, 0);
             moveToPos.position = newPositionScreen + new Vector3(50, 0, 0);
-
+                                                                          
             guidingText.text = "Construct a farm here.";
 
 
