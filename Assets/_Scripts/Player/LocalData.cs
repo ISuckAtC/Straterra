@@ -22,7 +22,7 @@ public static class LocalData
     }
 
     private static NetworkStructs.User? selfUser;
-    
+
 
     public static async System.Threading.Tasks.Task LoadSelfPlayerOnline()
     {
@@ -43,20 +43,26 @@ public static class LocalData
 
             var units = await Network.GetHomeUnits();
 
-            if (CityPlayer.cityPlayer.homeArmyAmount == null)
+            if (CityPlayer.cityPlayer)
             {
-                CityPlayer.cityPlayer.homeArmyAmount = new int[256];
+                if (CityPlayer.cityPlayer.homeArmyAmount == null)
+                {
+                    CityPlayer.cityPlayer.homeArmyAmount = new int[256];
+                }
+
+                System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
+
+                for (int i = 0; i < units.units.Length; ++i)
+                {
+                    int id = units.units[i].unitId;
+                    int amount = units.units[i].amount;
+
+                    CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+                }
             }
 
-            System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
 
-            for (int i = 0; i < units.units.Length; ++i)
-            {
-                int id = units.units[i].unitId;
-                int amount = units.units[i].amount;
 
-                CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
-            }
 
         }
         catch (System.Exception e)
