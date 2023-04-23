@@ -130,8 +130,11 @@ public class Network
     public static async Task<NetworkStructs.ReportList> GetNotifications()
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getNotifications?" + tokenIdentity);
-
-        return JsonUtility.FromJson<NetworkStructs.ReportList>(await message.Content.ReadAsStringAsync());
+        string newMessage = await message.Content.ReadAsStringAsync();
+        Debug.Log("just got notifications" + newMessage.Contains("\n"));
+        newMessage = newMessage.Replace("\n", "\\n");
+        Debug.Log("just got notifications" + newMessage.Contains("\n"));
+        return JsonUtility.FromJson<NetworkStructs.ReportList>(newMessage);
     }
 
     public static async Task<NetworkStructs.ActionResult> RemoveReport(int id)

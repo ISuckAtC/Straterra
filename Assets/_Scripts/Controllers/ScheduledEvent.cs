@@ -265,6 +265,7 @@ public class ScheduledAttackEvent : ScheduledEvent
         this.army = army;
         this.destination = destination;
         this.origin = origin;
+        SplashText.Splash("Sending units to" + destination);
         if (destination == LocalData.SelfUser.cityLocation)
         {
             GameManager.I.timesAttacked++;
@@ -349,6 +350,7 @@ public class ScheduledAttackEvent : ScheduledEvent
             }
             GameManager.I.timesAttacking++;// timesAttacking = 0;
 
+            SplashText.Splash("Combat log: " + message);
             NotificationCenter.Add("BATTLE REPORT " + GameManager.I.timesAttacking, message);
         }
     }

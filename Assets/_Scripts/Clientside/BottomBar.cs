@@ -339,8 +339,9 @@ public class BottomBar : MonoBehaviour
                 return await Network.GetNotifications();
             }).ContinueWith(async notifications =>
             {
+                try {
                 NetworkStructs.ReportList rep = await notifications;
-                Debug.Log(rep.reports);
+                Debug.Log("reports are this = " + rep.reports);
                 NotificationCenter.Clear();
 
                 for (int j = 0; j < rep.reports.Length; j++)
@@ -350,7 +351,9 @@ public class BottomBar : MonoBehaviour
 
                     GameManager.aq.queue.Add(() => 
                     {
+
                         reports.Add(Instantiate(reportPrefab, Vector3.zero, Quaternion.identity));
+                        Debug.LogWarning("report amount = " + rep.reports.Length);
                     });
                 }
                 for (int i = rep.reports.Length - 1; i >= 0; i--)
@@ -385,7 +388,12 @@ public class BottomBar : MonoBehaviour
                     });
 
                 }
-
+                }
+                catch(System.Exception e)
+                {
+                    Debug.LogError(e.Message + "\n\n" + e.StackTrace);
+                }
+    
 
             });
 
