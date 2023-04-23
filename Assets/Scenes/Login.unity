@@ -2556,8 +2556,8 @@ MonoBehaviour:
   m_text: "Login system coming shortly.\n\nFor now, select your user and stick to
     it through the playtesting. \nHonor system!\n\nNGA0 password: bigmuscles\nNGA1
     password: bigbrain \nNGA2 password: bigeyes\nNGA3 password: bigears\nNGA4 password:
-    bigfeet\nNGA5 password: bighands\nNGA6 password: bigteeth\nNGA7 password: bigmouth\nNGA8
-    password: smolpenis\nNGA9 password: bignose"
+    bigfeet\nNGA5 password: bighands\nNGA6 password: bigteeth\nNGA7 password: bigmouth\nNGA9
+    password: bignose"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

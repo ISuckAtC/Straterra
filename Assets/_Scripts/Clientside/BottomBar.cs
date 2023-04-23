@@ -377,8 +377,10 @@ public class BottomBar : MonoBehaviour
 
                         //rectTransform.GetComponentInChildren<TMPro.TMP_Text>().text = NotificationCenter.Get(index).title;
                         //rectTransform.GetComponentInChildren<Button>().onClick.AddListener(delegate { OpenReport(index); });
+
+                        rectTransform.GetChild(0).GetComponent<Button>().onClick.RemoveAllListeners();
                         rectTransform.GetChild(0).GetComponent<Button>().onClick.AddListener(delegate { OpenReport(index); });
-                        deleteReportButton.onClick.AddListener(delegate { RemoveReport(index); });
+
 
                     });
 
@@ -447,6 +449,8 @@ public class BottomBar : MonoBehaviour
         reportContent.text = notification.content;
         notification.viewed = true;
         NotificationCenter.I[index] = notification;
+        deleteReportButton.onClick.RemoveAllListeners();
+        deleteReportButton.onClick.AddListener(delegate { RemoveReport(index); });
 
         reportView.transform.position = new Vector3(Screen.width / 2, Screen.height / 2, 0f);
         reportView.SetActive(true);

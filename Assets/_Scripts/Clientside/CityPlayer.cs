@@ -987,6 +987,7 @@ public class CityPlayer : MonoBehaviour
                     Debug.LogError("upgraded troop: " + nextUnit.id);
                     upgradeUnitMenu.SetActive(false);
                     LocalData.SelfUser = await Network.GetSelfUser();
+                    CloseUpgradeUnitMenu();
                 }
                 else
                 {
