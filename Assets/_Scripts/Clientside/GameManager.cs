@@ -190,4 +190,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void KickPlayerToLogin()  // Is called whenever res.message gives "Session invalid" - The player was kicked
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0); //Login scene
+    }
+
 }

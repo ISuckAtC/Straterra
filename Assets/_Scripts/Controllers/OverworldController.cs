@@ -752,6 +752,10 @@ public class OverworldController : MonoBehaviour
                 if (!res.success)
                 {
                     Debug.LogError("Mapbuilding failed: " + res.message);
+                    if (res.message == "Session invalid")
+                    {
+                        GameManager.I.KickPlayerToLogin();
+                    }
                 }
                 else
                 {

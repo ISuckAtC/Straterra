@@ -149,6 +149,10 @@ public class BuildingMenu : MonoBehaviour
                         CityPlayer.cityPlayer.LoadBuildingInterfaces();
                     });
                 }
+                else if (res.message == "Session invalid")
+                {
+                    GameManager.I.KickPlayerToLogin();
+                }
 
             });
     }

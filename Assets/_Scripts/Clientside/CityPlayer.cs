@@ -552,7 +552,10 @@ public class CityPlayer : MonoBehaviour
                         CityPlayer.cityPlayer.LoadBuildingInterfaces();
                     });
                 }
-
+                else if (res.message == "Session invalid")
+                {
+                    GameManager.I.KickPlayerToLogin();
+                }
             });
 
 
@@ -613,6 +616,10 @@ public class CityPlayer : MonoBehaviour
                 {
                     Debug.LogError("Upgrade Resource Cap failed: " + res.message);
                     GameManager.aq.queue.Add(() => SplashText.Splash(res.message));
+                    if (res.message == "Session invalid")
+                    {
+                        GameManager.I.KickPlayerToLogin();
+                    }
                 }
             });
         });
@@ -907,6 +914,10 @@ public class CityPlayer : MonoBehaviour
                 {
                     Debug.LogError("Training troops failed: " + res.message);
                     GameManager.aq.queue.Add(() => SplashText.Splash(res.message));
+                    if (res.message == "Session invalid")
+                    {
+                        GameManager.I.KickPlayerToLogin();
+                    }
                 }
                 else
                 {
@@ -1027,6 +1038,10 @@ public class CityPlayer : MonoBehaviour
                 else
                 {
                     GameManager.aq.queue.Add(() => SplashText.Splash(res.message));
+                    if (res.message == "Session invalid")
+                    {
+                        GameManager.I.KickPlayerToLogin();
+                    }
                 }
 
             });
