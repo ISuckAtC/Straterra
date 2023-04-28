@@ -52,10 +52,6 @@ public class CityPlayer : MonoBehaviour
         topBar.Wood = GameManager.PlayerWood;
         topBar.Metal = GameManager.PlayerMetal;
         topBar.Order = GameManager.PlayerOrder;
-
-        UpgradeResourceLimit(0);
-        UpgradeResourceLimit(4);
-        UpgradeResourceLimit(8);
     }
 
     public void Build(int building, int slot)
@@ -640,16 +636,8 @@ public class CityPlayer : MonoBehaviour
         BuildingMenu warehouseMenu = warehouse.GetComponent<BuildingMenu>();
         switch (i)
         {
-            case 0:
-                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
-                buttonBackgrounds[i].color = activeButton;
-                buttonTexts[i].color = activeTextColor;
-                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
-
-                break;
-
             case 1:
-                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 5);
+                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -672,8 +660,8 @@ public class CityPlayer : MonoBehaviour
 
                 break;
 
-            case 10:
-                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
+            case 4:
+                foodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 5);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -681,7 +669,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 11:
-                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 5);
+                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -704,8 +692,8 @@ public class CityPlayer : MonoBehaviour
 
                 break;
 
-            case 20:
-                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
+            case 14:
+                woodLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 5);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -713,7 +701,7 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 21:
-                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 5);
+                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 4);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;
                 buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
@@ -729,6 +717,14 @@ public class CityPlayer : MonoBehaviour
                 break;
 
             case 23:
+                metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 5);
+                buttonBackgrounds[i].color = activeButton;
+                buttonTexts[i].color = activeTextColor;
+                buttonBackgrounds[i].transform.GetComponent<Button>().interactable = false;
+
+                break;
+
+            case 24:
                 metalLimit = Mathf.Pow(exponentValue, TownBuildingDefinition.I[warehouseMenu.id].level + 5);
                 buttonBackgrounds[i].color = activeButton;
                 buttonTexts[i].color = activeTextColor;

@@ -3451,6 +3451,8 @@ MonoBehaviour:
   statsImprovement2: {fileID: 1966225789}
   statsImage3: {fileID: 1227127157}
   statsImprovement3: {fileID: 1526735229}
+  currenTierBuildingLvlImage: {fileID: 0}
+  nextTierBuildingLvlImage: {fileID: 0}
   buildTimeImage: {fileID: 1177119290}
   buildTime: {fileID: 494156762}
   costsImage1: {fileID: 1197129102}
@@ -4480,6 +4482,8 @@ MonoBehaviour:
   statsImprovement2: {fileID: 2036521082}
   statsImage3: {fileID: 777172109}
   statsImprovement3: {fileID: 698115498}
+  currenTierBuildingLvlImage: {fileID: 0}
+  nextTierBuildingLvlImage: {fileID: 0}
   buildTimeImage: {fileID: 918454112}
   buildTime: {fileID: 1658238520}
   costsImage1: {fileID: 744842656}
@@ -21670,6 +21674,8 @@ MonoBehaviour:
   statsImprovement2: {fileID: 726801967}
   statsImage3: {fileID: 1451401993}
   statsImprovement3: {fileID: 1286114171}
+  currenTierBuildingLvlImage: {fileID: 0}
+  nextTierBuildingLvlImage: {fileID: 0}
   buildTimeImage: {fileID: 1730515355}
   buildTime: {fileID: 159287907}
   costsImage1: {fileID: 1153155435}
@@ -43375,7 +43381,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d7640a055f3abe9428dd54b3405753e8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca309564dda0023438ca09fb16d8c676, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -46965,7 +46971,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 31004a9f119f0254fa5064637e0b7633, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b55991c5b776a0e4092bb963fe626fc9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -57646,6 +57652,8 @@ MonoBehaviour:
   statsImprovement2: {fileID: 0}
   statsImage3: {fileID: 0}
   statsImprovement3: {fileID: 0}
+  currenTierBuildingLvlImage: {fileID: 0}
+  nextTierBuildingLvlImage: {fileID: 0}
   buildTimeImage: {fileID: 0}
   buildTime: {fileID: 0}
   costsImage1: {fileID: 0}
@@ -57847,6 +57855,8 @@ MonoBehaviour:
   statsImprovement2: {fileID: 0}
   statsImage3: {fileID: 0}
   statsImprovement3: {fileID: 0}
+  currenTierBuildingLvlImage: {fileID: 0}
+  nextTierBuildingLvlImage: {fileID: 0}
   buildTimeImage: {fileID: 0}
   buildTime: {fileID: 0}
   costsImage1: {fileID: 0}
@@ -62950,6 +62960,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpgradeResourceLimit
       objectReference: {fileID: 0}
+    - target: {fileID: 3394914546748500840, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 3394914546776223506, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_text
       value: 4096 Metal
@@ -63094,9 +63108,17 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -457.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3394914547160479985, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3394914547163950603, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_text
       value: 16384 Food
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394914547174497800, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_Padding.m_Left
+      value: 480
       objectReference: {fileID: 0}
     - target: {fileID: 3394914547214434680, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -63146,6 +63168,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -597.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3394914547235719942, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3394914547259191872, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -63153,6 +63179,10 @@ PrefabInstance:
     - target: {fileID: 3394914547259191872, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpgradeResourceLimit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394914547259191872, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3394914547331148862, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_text
@@ -63225,6 +63255,10 @@ PrefabInstance:
     - target: {fileID: 3394914547568491441, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpgradeResourceLimit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394914547568491441, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 3394914547614341131, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -63306,6 +63340,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpgradeResourceLimit
       objectReference: {fileID: 0}
+    - target: {fileID: 3394914547765033058, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 3394914547780118828, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_text
       value: '65536 Wood
@@ -63319,6 +63357,10 @@ PrefabInstance:
     - target: {fileID: 3394914547852443972, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpgradeResourceLimit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394914547852443972, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3394914547988085886, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -63420,6 +63462,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpgradeResourceLimit
       objectReference: {fileID: 0}
+    - target: {fileID: 3394914548103055819, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 22
+      objectReference: {fileID: 0}
     - target: {fileID: 3394914548104895419, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_text
       value: 4096 Food
@@ -63431,6 +63477,10 @@ PrefabInstance:
     - target: {fileID: 3394914548115200098, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpgradeResourceLimit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394914548115200098, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3394914548119235834, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -63475,6 +63525,10 @@ PrefabInstance:
     - target: {fileID: 3394914548249646175, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpgradeResourceLimit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394914548249646175, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 3394914548371270752, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_text
@@ -63591,9 +63645,17 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: UpgradeResourceLimit
       objectReference: {fileID: 0}
+    - target: {fileID: 3394914548579296242, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 3394914548584419071, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_text
       value: 16384 Wood
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982308424479260079, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5982308424479260079, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.b
@@ -63638,6 +63700,10 @@ PrefabInstance:
     - target: {fileID: 5982308425206882794, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -317.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982308425206882797, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6320121894959967475, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_text
@@ -77471,6 +77537,8 @@ MonoBehaviour:
   statsImprovement2: {fileID: 47775520}
   statsImage3: {fileID: 903743407}
   statsImprovement3: {fileID: 919938115}
+  currenTierBuildingLvlImage: {fileID: 0}
+  nextTierBuildingLvlImage: {fileID: 0}
   buildTimeImage: {fileID: 1491469547}
   buildTime: {fileID: 1753999192}
   costsImage1: {fileID: 547644828}
@@ -91384,6 +91452,8 @@ MonoBehaviour:
   statsImprovement2: {fileID: 2014669413}
   statsImage3: {fileID: 1964946425}
   statsImprovement3: {fileID: 1582103027}
+  currenTierBuildingLvlImage: {fileID: 0}
+  nextTierBuildingLvlImage: {fileID: 0}
   buildTimeImage: {fileID: 1635463975}
   buildTime: {fileID: 1191789041}
   costsImage1: {fileID: 2071597176}
@@ -97274,6 +97344,8 @@ MonoBehaviour:
   statsImprovement2: {fileID: 3292236170838284455}
   statsImage3: {fileID: 3292236171938120895}
   statsImprovement3: {fileID: 3292236170827541586}
+  currenTierBuildingLvlImage: {fileID: 0}
+  nextTierBuildingLvlImage: {fileID: 0}
   buildTimeImage: {fileID: 3292236170779651745}
   buildTime: {fileID: 3292236171130926614}
   costsImage1: {fileID: 3292236170329159406}
@@ -103929,6 +104001,8 @@ MonoBehaviour:
   statsImprovement2: {fileID: 1111408305807498182}
   statsImage3: {fileID: 1973940782157366652}
   statsImprovement3: {fileID: 365005126452051411}
+  currenTierBuildingLvlImage: {fileID: 0}
+  nextTierBuildingLvlImage: {fileID: 0}
   buildTimeImage: {fileID: 4671266394985058859}
   buildTime: {fileID: 7414229297109036664}
   costsImage1: {fileID: 7745434287334929609}
@@ -103975,6 +104049,8 @@ MonoBehaviour:
   statsImprovement2: {fileID: 1111408305999621403}
   statsImage3: {fileID: 1973940782082569121}
   statsImprovement3: {fileID: 365005126543035150}
+  currenTierBuildingLvlImage: {fileID: 0}
+  nextTierBuildingLvlImage: {fileID: 0}
   buildTimeImage: {fileID: 4671266394910254326}
   buildTime: {fileID: 7414229297267726501}
   costsImage1: {fileID: 7745434287141224980}
@@ -108744,6 +108820,8 @@ MonoBehaviour:
   statsImprovement2: {fileID: 6259628371030135052}
   statsImage3: {fileID: 6259628370954346940}
   statsImprovement3: {fileID: 6259628370772038888}
+  currenTierBuildingLvlImage: {fileID: 0}
+  nextTierBuildingLvlImage: {fileID: 0}
   buildTimeImage: {fileID: 6259628371083919287}
   buildTime: {fileID: 6259628372007585290}
   costsImage1: {fileID: 6259628372218634816}
