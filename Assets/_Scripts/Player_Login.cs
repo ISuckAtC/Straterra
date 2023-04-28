@@ -22,6 +22,8 @@ public class Player_Login : MonoBehaviour
 
     public GameObject sceneSelection;
 
+    public bool logging = false;
+
     void Awake()
     {
         #if !UNITY_EDITOR
@@ -60,6 +62,8 @@ public class Player_Login : MonoBehaviour
 */
     public void Login()
     {
+        if (logging) return;
+        logging = true;
         q = GetComponent<ActionQueue>();
         GameObject thisObject = gameObject;
         string pass = input_Password.text;
