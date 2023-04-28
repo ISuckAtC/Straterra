@@ -19,6 +19,18 @@ public class Player_Login : MonoBehaviour
 
     private bool loadScene;
     private string sceneName = "RunErikPrototype";
+
+    public GameObject sceneSelection;
+
+    void Awake()
+    {
+        #if !UNITY_EDITOR
+        if (sceneSelection != null)
+        {
+            Destroy(sceneSelection);
+        }
+        #endif
+    }
     
     // Start is called before the first frame update
     void Start()
