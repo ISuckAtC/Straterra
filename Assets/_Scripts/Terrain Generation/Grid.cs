@@ -324,7 +324,7 @@ public class Grid : MonoBehaviour
 
     private Vector3Int GetVec3Position(int id)
     {
-        return new Vector3Int(id % width, 1, id / width);
+        return new Vector3Int(id % width, id / width, 1);
     }
     
     public int GetIdAdjacent(int id, int x, int y)
