@@ -292,8 +292,17 @@ public class Grid : MonoBehaviour
         
         return tiles;
     }
-    
-    
+
+    public bool CheckTileValidity(int tile)
+    {
+        for (int i = 0; i < validTiles.Length; i++)
+        {
+            if (tile == validTiles[i])
+                return true;
+        }
+
+        return false;
+    }
 
     public int FindTileWithHighestResourceAmount(string type)
     {

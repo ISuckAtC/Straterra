@@ -23,9 +23,9 @@ public class MissionTracker : MonoBehaviour
     public Mission[] loyaltyMissions;
     public Mission[] playtimeMissions;
 
-    private int resAmtIndex, resGainIndex, townBuildingIndex, worldBuildingIndex, trainingIndex, raidingIndex, defendingIndex, loyaltyIndex, playtimeIndex;
+    private int foodAmtIndex, woodAmtIndex, metalAmtIndex, orderAmtIndex, resGainIndex, townBuildingIndex, worldBuildingIndex, trainingIndex, raidingIndex, defendingIndex, loyaltyIndex, playtimeIndex;
     
-    private bool resAmtComplete, resGainComplete, townBuildingComplete, worldBuildingComplete, trainingComplete, raidingComplete, defendingComplete, loyaltyComplete, playtimeComplete;
+    //private bool foodAmtComplete, woodAmtComplete, metalAmtComplete, orderAmtComplete, resAmtComplete, resGainComplete, townBuildingComplete, worldBuildingComplete, trainingComplete, raidingComplete, defendingComplete, loyaltyComplete, playtimeComplete;
     
     void Start()
     {
@@ -96,42 +96,83 @@ public class MissionTracker : MonoBehaviour
 
     private void CheckAllMissions()
     {
-        if (!resAmtComplete) CheckResourceAmountMissions();
-        if (!resGainComplete) CheckResourceGainMissions();
-        if (!townBuildingComplete) CheckTownBuildingMissions();
-        if (!worldBuildingComplete) CheckWorldBuildingMissions();
-        if (!trainingComplete) CheckTrainingMissions();
-        if (!raidingComplete) CheckRaidingMissions();
-        if (!defendingComplete) CheckDefendingMissions();
-        if (!loyaltyComplete) CheckLoyaltyMissions();
-        if (!playtimeComplete) CheckPlaytimeMissions();
+        CheckResourceAmountMissions();//if (!resAmtComplete)        
+        CheckResourceGainMissions();//if (!resGainComplete)       
+        CheckTownBuildingMissions();//if (!townBuildingComplete)  
+        CheckWorldBuildingMissions();//if (!worldBuildingComplete) 
+        CheckTrainingMissions();//if (!trainingComplete)      
+        CheckRaidingMissions();//if (!raidingComplete)       
+        CheckDefendingMissions();//if (!defendingComplete)     
+        CheckLoyaltyMissions();//if (!loyaltyComplete)       
+        CheckPlaytimeMissions();//if (!playtimeComplete)      
     }
 
     private void CheckResourceAmountMissions()
     {
+        // Food
+        if (foodAmtIndex < 5)
+        {
+            if (GameManager.PlayerFood > resAmtMissions[foodAmtIndex].amount)
+            {
+                // Rewar
+                foodAmtIndex++;
+
+            }
+
+        }
+        
+        
+        // Wood
+        if (woodAmtIndex < 5)
+        {
+            if (GameManager.PlayerWood > resAmtMissions[woodAmtIndex + 5].amount)
+            {
+                // Rewar
+                woodAmtIndex++;
+            }
+        }
+
+        // Metal
+        if (metalAmtIndex < 5)
+        {
+            if (GameManager.PlayerMetal > resAmtMissions[metalAmtIndex + 10].amount)
+            {
+                // Rewar
+                metalAmtIndex++;
+            }
+        }
+
+        // Order
+        if (orderAmtIndex < 5)
+        {
+            if (GameManager.PlayerOrder > resAmtMissions[orderAmtIndex + 15].amount)
+            {
+                // Rewar
+                orderAmtIndex++;
+            }
+        }
+        
+        /*
         for (int i = 0; i < resAmtMissions.Length; i++)
         {
             if (resAmtMissions[i].unitIdentifier == 0)
             {
                 // Food
-                
             }
             else if (resAmtMissions[i].unitIdentifier == 1)
             {
                 // Wood
-                
             }
             else if (resAmtMissions[i].unitIdentifier == 2)
             {
                 // Metal
-                
             }
             else
             {
                 // Order
-                
             }
         }
+        
         
         if (GameManager.PlayerFood > resAmtMissions[resAmtIndex].amount)
         {
@@ -139,7 +180,7 @@ public class MissionTracker : MonoBehaviour
 
             if (resAmtIndex > resAmtMissions.Length) resAmtComplete = true;
         }
-
+        */
     }
     
     private void CheckResourceGainMissions()

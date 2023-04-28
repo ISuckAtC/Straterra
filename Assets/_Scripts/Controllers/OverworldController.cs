@@ -703,7 +703,7 @@ public class OverworldController : MonoBehaviour
             SplashText.Splash("A building is already here.");
             return;
         }
-        if (Mathf.Abs(playerVillagePosition.x - selectedTileHighlight.transform.position.x) > 8 || Mathf.Abs(playerVillagePosition.y - selectedTileHighlight.transform.position.z) > 8)
+        if (!Grid._instance.CheckTileValidity(selectedPosition))
         {
             Debug.LogWarning("Building too far away from Village!");
 
