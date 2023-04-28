@@ -38,6 +38,12 @@ public class BuildingMenu : MonoBehaviour
     public Image statsImage3;
     public TMP_Text statsImprovement3;
 
+    //Upgrade Image
+    [Tooltip("Image of the current building tier")]
+    public Image currenTierBuildingLvlImage;
+    [Tooltip("Image of the next building tier")]
+    public Image nextTierBuildingLvlImage;
+
     public Image buildTimeImage;
     public TMP_Text buildTime;
 
@@ -50,6 +56,8 @@ public class BuildingMenu : MonoBehaviour
 
     public void OpenUpgradeMenu()
     {
+        currenTierBuildingLvlImage.sprite = CityPlayer.cityPlayer.buildingPrefabs[id].GetComponent<Image>().sprite;
+        nextTierBuildingLvlImage.sprite = CityPlayer.cityPlayer.buildingPrefabs[id+1].GetComponent<Image>().sprite;
         TownBuilding building = TownBuildingDefinition.I[id];
         if (building.level >= TownBuildingDefinition.I[id].maxLevel) return;
 
@@ -57,7 +65,7 @@ public class BuildingMenu : MonoBehaviour
         int currentHealth = building.health;
         int nextHealth = nextBuilding.health;
 
-        statsImprovement1.text = currentHealth + "->" + nextHealth;
+        //statsImprovement1.text = currentHealth + "->" + nextHealth;
 
         int foodCost = nextBuilding.foodCost;
         int woodCost = nextBuilding.woodCost;
