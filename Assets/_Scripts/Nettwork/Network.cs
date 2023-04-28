@@ -164,6 +164,8 @@ public class Network
             NetworkStructs.ErrorResult eRes = JsonUtility.FromJson<NetworkStructs.ErrorResult>(content);
             if (eRes.error == "Session invalid")
             {
+                GameManager.I.KickPlayerToLogin();
+
                 // Attempt to relog
                 await Task.Run<NetworkStructs.ActionResult>(async () =>
                 {
