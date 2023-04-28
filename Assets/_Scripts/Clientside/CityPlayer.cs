@@ -322,12 +322,12 @@ public class CityPlayer : MonoBehaviour
                 levelBackgrounds[1].color = inactiveBackground;
                 levelBackgrounds[2].color = inactiveBackground;
 
-                buttonBackgrounds[2].transform.GetComponent<Button>().enabled = false;
                 buttonBackgrounds[3].transform.GetComponent<Button>().enabled = false;
-                buttonBackgrounds[12].transform.GetComponent<Button>().enabled = false;
+                buttonBackgrounds[4].transform.GetComponent<Button>().enabled = false;
                 buttonBackgrounds[13].transform.GetComponent<Button>().enabled = false;
-                buttonBackgrounds[22].transform.GetComponent<Button>().enabled = false;
+                buttonBackgrounds[14].transform.GetComponent<Button>().enabled = false;
                 buttonBackgrounds[23].transform.GetComponent<Button>().enabled = false;
+                buttonBackgrounds[24].transform.GetComponent<Button>().enabled = false;
             }
 
             else if (TownBuildingDefinition.I[warehouseMenu.id].level == 2)
@@ -336,24 +336,24 @@ public class CityPlayer : MonoBehaviour
 
                 levelBackgrounds[2].color = inactiveBackground;
 
-                buttonBackgrounds[2].transform.GetComponent<Button>().enabled = true;
-                buttonBackgrounds[2].color = buyableButton;
-                buttonBackgrounds[12].transform.GetComponent<Button>().enabled = true;
-                buttonBackgrounds[12].color = buyableButton;
-                buttonBackgrounds[22].transform.GetComponent<Button>().enabled = true;
-                buttonBackgrounds[22].color = buyableButton;
-            }
-
-            else if (TownBuildingDefinition.I[warehouseMenu.id].level == 3)
-            {
-                levelBackgrounds[2].color = activeBackground;
-
                 buttonBackgrounds[3].transform.GetComponent<Button>().enabled = true;
                 buttonBackgrounds[3].color = buyableButton;
                 buttonBackgrounds[13].transform.GetComponent<Button>().enabled = true;
                 buttonBackgrounds[13].color = buyableButton;
                 buttonBackgrounds[23].transform.GetComponent<Button>().enabled = true;
                 buttonBackgrounds[23].color = buyableButton;
+            }
+
+            else if (TownBuildingDefinition.I[warehouseMenu.id].level == 3)
+            {
+                levelBackgrounds[2].color = activeBackground;
+
+                buttonBackgrounds[4].transform.GetComponent<Button>().enabled = true;
+                buttonBackgrounds[4].color = buyableButton;
+                buttonBackgrounds[14].transform.GetComponent<Button>().enabled = true;
+                buttonBackgrounds[14].color = buyableButton;
+                buttonBackgrounds[24].transform.GetComponent<Button>().enabled = true;
+                buttonBackgrounds[24].color = buyableButton;
             }
 
             if (TownBuildingDefinition.I[warehouseMenu.id].level < 3)
