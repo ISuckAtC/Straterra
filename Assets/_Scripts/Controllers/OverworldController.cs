@@ -507,7 +507,8 @@ public class OverworldController : MonoBehaviour
                     //InfoScreen._instance.ToggleInfoScreen(false);
                     //InfoScreen._instance.ToggleInfoScreenResource(false);
                     //if (id == previousTile) //Double Click removed
-
+                    
+                    PlaceTiles._instance.ColorBuildableTiles();
                     buildMenu.gameObject.SetActive(true);
                     //buildMenu.transform.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
 
@@ -538,7 +539,8 @@ public class OverworldController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             selectedTileHighlight.gameObject.SetActive(false);
-
+            PlaceTiles._instance.ClearBuildableTiles();
+            
             buildMenu.gameObject.SetActive(false);
 
             InfoScreen._instance.CloseInfoScreen();
@@ -552,6 +554,16 @@ public class OverworldController : MonoBehaviour
             NumConverter.GetConvertedTimeStamp(new DateTime(2013, 1, 1));
 
             FocusOnVillage();
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            PlaceTiles._instance.ColorBuildableTiles();
+        }
+
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            PlaceTiles._instance.ClearBuildableTiles();
         }
     }
 
@@ -635,6 +647,8 @@ public class OverworldController : MonoBehaviour
 
     public void OpenOverworldBuildingWindow(int buildingId)
     {
+        
+        
         // 0 = Farm
         // 1 = Logging Camp
         // 2 = Mine
@@ -746,6 +760,7 @@ public class OverworldController : MonoBehaviour
                 else
                 {
                     new ScheduledMapBuildEvent(mapBuilding.buildingTime, (byte)mapBuilding.id, lockedPosition, LocalData.SelfUser.userId);
+                    PlaceTiles._instance.ClearBuildableTiles();
                     buildMenu.gameObject.SetActive(false);
                 }
             });

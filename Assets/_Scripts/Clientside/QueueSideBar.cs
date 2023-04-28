@@ -49,7 +49,7 @@ public class QueueSideBar : MonoBehaviour
         if (mapBuilding.Count > 0)
         {
             if (line) qText += "_______________________________________\n";
-            qText += "Map Buildins: \n";
+            qText += "Map Buildings: \n";
             for (int i = 0; i < mapBuilding.Count; ++i)
             {
                 ScheduledMapBuildEvent productionEvent = mapBuilding[i];

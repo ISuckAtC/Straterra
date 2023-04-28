@@ -259,6 +259,13 @@ public class Network
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 
+    public static async Task<NetworkStructs.ActionResult> UpgradeResourceCap(int id)
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/upgradeResourceCap?" + tokenIdentity + "&" + id);
+
+        return JsonUtility.FromJson<NetworkStructs.ActionResult>(await message.Content.ReadAsStringAsync());
+    }
+
     public static async Task<NetworkStructs.NetworkUpdate> GetUpdate()
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getUpdate?" + tokenIdentity);

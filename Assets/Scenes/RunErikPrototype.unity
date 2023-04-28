@@ -5241,6 +5241,210 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &126639748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 126639749}
+  - component: {fileID: 126639751}
+  - component: {fileID: 126639750}
+  m_Layer: 0
+  m_Name: BuildTilemap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &126639749
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126639748}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1943953675}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!483693784 &126639750
+TilemapRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126639748}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_ChunkSize: {x: 32, y: 32, z: 32}
+  m_ChunkCullingBounds: {x: 1, y: 1, z: 1}
+  m_MaxChunkCount: 16
+  m_MaxFrameAge: 16
+  m_SortOrder: 0
+  m_Mode: 0
+  m_DetectChunkCullingBounds: 1
+  m_MaskInteraction: 0
+--- !u!1839735485 &126639751
+Tilemap:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126639748}
+  m_Enabled: 1
+  m_Tiles: {}
+  m_AnimatedTiles: {}
+  m_TileAssetArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileMatrixArray:
+  - m_RefCount: 0
+    m_Data:
+      e00: 0
+      e01: 0
+      e02: 4.7500076
+      e03: 4.7500076
+      e10: 0
+      e11: 0
+      e12: 7.13e-43
+      e13: 7.13e-43
+      e20: 3.6220755e-15
+      e21: 1e-45
+      e22: -5.1750777e-19
+      e23: -5.5018436e+19
+      e30: 4.5905e-41
+      e31: 0
+      e32: 7.13e-43
+      e33: 7.16e-43
+  m_TileColorArray:
+  - m_RefCount: 0
+    m_Data: {r: 3.76e-41, g: 3.76e-41, b: 3.76e-41, a: 3.76e-41}
+  m_TileObjectToInstantiateArray: []
+  m_AnimationFrameRate: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Origin: {x: -5, y: 0, z: 0}
+  m_Size: {x: 61, y: 64, z: 1}
+  m_TileAnchor: {x: 0, y: 0, z: 0}
+  m_TileOrientation: 1
+  m_TileOrientationMatrix:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
 --- !u!1 &129000200
 GameObject:
   m_ObjectHideFlags: 0
@@ -59134,6 +59338,8 @@ MonoBehaviour:
   tilemap: {fileID: 2075945052}
   overlayMap: {fileID: 373919092}
   DiplomacyMap: {fileID: 1638121623}
+  buildingMap: {fileID: 126639751}
+  buildHighlightTile: {fileID: 11400000, guid: a14cfa4df0f6c9b42b5b7bf45f2f78a1, type: 2}
 --- !u!114 &1415235159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63276,8 +63482,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3394914548441640964, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_text
-      value: "Increase your Resources <br> <br>Upgrade the warehouse to unlock next
-        tiers \n"
+      value: 'Increase your Resources <br> <br>Upgrade the warehouse to unlock next
+        tiers <br><br>Each upgrade costs 100 of each resource
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 3394914548441640964, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_fontSize
@@ -63299,9 +63507,17 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 24
       objectReference: {fileID: 0}
+    - target: {fileID: 3394914548441640964, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 3394914548441640964, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3394914548441640965, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -303
+      value: -352
       objectReference: {fileID: 0}
     - target: {fileID: 3394914548441640966, guid: 3794ac83eb3b8d748bc97a6a931404e5, type: 3}
       propertyPath: m_IsActive
@@ -75396,31 +75612,69 @@ MonoBehaviour:
   - {fileID: 1495385600}
   - {fileID: 1495385599}
   buttonBackgrounds:
+  - {fileID: 0}
   - {fileID: 1851323201}
   - {fileID: 1851323200}
   - {fileID: 1851323199}
   - {fileID: 1851323198}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 1851323197}
   - {fileID: 1851323196}
   - {fileID: 1851323195}
   - {fileID: 1851323194}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 1851323193}
   - {fileID: 1851323192}
   - {fileID: 1851323191}
   - {fileID: 1851323190}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   buttonTexts:
+  - {fileID: 0}
   - {fileID: 1851323189}
   - {fileID: 1851323188}
   - {fileID: 1851323187}
   - {fileID: 1851323186}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 1851323185}
   - {fileID: 1851323184}
   - {fileID: 1851323183}
   - {fileID: 1851323182}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 1851323181}
   - {fileID: 1851323180}
   - {fileID: 1851323179}
   - {fileID: 1851323178}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   trainingMenu: {fileID: 758036532}
   trainingTitle: {fileID: 258241328}
   trainingInput: {fileID: 105179602}
@@ -84376,6 +84630,7 @@ Transform:
   - {fileID: 2075945050}
   - {fileID: 373919090}
   - {fileID: 1638121621}
+  - {fileID: 126639749}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
