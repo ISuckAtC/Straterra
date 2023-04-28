@@ -264,6 +264,10 @@ public class Grid : MonoBehaviour
                 if (dist < radius)
                 {
                     inrange.Add(GetIdByVec(new Vector2Int(i,j)));
+                    
+                    
+                    
+                    
                     valid++;
                 }
             }
@@ -276,6 +280,20 @@ public class Grid : MonoBehaviour
         
         return inrange.ToArray();
     }
+
+    public Vector3Int[] GetValidTiles()
+    {
+        Vector3Int[] tiles = new Vector3Int[validTiles.Length];//validTiles.Length;
+        
+        for (int i = 0; i < validTiles.Length; i++)
+        {
+            tiles[i] = GetVec3Position(validTiles[i]);
+        }
+        
+        return tiles;
+    }
+    
+    
 
     public int FindTileWithHighestResourceAmount(string type)
     {
@@ -302,6 +320,11 @@ public class Grid : MonoBehaviour
 
         return validTiles[highest];
 
+    }
+
+    private Vector3Int GetVec3Position(int id)
+    {
+        return new Vector3Int(id % width, 1, id / width);
     }
     
     public int GetIdAdjacent(int id, int x, int y)

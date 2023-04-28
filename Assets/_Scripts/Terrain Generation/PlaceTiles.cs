@@ -26,6 +26,9 @@ public class PlaceTiles : MonoBehaviour
     public Tilemap tilemap;
     public Tilemap overlayMap;
     public Tilemap DiplomacyMap;
+    public Tilemap buildingMap;
+
+    public UnityEngine.Tilemaps.Tile buildHighlightTile;
     
     // Relative values to set tile color correctly
     private float maxHeight = 0f;
@@ -225,5 +228,19 @@ public class PlaceTiles : MonoBehaviour
                 tilemap.SetColor(new Vector3Int(i, j, 1), new Color(val, val, val));
             }
         }
+    }
+
+    public void ColorBuildableTiles()
+    {
+        Vector3Int[] tiles = Grid._instance.GetValidTiles();
+
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            buildingMap.SetTile(tiles[i], buildHighlightTile);
+        }
+    }
+    public void ClearBuildableTiles()
+    {
+        buildingMap.ClearAllTiles();
     }
 }

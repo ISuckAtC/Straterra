@@ -553,6 +553,16 @@ public class OverworldController : MonoBehaviour
 
             FocusOnVillage();
         }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            PlaceTiles._instance.ColorBuildableTiles();
+        }
+
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            PlaceTiles._instance.ClearBuildableTiles();
+        }
     }
 
     public static void AttackWithAll(int position)
