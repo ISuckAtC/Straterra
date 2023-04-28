@@ -165,6 +165,7 @@ public class Network
             if (eRes.error == "Session invalid")
             {
                 GameManager.I.KickPlayerToLogin();
+                return new NetworkStructs.Resources();
 
                 // Attempt to relog
                 await Task.Run<NetworkStructs.ActionResult>(async () =>
@@ -288,6 +289,8 @@ public class Network
             NetworkStructs.ErrorResult eRes = JsonUtility.FromJson<NetworkStructs.ErrorResult>(content);
             if (eRes.error == "Session invalid")
             {
+                GameManager.I.KickPlayerToLogin();
+                return new NetworkUpdate();
                 // Attempt to relog
                 await Task.Run<NetworkStructs.ActionResult>(async () =>
                 {
@@ -298,6 +301,8 @@ public class Network
                     if (!res.success)
                     {
                         Debug.LogError(res.message);
+                        return;
+                        
                     }
                     else
                     {
