@@ -513,8 +513,11 @@ public class OverworldController : MonoBehaviour
                     //buildMenu.transform.position = new Vector3Int((int)(hit.point.x + PlaceTiles.tilePivot.x), (int)1f, (int)(hit.point.z + PlaceTiles.tilePivot.y));
 
                     farmWindow.SetActive(false);
+                    foodBuildingWarningWindow.SetActive(false);
                     loggingCampWindow.SetActive(false);
+                    woodBuildingWarningWindow.SetActive(false);
                     mineWindow.SetActive(false);
+                    metalBuildingWarningWindow.SetActive(false);
                     rightSideBlocker.SetActive(false);
 
                     /*
@@ -644,6 +647,12 @@ public class OverworldController : MonoBehaviour
     public GameObject loggingCampWindow;
     public GameObject mineWindow;
     public GameObject rightSideBlocker;
+    public GameObject foodBuildingWarningWindow;
+    public GameObject woodBuildingWarningWindow;
+    public GameObject metalBuildingWarningWindow;
+    public Slider foodBuildingWarningSlider;
+    public Slider woodBuildingWarningSlider;
+    public Slider metalBuildingWarningSlider;
 
     public void OpenOverworldBuildingWindow(int buildingId)
     {
@@ -711,8 +720,30 @@ public class OverworldController : MonoBehaviour
             return;
         }
 
-        MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
+        // Opens warning windows when the yield is below 50%
+        if (buildingId == 10 && Grid._instance.tiles[selectedPosition].foodAmount < 0.5f && !foodBuildingWarningWindow.activeSelf)
+        {
+            SplashText.Splash("Low Yield Tile");
+            foodBuildingWarningWindow.SetActive(true);
+            foodBuildingWarningSlider.value = Grid._instance.tiles[selectedPosition].foodAmount;
+            return;
+        }
+        if (buildingId == 20 && Grid._instance.tiles[selectedPosition].woodAmount < 0.5f && !woodBuildingWarningWindow.activeSelf)
+        {
+            SplashText.Splash("Low Yield Tile");
+            woodBuildingWarningWindow.SetActive(true);
+            woodBuildingWarningSlider.value = Grid._instance.tiles[selectedPosition].woodAmount;
+            return;
+        }
+        if (buildingId == 30 && Grid._instance.tiles[selectedPosition].metalAmount < 0.5f && !metalBuildingWarningWindow.activeSelf)
+        {
+            SplashText.Splash("Low Yield Tile");
+            metalBuildingWarningWindow.SetActive(true);
+            metalBuildingWarningSlider.value = Grid._instance.tiles[selectedPosition].metalAmount;
+            return;
+        }
 
+        MapBuilding mapBuilding = MapBuildingDefinition.I[buildingId];
 
         int foodCost = mapBuilding.foodCost;
         int woodCost = mapBuilding.woodCost;
@@ -766,6 +797,9 @@ public class OverworldController : MonoBehaviour
                     new ScheduledMapBuildEvent(mapBuilding.buildingTime, (byte)mapBuilding.id, lockedPosition, LocalData.SelfUser.userId);
                     PlaceTiles._instance.ClearBuildableTiles();
                     buildMenu.gameObject.SetActive(false);
+                    foodBuildingWarningWindow.SetActive(false);
+                    woodBuildingWarningWindow.SetActive(false);
+                    metalBuildingWarningWindow.SetActive(false);
                 }
             });
         });

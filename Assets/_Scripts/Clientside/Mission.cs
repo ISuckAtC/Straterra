@@ -30,7 +30,7 @@ public class Mission : ScriptableObject
     public int metalReward;
     public int orderReward;
     [Space(10)]
-    public int archerReward;
+    public int bowmanReward;
     public int cavalryReward;
     public int swordsmanReward;
     public int spearmanReward;
