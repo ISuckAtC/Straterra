@@ -32,7 +32,9 @@ public class QueueSideBar : MonoBehaviour
                 if (productionEvent.amount > 1 && UnitDefinition.I[productionEvent.unitId].name != "Cavalry")
                 {
                     string plural = UnitDefinition.I[productionEvent.unitId].name;
-                    string[] splits = plural.Split('m', 1, System.StringSplitOptions.None);
+                    string[] splits = plural.Split('m', 2, System.StringSplitOptions.None);
+                    Debug.Log("splits "+ splits[0]);
+                    Debug.Log(splits[1]);
                     splits[1] = "men";
 
                     plural = splits[0] + splits[1];
