@@ -28,7 +28,23 @@ public class QueueSideBar : MonoBehaviour
             for (int i = 0; i < unitProduction.Count; ++i)
             {
                 ScheduledUnitProductionEvent productionEvent = unitProduction[i];
-                qText += productionEvent.amount + " " + UnitDefinition.I[productionEvent.unitId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft) + "\n";
+             
+                if (productionEvent.amount > 1 && UnitDefinition.I[productionEvent.unitId].name != "Cavalry")
+                {
+                    string plural = UnitDefinition.I[productionEvent.unitId].name;
+                    string[] splits = plural.Split('m', 2, System.StringSplitOptions.None);
+                    Debug.Log("splits "+ splits[0]);
+                    Debug.Log(splits[1]);
+                    splits[1] = "men";
+
+                    plural = splits[0] + splits[1];
+
+                    qText += productionEvent.amount + " " + plural + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft) + "\n";
+                }
+                else
+                {
+                    qText += productionEvent.amount + " " + UnitDefinition.I[productionEvent.unitId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft) + "\n";
+                }
             }
             line = true;
         }

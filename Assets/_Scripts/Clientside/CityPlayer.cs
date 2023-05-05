@@ -420,7 +420,7 @@ public class CityPlayer : MonoBehaviour
             aq.queue.Add(() =>
             {
                 string swrText = "Swordsmen: 0*";
-                string arcText = "Archers: 0*";
+                string arcText = "Bowmen: 0*";
                 string sprText = "Spearmen: 0*";
                 string cvlText = "Cavalry: 0*";
 
@@ -436,8 +436,8 @@ public class CityPlayer : MonoBehaviour
                         swrText = "Swordsmen: " + NumConverter.GetConvertedAmount(amount);
                     UnityEngine.Debug.LogError(swrText + " + " + arcText + sprText + cvlText);
 
-                    if (UnitDefinition.I[i*10].name == "Archer")
-                        arcText = "Archers: " + NumConverter.GetConvertedAmount(amount);
+                    if (UnitDefinition.I[i*10].name == "Bowman")
+                        arcText = "Bowmen: " + NumConverter.GetConvertedAmount(amount);
 
                     if (UnitDefinition.I[i*10].name == "Spearman")
                         sprText = "Spearmen: " + NumConverter.GetConvertedAmount(amount);
