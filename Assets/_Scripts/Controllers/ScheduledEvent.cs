@@ -274,10 +274,6 @@ public class ScheduledUnitUpgradeEvent : ScheduledEvent
     {
         this.unitId = unitId;
     }
-
-            SplashText.Splash("Combat log: " + message);
-            NotificationCenter.Add("BATTLE REPORT " + GameManager.I.timesAttacking, message);
-        }
     public override void Complete()
     {
         base.Complete();
