@@ -31,6 +31,8 @@ namespace NetworkStructs
         public int buildingId;
         public int buildingSlot;
         public int position;
+        public int destination;
+        public int origin;
         public bool running;
     }
 

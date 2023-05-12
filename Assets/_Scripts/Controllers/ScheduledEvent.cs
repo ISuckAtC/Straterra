@@ -84,6 +84,24 @@ public class ScheduledEvent
                                     // map
                                     break;
                                 }
+                            case 4:
+                                {
+                                    // Move army
+                                    tempEvents.Add(new ScheduledMoveArmyEvent(sEvent.secondsLeft, null, sEvent.destination, sEvent.origin, sEvent.owner));
+                                    break;
+                                }
+                            case 5:
+                                {
+                                    // Attack
+                                    tempEvents.Add(new ScheduledAttackEvent(sEvent.secondsLeft, null, sEvent.destination, sEvent.origin, sEvent.owner));
+                                    break;
+                                }
+                            case 6:
+                                {
+                                    // Upgrade unit
+                                    tempEvents.Add(new ScheduledUnitUpgradeEvent(sEvent.secondsLeft, sEvent.unitId, sEvent.owner));
+                                    break;
+                                }
                         }
 
 
@@ -220,38 +238,6 @@ public class ScheduledMoveArmyEvent : ScheduledEvent
     public override void Complete()
     {
         base.Complete();
-
-        Debug.Log("Scheduled Move Event Completed");
-
-        if (Grid._instance.tiles[destination].building == 0)
-        {
-            Debug.Log("Tried to move troops to a tile with no buildings");
-            if (Grid._instance.tiles[destination].building != 0)
-            {
-                ScheduledMoveArmyEvent e = new ScheduledMoveArmyEvent(0, army, origin, destination, owner);
-                return;
-            }
-            return;
-        }
-
-        MapBuilding building = MapBuildingDefinition.I[Grid._instance.tiles[destination].building];
-
-        if (building.type == MapBuildingType.village)
-        {
-            Debug.Log("Soliders have returned home");
-            for (int i = 0; i < army.Count; ++i)
-            {
-                GameManager.I.playerResources.unitAmounts[army[i].unitId] += army[i].count;
-            }
-            return;
-        }
-
-        if (Grid._instance.tiles[destination].army != null && Grid._instance.tiles[destination].army.Count > 0)
-        {
-            Debug.Log("Tried to move troops to a tile with troops on it");
-            return;
-        }
-        Grid._instance.tiles[destination].army = army;
     }
 }
 
@@ -278,80 +264,24 @@ public class ScheduledAttackEvent : ScheduledEvent
     public override void Complete()
     {
         base.Complete();
+    }
+}
 
-        List<Group> enemyArmy = Grid._instance.tiles[destination].army;
-
-        string message = "";
-
-        if (owner == 666)
-        {
-            (bool attackerWon, List<Group> remains) result = BattleSim.Fight(enemyArmy, army);
-
-            if (result.attackerWon)
-            {
-                Grid._instance.tiles[destination].army = null;
-
-                message += "Your troops were defeated at home!\n\n";
-                message += "___________________________________\n";
-            }
-            else
-            {
-                message += "Your troops managed to defend at home!\n";
-                message += "___________________________________\n";
-                message += "Remaining army:\n\n";
-
-                for (int i = 0; i < result.remains.Count; ++i)
-                {
-                    message += UnitDefinition.I[result.remains[i].unitId].name + " (" + result.remains[i].count + ")\n";
-                }
-                Grid._instance.tiles[destination].army = Grid._instance.tiles[destination].army.Where(x => !x.dead).ToList();
-                for (int i = 0; i < GameManager.PlayerUnitAmounts.Length; ++i)
-                {
-                    int index = Grid._instance.tiles[destination].army.FindIndex(0, Grid._instance.tiles[destination].army.Count, x => x.unitId == i);
-                    if (index > -1) GameManager.PlayerUnitAmounts[i] = Grid._instance.tiles[destination].army[index].count;
-                    else GameManager.PlayerUnitAmounts[i] = 0;
-                }
-            }
-            GameManager.I.timesDefended++;
-
-            NotificationCenter.Add("DEFENCE REPORT " + GameManager.I.timesDefended, message);
-            return;
-        }
-
-        if (enemyArmy != null && enemyArmy.Count > 0)
-        {
-            (bool attackerWon, List<Group> remains) result = BattleSim.Fight(enemyArmy, army);
-
-            if (result.attackerWon)
-            {
-                ScheduledMoveArmyEvent moveArmy = new ScheduledMoveArmyEvent(10, result.remains, LocalData.SelfUser.cityLocation, destination, owner);
-
-                Grid._instance.tiles[destination].army = Grid._instance.tiles[destination].army.Where(x => !x.dead).ToList();
-
-                message += "Your troops were victorious in location [" + destination + "]!\n\n";
-                message += "___________________________________\n";
-                message += "Remaining troops returning home in " + moveArmy.secondsTotal + " seconds:\n\n";
-
-                for (int i = 0; i < result.remains.Count; ++i)
-                {
-                    message += UnitDefinition.I[result.remains[i].unitId].name + " (" + result.remains[i].count + ")\n";
-                }
-            }
-            else
-            {
-                message += "Your troops were defeated in location [" + destination + "]!\n";
-                message += "___________________________________\n";
-                message += "Remaining enemies:\n\n";
-
-                for (int i = 0; i < result.remains.Count; ++i)
-                {
-                    message += UnitDefinition.I[result.remains[i].unitId].name + " (" + result.remains[i].count + ")\n";
-                }
-            }
-            GameManager.I.timesAttacking++;// timesAttacking = 0;
+public class ScheduledUnitUpgradeEvent : ScheduledEvent
+{
+    public int unitId;
+    public ScheduledUnitUpgradeEvent(int secondsTotal, int unitId, int owner) : base(secondsTotal, owner)
+    {
+        this.unitId = unitId;
+    }
 
             SplashText.Splash("Combat log: " + message);
             NotificationCenter.Add("BATTLE REPORT " + GameManager.I.timesAttacking, message);
         }
+    public override void Complete()
+    {
+        base.Complete();
+        Unit unit = UnitDefinition.I[unitId];
+        SplashText.Splash(unit.name + " finished upgrading to level " + unit.level + "!");
     }
 }

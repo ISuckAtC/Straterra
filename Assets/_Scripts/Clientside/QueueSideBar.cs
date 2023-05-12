@@ -19,6 +19,8 @@ public class QueueSideBar : MonoBehaviour
         List<ScheduledUnitProductionEvent> unitProduction = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Cast<ScheduledUnitProductionEvent>().ToList();
         List<ScheduledTownBuildEvent> townBuilding = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledTownBuildEvent)).Cast<ScheduledTownBuildEvent>().ToList();
         List<ScheduledMapBuildEvent> mapBuilding = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledMapBuildEvent)).Cast<ScheduledMapBuildEvent>().ToList();
+        List<ScheduledMoveArmyEvent> moveArmy = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledMoveArmyEvent)).Cast<ScheduledMoveArmyEvent>().ToList();
+        List<ScheduledAttackEvent> attack = ScheduledEvent.activeEvents.Where(x => x.GetType() == typeof(ScheduledAttackEvent)).Cast<ScheduledAttackEvent>().ToList();
 
         bool line = false;
 
@@ -70,6 +72,28 @@ public class QueueSideBar : MonoBehaviour
             {
                 ScheduledMapBuildEvent productionEvent = mapBuilding[i];
                 qText += MapBuildingDefinition.I[productionEvent.buildingId].name + ": " + NumConverter.GetConvertedTime(productionEvent.secondsLeft) + "\n";
+            }
+        }
+
+        if (moveArmy.Count > 0)
+        {
+            if (line) qText += "_______________________________________\n";
+            qText += "Moving armies: \n";
+            for (int i = 0; i < moveArmy.Count; ++i)
+            {
+                ScheduledMoveArmyEvent moveArmyEvent = moveArmy[i];
+                qText += "Moving army -> " + moveArmyEvent.destination + " : " + NumConverter.GetConvertedTime(moveArmyEvent.secondsLeft) + "\n";
+            }
+        }
+        
+        if (attack.Count > 0)
+        {
+            if (line) qText += "_______________________________________\n";
+            qText += "Attacks: \n";
+            for (int i = 0; i < attack.Count; ++i)
+            {
+                ScheduledAttackEvent attackEvent = attack[i];
+                qText += "Attacking -> " + attackEvent.destination + " : " + NumConverter.GetConvertedTime(attackEvent.secondsLeft) + "\n";
             }
         }
 
