@@ -31,10 +31,12 @@ public static class LocalData
             var u = await Network.GetSelfUser();
 
             UnityEngine.Debug.Log(u.name + " | " + u.userId);
-            UnityEngine.Debug.Log(u.cityBuildingSlots[5]);
+            string outputCityBuildings = "City buildings: ";
+            for (int i = 0; i < 8; ++i) outputCityBuildings += u.cityBuildingSlots[i] + " | ";
+            UnityEngine.Debug.Log(outputCityBuildings);
             UnityEngine.Debug.Log("archerlevel is:  " + u.archerLevel);
 
-            selfUser = u;
+            SelfUser = u;
 
             var users = await Network.GetUsers();
 
@@ -109,6 +111,11 @@ public static class LocalData
         set
         {
             selfUser = value;
+            if (selfUser != null && TopBar.I != null)
+            {
+                TopBar.I.Population = selfUser.Value.population;
+                TopBar.I.PopulationCap = selfUser.Value.populationCap;
+            }
         }
     }
 }

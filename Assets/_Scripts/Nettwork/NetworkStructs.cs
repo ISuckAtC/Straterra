@@ -69,6 +69,7 @@ namespace NetworkStructs
         public string name;
         public int cityLocation;
         public int path;
+        public byte cityUpgradeCap;
         public byte[] cityBuildingSlots;
         public int color;
         public int allianceId;
@@ -76,6 +77,8 @@ namespace NetworkStructs
         public byte archerLevel;
         public byte cavalryLevel;
         public byte spearmanLevel;
+        public int population;
+        public int populationCap;
         public MapBuilding[] buildingPositions;
     }
 

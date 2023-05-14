@@ -32,9 +32,9 @@ public class MapBuildingDefinition
 {
 
     private static MapBuildingDefinition instance = null;
-    public static MapBuildingDefinition I 
+    public static MapBuildingDefinition I
     {
-        get 
+        get
         {
             if (instance == null) instance = new MapBuildingDefinition();
             return instance;
@@ -48,10 +48,10 @@ public class MapBuildingDefinition
             {
                 SplashText.Splash("This building is currently not available.");
                 throw new System.Exception("MapBuilding ID [" + index + "] not defined");
-                
-                
+
+
             }
-                return MapBuildingDefinitions[index].Value;
+            return MapBuildingDefinitions[index].Value;
         }
     }
     private static MapBuilding?[] mapBuildingDefinitions;
@@ -91,7 +91,7 @@ public class MapBuildingDefinition
         village1.baseProduction = 0;
 
         mapBuildings[1] = village1;
-        
+
         // Farms
         MapBuilding farm1 = new MapBuilding();
         farm1.type = MapBuildingType.farm;
@@ -106,10 +106,10 @@ public class MapBuildingDefinition
         farm1.name = "Farm";
         farm1.orderCost = 0;
         farm1.baseProduction = 3600;
-        
+
         mapBuildings[10] = farm1;
-        
-        
+
+
         MapBuilding farm2 = new MapBuilding();
         farm2.type = MapBuildingType.farm;
         farm2.buildingTime = 700;
@@ -123,10 +123,10 @@ public class MapBuildingDefinition
         farm2.name = "Farm";
         farm2.orderCost = 0;
         farm2.baseProduction = 0;
-        
+
         mapBuildings[11] = farm2;
 
-        
+
         MapBuilding farm3 = new MapBuilding();
         farm3.type = MapBuildingType.farm;
         farm3.buildingTime = 1100;
@@ -140,11 +140,11 @@ public class MapBuildingDefinition
         farm3.name = "Farm";
         farm3.orderCost = 0;
         farm3.baseProduction = 0;
-        
+
         mapBuildings[12] = farm3;
-        
-        
-        
+
+
+
         // Logging Camps
         MapBuilding wood1 = new MapBuilding();
         wood1.type = MapBuildingType.wood;
@@ -159,7 +159,7 @@ public class MapBuildingDefinition
         wood1.name = "Logging Camp";
         wood1.orderCost = 0;
         wood1.baseProduction = 3600;
-        
+
         mapBuildings[20] = wood1;
 
 
@@ -176,7 +176,7 @@ public class MapBuildingDefinition
         wood2.name = "Logging Camp";
         wood2.orderCost = 0;
         wood2.baseProduction = 0;
-        
+
         mapBuildings[21] = wood2;
 
 
@@ -193,11 +193,11 @@ public class MapBuildingDefinition
         wood3.name = "Logging Camp";
         wood3.orderCost = 0;
         wood3.baseProduction = 0;
-        
-        mapBuildings[22] = wood3;
-                
 
-        
+        mapBuildings[22] = wood3;
+
+
+
         // Mines
         MapBuilding mine1 = new MapBuilding();
         mine1.type = MapBuildingType.mine;
@@ -212,7 +212,7 @@ public class MapBuildingDefinition
         mine1.name = "Mine";
         mine1.orderCost = 0;
         mine1.baseProduction = 3600;
-        
+
         mapBuildings[30] = mine1;
 
 
@@ -229,10 +229,10 @@ public class MapBuildingDefinition
         mine2.name = "Mine";
         mine2.orderCost = 0;
         mine2.baseProduction = 0;
-        
+
         mapBuildings[31] = mine2;
-        
-        
+
+
         MapBuilding mine3 = new MapBuilding();
         mine3.type = MapBuildingType.mine;
         mine3.buildingTime = 250;
@@ -246,8 +246,24 @@ public class MapBuildingDefinition
         mine3.name = "Mine";
         mine3.orderCost = 0;
         mine3.baseProduction = 0;
-        
+
         mapBuildings[32] = mine3;
+
+        MapBuilding house1 = new MapBuilding();
+        house1.type = MapBuildingType.house;
+        house1.buildingTime = 10;
+        house1.foodCost = 100;
+        house1.woodCost = 100;
+        house1.metalCost = 0;
+        house1.orderCost = 0;
+        house1.id = 100;
+        house1.level = 1;
+        house1.maxLevel = 1;
+        house1.name = "House";
+        house1.baseProduction = 10;
+
+        mapBuildings[100] = house1;
+
         return mapBuildings;
     }
 }

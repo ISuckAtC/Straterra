@@ -14,16 +14,22 @@ public class TopBar : MonoBehaviour
     private TMPro.TextMeshProUGUI orderText;
     [SerializeField]
     private TMPro.TextMeshProUGUI chaosText;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI populationText;
 
     private bool foodDirty;
     private bool woodDirty;
     private bool metalDirty;
     private bool orderDirty;
+    private bool populationDirty;
+    private bool populationCapDirty;
 
     private int food;
     private int wood;
     private int metal;
     private int order;
+    private int population;
+    private int populationCap;
     
     public static TopBar I;
 
@@ -70,11 +76,35 @@ public class TopBar : MonoBehaviour
             chaosText.text = NumConverter.GetConvertedAmount(value);
         }
     }
+    public int Population
+    {
+        set
+        {
+            populationDirty = true;
+            population = value;
+        }
+    }
+    public int PopulationCap
+    {
+        set
+        {
+            populationCapDirty = true;
+            populationCap = value;
+        }
+    }
 
     public void Awake()
     {
         if (I != null) throw new System.Exception("Another topbar detected");
         I = this;
+
+        Grid.onReady += OnGridReady;
+    }
+
+    public void OnGridReady()
+    {
+        TopBar.I.Population = LocalData.SelfUser.population;
+        TopBar.I.PopulationCap = LocalData.SelfUser.populationCap;
     }
 
     public void Update()
@@ -98,6 +128,12 @@ public class TopBar : MonoBehaviour
         {
             orderDirty = false;
             orderText.text = NumConverter.GetConvertedAmount(order);
+        }
+        if (populationDirty || populationCapDirty)
+        {
+            populationDirty = false;
+            populationCapDirty = false;
+            populationText.text = population.ToString() + " / " + populationCap.ToString();
         }
     }
 }

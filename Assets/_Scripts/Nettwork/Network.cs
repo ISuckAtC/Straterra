@@ -60,6 +60,8 @@ public class Network
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getSelfUser?" + tokenIdentity);
 
+        Debug.Log(await message.Content.ReadAsStringAsync());
+
         return JsonUtility.FromJson<User>(await message.Content.ReadAsStringAsync());
     }
 

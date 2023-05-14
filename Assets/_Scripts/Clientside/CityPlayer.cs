@@ -917,7 +917,7 @@ public class CityPlayer : MonoBehaviour
                 }
                 else
                 {
-                    new ScheduledUnitProductionEvent(trainingUnit.trainingTime * amount, trainingUnit.id, amount, LocalData.SelfUser.userId,
+                    new ScheduledUnitProductionEvent(trainingUnit.trainingTime, trainingUnit.id, amount, LocalData.SelfUser.userId,
                     ScheduledEvent.tempEvents.Where(x => x.GetType() == typeof(ScheduledUnitProductionEvent)).Count() == 0);
                 }
             });

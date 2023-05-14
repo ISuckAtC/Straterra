@@ -518,6 +518,7 @@ public class OverworldController : MonoBehaviour
                     woodBuildingWarningWindow.SetActive(false);
                     mineWindow.SetActive(false);
                     metalBuildingWarningWindow.SetActive(false);
+                    houseWindow.SetActive(false);
                     rightSideBlocker.SetActive(false);
 
                     /*
@@ -646,6 +647,7 @@ public class OverworldController : MonoBehaviour
     public GameObject farmWindow;
     public GameObject loggingCampWindow;
     public GameObject mineWindow;
+    public GameObject houseWindow;
     public GameObject rightSideBlocker;
     public GameObject foodBuildingWarningWindow;
     public GameObject woodBuildingWarningWindow;
@@ -666,6 +668,7 @@ public class OverworldController : MonoBehaviour
         {
             loggingCampWindow.SetActive(false);
             mineWindow.SetActive(false);
+            houseWindow.SetActive(false);
 
             farmWindow.SetActive(true);
         }
@@ -674,6 +677,7 @@ public class OverworldController : MonoBehaviour
         {
             farmWindow.SetActive(false);
             mineWindow.SetActive(false);
+            houseWindow.SetActive(false);
 
             loggingCampWindow.SetActive(true);
         }
@@ -682,8 +686,18 @@ public class OverworldController : MonoBehaviour
         {
             farmWindow.SetActive(false);
             loggingCampWindow.SetActive(false);
+            houseWindow.SetActive(false);
 
             mineWindow.SetActive(true);
+        }
+
+        if (buildingId == 3)
+        {
+            farmWindow.SetActive(false);
+            loggingCampWindow.SetActive(false);
+            mineWindow.SetActive(false);
+
+            houseWindow.SetActive(true);
         }
     }
 
