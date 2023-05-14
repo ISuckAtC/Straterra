@@ -263,12 +263,12 @@ public class CityPlayer : MonoBehaviour
                     }
                 case 3:
                     {
-                        WaterPath();
+                        LightPath();
                         break;
                     }
                 case 4:
                     {
-                        LightPath();
+                        WaterPath();
                         break;
                     }
                 default:

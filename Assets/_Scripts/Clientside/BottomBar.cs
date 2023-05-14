@@ -96,6 +96,7 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenArmyTab()
     {
+        CloseBottomMenus();
         armyButton.GetComponent<Image>().sprite = armySpriteSelected;
         if (armyOpen) //Closes army
         {
@@ -145,6 +146,7 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenOverworld()
     {
+        CloseBottomMenus();
         if (worldView)
         {
 
@@ -241,6 +243,7 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenQueue()
     {
+        CloseBottomMenus();
         queueButton.GetComponent<Image>().sprite = queueSpriteSelected;
         if (queueOpen)
         {
@@ -323,6 +326,7 @@ public class BottomBar : MonoBehaviour
     }
     public void OpenMenu()
     {
+        CloseBottomMenus();
         reportsButton.GetComponent<Image>().sprite = reportsSpriteSelected;
         if (reportsOpen)
         {
@@ -488,7 +492,7 @@ public class BottomBar : MonoBehaviour
     }
     public void CloseReport()
     {
-        OpenMenu();
+        //OpenMenu();
         reportView.SetActive(false);
     }
     public void CloseMenu()
