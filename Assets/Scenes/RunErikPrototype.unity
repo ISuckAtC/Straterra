@@ -16141,6 +16141,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 273008198066784616, guid: 8a9d5ddcf0d7f1c4c9655f79f762c11e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1415235157}
+    - target: {fileID: 273008198066784616, guid: 8a9d5ddcf0d7f1c4c9655f79f762c11e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaceBuildingOnSelectedTile
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a9d5ddcf0d7f1c4c9655f79f762c11e, type: 3}
 --- !u!224 &370887934 stripped
@@ -51673,6 +51681,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1611792695924639210, guid: 191ef49be387a6f4895e25a90e82aa0a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1415235157}
+    - target: {fileID: 1611792695924639210, guid: 191ef49be387a6f4895e25a90e82aa0a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaceBuildingOnSelectedTile
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 191ef49be387a6f4895e25a90e82aa0a, type: 3}
 --- !u!224 &1209941726 stripped
@@ -78172,6 +78188,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1281086703}
     m_Modifications:
+    - target: {fileID: 1015056947958344897, guid: 7f0622d6d8086864b9af7a688d9953b1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1415235157}
+    - target: {fileID: 1015056947958344897, guid: 7f0622d6d8086864b9af7a688d9953b1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PlaceBuildingOnSelectedTile
+      objectReference: {fileID: 0}
     - target: {fileID: 1015056949382636648, guid: 7f0622d6d8086864b9af7a688d9953b1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -98104,7 +98128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1295481400883920690
 GameObject:
   m_ObjectHideFlags: 0
