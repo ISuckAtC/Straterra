@@ -480,7 +480,31 @@ public class BottomBar : MonoBehaviour
                 aQ.queue.Add(() =>
                 {
                     CloseReport();
-                    Destroy(reports[index]);
+                    //Destroy(reports[index]);
+                });
+                
+            }
+            else
+            {
+                Debug.Log(res.message);
+            }
+        });
+    }
+    public void RemoveAllReports()
+    {
+        Task.Run<NetworkStructs.ActionResult>(async () => 
+        {
+            return await Network.RemoveAllReports();
+        }).ContinueWith(async result => 
+        {
+            var res = await result;
+            if (res.success)
+            {
+                aQ.queue.Add(() =>
+                {
+                    SplashText.Splash("Reports Deleted");
+                    CloseMenu();
+                    //Destroy(reports[index]);
                 });
                 
             }
@@ -492,8 +516,10 @@ public class BottomBar : MonoBehaviour
     }
     public void CloseReport()
     {
-        //OpenMenu();
+        CloseMenu();
+        OpenMenu();
         reportView.SetActive(false);
+
     }
     public void CloseMenu()
     {

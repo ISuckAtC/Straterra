@@ -90,6 +90,10 @@ public class BuildingMenu : MonoBehaviour
         buildTime.text = nextBuilding.buildingTime.ToString() + " seconds";
 
         upgradeTitle.text = "UPGRADE " + building.name + " to level " + nextBuilding.level;
+        upgradeConfirmButton.GetComponent<Button>().onClick.RemoveAllListeners();
+        upgradeConfirmButton.GetComponent<Button>().onClick.AddListener(delegate {CityPlayer.cityPlayer.BuildBuilding(nextBuilding.id);});
+        Debug.LogWarning("Upgrade button will upgrade " + nextBuilding.id);
+
 
         upgradeMenu.SetActive(true);
     }
