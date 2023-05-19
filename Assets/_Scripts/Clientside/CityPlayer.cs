@@ -434,7 +434,7 @@ public class CityPlayer : MonoBehaviour
 
                     if (UnitDefinition.I[i*10].name == "Swordsman")
                         swrText = "Swordsmen: " + NumConverter.GetConvertedAmount(amount);
-                    UnityEngine.Debug.LogError(swrText + " + " + arcText + sprText + cvlText);
+                    //UnityEngine.Debug.LogError(swrText + " + " + arcText + sprText + cvlText);
 
                     if (UnitDefinition.I[i*10].name == "Bowman")
                         arcText = "Bowmen: " + NumConverter.GetConvertedAmount(amount);
@@ -492,6 +492,7 @@ public class CityPlayer : MonoBehaviour
     {
         //TownBuildingDefinition.I[building].
         int lockedSlot = selectedSlot;
+        //Debug.Log("Lockedslot is " + lockedSlot);
 
         TownBuilding building = TownBuildingDefinition.I[id];
 
@@ -540,6 +541,7 @@ public class CityPlayer : MonoBehaviour
                 {
                     aq.queue.Add(() =>
                     {
+                        Debug.LogError("locked is " + lockedSlot + "& slot is " + selectedSlot);
                         LocalData.SelfUser.cityBuildingSlots[lockedSlot] = 254;
                         new ScheduledTownBuildEvent(building.buildingTime, (byte)building.id, lockedSlot, LocalData.SelfUser.userId);
                         Debug.Log("DATA IN SLOT " + lockedSlot + " IS " + LocalData.SelfUser.cityBuildingSlots[lockedSlot]);
@@ -551,6 +553,11 @@ public class CityPlayer : MonoBehaviour
                 else if (res.message == "Session invalid")
                 {
                     GameManager.I.KickPlayerToLogin();
+                }
+                else
+                {
+                    Debug.LogError("locked is " + lockedSlot + "& slot is " + selectedSlot);
+                    SplashText.Splash(res.message);
                 }
             });
 

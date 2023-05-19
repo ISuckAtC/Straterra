@@ -93,6 +93,10 @@ public class BuildingMenu : MonoBehaviour
         upgradeConfirmButton.GetComponent<Button>().onClick.RemoveAllListeners();
         upgradeConfirmButton.GetComponent<Button>().onClick.AddListener(delegate {CityPlayer.cityPlayer.BuildBuilding(nextBuilding.id);});
         Debug.LogWarning("Upgrade button will upgrade " + nextBuilding.id);
+        //Debug.Log("persistentEvent is " + upgradeConfirmButton.GetComponent<Button>().onClick.GetPersistentEventCount());
+
+        upgradeClickAwayButton.GetComponent<Button>().onClick.RemoveAllListeners();
+        upgradeClickAwayButton.GetComponent<Button>().onClick.AddListener(delegate {CloseUpgradeMenu();});
 
 
         upgradeMenu.SetActive(true);

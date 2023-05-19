@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 9032182316465714797}
   - component: {fileID: 1183771272846049066}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ConfirmText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1000,7 +1000,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2bc1382eddfa0a34794bbad51758fe73, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9e895cf67cc541941878e3357a7026c9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1515,7 +1515,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3723e3861a6ab274386cd6e863f88020, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d2d3c34ce194bf745a276c8cfdc84ea3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1586,7 +1586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.42352942, g: 0.6156863, b: 0.9019608, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1807,7 +1807,7 @@ GameObject:
   - component: {fileID: 5430689939813396794}
   - component: {fileID: 3779983662019112077}
   m_Layer: 5
-  m_Name: UpgradeText
+  m_Name: UpgradeTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
