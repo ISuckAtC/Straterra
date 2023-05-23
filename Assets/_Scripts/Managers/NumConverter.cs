@@ -11,19 +11,19 @@ public static class NumConverter
         int seconds = amount - hours * 3600 - minutes * 60;
 
         string output = "";
-        
+
         if (hours > 0)
         {
             output += hours + " h, ";
-            
+
         }
         if (minutes > 0)
         {
             output += minutes + " m, ";
-            
+
             //return amount / 60 + " minutes, " + amount % 60 + "seconds";
         }
-        output += seconds + " s";    
+        output += seconds + " s";
 
         return output;
 
@@ -33,30 +33,39 @@ public static class NumConverter
     {
         DateTime currentTime = DateTime.Now;
 
-        if (time < currentTime.AddYears(-1))
+        if (time < currentTime.AddHours(-1))
         {
-            string output = time.Day + "." + time.ToString("MMM", CultureInfo.InvariantCulture) + "." + time.Year;
-            
-            return output;
-        }
-        else if (time < currentTime.AddMonths(-1))
-        {
-            string output = time.Day + "." + time.ToString("MMM", CultureInfo.InvariantCulture);
-            
-            return output;
-        }
-        else if (time < currentTime.AddDays(-1))
-        {
-            string output = time.Day + "." + time.ToString("MMM", CultureInfo.InvariantCulture);
-            
-            return output;
-            
+			    string output = "" + (currentTime.Minute - time.Minute + "M ago");
+
+                return output;
         }
         else
         {
-            string output = "" + (currentTime.Hour - time.Hour) + "H:" + (currentTime.Minute - time.Minute + "M ago");
-            
-            return output;
+            if (time < currentTime.AddYears(-1))
+            {
+                string output = time.Day + "." + time.ToString("MMM", CultureInfo.InvariantCulture) + "." + time.Year;
+
+                return output;
+            }
+            else if (time < currentTime.AddMonths(-1))
+            {
+                string output = time.Day + "." + time.ToString("MMM", CultureInfo.InvariantCulture);
+
+                return output;
+            }
+            else if (time < currentTime.AddDays(-1))
+            {
+                string output = time.Day + "." + time.ToString("MMM", CultureInfo.InvariantCulture);
+
+                return output;
+
+            }
+            else
+            {
+                string output = "" + (currentTime.Hour - time.Hour) + "H:" + (currentTime.Minute - time.Minute + "M ago");
+
+                return output;
+            }
         }
     }
 
@@ -82,7 +91,7 @@ public static class NumConverter
     public static string GetConvertedArmy(int amount)
     {
         // Unit tests showed this to be the most efficient way
-        
+
         // Code
         // string armyText = "The army consists of";
         // for (int i = 0; i < armyUnits.Length; i++)
@@ -124,33 +133,33 @@ public static class NumConverter
 
     public static string GetConvertedResource(int amount)
     {
-        
+
         if (amount >= 100000)               // Hundred Thousands
         {
             if (amount >= 100000000)        // > 100 Million
-                return ( " > " + GetConvertedAmount(100000000) + " ");
+                return (" > " + GetConvertedAmount(100000000) + " ");
 
             if (amount >= 100000000)          // Millions
-                return ( " > " + GetConvertedAmount(100000000) + " ");
+                return (" > " + GetConvertedAmount(100000000) + " ");
 
-            return ( " > " + GetConvertedAmount(100000) + " ");
+            return (" > " + GetConvertedAmount(100000) + " ");
 
         }
         if (amount >= 200)                  // Two Hundred
         {
             if (amount >= 10000)            // Ten Thousands
-                return ( " > " + GetConvertedAmount(10000) + " ");
+                return (" > " + GetConvertedAmount(10000) + " ");
 
             if (amount >= 1000)             // Thousands
-                return ( " > " + GetConvertedAmount(1000) + " ");
+                return (" > " + GetConvertedAmount(1000) + " ");
 
             if (amount >= 500)              // Half Thousand
-                return ( " > 500 ");
+                return (" > 500 ");
 
-            return ( " > 200 ");
+            return (" > 200 ");
         }
 
-        return ( " < 200 ");                  // <Twenty
+        return (" < 200 ");                  // <Twenty
     }
-    
+
 }
