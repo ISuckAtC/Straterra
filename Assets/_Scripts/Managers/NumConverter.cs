@@ -33,7 +33,7 @@ public static class NumConverter
     {
         DateTime currentTime = DateTime.Now;
 
-        if (time < currentTime.AddHours(-1))
+        if (time > currentTime.AddHours(-1))
         {
 			    string output = "" + (currentTime.Minute - time.Minute + "M ago");
 
