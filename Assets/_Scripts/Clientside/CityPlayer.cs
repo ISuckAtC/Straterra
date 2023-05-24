@@ -483,6 +483,8 @@ public class CityPlayer : MonoBehaviour
 
         selectedSlot = slot;
 
+        // Code here
+
     }
     #endregion
 
