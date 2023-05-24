@@ -48,7 +48,7 @@ public class AttackScreen : MonoBehaviour
 
     }
 
-    void OpenAttackScreen(int position)
+    public void OpenAttackScreen(int position)
     {
         attackScreen.SetActive(true);
         tilePosition = position;
