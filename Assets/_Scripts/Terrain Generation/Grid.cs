@@ -68,8 +68,8 @@ public class Grid : MonoBehaviour
         Grid._instance.UpdateValidTiles(LocalData.SelfUser.cityLocation, GameManager.I.buildRange);
 
         onReady.Invoke();
-        PlaceTiles._instance.ColorAllTiles();
-        
+        //PlaceTiles._instance.ColorAllTiles();
+        PlaceTiles._instance.ColorTilesByResourceAmount();
     }
 
     public void SetNewSize(int width, int height)
