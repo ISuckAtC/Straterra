@@ -8,10 +8,12 @@ using TMPro;
 public class AttackScreen : MonoBehaviour
 {
     public GameObject attackScreen;
+    public Button clickAway;
     public TMPro.TMP_Text armyText;
     public TMPro.TMP_Text playerNameText;
     public TMPro.TMP_Text playerIdText;
 
+    public GameObject tileTypeWindow;
     public TMPro.TMP_Text tileTypeText;
     public TMPro.TMP_Text tileEfficiencyText;
     public Image tileBuildingImage;
@@ -33,40 +35,33 @@ public class AttackScreen : MonoBehaviour
     public TMPro.TMP_Text spearmenText;
     public TMPro.TMP_Text cavalryText;
 
-    int swordsmenMaxAmount;
-    int bowmenMaxAmount;
-    int spearmenMaxAmount;
-    int cavalryMaxAmount;
+    int swordsmenMaxAmount = 0;
+    int bowmenMaxAmount = 0;
+    int spearmenMaxAmount = 0;
+    int cavalryMaxAmount = 0;
 
     public Button attackButton;
     public Button cancelButton;
 
-    ActionQueue aq;
+    public ActionQueue aq;
     public int tilePosition;
     void Start()
     {
-
+        
     }
-
-    public void OpenAttackScreen(int position)
-    {
-        attackScreen.SetActive(true);
-        tilePosition = position;
-    }
-    void CloseAttackScreen()
+    void CloseAttackScreen(int villageId)
     {
         attackScreen.SetActive(false);
+        InfoScreen._instance.OpenVillageInfoScreen(villageId);
     }
-    public void UpdateMaxArmy()
+    public void NewUpdateArmy()
     {
-        Task.Run<NetworkStructs.User>(async () => 
-        {
-            return await Network.GetSelfUser();
-        }).ContinueWith(async result => 
-        {
-            var res = await result;
-            LocalData.SelfUser = res;
-        });
+        string swordtext = "";
+        string bowtext = "";
+        string speartext = "";
+        string cavalrytxt = "";
+
+
         Task.Run<NetworkStructs.UnitGroup>(async () =>
         {
             return await Network.GetHomeUnits();
@@ -84,88 +79,122 @@ public class AttackScreen : MonoBehaviour
             }
             aq.queue.Add(() =>
             {
-                for (int i = 0; i < 4; ++i)
+
+                // Spearmen loop
+                for (int i = 0; i < 256; ++i)
                 {
-                    int amount = 0;
-                    for (int k = i * 10; k < (i+1) * 10; ++k)
+                    int amount = CityPlayer.cityPlayer.homeArmyAmount[i];
+
+                    if (amount > 0 && UnitDefinition.I[i].name == "Swordsman")
                     {
-                        amount += CityPlayer.cityPlayer.homeArmyAmount[k];
+                        swordtext += amount;
+                        swordsmenMaxAmount += amount;
                     }
 
-                    if (UnitDefinition.I[i*10].name == "Swordsman")
-                        swordsmenMaxAmount += amount;
+                    if (amount > 0 && UnitDefinition.I[i].name == "Bowman")
+                    {
+                        bowtext += amount;
+                        bowmenMaxAmount += amount;
+                    }
 
-                    if (UnitDefinition.I[i*10].name == "Bowman")
-                        bowmenMaxAmount = amount;
+                    if (amount > 0 && UnitDefinition.I[i].name == "Spearman")
+                    {
+                        speartext += amount;
+                        spearmenMaxAmount += amount;
+                    }
 
-                    if (UnitDefinition.I[i*10].name == "Spearman")
-                        spearmenMaxAmount = amount;
-
-                    if (UnitDefinition.I[i*10].name == "Cavalry")
-                        cavalryMaxAmount = amount;
+                    if (amount > 0 && UnitDefinition.I[i].name == "Cavalry")
+                    {
+                        cavalrytxt += amount;
+                        cavalryMaxAmount += amount;
+                    }
                 }
+
+                swordsmenText.text = swordtext;
+                bowmenText.text = bowtext;
+                spearmenText.text = speartext;
+                cavalryText.text = cavalrytxt;
+
+                swordsmenSlider.onValueChanged.RemoveAllListeners();
+                bowmenSlider.onValueChanged.RemoveAllListeners();
+                spearmenSlider.onValueChanged.RemoveAllListeners();
+                cavalrySlider.onValueChanged.RemoveAllListeners();
+
+                swordsmenSlider.maxValue = swordsmenMaxAmount;
+                swordsmenSlider.value = swordsmenMaxAmount;
+                swordsmenSlider.onValueChanged.AddListener(delegate { OnSwordsmenSliderChanged(); });
+                bowmenSlider.maxValue = bowmenMaxAmount;
+                bowmenSlider.value = bowmenMaxAmount;
+                bowmenSlider.onValueChanged.AddListener(delegate { OnBowmenSliderChanged(); });
+                spearmenSlider.maxValue = spearmenMaxAmount;
+                spearmenSlider.value = spearmenMaxAmount;
+                spearmenSlider.onValueChanged.AddListener(delegate { OnSpearmenSliderChanged(); });
+                cavalrySlider.maxValue = cavalryMaxAmount;
+                cavalrySlider.value = cavalryMaxAmount;
+                cavalrySlider.onValueChanged.AddListener(delegate { OnCavalrySliderChanged(); });
             });
         });
     }
-    void OpenAttackScreen(int playerId, bool isResourceCamp, int tileId)
+
+    public void OpenAttackScreen(int playerId, bool isResourceCamp, int tileId)
     {
-        UpdateMaxArmy();
-
-        swordsmenSlider.onValueChanged.RemoveAllListeners();
-        bowmenSlider.onValueChanged.RemoveAllListeners();
-        spearmenSlider.onValueChanged.RemoveAllListeners();
-        cavalrySlider.onValueChanged.RemoveAllListeners();
-
-        swordsmenSlider.maxValue = swordsmenMaxAmount;
-        swordsmenSlider.onValueChanged.AddListener(delegate { OnSwordsmenSliderChanged(); });
-        bowmenSlider.maxValue = bowmenMaxAmount;
-        bowmenSlider.onValueChanged.AddListener(delegate { OnBowmenSliderChanged(); });
-        spearmenSlider.maxValue = spearmenMaxAmount;
-        spearmenSlider.onValueChanged.AddListener(delegate { OnSpearmenSliderChanged(); });
-        cavalrySlider.maxValue = cavalryMaxAmount;
-        cavalrySlider.onValueChanged.AddListener(delegate { OnCavalrySliderChanged(); });
+        attackScreen.SetActive(true);
+        tilePosition = tileId;
+        int owner = Grid._instance.tiles[tileId].owner;
+        playerNameText.text = Network.allUsers.Find(x => x.userId == owner).name;
+        playerIdText.text = owner.ToString();
+        NewUpdateArmy(); 
+        cancelButton.onClick.RemoveAllListeners();
+        cancelButton.onClick.AddListener(delegate { CloseAttackScreen(owner); });
+        clickAway.onClick.RemoveAllListeners();
+        clickAway.onClick.AddListener(delegate { CloseAttackScreen(owner); });
 
         MapBuilding building = MapBuildingDefinition.I[Grid._instance.tiles[tileId].building];
-        if (isResourceCamp)
-        {
-            
-            switch(building.type)
-            {
-
-                case MapBuildingType.village: // Village
-                break;
-
-                case MapBuildingType.farm: // Farm
-                tileEfficiencySlider.value = Grid._instance.tiles[tileId].foodAmount;
-                tileBuildingImage.sprite = farmSprite;
-                break;
-
-                case MapBuildingType.wood: // Wood
-                tileEfficiencySlider.value = Grid._instance.tiles[tileId].woodAmount;
-                tileBuildingImage.sprite = woodcutterSprite;
-                break;
-
-                case MapBuildingType.mine: // Mine
-                tileEfficiencySlider.value = Grid._instance.tiles[tileId].metalAmount;
-                tileBuildingImage.sprite = mineSprite;
-                break;
-
-                case MapBuildingType.house: // House
-                tileBuildingImage.sprite = houseSprite;
-                break;
-
-                case MapBuildingType.castle: // Castle
-                tileBuildingImage.sprite = castleSprite;
-                break;
-            }
-            //tileBuildingImage.sprite = Grid._instance.tiles[tileId].building 
-            tileEfficiencyText.text = Grid._instance.tiles[tileId].foodAmount.ToString();
-            for (int i = 0; i < Grid._instance.tiles[tileId].army.Count; i++)
+        for (int i = 0; i < Grid._instance.tiles[tileId].army.Count; i++)
             {
                 armyText.text += NumConverter.GetConvertedArmy(Grid._instance.tiles[tileId].army[i].count) + " " + UnitDefinition.I[Grid._instance.tiles[tileId].army[i].unitId].name + "\n";
             }
+        if (isResourceCamp)
+        {
+            tileTypeWindow.SetActive(true);
+            tileTypeText.text = building.type.ToString();
+            switch (building.type)
+            {
+
+                case MapBuildingType.village: // Village
+                    break;
+
+                case MapBuildingType.farm: // Farm
+                    tileEfficiencySlider.value = Grid._instance.tiles[tileId].foodAmount;
+                    tileBuildingImage.sprite = farmSprite;
+                    break;
+
+                case MapBuildingType.wood: // Wood
+                    tileEfficiencySlider.value = Grid._instance.tiles[tileId].woodAmount;
+                    tileBuildingImage.sprite = woodcutterSprite;
+                    break;
+
+                case MapBuildingType.mine: // Mine
+                    tileEfficiencySlider.value = Grid._instance.tiles[tileId].metalAmount;
+                    tileBuildingImage.sprite = mineSprite;
+                    break;
+
+                case MapBuildingType.house: // House
+                    tileBuildingImage.sprite = houseSprite;
+                    break;
+
+                case MapBuildingType.castle: // Castle
+                    tileBuildingImage.sprite = castleSprite;
+                    break;
+            }
+            //tileBuildingImage.sprite = Grid._instance.tiles[tileId].building 
+            tileEfficiencyText.text = Grid._instance.tiles[tileId].foodAmount.ToString();
         }
-        attackButton.onClick.AddListener(delegate { AttackWithSome(tilePosition); });;
+        else if (!isResourceCamp)
+        {
+            tileTypeWindow.SetActive(false);
+        }
+        attackButton.onClick.AddListener(delegate { AttackWithSome(tilePosition); });
     }
     public void OnSwordsmenSliderChanged()
     {
@@ -191,28 +220,40 @@ public class AttackScreen : MonoBehaviour
         int lockPosition = position;
         List<Group> army = new List<Group>();
 
-        int swordsmenAmount = int.Parse(swordsmenText.text);
-        if (swordsmenAmount > 0)
+        if (swordsmenText.text != "")
         {
-            army.Add(new Group(swordsmenAmount, LocalData.SelfUser.swordLevel));
+            int swordsmenAmount = int.Parse(swordsmenText.text);
+            if (swordsmenAmount > 0)
+            {
+                army.Add(new Group(swordsmenAmount, LocalData.SelfUser.swordLevel));
+            }
         }
 
-        int bowmenAmount = int.Parse(bowmenText.text);
-        if (bowmenAmount > 0)
+        if (bowmenText.text != "")
         {
-            army.Add(new Group(bowmenAmount, LocalData.SelfUser.archerLevel));
+            int bowmenAmount = int.Parse(bowmenText.text);
+            if (bowmenAmount > 0)
+            {
+                army.Add(new Group(bowmenAmount, LocalData.SelfUser.archerLevel));
+            }
         }
 
-        int spearmenAmount = int.Parse(spearmenText.text);
-        if (spearmenAmount > 0)
+        if (spearmenText.text != "")
         {
-            army.Add(new Group(spearmenAmount, LocalData.SelfUser.spearmanLevel));
+            int spearmenAmount = int.Parse(spearmenText.text);
+            if (spearmenAmount > 0)
+            {
+                army.Add(new Group(spearmenAmount, LocalData.SelfUser.spearmanLevel));
+            }
         }
 
-        int cavalryAmount = int.Parse(cavalryText.text);
-        if (cavalryAmount > 0)
+        if (cavalryText.text != "")
         {
-            army.Add(new Group(cavalryAmount, LocalData.SelfUser.cavalryLevel));
+            int cavalryAmount = int.Parse(cavalryText.text);
+            if (cavalryAmount > 0)
+            {
+                army.Add(new Group(cavalryAmount, LocalData.SelfUser.cavalryLevel));
+            }
         }
 
         Task.Run(async () =>
@@ -225,10 +266,17 @@ public class AttackScreen : MonoBehaviour
 
             if (result.success)
             {
+                aq.queue.Add(() =>
+                {
+                    SplashText.Splash("Attacking " + playerNameText.text);
+                    CloseAttackScreen(Grid._instance.tiles[lockPosition].owner);
+                });
                 ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(20, army, lockPosition, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
+                
             }
             else
             {
+                SplashText.Splash(result.message);
                 Debug.LogError(result.message);
             }
         });
@@ -237,4 +285,73 @@ public class AttackScreen : MonoBehaviour
     {
 
     }
+    /*
+    public void UpdateMaxArmy()
+    {
+        Task.Run<NetworkStructs.User>(async () =>
+        {
+            return await Network.GetSelfUser();
+        }).ContinueWith(async result =>
+        {
+            var res = await result;
+            LocalData.SelfUser = res;
+        });
+        Task.Run<NetworkStructs.UnitGroup>(async () =>
+        {
+            return await Network.GetHomeUnits();
+        }).ContinueWith(async result =>
+        {
+            NetworkStructs.UnitGroup army = await result;
+            System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
+            for (int i = 0; i < army.units.Length; ++i)
+            {
+                int id = army.units[i].unitId;
+                int amount = army.units[i].amount;
+
+                CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+            }
+            aq.queue.Add(() =>
+            {
+                int swrTemp = 0;
+                int arcTemp = 0;
+                int sprTemp = 0;
+                int cvlTemp = 0;
+
+                for (int i = 0; i < 256; ++i)
+                {
+                    int amount = 0;
+                    for (int k = i * 10; k < (i + 1) * 10; ++k)
+                    {
+                        amount += CityPlayer.cityPlayer.homeArmyAmount[k];
+                    }
+
+                    if (UnitDefinition.I[i * 10].name == "Swordsman")
+                        swrTemp = amount;
+                    UnityEngine.Debug.LogWarning(swrTemp + " + " + arcTemp + sprTemp + cvlTemp);
+
+                    if (UnitDefinition.I[i * 10].name == "Bowman")
+                        arcTemp = amount;
+
+                    if (UnitDefinition.I[i * 10].name == "Spearman")
+                        sprTemp = amount;
+
+                    if (UnitDefinition.I[i * 10].name == "Cavalry")
+                        cvlTemp = amount;
+                }
+                swordsmenMaxAmount = swrTemp;
+                bowmenMaxAmount = arcTemp;
+                spearmenMaxAmount = sprTemp;
+                cavalryMaxAmount = cvlTemp;
+
+                swordsmenText.text = swordsmenSlider.value.ToString();
+                bowmenText.text = swordsmenSlider.value.ToString();
+                spearmenText.text = swordsmenSlider.value.ToString();
+                cavalryText.text = swordsmenSlider.value.ToString();
+
+
+
+            });
+        });
+    }
+    */
 }

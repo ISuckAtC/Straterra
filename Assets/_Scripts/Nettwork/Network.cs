@@ -264,6 +264,18 @@ public class Network
 
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
+    public static async Task<ActionResult> StationUnits(int target, List<Group> army)
+    {
+        string armyString = "";
+        for (int i = 0; i < army.Count; ++i)
+        {
+            if (i > 0) armyString += ";";
+            armyString += army[i].unitId + ":" + army[i].count;
+        }
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/stationUnits?" + tokenIdentity + "&" + target + "&" + armyString);
+
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+    }
 
     public static async Task<ActionResult> ChoosePath(int path)
     {
