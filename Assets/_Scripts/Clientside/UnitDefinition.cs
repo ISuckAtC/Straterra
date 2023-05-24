@@ -281,7 +281,7 @@ public class UnitDefinition
         cavalry1.counterBonus = 0;
         cavalry1.hoverText = "";
         cavalry1.trainingTime = 60;
-        cavalry1.spritePath = "Sprites/Army/Img_cavalry_Lvl1_1";
+        cavalry1.spritePath = "Sprites/Army/Img_cavalry_Lvl1_V2";
         cavalry1.upgradeFoodCost = 100;
         cavalry1.upgradeWoodCost = 100;
         cavalry1.upgradeMetalCost = 100;

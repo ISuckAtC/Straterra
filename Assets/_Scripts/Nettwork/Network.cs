@@ -136,6 +136,7 @@ public class Network
         Debug.Log("just got notifications" + newMessage.Contains("\n"));
         newMessage = newMessage.Replace("\n", "\\n");
         Debug.Log("just got notifications" + newMessage.Contains("\n"));
+        Debug.Log(newMessage);
         return JsonUtility.FromJson<NetworkStructs.ReportList>(newMessage);
     }
 
