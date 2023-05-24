@@ -375,9 +375,9 @@ public class PlaceTiles : MonoBehaviour
 
 	public void ColorTilesByResourceAmount()
 	{
-		float foodR = 0.74f;
-		float foodG = 0.6f;
-		float foodB = 0.46f;
+		float foodR = 0.9f;
+		float foodG = 0.85f;
+		float foodB = 0.8f;
 
 
 
@@ -390,7 +390,7 @@ public class PlaceTiles : MonoBehaviour
 			{
 				int tileType = Grid._instance.tiles[Grid._instance.GetIdByInt(i, j)].tileType;
 
-				if (tileType == 2)      // Grassland
+				if (tileType == 2 || tileType == 4)      // Grassland
 				{
 					float foodAmount = Grid._instance.tiles[Grid._instance.GetIdByInt(i, j)].foodAmount;
 
