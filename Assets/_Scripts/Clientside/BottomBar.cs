@@ -351,11 +351,13 @@ public class BottomBar : MonoBehaviour
                 for (int j = 0; j < rep.reports.Length; j++)
                 {
                     NetworkStructs.Report report = rep.reports[j];
-                    NotificationCenter.Add(report.title, report.content, System.DateTime.FromFileTimeUtc(report.time_created), report.viewed);
+                    NotificationCenter.Add(report.title, report.content, System.DateTimeOffset.FromUnixTimeSeconds(report.time_created).DateTime.ToLocalTime(), report.viewed);
+                    
+                    Debug.Log(report.time_created);
 
                     GameManager.aq.queue.Add(() => 
                     {
-
+                        
                         reports.Add(Instantiate(reportPrefab, Vector3.zero, Quaternion.identity));
                         Debug.LogWarning("report amount = " + rep.reports.Length);
                     });

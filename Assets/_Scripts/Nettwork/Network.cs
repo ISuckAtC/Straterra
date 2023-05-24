@@ -136,6 +136,7 @@ public class Network
         Debug.Log("just got notifications" + newMessage.Contains("\n"));
         newMessage = newMessage.Replace("\n", "\\n");
         Debug.Log("just got notifications" + newMessage.Contains("\n"));
+        Debug.Log(newMessage);
         return JsonUtility.FromJson<NetworkStructs.ReportList>(newMessage);
     }
 
@@ -260,6 +261,18 @@ public class Network
             armyString += army[i].unitId + ":" + army[i].count;
         }
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/attackMapTile?" + tokenIdentity + "&" + target + "&" + armyString);
+
+        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+    }
+    public static async Task<ActionResult> StationUnits(int target, List<Group> army)
+    {
+        string armyString = "";
+        for (int i = 0; i < army.Count; ++i)
+        {
+            if (i > 0) armyString += ";";
+            armyString += army[i].unitId + ":" + army[i].count;
+        }
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/stationUnits?" + tokenIdentity + "&" + target + "&" + armyString);
 
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }

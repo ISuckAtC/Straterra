@@ -4,6 +4,7 @@
 //using Mono.Cecil;
 
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using NetworkStructs;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,6 +45,31 @@ public class InfoScreen : MonoBehaviour
     public TMP_Text villageBuildingsText;
     public TMP_Text tileArmyText;
     public Button attackButton;
+    AttackScreen attackScreen;
+    public bool resourceCamp;
+
+    public Button openArmyCampButton;
+    public GameObject armyCampWindow;
+    public Button openStationWindow;
+    public Button openRecallWindow;
+
+    public GameObject stationWindow;
+    public Slider stationSwordsmenSlider;
+    public Slider stationBowmenSlider;
+    public Slider stationSpearmenSlider;
+    public Slider stationCavalrySlider;
+    public TMPro.TMP_Text stationSwordsmenText;
+    public TMPro.TMP_Text stationBowmenText;
+    public TMPro.TMP_Text stationSpearmenText;
+    public TMPro.TMP_Text stationCavalryText;
+    int stationSwordsmenMaxAmount = 0;
+    int stationBowmenMaxAmount = 0;
+    int stationSpearmenMaxAmount = 0;
+    int stationCavalryMaxAmount = 0;
+    public Button stationConfirmButton;
+
+    public GameObject recallWindow;
+
     //public Image villageImage;
     public Button homeButton; //Button that takes you from Overworld to your own village screen.
 
@@ -63,6 +89,200 @@ public class InfoScreen : MonoBehaviour
         aq = GetComponent<ActionQueue>();
 
         infoScreen.SetActive(false);
+        attackScreen = GetComponent<AttackScreen>();
+    }
+    public void UpdateStationArmy()
+    {
+        string swordtext = "";
+        string bowtext = "";
+        string speartext = "";
+        string cavalrytxt = "";
+
+
+        Task.Run<NetworkStructs.UnitGroup>(async () =>
+        {
+            return await Network.GetHomeUnits();
+        }).ContinueWith(async result =>
+        {
+            NetworkStructs.UnitGroup army = await result;
+            System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
+
+            for (int i = 0; i < army.units.Length; ++i)
+            {
+                int id = army.units[i].unitId;
+                int amount = army.units[i].amount;
+
+                CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+            }
+            aq.queue.Add(() =>
+            {
+
+                // Spearmen loop
+                for (int i = 0; i < 256; ++i)
+                {
+                    int amount = CityPlayer.cityPlayer.homeArmyAmount[i];
+
+                    if (amount > 0 && UnitDefinition.I[i].name == "Swordsman")
+                    {
+                        swordtext += amount;
+                        stationSwordsmenMaxAmount += amount;
+                    }
+
+                    if (amount > 0 && UnitDefinition.I[i].name == "Bowman")
+                    {
+                        bowtext += amount;
+                        stationBowmenMaxAmount += amount;
+                    }
+
+                    if (amount > 0 && UnitDefinition.I[i].name == "Spearman")
+                    {
+                        speartext += amount;
+                        stationSpearmenMaxAmount += amount;
+                    }
+
+                    if (amount > 0 && UnitDefinition.I[i].name == "Cavalry")
+                    {
+                        cavalrytxt += amount;
+                        stationCavalryMaxAmount += amount;
+                    }
+                }
+
+                stationSwordsmenText.text = swordtext;
+                stationBowmenText.text = bowtext;
+                stationSpearmenText.text = speartext;
+                stationCavalryText.text = cavalrytxt;
+
+                stationSwordsmenSlider.onValueChanged.RemoveAllListeners();
+                stationBowmenSlider.onValueChanged.RemoveAllListeners();
+                stationSpearmenSlider.onValueChanged.RemoveAllListeners();
+                stationCavalrySlider.onValueChanged.RemoveAllListeners();
+
+                stationSwordsmenSlider.maxValue = stationSwordsmenMaxAmount;
+                stationSwordsmenSlider.value = stationSwordsmenMaxAmount;
+                stationSwordsmenSlider.onValueChanged.AddListener(delegate { OnSwordsmenSliderChanged(); });
+                stationBowmenSlider.maxValue = stationBowmenMaxAmount;
+                stationBowmenSlider.value = stationBowmenMaxAmount;
+                stationBowmenSlider.onValueChanged.AddListener(delegate { OnBowmenSliderChanged(); });
+                stationSpearmenSlider.maxValue = stationSpearmenMaxAmount;
+                stationSpearmenSlider.value = stationSpearmenMaxAmount;
+                stationSpearmenSlider.onValueChanged.AddListener(delegate { OnSpearmenSliderChanged(); });
+                stationCavalrySlider.maxValue = stationCavalryMaxAmount;
+                stationCavalrySlider.value = stationCavalryMaxAmount;
+                stationCavalrySlider.onValueChanged.AddListener(delegate { OnCavalrySliderChanged(); });
+            });
+        });
+    }
+    public void OnSwordsmenSliderChanged()
+    {
+        stationSwordsmenText.text = ((int)stationSwordsmenSlider.value).ToString();
+    }
+    public void OnBowmenSliderChanged()
+    {
+        stationBowmenText.text = ((int)stationBowmenSlider.value).ToString();
+    }
+    public void OnSpearmenSliderChanged()
+    {
+        stationSpearmenText.text = ((int)stationSpearmenSlider.value).ToString();
+    }
+    public void OnCavalrySliderChanged()
+    {
+        stationCavalryText.text = ((int)stationCavalrySlider.value).ToString();
+    }
+    public void CloseAllInfoWindows()
+    {
+        recallWindow.SetActive(false);
+        stationWindow.SetActive(false);
+        armyCampWindow.SetActive(false);
+    }
+    public void OpenStationWindow(int tileId)
+    {
+        recallWindow.SetActive(false);
+        stationWindow.SetActive(true);
+        UpdateStationArmy();
+        stationConfirmButton.onClick.RemoveAllListeners();
+        stationConfirmButton.onClick.AddListener(delegate { StationUnits(tileId); });
+    }
+    public void OpenRecallWindow(int tileId)
+    {
+        stationWindow.SetActive(false);
+        recallWindow.SetActive(true);
+    }
+    public void OpenArmyCampWindow(int tileId)
+    {
+        armyCampWindow.SetActive(true);
+        openStationWindow.onClick.RemoveAllListeners();
+        openRecallWindow.onClick.RemoveAllListeners();
+        openStationWindow.onClick.AddListener(delegate { OpenStationWindow(tileId); });
+        openRecallWindow.onClick.AddListener(delegate { OpenRecallWindow(tileId); });
+    }
+    public void StationUnits(int tileId)
+    {
+        Debug.Log("Attacked tile at position " + tileId + " has building type " + Grid._instance.tiles[tileId].building);
+        if (Grid._instance.tiles[tileId].building != 1) return;
+
+        int lockPosition = tileId;
+        List<Group> army = new List<Group>();
+
+        if (stationSwordsmenText.text != "")
+        {
+            int swordsmenAmount = int.Parse(stationSwordsmenText.text);
+            if (swordsmenAmount > 0)
+            {
+                army.Add(new Group(swordsmenAmount, LocalData.SelfUser.swordLevel));
+            }
+        }
+
+        if (stationBowmenText.text != "")
+        {
+            int bowmenAmount = int.Parse(stationBowmenText.text);
+            if (bowmenAmount > 0)
+            {
+                army.Add(new Group(bowmenAmount, LocalData.SelfUser.archerLevel));
+            }
+        }
+
+        if (stationSpearmenText.text != "")
+        {
+            int spearmenAmount = int.Parse(stationSpearmenText.text);
+            if (spearmenAmount > 0)
+            {
+                army.Add(new Group(spearmenAmount, LocalData.SelfUser.spearmanLevel));
+            }
+        }
+
+        if (stationCavalryText.text != "")
+        {
+            int cavalryAmount = int.Parse(stationCavalryText.text);
+            if (cavalryAmount > 0)
+            {
+                army.Add(new Group(cavalryAmount, LocalData.SelfUser.cavalryLevel));
+            }
+        }
+
+        Task.Run(async () =>
+        {
+            return await Network.StationUnits(lockPosition, army);
+        }).ContinueWith(async res =>
+        {
+            var result = await res;
+            Debug.Log(result.message);
+
+            if (result.success)
+            {
+                aq.queue.Add(() =>
+                {
+                    SplashText.Splash("Stationing Units " + army);
+                    CloseAllInfoWindows();
+                });
+                ScheduledMoveArmyEvent moveArmyEvent = new ScheduledMoveArmyEvent(20, army, lockPosition, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
+                
+            }
+            else
+            {
+                SplashText.Splash(result.message);
+                Debug.LogError(result.message);
+            }
+        });
     }
 
     public void OpenInfoScreen()
@@ -82,7 +302,16 @@ public class InfoScreen : MonoBehaviour
         
         CloseResourceInfoScreen();
         Debug.Log("OPENVILLAGEINFOSCREEN");
-        attackButton.onClick.AddListener(delegate { OverworldController.AttackWithAll(position); });
+        if (Grid._instance.tiles[position].building == 1)
+        {
+            resourceCamp = false;
+        }
+
+        if (Grid._instance.tiles[position].building > 1 && Grid._instance.tiles[position].building < 254)
+        {
+            resourceCamp = true;
+        }
+        attackButton.onClick.AddListener(delegate { attackScreen.OpenAttackScreen(Grid._instance.tiles[position].owner, resourceCamp, position); });
 
         //Debug.Log(attackButton.onClick.GetPersistentMethodName(0));
     }
@@ -155,6 +384,7 @@ public class InfoScreen : MonoBehaviour
     public void UpdateInfoScreenVillage(int id)
     {
         int owner = Grid._instance.tiles[id].owner;
+
         //Debug.LogError("TOWNBOYS " + Grid._instance.tiles[id].owner + "+++++++" + LocalData.SelfUser.userId);
 
         //villageCoordinateText.text = Grid._instance.GetPosition(id).ToString();
@@ -234,6 +464,8 @@ public class InfoScreen : MonoBehaviour
     {
         int buildingType = Grid._instance.tiles[id].building;
         int owner = Grid._instance.tiles[id].owner;
+        openArmyCampButton.onClick.RemoveAllListeners();
+        openArmyCampButton.onClick.AddListener(delegate { OpenArmyCampWindow(id); });
 
         resourceCoordinateText.text = "Lvl 1";//Network.allUsers.Find(x => x.userId == owner).name;
         

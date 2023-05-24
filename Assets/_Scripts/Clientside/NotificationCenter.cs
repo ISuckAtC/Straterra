@@ -35,6 +35,7 @@ public class NotificationCenter
     public static void Add(string title, string message)
     {
         Debug.Log("NOTIFICATION MESSAGE\n_________________\n\n" + message);
+        Debug.Log("datetime-now is " + DateTime.Now);
         I.notifications.Insert(0, (title,message, DateTime.Now, false));
         //I.notifications.Add((title, message, false));
     }
