@@ -165,7 +165,7 @@ public class AttackScreen : MonoBehaviour
                 armyText.text += NumConverter.GetConvertedArmy(Grid._instance.tiles[tileId].army[i].count) + " " + UnitDefinition.I[Grid._instance.tiles[tileId].army[i].unitId].name + "\n";
             }
         }
-        attackButton.onClick.AddListener( { delegate AttackWithSome(tilePosition)});
+        attackButton.onClick.AddListener(delegate { AttackWithSome(tilePosition); });;
     }
     public void OnSwordsmenSliderChanged()
     {
@@ -221,6 +221,7 @@ public class AttackScreen : MonoBehaviour
         }).ContinueWith(async res =>
         {
             var result = await res;
+            Debug.Log(result.message);
 
             if (result.success)
             {
