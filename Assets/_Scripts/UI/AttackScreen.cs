@@ -54,12 +54,16 @@ public class AttackScreen : MonoBehaviour
         attackScreen.SetActive(false);
         InfoScreen._instance.OpenVillageInfoScreen(villageId);
     }
-    public void NewUpdateArmy()
+    public void UpdateArmy()
     {
         string swordtext = "";
         string bowtext = "";
         string speartext = "";
         string cavalrytxt = "";
+        swordsmenMaxAmount = 0;
+        bowmenMaxAmount = 0;
+        spearmenMaxAmount = 0;
+        cavalryMaxAmount = 0;
 
 
         Task.Run<NetworkStructs.UnitGroup>(async () =>
@@ -143,7 +147,7 @@ public class AttackScreen : MonoBehaviour
         int owner = Grid._instance.tiles[tileId].owner;
         playerNameText.text = Network.allUsers.Find(x => x.userId == owner).name;
         playerIdText.text = owner.ToString();
-        NewUpdateArmy(); 
+        UpdateArmy(); 
         cancelButton.onClick.RemoveAllListeners();
         cancelButton.onClick.AddListener(delegate { CloseAttackScreen(owner); });
         clickAway.onClick.RemoveAllListeners();
