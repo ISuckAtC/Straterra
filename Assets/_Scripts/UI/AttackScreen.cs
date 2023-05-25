@@ -60,6 +60,10 @@ public class AttackScreen : MonoBehaviour
         string bowtext = "";
         string speartext = "";
         string cavalrytxt = "";
+        swordsmenMaxAmount = 0;
+        bowmenMaxAmount = 0;
+        spearmenMaxAmount = 0;
+        cavalryMaxAmount = 0;
 
 
         Task.Run<NetworkStructs.UnitGroup>(async () =>

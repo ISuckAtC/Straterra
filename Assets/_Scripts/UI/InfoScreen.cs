@@ -69,6 +69,19 @@ public class InfoScreen : MonoBehaviour
     public Button stationConfirmButton;
 
     public GameObject recallWindow;
+    public Slider recallSwordsmenSlider;
+    public Slider recallBowmenSlider;
+    public Slider recallSpearmenSlider;
+    public Slider recallCavalrySlider;
+    public TMPro.TMP_Text recallSwordsmenText;
+    public TMPro.TMP_Text recallBowmenText;
+    public TMPro.TMP_Text recallSpearmenText;
+    public TMPro.TMP_Text recallCavalryText;
+    int recallSwordsmenMaxAmount = 0;
+    int recallBowmenMaxAmount = 0;
+    int recallSpearmenMaxAmount = 0;
+    int recallCavalryMaxAmount = 0;
+    public Button recallConfirmButton;
 
     //public Image villageImage;
     public Button homeButton; //Button that takes you from Overworld to your own village screen.
@@ -159,34 +172,120 @@ public class InfoScreen : MonoBehaviour
 
                 stationSwordsmenSlider.maxValue = stationSwordsmenMaxAmount;
                 stationSwordsmenSlider.value = stationSwordsmenMaxAmount;
-                stationSwordsmenSlider.onValueChanged.AddListener(delegate { OnSwordsmenSliderChanged(); });
+                stationSwordsmenSlider.onValueChanged.AddListener(delegate { OnSwordsmenSliderChanged(true); });
                 stationBowmenSlider.maxValue = stationBowmenMaxAmount;
                 stationBowmenSlider.value = stationBowmenMaxAmount;
-                stationBowmenSlider.onValueChanged.AddListener(delegate { OnBowmenSliderChanged(); });
+                stationBowmenSlider.onValueChanged.AddListener(delegate { OnBowmenSliderChanged(true); });
                 stationSpearmenSlider.maxValue = stationSpearmenMaxAmount;
                 stationSpearmenSlider.value = stationSpearmenMaxAmount;
-                stationSpearmenSlider.onValueChanged.AddListener(delegate { OnSpearmenSliderChanged(); });
+                stationSpearmenSlider.onValueChanged.AddListener(delegate { OnSpearmenSliderChanged(true); });
                 stationCavalrySlider.maxValue = stationCavalryMaxAmount;
                 stationCavalrySlider.value = stationCavalryMaxAmount;
-                stationCavalrySlider.onValueChanged.AddListener(delegate { OnCavalrySliderChanged(); });
+                stationCavalrySlider.onValueChanged.AddListener(delegate { OnCavalrySliderChanged(true); });
             });
         });
     }
-    public void OnSwordsmenSliderChanged()
+    public void UpdateRecallArmy(int tileId)
     {
-        stationSwordsmenText.text = ((int)stationSwordsmenSlider.value).ToString();
+        string swordtext = "";
+        string bowtext = "";
+        string speartext = "";
+        string cavalrytxt = "";
+
+
+        Task.Run<NetworkStructs.UnitGroup>(async () =>
+        {
+            return await Network.GetHomeUnits();
+        }).ContinueWith(async result =>
+        {
+            NetworkStructs.UnitGroup army = await result;
+            System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
+
+            for (int i = 0; i < army.units.Length; ++i)
+            {
+                int id = army.units[i].unitId;
+                int amount = army.units[i].amount;
+
+                CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+            }
+            aq.queue.Add(() =>
+            {
+                int lockedTile = Grid._instance.tiles[tileId].id;
+
+                // Spearmen loop
+                for (int i = 0; i < 256; ++i)
+                {
+                    int amount = Grid._instance.tiles[lockedTile].army[i].count;
+
+                    if (amount > 0 && UnitDefinition.I[i].name == "Swordsman")
+                    {
+                        swordtext += amount;
+                        recallSwordsmenMaxAmount += amount;
+                    }
+
+                    if (amount > 0 && UnitDefinition.I[i].name == "Bowman")
+                    {
+                        bowtext += amount;
+                        recallBowmenMaxAmount += amount;
+                    }
+
+                    if (amount > 0 && UnitDefinition.I[i].name == "Spearman")
+                    {
+                        speartext += amount;
+                        recallSpearmenMaxAmount += amount;
+                    }
+
+                    if (amount > 0 && UnitDefinition.I[i].name == "Cavalry")
+                    {
+                        cavalrytxt += amount;
+                        recallCavalryMaxAmount += amount;
+                    }
+                }
+
+                recallSwordsmenText.text = swordtext;
+                recallBowmenText.text = bowtext;
+                recallSpearmenText.text = speartext;
+                recallCavalryText.text = cavalrytxt;
+
+                recallSwordsmenSlider.onValueChanged.RemoveAllListeners();
+                recallBowmenSlider.onValueChanged.RemoveAllListeners();
+                recallSpearmenSlider.onValueChanged.RemoveAllListeners();
+                recallCavalrySlider.onValueChanged.RemoveAllListeners();
+
+                recallSwordsmenSlider.maxValue = recallSwordsmenMaxAmount;
+                recallSwordsmenSlider.value = recallSwordsmenMaxAmount;
+                recallSwordsmenSlider.onValueChanged.AddListener(delegate { OnSwordsmenSliderChanged(false); });
+                recallBowmenSlider.maxValue = recallBowmenMaxAmount;
+                recallBowmenSlider.value = recallBowmenMaxAmount;
+                recallBowmenSlider.onValueChanged.AddListener(delegate { OnBowmenSliderChanged(false); });
+                recallSpearmenSlider.maxValue = recallSpearmenMaxAmount;
+                recallSpearmenSlider.value = recallSpearmenMaxAmount;
+                recallSpearmenSlider.onValueChanged.AddListener(delegate { OnSpearmenSliderChanged(false); });
+                recallCavalrySlider.maxValue = recallCavalryMaxAmount;
+                recallCavalrySlider.value = recallCavalryMaxAmount;
+                recallCavalrySlider.onValueChanged.AddListener(delegate { OnCavalrySliderChanged(false); });
+            });
+        });
     }
-    public void OnBowmenSliderChanged()
+    public void OnSwordsmenSliderChanged(bool station)
     {
-        stationBowmenText.text = ((int)stationBowmenSlider.value).ToString();
+        if (station)stationSwordsmenText.text = ((int)stationSwordsmenSlider.value).ToString();
+        if (!station)recallSwordsmenText.text = ((int)recallSwordsmenSlider.value).ToString();
     }
-    public void OnSpearmenSliderChanged()
+    public void OnBowmenSliderChanged(bool station)
     {
-        stationSpearmenText.text = ((int)stationSpearmenSlider.value).ToString();
+        if (station)stationBowmenText.text = ((int)stationBowmenSlider.value).ToString();
+        if (!station)recallBowmenText.text = ((int)recallBowmenSlider.value).ToString();
     }
-    public void OnCavalrySliderChanged()
+    public void OnSpearmenSliderChanged(bool station)
     {
-        stationCavalryText.text = ((int)stationCavalrySlider.value).ToString();
+        if (station)stationSpearmenText.text = ((int)stationSpearmenSlider.value).ToString();
+        if (!station)recallSpearmenText.text = ((int)recallSpearmenSlider.value).ToString();
+    }
+    public void OnCavalrySliderChanged(bool station)
+    {
+        if (station)stationCavalryText.text = ((int)stationCavalrySlider.value).ToString();
+        if (!station)recallCavalryText.text = ((int)recallCavalrySlider.value).ToString();
     }
     public void CloseAllInfoWindows()
     {
@@ -206,6 +305,7 @@ public class InfoScreen : MonoBehaviour
     {
         stationWindow.SetActive(false);
         recallWindow.SetActive(true);
+        UpdateRecallArmy(tileId);
     }
     public void OpenArmyCampWindow(int tileId)
     {
@@ -271,6 +371,74 @@ public class InfoScreen : MonoBehaviour
                 aq.queue.Add(() =>
                 {
                     SplashText.Splash("Stationing Units");
+                    CloseAllInfoWindows();
+                });
+                //ScheduledMoveArmyEvent moveArmyEvent = new ScheduledMoveArmyEvent(20, army, lockPosition, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
+                
+            }
+            else
+            {
+                SplashText.Splash(result.message);
+                Debug.LogError(result.message);
+            }
+        });
+    }
+    public void RecallUnits(int tileId)
+    {
+        Debug.Log("Recalled tile at position " + tileId + " has building type " + Grid._instance.tiles[tileId].building);
+        if (Grid._instance.tiles[tileId].building == 1) return;
+
+        int lockPosition = tileId;
+        List<Group> army = new List<Group>();
+
+        if (recallSwordsmenText.text != "")
+        {
+            int swordsmenAmount = int.Parse(recallSwordsmenText.text);
+            if (swordsmenAmount > 0)
+            {
+                army.Add(new Group(swordsmenAmount, LocalData.SelfUser.swordLevel));
+            }
+        }
+
+        if (recallBowmenText.text != "")
+        {
+            int bowmenAmount = int.Parse(recallBowmenText.text);
+            if (bowmenAmount > 0)
+            {
+                army.Add(new Group(bowmenAmount, LocalData.SelfUser.archerLevel));
+            }
+        }
+
+        if (recallSpearmenText.text != "")
+        {
+            int spearmenAmount = int.Parse(recallSpearmenText.text);
+            if (spearmenAmount > 0)
+            {
+                army.Add(new Group(spearmenAmount, LocalData.SelfUser.spearmanLevel));
+            }
+        }
+
+        if (recallCavalryText.text != "")
+        {
+            int cavalryAmount = int.Parse(recallCavalryText.text);
+            if (cavalryAmount > 0)
+            {
+                army.Add(new Group(cavalryAmount, LocalData.SelfUser.cavalryLevel));
+            }
+        }
+
+        Task.Run(async () =>
+        {
+            return await Network.RecallUnits(lockPosition, army);
+        }).ContinueWith(async res =>
+        {
+            var result = await res;
+
+            if (result.success)
+            {
+                aq.queue.Add(() =>
+                {
+                    SplashText.Splash("Recalling Units");
                     CloseAllInfoWindows();
                 });
                 //ScheduledMoveArmyEvent moveArmyEvent = new ScheduledMoveArmyEvent(20, army, lockPosition, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
