@@ -193,21 +193,24 @@ public class InfoScreen : MonoBehaviour
         string cavalrytxt = "";
 
 
-        Task.Run<NetworkStructs.UnitGroup>(async () =>
+        Task.Run<NetworkStructs.MapTile>(async () =>
         {
-            return await Network.GetHomeUnits();
+            return await Network.GetMapTile(tileId);
         }).ContinueWith(async result =>
         {
-            NetworkStructs.UnitGroup army = await result;
+            NetworkStructs.MapTile tile = await result;
             System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
+            List<NetworkStructs.Unit> army = tile.army;
 
+            /*
             for (int i = 0; i < army.units.Length; ++i)
             {
                 int id = army.units[i].unitId;
                 int amount = army.units[i].amount;
 
-                CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+                //CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
             }
+            */
             aq.queue.Add(() =>
             {
                 int lockedTile = Grid._instance.tiles[tileId].id;
@@ -215,6 +218,9 @@ public class InfoScreen : MonoBehaviour
                 // Spearmen loop
                 for (int i = 0; i < 256; ++i)
                 {
+                    
+                    Debug.Log(UnitDefinition.I[i].name + " " + Grid._instance.tiles[lockedTile].army[i].count);
+
                     int amount = Grid._instance.tiles[lockedTile].army[i].count;
 
                     if (amount > 0 && UnitDefinition.I[i].name == "Swordsman")
@@ -429,6 +435,7 @@ public class InfoScreen : MonoBehaviour
 
         Task.Run(async () =>
         {
+            Debug.Log(army);
             return await Network.RecallUnits(lockPosition, army);
         }).ContinueWith(async res =>
         {
