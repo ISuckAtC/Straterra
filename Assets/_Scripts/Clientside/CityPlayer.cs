@@ -30,9 +30,17 @@ public class CityPlayer : MonoBehaviour
     public GameObject temple;
     public GameObject workshop;
     public GameObject emptyPlot;
-
     public GameObject marketplace;
     public GameObject warehouse;
+
+    public Button buildButtonTownHall, 
+    buildButtonBarracks,
+    buildButtonSmithy,
+    buildButtonAcademy,
+    buildButtonTemple,
+    buildButtonWorkshop,
+    buildButtonWarehouse,
+    buildButtonMarketplace;
 
     private List<GameObject> buildingsInterfaces;
     private int selectedSlot;
@@ -484,7 +492,13 @@ public class CityPlayer : MonoBehaviour
         selectedSlot = slot;
 
         // Code here
+        
 
+        for (int i = 0; i < cityPlayer.slots.Length /*buildingsInterfaces.Count*/; i++)
+        {
+            //Debug.Log(buildings[i].)
+            Debug.Log(buildingsInterfaces[i].name);
+        }
     }
     #endregion
 
