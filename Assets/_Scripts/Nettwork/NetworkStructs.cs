@@ -54,6 +54,7 @@ namespace NetworkStructs
         public float metalAmount;
         public float orderAmount;
         public float corruptionProgress;
+        public List<Unit> army;
     }
 
     [System.Serializable]

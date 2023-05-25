@@ -217,8 +217,8 @@ public class InfoScreen : MonoBehaviour
     }
     public void StationUnits(int tileId)
     {
-        Debug.Log("Attacked tile at position " + tileId + " has building type " + Grid._instance.tiles[tileId].building);
-        if (Grid._instance.tiles[tileId].building != 1) return;
+        Debug.Log("Stationed tile at position " + tileId + " has building type " + Grid._instance.tiles[tileId].building);
+        if (Grid._instance.tiles[tileId].building == 1) return;
 
         int lockPosition = tileId;
         List<Group> army = new List<Group>();
@@ -265,16 +265,15 @@ public class InfoScreen : MonoBehaviour
         }).ContinueWith(async res =>
         {
             var result = await res;
-            Debug.Log(result.message);
 
             if (result.success)
             {
                 aq.queue.Add(() =>
                 {
-                    SplashText.Splash("Stationing Units " + army);
+                    SplashText.Splash("Stationing Units");
                     CloseAllInfoWindows();
                 });
-                ScheduledMoveArmyEvent moveArmyEvent = new ScheduledMoveArmyEvent(20, army, lockPosition, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
+                //ScheduledMoveArmyEvent moveArmyEvent = new ScheduledMoveArmyEvent(20, army, lockPosition, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
                 
             }
             else

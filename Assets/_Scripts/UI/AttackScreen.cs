@@ -271,7 +271,7 @@ public class AttackScreen : MonoBehaviour
                     SplashText.Splash("Attacking " + playerNameText.text);
                     CloseAttackScreen(Grid._instance.tiles[lockPosition].owner);
                 });
-                ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(20, army, lockPosition, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
+                //ScheduledAttackEvent attackEvent = new ScheduledAttackEvent(20, army, lockPosition, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
                 
             }
             else

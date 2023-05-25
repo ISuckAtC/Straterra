@@ -550,6 +550,7 @@ public class OverworldController : MonoBehaviour
             InfoScreen._instance.CloseInfoScreen();
             InfoScreen._instance.CloseResourceInfoScreen();
             InfoScreen._instance.CloseVillageInfoScreen();
+            InfoScreen._instance.CloseAllInfoWindows();
             //InfoScreen._instance.ToggleInfoScreen(false);
         }
 
@@ -621,9 +622,34 @@ public class OverworldController : MonoBehaviour
 
     private void CheckTile(int id)
     {
-        byte buildingType = Grid._instance.tiles[id].building;
+        int lockedId = id;
+        Task.Run<NetworkStructs.MapTile>(async () =>
+        {
+            return await Network.GetMapTile(lockedId);
+        }).ContinueWith(async result =>
+        {
+            NetworkStructs.MapTile mapTile = await result;
+            Tile tile = Grid._instance.tiles[lockedId];
+            tile.travelCost = mapTile.travelCost;
+            //tile.tileType = mapTile.tileType;
+            tile.building = mapTile.building;
+            tile.owner = mapTile.ownerId;
+            tile.foodAmount = mapTile.foodAmount;
+            tile.woodAmount = mapTile.woodAmount;
+            tile.metalAmount = mapTile.metalAmount;
+            tile.corruptionProgress = mapTile.corruptionProgress;
+            tile.army = new List<Group>();
+            for(int i =0; i < mapTile.army.Count; i++)
+            {
+                tile.army.Add(new Group(mapTile.army[i].amount, mapTile.army[i].unitId));
+            }
+            Grid._instance.tiles[lockedId] = tile;
+        });
 
-        InfoScreen._instance.UpdateInfoScreen(id);
+    
+        byte buildingType = Grid._instance.tiles[lockedId].building;
+
+        InfoScreen._instance.UpdateInfoScreen(lockedId);
         InfoScreen._instance.OpenInfoScreen();
         if (buildingType > 1)
         {
@@ -631,15 +657,15 @@ public class OverworldController : MonoBehaviour
 
             InfoScreen._instance.OpenResourceInfoScreen();
             InfoScreen._instance.OpenInfoScreen();
-            InfoScreen._instance.UpdateInfoScreenResource(id);
+            InfoScreen._instance.UpdateInfoScreenResource(lockedId);
         }
         else if (buildingType == 1)
         {
             // Village building
 
-            InfoScreen._instance.UpdateInfoScreenVillage(id);
+            InfoScreen._instance.UpdateInfoScreenVillage(lockedId);
             InfoScreen._instance.OpenInfoScreen();
-            InfoScreen._instance.OpenVillageInfoScreen(id);
+            InfoScreen._instance.OpenVillageInfoScreen(lockedId);
             //InfoScreen._instance.ToggleInfoScreen(true);
         }
     }
