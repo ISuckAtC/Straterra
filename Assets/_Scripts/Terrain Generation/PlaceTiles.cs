@@ -118,7 +118,6 @@ public class PlaceTiles : MonoBehaviour
 					if (Grid._instance.tiles[id - 1].tileType == 4)
 					{
 						left = true;
-						
 					}
 					if (Grid._instance.tiles[id + 1].tileType == 4)
 					{
@@ -280,10 +279,10 @@ public class PlaceTiles : MonoBehaviour
 		maxHeight += Mathf.Abs(minHeight);
 
 		//ColorAllTiles();
-		SetWaterEdgeTiles();
+		
 	}
 
-	private void SetWaterEdgeTiles()
+	public void SetWaterEdgeTiles()
 	{
 		float val = 0.6f;
 
@@ -297,7 +296,7 @@ public class PlaceTiles : MonoBehaviour
 
 				if (watertiles > 0 && Grid._instance.tiles[id].tileType > 1)
 				{
-					tilemap.SetTile(new Vector3Int(i, j, 1), null);
+					//tilemap.SetTile(new Vector3Int(i, j, 1), null);
 					tilemap.SetTile(new Vector3Int(i, j, 1), grassTiles[watertiles]);
 
 					Grid._instance.tiles[id].tileType = 2;
@@ -311,17 +310,17 @@ public class PlaceTiles : MonoBehaviour
 					Grid._instance.tiles[id].woodAmount *= 0.5f;
 					Grid._instance.tiles[id].foodAmount *= 1.25f;
 
-					tilemap.SetColor(new Vector3Int(i, j, 1), new Color(val, val, val));
+					//tilemap.SetColor(new Vector3Int(i, j, 1), new Color(val, val, val));
 					//Debug.Log("Tile xy: " + i + ", " + j + "  Byte: " + watertiles);
+					float foodAmount = Grid._instance.tiles[id].foodAmount;
+
+					tilemap.SetColor(new Vector3Int(i, j, 1), new Color(Mathf.Lerp(0.85f, 1f, foodAmount), Mathf.Lerp(0.8f, 1f, foodAmount), Mathf.Lerp(0.75f, 1f, foodAmount)));
 				}
 			}
 		}
 	}
-	/*
 
-		resourceAmount += ((resourceAmount * resourceBuildingCount) );
 
-	*/
 	public byte /*bool[]*/ FindAdjacentWater(int id)
 	{
 		int count = 0;
@@ -375,9 +374,9 @@ public class PlaceTiles : MonoBehaviour
 
 	public void ColorTilesByResourceAmount()
 	{
-		float foodR = 0.9f;
-		float foodG = 0.85f;
-		float foodB = 0.8f;
+		float foodR = 0.85f;
+		float foodG = 0.8f;
+		float foodB = 0.75f;
 
 
 
@@ -390,7 +389,14 @@ public class PlaceTiles : MonoBehaviour
 			{
 				int tileType = Grid._instance.tiles[Grid._instance.GetIdByInt(i, j)].tileType;
 
-				if (tileType == 2 || tileType == 4)      // Grassland
+				if (tileType == 1)	// Water
+				{
+					float foodAmount = Grid._instance.tiles[Grid._instance.GetIdByInt(i, j)].foodAmount;
+
+					tilemap.SetColor(new Vector3Int(i, j, 1), new Color(Mathf.Lerp(foodR, 1f, foodAmount), Mathf.Lerp(foodG, 1f, foodAmount), Mathf.Lerp(foodB, 1f, foodAmount)));
+					
+				}
+				else if (tileType == 2 || tileType == 4)      // Grassland
 				{
 					float foodAmount = Grid._instance.tiles[Grid._instance.GetIdByInt(i, j)].foodAmount;
 
