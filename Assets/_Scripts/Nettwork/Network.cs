@@ -90,7 +90,9 @@ public class Network
     {
         HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/getMapTile?" + tokenIdentity + "&" + id);
 
-        return JsonUtility.FromJson<MapTile>(await message.Content.ReadAsStringAsync());
+        string res = await message.Content.ReadAsStringAsync();
+        Debug.Log("GETMAPTILE: " + res);
+        return JsonUtility.FromJson<MapTile>(res);
     }
 
     public static async Task<MapTile[]> GetMap()
@@ -360,6 +362,12 @@ public class Network
             }
         }
         throw new Exception("GetUpdate Failed");
+    }
+    public static async Task<NetworkStructs.ActionResult> Logout()
+    {
+        HttpResponseMessage message = await HttpClient.GetAsync("http://18.216.109.151:80/logout?" + tokenIdentity);
+
+        return JsonUtility.FromJson<NetworkStructs.ActionResult>(await message.Content.ReadAsStringAsync());
     }
 }
 

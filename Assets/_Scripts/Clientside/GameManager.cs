@@ -62,13 +62,13 @@ public class GameManager : MonoBehaviour
             I.playerResources.chaos = value;
         }
     }
-    
+
     public int timesAttacked = 0;
     public int timesAttacking = 0;
     public int timesDefended = 0;
-    
+
     public int buildRange = 4;
-    
+
     public static Color PlayerColor = new Color(0.3f, 1.0f, 0.3f, 0.8f);
 
     public static int[] PlayerUnitAmounts { get => I.playerResources.unitAmounts; }
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
         EventHub.OnTick += AddResources;
 
 
-        Task.Run(async () => 
+        Task.Run(async () =>
         {
             await Network.GetScheduledEvents();
         });
@@ -117,8 +117,8 @@ public class GameManager : MonoBehaviour
             NotificationCenter.unreads = res.notifications;
 
             // TODO actionqueue activate unread blinker
-            
-            aq.queue.Add(() => 
+
+            aq.queue.Add(() =>
             {
                 BottomBar.I.reportsNotificationBlinker.SetActive(NotificationCenter.unreads > 0);
             });
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.LogError(e.Message + "\n\n" + e.StackTrace + "\n");
             }
-            
+
             PlayerWood = resources.wood;
             PlayerMetal = resources.metal;
             PlayerOrder = resources.order;
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
 
         // Metal
         PlayerMetal += ResourceData.GetMetalTickValue();
-        
+
         //Debug.Log("F: " + PlayerFood + " | W: " + PlayerWood + " | M: " + PlayerMetal);
     }
 
@@ -160,39 +160,55 @@ public class GameManager : MonoBehaviour
         switch (resourceName)
         {
             case "Food":
-            {
-                SplashText.Splash("You're lacking Food.");
-                foodImage.Stop();
-                foodImage.Play();
-                break;
-            }
+                {
+                    SplashText.Splash("You're lacking Food.");
+                    foodImage.Stop();
+                    foodImage.Play();
+                    break;
+                }
             case "Wood":
-            {
-                SplashText.Splash("You're lacking Wood.");
-                woodImage.Stop();
-                woodImage.Play();
-                break;
-            }
+                {
+                    SplashText.Splash("You're lacking Wood.");
+                    woodImage.Stop();
+                    woodImage.Play();
+                    break;
+                }
             case "Metal":
-            {
-                SplashText.Splash("You're lacking Metal.");
-                metalImage.Stop();
-                metalImage.Play();
-                break;
-            }
+                {
+                    SplashText.Splash("You're lacking Metal.");
+                    metalImage.Stop();
+                    metalImage.Play();
+                    break;
+                }
             case "Order":
-            {
-                SplashText.Splash("You're lacking Order.");
-                orderImage.Stop();
-                orderImage.Play();
-                break;
-            }
+                {
+                    SplashText.Splash("You're lacking Order.");
+                    orderImage.Stop();
+                    orderImage.Play();
+                    break;
+                }
         }
     }
 
     public void KickPlayerToLogin()  // Is called whenever res.message gives "Session invalid" - The player was kicked
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(0); //Login scene
+        Task.Run<NetworkStructs.ActionResult>(async () =>
+        {
+            return await Network.Logout();
+        }).ContinueWith(async result =>
+        {
+            var res = await result;
+            if (res.success)
+            {
+                SplashText.Splash("Logged Out");
+            }
+
+            else if (!res.success)
+            {
+                SplashText.Splash(res.message);
+            }
+        });
     }
 
 }

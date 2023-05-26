@@ -127,6 +127,8 @@ public static class NumConverter
             return "Lots of";
         }
 
+        if (amount == 0) return "No";
+
         return "A few";                   // <Twenty
     }
 

@@ -537,6 +537,7 @@ public class OverworldController : MonoBehaviour
 					InfoScreen._instance.CloseInfoScreen();
 					InfoScreen._instance.CloseResourceInfoScreen();
 					InfoScreen._instance.CloseVillageInfoScreen();
+					InfoScreen._instance.CloseAllInfoWindows();
 
 					CheckTile(id);
 				}
@@ -656,7 +657,16 @@ public class OverworldController : MonoBehaviour
 		if (buildingType > 1)
 		{
 			// Random building
-
+			if (Grid._instance.tiles[lockedId].owner == LocalData.SelfUserId) 
+			{
+				InfoScreen._instance.openArmyCampButton.gameObject.SetActive(true);
+				InfoScreen._instance.openAttackResourceWindow.gameObject.SetActive(false);
+			}
+			if (Grid._instance.tiles[lockedId].owner != LocalData.SelfUserId) 
+			{
+				InfoScreen._instance.openArmyCampButton.gameObject.SetActive(false);
+				InfoScreen._instance.openAttackResourceWindow.gameObject.SetActive(true);
+			}
 			InfoScreen._instance.OpenResourceInfoScreen();
 			InfoScreen._instance.OpenInfoScreen();
 			InfoScreen._instance.UpdateInfoScreenResource(lockedId);

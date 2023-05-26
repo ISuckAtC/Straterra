@@ -52,6 +52,8 @@ public class AttackScreen : MonoBehaviour
     void CloseAttackScreen(int villageId)
     {
         attackScreen.SetActive(false);
+
+        if(villageId!=0)
         InfoScreen._instance.OpenVillageInfoScreen(villageId);
     }
     public void UpdateArmy()

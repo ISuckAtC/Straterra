@@ -15,11 +15,11 @@ using TMPro;
 public class InfoScreen : MonoBehaviour
 {
     public static InfoScreen _instance;
-    
+
     public GameObject infoScreen;
     public GameObject resourceInfoScreen;
     public GameObject villageInfoScreen;
-    
+
     public TMP_Text coordinateText;
     public TMP_Text tileTypeText;
     public TMP_Text foodAmountText;
@@ -27,7 +27,7 @@ public class InfoScreen : MonoBehaviour
     public TMP_Text metalAmountText;
     public TMP_Text chaosAmountText;
 
-    
+
     public TMP_Text resourceTypeText;
     public Slider healthSlider;
     public TMP_Text healthText;
@@ -37,7 +37,7 @@ public class InfoScreen : MonoBehaviour
     public TMP_Text resourceBreadText;
     public Image tileImage;
 
-    
+
     public TMP_Text playerNameText;
     public TMP_Text villageCoordinateText;
     public TMP_Text villageResourceText;
@@ -52,6 +52,7 @@ public class InfoScreen : MonoBehaviour
     public GameObject armyCampWindow;
     public Button openStationWindow;
     public Button openRecallWindow;
+    public Button openAttackResourceWindow;
 
     public GameObject stationWindow;
     public Slider stationSwordsmenSlider;
@@ -87,7 +88,8 @@ public class InfoScreen : MonoBehaviour
     public Button homeButton; //Button that takes you from Overworld to your own village screen.
 
     private ActionQueue aq;
-    
+    public int[] tileArmyAmount = new int[256];
+
     void Start()
     {
         if (_instance == null)
@@ -192,56 +194,59 @@ public class InfoScreen : MonoBehaviour
         string speartext = "";
         string cavalrytxt = "";
 
-
+        Debug.Log("Recall working");
         Task.Run<NetworkStructs.MapTile>(async () =>
         {
             return await Network.GetMapTile(tileId);
         }).ContinueWith(async result =>
         {
             NetworkStructs.MapTile tile = await result;
-            System.Array.Fill(CityPlayer.cityPlayer.homeArmyAmount, 0);
+            System.Array.Fill(tileArmyAmount, 0);
             List<NetworkStructs.Unit> army = tile.army;
 
-            /*
-            for (int i = 0; i < army.units.Length; ++i)
-            {
-                int id = army.units[i].unitId;
-                int amount = army.units[i].amount;
 
-                //CityPlayer.cityPlayer.homeArmyAmount[id] = amount;
+            for (int i = 0; i < army.Count; ++i)
+            {
+                int id = army[i].unitId;
+                int amount = army[i].amount;
+
+                tileArmyAmount[id] = amount;
             }
-            */
+
             aq.queue.Add(() =>
             {
                 int lockedTile = Grid._instance.tiles[tileId].id;
 
                 // Spearmen loop
-                for (int i = 0; i < 256; ++i)
+                for (int i = 0; i < Grid._instance.tiles[lockedTile].army.Count; ++i)
                 {
-                    
-                    Debug.Log(UnitDefinition.I[i].name + " " + Grid._instance.tiles[lockedTile].army[i].count);
+                    Group currentGroup = Grid._instance.tiles[lockedTile].army[i];
+                    Unit unitDef = UnitDefinition.I[currentGroup.unitId];
+
+                    Debug.Log(unitDef.name);
+                    Debug.Log(currentGroup.count);
 
                     int amount = Grid._instance.tiles[lockedTile].army[i].count;
 
-                    if (amount > 0 && UnitDefinition.I[i].name == "Swordsman")
+                    if (amount > 0 && unitDef.name == "Swordsman")
                     {
                         swordtext += amount;
                         recallSwordsmenMaxAmount += amount;
                     }
 
-                    if (amount > 0 && UnitDefinition.I[i].name == "Bowman")
+                    if (amount > 0 && unitDef.name == "Bowman")
                     {
                         bowtext += amount;
                         recallBowmenMaxAmount += amount;
                     }
 
-                    if (amount > 0 && UnitDefinition.I[i].name == "Spearman")
+                    if (amount > 0 && unitDef.name == "Spearman")
                     {
                         speartext += amount;
                         recallSpearmenMaxAmount += amount;
                     }
 
-                    if (amount > 0 && UnitDefinition.I[i].name == "Cavalry")
+                    if (amount > 0 && unitDef.name == "Cavalry")
                     {
                         cavalrytxt += amount;
                         recallCavalryMaxAmount += amount;
@@ -275,23 +280,23 @@ public class InfoScreen : MonoBehaviour
     }
     public void OnSwordsmenSliderChanged(bool station)
     {
-        if (station)stationSwordsmenText.text = ((int)stationSwordsmenSlider.value).ToString();
-        if (!station)recallSwordsmenText.text = ((int)recallSwordsmenSlider.value).ToString();
+        if (station) stationSwordsmenText.text = ((int)stationSwordsmenSlider.value).ToString();
+        if (!station) recallSwordsmenText.text = ((int)recallSwordsmenSlider.value).ToString();
     }
     public void OnBowmenSliderChanged(bool station)
     {
-        if (station)stationBowmenText.text = ((int)stationBowmenSlider.value).ToString();
-        if (!station)recallBowmenText.text = ((int)recallBowmenSlider.value).ToString();
+        if (station) stationBowmenText.text = ((int)stationBowmenSlider.value).ToString();
+        if (!station) recallBowmenText.text = ((int)recallBowmenSlider.value).ToString();
     }
     public void OnSpearmenSliderChanged(bool station)
     {
-        if (station)stationSpearmenText.text = ((int)stationSpearmenSlider.value).ToString();
-        if (!station)recallSpearmenText.text = ((int)recallSpearmenSlider.value).ToString();
+        if (station) stationSpearmenText.text = ((int)stationSpearmenSlider.value).ToString();
+        if (!station) recallSpearmenText.text = ((int)recallSpearmenSlider.value).ToString();
     }
     public void OnCavalrySliderChanged(bool station)
     {
-        if (station)stationCavalryText.text = ((int)stationCavalrySlider.value).ToString();
-        if (!station)recallCavalryText.text = ((int)recallCavalrySlider.value).ToString();
+        if (station) stationCavalryText.text = ((int)stationCavalrySlider.value).ToString();
+        if (!station) recallCavalryText.text = ((int)recallCavalrySlider.value).ToString();
     }
     public void CloseAllInfoWindows()
     {
@@ -312,14 +317,24 @@ public class InfoScreen : MonoBehaviour
         stationWindow.SetActive(false);
         recallWindow.SetActive(true);
         UpdateRecallArmy(tileId);
+        recallConfirmButton.onClick.RemoveAllListeners();
+        recallConfirmButton.onClick.AddListener(delegate { RecallUnits(tileId); });
     }
     public void OpenArmyCampWindow(int tileId)
     {
-        armyCampWindow.SetActive(true);
-        openStationWindow.onClick.RemoveAllListeners();
-        openRecallWindow.onClick.RemoveAllListeners();
-        openStationWindow.onClick.AddListener(delegate { OpenStationWindow(tileId); });
-        openRecallWindow.onClick.AddListener(delegate { OpenRecallWindow(tileId); });
+        if (Grid._instance.tiles[tileId].owner == LocalData.SelfUserId)
+        {
+            armyCampWindow.SetActive(true);
+            openStationWindow.onClick.RemoveAllListeners();
+            openRecallWindow.onClick.RemoveAllListeners();
+            openStationWindow.onClick.AddListener(delegate { OpenStationWindow(tileId); });
+            openRecallWindow.onClick.AddListener(delegate { OpenRecallWindow(tileId); });
+        }
+        else if (Grid._instance.tiles[tileId].owner !=LocalData.SelfUserId)
+        {
+            SplashText.Splash("You do not own this tile");
+            openAttackResourceWindow.onClick.AddListener(delegate { attackScreen.OpenAttackScreen(Grid._instance.tiles[tileId].owner, true, tileId); });
+        }
     }
     public void StationUnits(int tileId)
     {
@@ -380,7 +395,7 @@ public class InfoScreen : MonoBehaviour
                     CloseAllInfoWindows();
                 });
                 //ScheduledMoveArmyEvent moveArmyEvent = new ScheduledMoveArmyEvent(20, army, lockPosition, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
-                
+
             }
             else
             {
@@ -449,7 +464,7 @@ public class InfoScreen : MonoBehaviour
                     CloseAllInfoWindows();
                 });
                 //ScheduledMoveArmyEvent moveArmyEvent = new ScheduledMoveArmyEvent(20, army, lockPosition, LocalData.SelfUser.cityLocation, LocalData.SelfUser.userId);
-                
+
             }
             else
             {
@@ -461,9 +476,9 @@ public class InfoScreen : MonoBehaviour
 
     public void OpenInfoScreen()
     {
-        infoScreen.SetActive(true);    
+        infoScreen.SetActive(true);
     }
-    
+
     public void CloseInfoScreen()
     {
         infoScreen.SetActive(false);
@@ -471,9 +486,9 @@ public class InfoScreen : MonoBehaviour
 
     public void OpenVillageInfoScreen(int position)
     {
-       homeButton.interactable = (Grid._instance.tiles[position].owner == LocalData.SelfUser.userId);
+        homeButton.interactable = (Grid._instance.tiles[position].owner == LocalData.SelfUser.userId);
         villageInfoScreen.SetActive(true);
-        
+
         CloseResourceInfoScreen();
         Debug.Log("OPENVILLAGEINFOSCREEN");
         if (Grid._instance.tiles[position].building == 1)
@@ -489,21 +504,21 @@ public class InfoScreen : MonoBehaviour
 
         //Debug.Log(attackButton.onClick.GetPersistentMethodName(0));
     }
-    
+
     public void CloseVillageInfoScreen()
     {
         villageInfoScreen.SetActive(false);
         Debug.Log("CLOSEVILLAGEINFOSCREEN");
         attackButton.onClick.RemoveAllListeners();
     }
-    
+
     public void OpenResourceInfoScreen()
     {
         resourceInfoScreen.SetActive(true);
-        
+
         CloseVillageInfoScreen();
     }
-    
+
     public void CloseResourceInfoScreen()
     {
         resourceInfoScreen.SetActive(false);
@@ -563,7 +578,7 @@ public class InfoScreen : MonoBehaviour
 
         //villageCoordinateText.text = Grid._instance.GetPosition(id).ToString();
         villageCoordinateText.text = "Pathless";
-        
+
         if (owner == LocalData.SelfUser.userId)
         {
             attackButton.transform.parent.gameObject.SetActive(false);
@@ -577,7 +592,7 @@ public class InfoScreen : MonoBehaviour
             playerNameText.text = Network.allUsers.Find(x => x.userId == owner).name;
 
             coordinateText.text = "" + id;
-            
+
             Task.Run<NetworkStructs.Resources>(async () =>
             {
                 return await Network.GetResources(owner);
@@ -593,14 +608,14 @@ public class InfoScreen : MonoBehaviour
                         "Order: " + res.order;
                 });
             });
-            
+
             Task.Run<NetworkStructs.User>(async () =>
             {
                 return await Network.GetUser(owner);
             }).ContinueWith(async _user =>
             {
                 string buildings = "";
-                
+
                 NetworkStructs.User user = _user.Result;
 
                 for (int i = 0; i < user.cityBuildingSlots.Length; i++)
@@ -610,16 +625,16 @@ public class InfoScreen : MonoBehaviour
                     TownBuilding building = TownBuildingDefinition.I[user.cityBuildingSlots[i]];
                     buildings += building.name + " Lv " + building.level + "\n";
                 }
-                
+
                 aq.queue.Add(() =>
                 {
                     villageBuildingsText.text = buildings;
                 });
             });
-            
+
         }
-        
-        
+
+
         /*
         public TMP_Text playerNameText;
         public TMP_Text villageCoordinateText;
@@ -642,58 +657,58 @@ public class InfoScreen : MonoBehaviour
         openArmyCampButton.onClick.AddListener(delegate { OpenArmyCampWindow(id); });
 
         resourceCoordinateText.text = "Lvl 1";//Network.allUsers.Find(x => x.userId == owner).name;
-        
+
         switch (buildingType)
         {
             // All buildings have levels. For starting we will have level 1, 2 and 3
 
-            
+
             // Resource buildings
             case 10:                // Farm
-                
+
                 int foodEfficiency = (int)(Grid._instance.tiles[id].foodAmount * 100);
-                
+
                 resourceTypeText.text = "Farm";
-                
+
                 tileImage.sprite = PlaceTiles._instance.buildingTiles[buildingType].sprite;
                 resourceBreadText.text = "Producing Food";
-                
-                healthSlider.maxValue =  MapBuildingDefinition.I[buildingType].health;
-                healthSlider.value =  MapBuildingDefinition.I[buildingType].health;
+
+                healthSlider.maxValue = MapBuildingDefinition.I[buildingType].health;
+                healthSlider.value = MapBuildingDefinition.I[buildingType].health;
                 healthText.text = ("" + MapBuildingDefinition.I[buildingType].health);
 
                 efficiencySlider.value = foodEfficiency;
                 efficiencyText.text = ("" + foodEfficiency + "%");
                 break;
             case 20:                // Logging camp
-                
+
                 int woodEfficiency = (int)(Grid._instance.tiles[id].woodAmount * 100);
-                
+
                 resourceTypeText.text = "Logging camp";
-                
-                
+
+
                 tileImage.sprite = PlaceTiles._instance.buildingTiles[buildingType].sprite;
                 resourceBreadText.text = "Producing Wood";
-                
-                healthSlider.maxValue =  MapBuildingDefinition.I[buildingType].health;
-                healthSlider.value =  MapBuildingDefinition.I[buildingType].health;
+
+                healthSlider.maxValue = MapBuildingDefinition.I[buildingType].health;
+                healthSlider.value = MapBuildingDefinition.I[buildingType].health;
                 healthText.text = ("" + MapBuildingDefinition.I[buildingType].health);
 
                 efficiencySlider.value = woodEfficiency;
                 efficiencyText.text = ("" + woodEfficiency + "%");
                 break;
             case 30:                // Mine
-                
+
                 int mineEfficiency = (int)(Grid._instance.tiles[id].metalAmount * 100);
-                
+
                 resourceTypeText.text = "Mine";
-                
-                
+
+
                 tileImage.sprite = PlaceTiles._instance.buildingTiles[buildingType].sprite;
                 resourceBreadText.text = "Producing Metal";
-                
-                healthSlider.maxValue =  MapBuildingDefinition.I[buildingType].health;
-                healthSlider.value =  MapBuildingDefinition.I[buildingType].health;
+
+                healthSlider.maxValue = MapBuildingDefinition.I[buildingType].health;
+                healthSlider.value = MapBuildingDefinition.I[buildingType].health;
                 healthText.text = ("" + MapBuildingDefinition.I[buildingType].health);
 
                 efficiencySlider.value = mineEfficiency;
@@ -739,7 +754,8 @@ public class InfoScreen : MonoBehaviour
 
             for (int i = 0; i < Grid._instance.tiles[id].army.Count; i++)
             {
-                tileArmyText.text += NumConverter.GetConvertedArmy(Grid._instance.tiles[id].army[i].count) + " " + UnitDefinition.I[Grid._instance.tiles[id].army[i].unitId].name + "\n";
+                Group unitGroup = Grid._instance.tiles[id].army[i];
+                tileArmyText.text += NumConverter.GetConvertedArmy(unitGroup.count) + " " + UnitDefinition.I[unitGroup.unitId].name + "\n";
             }
         }
         else
@@ -749,32 +765,32 @@ public class InfoScreen : MonoBehaviour
 
 
         }
-        
+
 
         switch (tileType)
         {
             // 0 - no tile | 1 - water | 2 - grassland | 3 - forest | 4 - hill | 5 - mountain
-            case 0 :
+            case 0:
                 tileTypeText.text = "Barrier";
                 break;
 
-            case 1 :
+            case 1:
                 tileTypeText.text = "Lake";
                 break;
 
-            case 2 :
+            case 2:
                 tileTypeText.text = "Grassland";
                 break;
 
-            case 3 :
+            case 3:
                 tileTypeText.text = "Forest";
                 break;
 
-            case 4 :
+            case 4:
                 tileTypeText.text = "Hill";
                 break;
 
-            case 5 :
+            case 5:
                 tileTypeText.text = "Mountain";
                 break;
         }
@@ -790,7 +806,7 @@ public class InfoScreen : MonoBehaviour
         metalAmountText.text = "Metal: " + roundedMetalAmt + "%";
 
         float roundedChaosAmt = (Mathf.FloorToInt((Grid._instance.tiles[id].chaosAmount) * 100));
-        chaosAmountText.text = "Chaos: " + + roundedChaosAmt + "%";
+        chaosAmountText.text = "Chaos: " + +roundedChaosAmt + "%";
 
         Vector2 idSplit = Grid._instance.GetPosition(id);
         coordinateText.text = "ID: " + idSplit.x + ", " + idSplit.y;
