@@ -322,7 +322,7 @@ public class InfoScreen : MonoBehaviour
     }
     public void OpenArmyCampWindow(int tileId)
     {
-        if (Grid._instance.tiles[tileId].owner == LocalData.SelfUserId)
+        if (Grid._instance.tiles[tileId].owner == LocalData.SelfUser.userId)
         {
             armyCampWindow.SetActive(true);
             openStationWindow.onClick.RemoveAllListeners();
@@ -330,7 +330,7 @@ public class InfoScreen : MonoBehaviour
             openStationWindow.onClick.AddListener(delegate { OpenStationWindow(tileId); });
             openRecallWindow.onClick.AddListener(delegate { OpenRecallWindow(tileId); });
         }
-        else if (Grid._instance.tiles[tileId].owner != LocalData.SelfUserId)
+        else if (Grid._instance.tiles[tileId].owner != LocalData.SelfUser.userId)
         {
             SplashText.Splash("You do not own this tile");
             openAttackResourceWindow.onClick.AddListener(delegate { attackScreen.OpenAttackScreen(Grid._instance.tiles[tileId].owner, true, tileId); });
