@@ -12,7 +12,7 @@ using NetworkStructs;
 
 public class Network
 {
-    public static bool LAN = true;
+    public static bool LAN = false;
     // Storing the token for the players id.
     public static string tokenIdentity;
 
