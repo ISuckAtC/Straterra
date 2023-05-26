@@ -48,7 +48,7 @@ namespace NetworkStructs
         public byte building;
         public byte corruptionLevel;
         public int travelCost;
-        public int ownerId;
+        public int owner;
         public float foodAmount;
         public float woodAmount;
         public float metalAmount;

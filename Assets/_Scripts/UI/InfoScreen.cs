@@ -330,7 +330,7 @@ public class InfoScreen : MonoBehaviour
             openStationWindow.onClick.AddListener(delegate { OpenStationWindow(tileId); });
             openRecallWindow.onClick.AddListener(delegate { OpenRecallWindow(tileId); });
         }
-        else if (Grid._instance.tiles[tileId].owner !=LocalData.SelfUserId)
+        else if (Grid._instance.tiles[tileId].owner != LocalData.SelfUserId)
         {
             SplashText.Splash("You do not own this tile");
             openAttackResourceWindow.onClick.AddListener(delegate { attackScreen.OpenAttackScreen(Grid._instance.tiles[tileId].owner, true, tileId); });
@@ -656,6 +656,19 @@ public class InfoScreen : MonoBehaviour
         openArmyCampButton.onClick.RemoveAllListeners();
         openArmyCampButton.onClick.AddListener(delegate { OpenArmyCampWindow(id); });
 
+        if (Grid._instance.tiles[id].owner == LocalData.SelfUser.userId)
+        {
+            Debug.Log("User was selfuser, showing armycamp" + LocalData.SelfUser.userId + ", " + Grid._instance.tiles[id].owner);
+            InfoScreen._instance.openArmyCampButton.gameObject.SetActive(true);
+            InfoScreen._instance.openAttackResourceWindow.gameObject.SetActive(false);
+        }
+        if (Grid._instance.tiles[id].owner != LocalData.SelfUser.userId)
+        {
+            Debug.Log("User was Different user, showing attack button" + LocalData.SelfUser.userId + ", " + Grid._instance.tiles[id].owner);
+            InfoScreen._instance.openArmyCampButton.gameObject.SetActive(false);
+            InfoScreen._instance.openAttackResourceWindow.gameObject.SetActive(true);
+        }
+
         resourceCoordinateText.text = "Lvl 1";//Network.allUsers.Find(x => x.userId == owner).name;
 
         switch (buildingType)
@@ -738,6 +751,7 @@ public class InfoScreen : MonoBehaviour
                 tileTypeText.text = "Darkshrine";
                 break;
         }
+        
 
         Vector2 idSplit = Grid._instance.GetPosition(id);
         coordinateText.text = "ID: " + idSplit.x + ", " + idSplit.y;

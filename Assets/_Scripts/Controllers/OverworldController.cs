@@ -636,7 +636,7 @@ public class OverworldController : MonoBehaviour
 			tile.travelCost = mapTile.travelCost;
 			//tile.tileType = mapTile.tileType;
 			tile.building = mapTile.building;
-			tile.owner = mapTile.ownerId;
+			tile.owner = mapTile.owner;
 			tile.foodAmount = mapTile.foodAmount;
 			tile.woodAmount = mapTile.woodAmount;
 			tile.metalAmount = mapTile.metalAmount;
@@ -657,16 +657,7 @@ public class OverworldController : MonoBehaviour
 		if (buildingType > 1)
 		{
 			// Random building
-			if (Grid._instance.tiles[lockedId].owner == LocalData.SelfUserId) 
-			{
-				InfoScreen._instance.openArmyCampButton.gameObject.SetActive(true);
-				InfoScreen._instance.openAttackResourceWindow.gameObject.SetActive(false);
-			}
-			if (Grid._instance.tiles[lockedId].owner != LocalData.SelfUserId) 
-			{
-				InfoScreen._instance.openArmyCampButton.gameObject.SetActive(false);
-				InfoScreen._instance.openAttackResourceWindow.gameObject.SetActive(true);
-			}
+			
 			InfoScreen._instance.OpenResourceInfoScreen();
 			InfoScreen._instance.OpenInfoScreen();
 			InfoScreen._instance.UpdateInfoScreenResource(lockedId);
