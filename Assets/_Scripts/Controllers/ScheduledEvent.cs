@@ -36,6 +36,10 @@ public class ScheduledEvent
         running = true;
         EventHub.OnTick += Tick;
     }
+    public void Cancel()
+    {
+        EventHub.OnTick -= Tick;
+    }
     public void Tick()
     {
         if (secondsLeft-- == 0) Complete();
@@ -103,9 +107,12 @@ public class ScheduledEvent
                                     break;
                                 }
                         }
-
-
                     }
+                    for (int i = 0; i < activeEvents.Count; ++i)
+                    {
+                        activeEvents[i].Cancel();
+                    }
+                    activeEvents.Clear();
                     activeEvents = new List<ScheduledEvent>(tempEvents);
                 });
         });
