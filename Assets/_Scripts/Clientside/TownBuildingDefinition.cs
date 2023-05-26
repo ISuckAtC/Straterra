@@ -113,7 +113,7 @@ public class TownBuildingDefinition
         barracks1.woodCost = 50;
         barracks1.metalCost = 50;
         barracks1.level = 1;
-        barracks1.maxLevel = 2;
+        barracks1.maxLevel = 3;
         townBuildings[3] = barracks1;
 
         TownBuilding barracks2 = new TownBuilding();
@@ -340,13 +340,66 @@ public class TownBuildingDefinition
         marketplace3.buildingTime = 130;
         marketplace3.name = "Marketplace";
         marketplace3.health = 1500;
-        marketplace1.foodCost = 1000;
-        marketplace1.woodCost = 1000;
-        marketplace1.metalCost = 1000;
+        marketplace3.foodCost = 1000;
+        marketplace3.woodCost = 1000;
+        marketplace3.metalCost = 1000;
         marketplace3.level = 3;
         marketplace3.maxLevel = 3;
         townBuildings[26] = marketplace3;
 
+        TownBuilding wall0 = new TownBuilding();
+        wall0.id = 27;
+        wall0.type = TownBuildingType.wall;
+        wall0.buildingTime = 0;
+        wall0.name = "Wall";
+        wall0.health = 5000;
+        wall0.foodCost = 0;
+        wall0.woodCost = 0;
+        wall0.metalCost = 0;
+        wall0.level = 0;
+        wall0.maxLevel = 3;
+        townBuildings[27] = wall0;
+        
+        TownBuilding wall1 = new TownBuilding();
+        wall1.id = 28;
+        wall1.type = TownBuildingType.wall;
+        wall1.buildingTime = 300;
+        wall1.name = "Wall";
+        wall1.health = 10000;
+        wall1.foodCost = 0;
+        wall1.woodCost = 500;
+        wall1.metalCost = 100;
+        wall1.level = 1;
+        wall1.maxLevel = 3;
+        townBuildings[28] = wall1;
+        
+        TownBuilding wall2 = new TownBuilding();
+        wall2.id = 29;
+        wall2.type = TownBuildingType.wall;
+        wall2.buildingTime = 3000;
+        wall2.name = "Wall";
+        wall2.health = 20000;
+        wall2.foodCost = 0;
+        wall2.woodCost = 1200;
+        wall2.metalCost = 500;
+        wall2.level = 2;
+        wall2.maxLevel = 3;
+        townBuildings[29] = wall2;
+        
+        TownBuilding wall3 = new TownBuilding();
+        wall3.id = 30;
+        wall3.type = TownBuildingType.wall;
+        wall3.buildingTime = 0;
+        wall3.name = "Wall";
+        wall3.health = 5000;
+        wall3.foodCost = 0;
+        wall3.woodCost = 0;
+        wall3.metalCost = 0;
+        wall3.level = 0;
+        wall3.maxLevel = 3;
+        townBuildings[30] = wall3;
+        
+        
         return townBuildings;
     }
 }

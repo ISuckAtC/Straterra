@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     public int timesAttacked = 0;
     public int timesAttacking = 0;
     public int timesDefended = 0;
-
+    
     public int buildRange = 4;
     
     public static Color PlayerColor = new Color(0.3f, 1.0f, 0.3f, 0.8f);
