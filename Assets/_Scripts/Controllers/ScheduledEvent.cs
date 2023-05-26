@@ -42,7 +42,7 @@ public class ScheduledEvent
     }
     public void Tick()
     {
-        if (secondsLeft-- == 0) Complete();
+        if (secondsLeft-- <= 0) Complete();
     }
     public virtual void Complete()
     {
@@ -51,6 +51,7 @@ public class ScheduledEvent
     }
     public static void UpdateScheduledEvents()
     {
+        
         Task.Run<NetworkStructs.ScheduledEventGroup>(async () =>
         {
             return await Network.GetScheduledEvents();
@@ -61,6 +62,7 @@ public class ScheduledEvent
 
             GameManager.aq.queue.Add(() =>
                 {
+                    Debug.Log("UPDATESCHEDULEDEVENTS: " + events.events.Length) ;
                     for (int i = 0; i < events.events.Length; ++i)
                     {
                         NetworkStructs.SerializableScheduledEvent sEvent = events.events[i];
@@ -75,7 +77,7 @@ public class ScheduledEvent
                                 {
                                     tempEvents.Add(new ScheduledUnitProductionEvent(sEvent.secondsLeft, sEvent.unitId, sEvent.amount, sEvent.owner, sEvent.running));
                                     break;
-                                }
+                                }   
                             case 2:
                                 {
                                     tempEvents.Add(new ScheduledTownBuildEvent(sEvent.secondsLeft, (byte)sEvent.buildingId, sEvent.buildingSlot, sEvent.owner));
@@ -114,6 +116,10 @@ public class ScheduledEvent
                     }
                     activeEvents.Clear();
                     activeEvents = new List<ScheduledEvent>(tempEvents);
+                    for (int i = 0; i < activeEvents.Count; ++i)
+                    {
+                        if (activeEvents[i].running) activeEvents[i].Run();
+                    }
                 });
         });
     }
@@ -132,6 +138,7 @@ public class ScheduledUnitProductionEvent : ScheduledEvent
     public override void Complete()
     {
         base.Complete();
+        Debug.Log("UNITPROD COMPLETE INTERNAL");
         Task.Run(async () => {
             await Task.Delay(1000);
             UpdateScheduledEvents();

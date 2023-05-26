@@ -35,8 +35,8 @@ public class QueueSideBar : MonoBehaviour
                 {
                     string plural = UnitDefinition.I[productionEvent.unitId].name;
                     string[] splits = plural.Split('m', 2, System.StringSplitOptions.None);
-                    Debug.Log("splits "+ splits[0]);
-                    Debug.Log(splits[1]);
+                    //Debug.Log("splits "+ splits[0]);
+                    //Debug.Log(splits[1]);
                     splits[1] = "men";
 
                     plural = splits[0] + splits[1];
