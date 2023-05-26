@@ -69056,7 +69056,7 @@ MonoBehaviour:
   armyCampWindow: {fileID: 2102953392}
   openStationWindow: {fileID: 914797813}
   openRecallWindow: {fileID: 854548119}
-  openAttackResourceWindow: {fileID: 0}
+  openAttackResourceWindow: {fileID: 1219436626}
   stationWindow: {fileID: 854189656}
   stationSwordsmenSlider: {fileID: 582556328}
   stationBowmenSlider: {fileID: 1767563033}
