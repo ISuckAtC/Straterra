@@ -113,6 +113,11 @@ public class InfoScreen : MonoBehaviour
         string speartext = "";
         string cavalrytxt = "";
 
+        stationSwordsmenMaxAmount = 0;
+        stationBowmenMaxAmount = 0;
+        stationSpearmenMaxAmount = 0;
+        stationCavalryMaxAmount = 0;
+
 
         Task.Run<NetworkStructs.UnitGroup>(async () =>
         {
@@ -193,6 +198,11 @@ public class InfoScreen : MonoBehaviour
         string bowtext = "";
         string speartext = "";
         string cavalrytxt = "";
+
+        recallSwordsmenMaxAmount = 0;
+        recallBowmenMaxAmount = 0;
+        recallSpearmenMaxAmount = 0;
+        recallCavalryMaxAmount = 0;
 
         Debug.Log("Recall working");
         Task.Run<NetworkStructs.MapTile>(async () =>
@@ -333,7 +343,7 @@ public class InfoScreen : MonoBehaviour
         else if (Grid._instance.tiles[tileId].owner != LocalData.SelfUser.userId)
         {
             SplashText.Splash("You do not own this tile");
-            openAttackResourceWindow.onClick.AddListener(delegate { attackScreen.OpenAttackScreen(Grid._instance.tiles[tileId].owner, true, tileId); });
+
         }
     }
     public void StationUnits(int tileId)
@@ -500,6 +510,7 @@ public class InfoScreen : MonoBehaviour
         {
             resourceCamp = true;
         }
+        attackButton.onClick.RemoveAllListeners();
         attackButton.onClick.AddListener(delegate { attackScreen.OpenAttackScreen(Grid._instance.tiles[position].owner, resourceCamp, position); });
 
         //Debug.Log(attackButton.onClick.GetPersistentMethodName(0));
@@ -659,14 +670,16 @@ public class InfoScreen : MonoBehaviour
         if (Grid._instance.tiles[id].owner == LocalData.SelfUser.userId)
         {
             Debug.Log("User was selfuser, showing armycamp" + LocalData.SelfUser.userId + ", " + Grid._instance.tiles[id].owner);
-            InfoScreen._instance.openArmyCampButton.gameObject.SetActive(true);
-            InfoScreen._instance.openAttackResourceWindow.gameObject.SetActive(false);
+            openArmyCampButton.gameObject.SetActive(true);
+            openAttackResourceWindow.gameObject.SetActive(false);
         }
         if (Grid._instance.tiles[id].owner != LocalData.SelfUser.userId)
         {
             Debug.Log("User was Different user, showing attack button" + LocalData.SelfUser.userId + ", " + Grid._instance.tiles[id].owner);
-            InfoScreen._instance.openArmyCampButton.gameObject.SetActive(false);
-            InfoScreen._instance.openAttackResourceWindow.gameObject.SetActive(true);
+            openArmyCampButton.gameObject.SetActive(false);
+            openAttackResourceWindow.onClick.RemoveAllListeners();
+            openAttackResourceWindow.onClick.AddListener(delegate { attackScreen.OpenAttackScreen(Grid._instance.tiles[id].owner, true, id); });
+            openAttackResourceWindow.gameObject.SetActive(true);
         }
 
         resourceCoordinateText.text = "Lvl 1";//Network.allUsers.Find(x => x.userId == owner).name;

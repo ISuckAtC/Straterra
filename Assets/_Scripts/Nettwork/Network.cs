@@ -257,6 +257,8 @@ public class Network
     }
     public static async Task<ActionResult> AttackMapTile(int target, List<Group> army)
     {
+        try
+        {
         string armyString = "";
         for (int i = 0; i < army.Count; ++i)
         {
@@ -266,6 +268,12 @@ public class Network
         HttpResponseMessage message = await HttpClient.GetAsync((LAN ? "http://127.0.0.1:80" : "http://18.216.109.151:80") + "/attackMapTile?" + tokenIdentity + "&" + target + "&" + armyString);
 
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.Message + "\n\n" + e.StackTrace);
+            throw;
+        }
     }
     
     public static async Task<ActionResult> StationUnits(int target, List<Group> army)

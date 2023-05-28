@@ -44,6 +44,7 @@ public class OverworldController : MonoBehaviour
 
 	private Vector2 playerVillagePosition;
 	public UnityEngine.Tilemaps.TileBase flag;
+	public UnityEngine.Tilemaps.TileBase[] enemyFlags;
 
 	private ActionQueue aq;
 
