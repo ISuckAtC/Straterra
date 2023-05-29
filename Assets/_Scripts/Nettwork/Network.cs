@@ -34,12 +34,12 @@ public class Network
         }
     }
 
-    public static async Task<string> CreateUser(string username, string password)
+    public static async Task<string> CreateUser(string username, string password, int newTownPosition)
     {
         UnityEngine.Debug.Log("aa");
         try
         {
-            HttpResponseMessage responseMessage = await HttpClient.GetAsync((LAN ? "http://127.0.0.1:80" : "http://18.216.109.151:80") + "/createPlayer?" + username + "&" + password);
+            HttpResponseMessage responseMessage = await HttpClient.GetAsync((LAN ? "http://127.0.0.1:80" : "http://18.216.109.151:80") + "/createPlayer?" + username + "&" + password + "&" + newTownPosition);
             return await responseMessage.Content.ReadAsStringAsync();
         }
         catch (Exception e)
