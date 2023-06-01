@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Marketplace 3
   m_EditorClassIdentifier: 
   Type: 2
-  unitIdentifier: 26
+  unitIdentifier: 24
   amount: 3
   foodReward: 0
   woodReward: 0

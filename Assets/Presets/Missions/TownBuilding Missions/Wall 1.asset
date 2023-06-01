@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wall 1
   m_EditorClassIdentifier: 
   Type: 2
-  unitIdentifier: 21
+  unitIdentifier: 27
   amount: 1
   foodReward: 0
   woodReward: 0

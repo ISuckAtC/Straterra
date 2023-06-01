@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TownHall 2
   m_EditorClassIdentifier: 
   Type: 2
-  unitIdentifier: 1
+  unitIdentifier: 0
   amount: 2
   foodReward: 0
   woodReward: 0

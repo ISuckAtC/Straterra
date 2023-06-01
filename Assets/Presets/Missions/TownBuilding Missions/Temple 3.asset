@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Temple 3
   m_EditorClassIdentifier: 
   Type: 2
-  unitIdentifier: 14
+  unitIdentifier: 12
   amount: 3
   foodReward: 0
   woodReward: 0

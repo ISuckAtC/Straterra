@@ -156,7 +156,7 @@ public class MissionTracker : MonoBehaviour
 			
 			case Mission.type.training:
 			
-				missionFlavorText.text = flavorTexts[6] + allMissions[i].amount + " " + UnitDefinition.I[0].name + ".";
+				missionFlavorText.text = flavorTexts[6] + allMissions[i].amount + " " + UnitDefinition.I[allMissions[i].unitIdentifier].name + ".";
 			
 				/*
 				if (allMissions[i].unitIdentifier == 0)		// Archers
@@ -352,6 +352,8 @@ public class MissionTracker : MonoBehaviour
 
 		for (int i = 0; i < 9; i++)
 		{
+			int id = 0;
+			
 			if (!missionCategoriesToShow[i])
 				continue;
 			
@@ -370,9 +372,11 @@ public class MissionTracker : MonoBehaviour
 				else if (!allMissions[y].completed)
 				{
 					// we check if it is the first mission in the category, or if the mission before it has been completed
-					if (active && (y == missionOffsets[i] || allMissions[y-1].completed))
+					if (active && ((y == missionOffsets[i] || allMissions[y-1].completed) || allMissions[y].unitIdentifier != id))
 					{
 						//Debug.Log("Active. i: " + i + " y: " + y + " active:" + active.ToString() + " startcheck:" + (y == missionOffsets[i]).ToString() + " prevcheck:" + (y == 0 ? "first" : (allMissions[y-1].completed).ToString()) );
+						id = allMissions[y].unitIdentifier;
+						
 						toShow.Add(y);
 						missionBoxes[y].GetChild(3).gameObject.SetActive(false);
 					}

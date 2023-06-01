@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Smithy 2
   m_EditorClassIdentifier: 
   Type: 2
-  unitIdentifier: 7
+  unitIdentifier: 6
   amount: 2
   foodReward: 0
   woodReward: 0

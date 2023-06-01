@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Warehouse 2
   m_EditorClassIdentifier: 
   Type: 2
-  unitIdentifier: 19
+  unitIdentifier: 18
   amount: 2
   foodReward: 0
   woodReward: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Academy 2
   m_EditorClassIdentifier: 
   Type: 2
-  unitIdentifier: 10
+  unitIdentifier: 9
   amount: 2
   foodReward: 0
   woodReward: 0

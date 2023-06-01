@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Barracks 3
   m_EditorClassIdentifier: 
   Type: 2
-  unitIdentifier: 5
+  unitIdentifier: 3
   amount: 3
   foodReward: 0
   woodReward: 0
