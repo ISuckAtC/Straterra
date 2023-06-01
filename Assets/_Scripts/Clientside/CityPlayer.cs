@@ -400,6 +400,40 @@ public class CityPlayer : MonoBehaviour
         trainSpearmanButton.onClick.AddListener(delegate { OpenTrainingMenu(LocalData.SelfUser.spearmanLevel); });
         trainCavalryButton.onClick.AddListener(delegate { OpenTrainingMenu(LocalData.SelfUser.cavalryLevel); });
 
+        Debug.Log(LocalData.SelfUser.name);
+        Debug.Log(LocalData.SelfUser.swordLevel);
+        Debug.Log(LocalData.SelfUser.archerLevel);
+        Debug.Log(LocalData.SelfUser.spearmanLevel);
+        Debug.Log(LocalData.SelfUser.cavalryLevel);
+
+        for (int i = 0; i < LocalData.SelfUser.cityBuildingSlots.Length; i++)
+        {
+            if (LocalData.SelfUser.cityBuildingSlots[i] == 3)
+            {
+                trainSwordsmanButton.interactable = true;
+
+                trainArcherButton.interactable = false;
+                trainSpearmanButton.interactable = false;
+                trainCavalryButton.interactable = false;
+            }
+
+            if (LocalData.SelfUser.cityBuildingSlots[i] == 4)
+            {
+                trainSwordsmanButton.interactable = true;
+                trainArcherButton.interactable = true;
+
+                trainSpearmanButton.interactable = false;
+                trainCavalryButton.interactable = false;
+            }
+
+            if (LocalData.SelfUser.cityBuildingSlots[i] == 5)
+            {
+                trainSwordsmanButton.interactable = true;
+                trainArcherButton.interactable = true;
+                trainSpearmanButton.interactable = true;
+                trainCavalryButton.interactable = true;
+            }
+        }
 
         buildingsInterfaces.ForEach(x => x.SetActive(x == barracks));
 
@@ -502,7 +536,7 @@ public class CityPlayer : MonoBehaviour
         buildButtonWarehouse.interactable = true;
         buildButtonMarketplace.interactable = true;
 
-        for (int i = 0; i < LocalData.SelfUser.cityBuildingSlots.Length /*buildingsInterfaces.Count*/; i++)
+        for (int i = 0; i < LocalData.SelfUser.cityBuildingSlots.Length; i++)
         {
             Debug.Log(LocalData.SelfUser.cityBuildingSlots[i]);
             if (LocalData.SelfUser.cityBuildingSlots[i] <= 2)
@@ -1032,6 +1066,7 @@ public class CityPlayer : MonoBehaviour
         statNextRange.text = nextUpgradeUnit.range.ToString();
         nextUnitUpgradeImage.sprite = Resources.Load<Sprite>(nextUpgradeUnit.spritePath);
         upgradeUnitMenu.SetActive(true);
+        
     }
 
     public void CloseUpgradeUnitMenu()
@@ -1078,6 +1113,24 @@ public class CityPlayer : MonoBehaviour
             return;
         }
 
+        TownBuilding building = default(TownBuilding);
+
+
+        for (int i = 0; i < LocalData.SelfUser.cityBuildingSlots.Length; i++)
+        {
+            building = TownBuildingDefinition.I[LocalData.SelfUser.cityBuildingSlots[i]];
+            if (building.type == TownBuildingType.barracks) break;
+        }
+
+        if (building.id <3 || building.id > 5) throw new Exception("Tried to run barracks code on non-barracks");
+
+        if (UnitDefinition.I[nextId].level >= building.level * 2)
+        {
+            Debug.Log("Returned because low barracks level, " + nextId + ", " + building.level);
+            SplashText.Splash("Upgrade failed, Barracks too low level " + "(" + building.level + ")");
+            return;
+        }
+
         Task.Run<NetworkStructs.ActionResult>(async () =>
             {
                 return await Network.UpgradeUnit(nextUnit.id);
@@ -1098,7 +1151,7 @@ public class CityPlayer : MonoBehaviour
                 }
                 else
                 {
-                    GameManager.aq.queue.Add(() => SplashText.Splash(res.message));
+                    aq.queue.Add(() => SplashText.Splash(res.message));
                     if (res.message == "Session invalid")
                     {
                         GameManager.I.KickPlayerToLogin();
