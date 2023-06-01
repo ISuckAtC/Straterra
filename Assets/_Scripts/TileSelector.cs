@@ -18,6 +18,17 @@ public class TileSelector : MonoBehaviour
 		else
 			Destroy(this);
 		
+		string s = "";
+		
+		for (int i = 0; i < startPositions.Count; i++)
+		{
+			s += Grid._instance.GetIdByVec(startPositions[i]) + ";";
+			
+			//s += startPositions[i].x.ToString() + ":" + startPositions[i].y.ToString() + ";";
+			
+				
+		}
+		Debug.Log(s);
 	}
 
 /*

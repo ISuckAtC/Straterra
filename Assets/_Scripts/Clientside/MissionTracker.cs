@@ -5,221 +5,238 @@ using UnityEngine;
 
 public class MissionTracker : MonoBehaviour
 {
-    //public Mission[] missions;
+	//public Mission[] missions;
 
-    private const int tickMax = 25;
-    private int ticks;
+	private const int tickMax = 25;
+	private int ticks;
 
-    public Mission[] resAmtMissions;
-    public Mission[] resGainMissions;
-    
-    public Mission[] townBuildingMissions;
-    public Mission[] worldBuildingMissions;
-    
-    public Mission[] trainingMissions;
-    public Mission[] raidingMissions;
-    public Mission[] defendingMissions;
-    
-    public Mission[] loyaltyMissions;
-    public Mission[] playtimeMissions;
+	public Mission[] resAmtMissions;
+	public Mission[] resGainMissions;
+	
+	public Mission[] townBuildingMissions;
+	public Mission[] worldBuildingMissions;
+	
+	public Mission[] trainingMissions;
+	public Mission[] raidingMissions;
+	public Mission[] defendingMissions;
+	
+	public Mission[] loyaltyMissions;
+	public Mission[] playtimeMissions;
 
-    private int foodAmtIndex, woodAmtIndex, metalAmtIndex, orderAmtIndex, resGainIndex, townBuildingIndex, worldBuildingIndex, trainingIndex, raidingIndex, defendingIndex, loyaltyIndex, playtimeIndex;
-    
-    //private bool foodAmtComplete, woodAmtComplete, metalAmtComplete, orderAmtComplete, resAmtComplete, resGainComplete, townBuildingComplete, worldBuildingComplete, trainingComplete, raidingComplete, defendingComplete, loyaltyComplete, playtimeComplete;
-    
-    void Start()
-    {
-        /*
-        int resAmtCounter = 0;
-        int resGainCounter = 0;
-        int townBuildingCounter = 0;
-        int worldBuildingCounter = 0;
-        int trainingCounter = 0;
-        int raidingCounter = 0;
-        int defendingCounter = 0;
-        int loyaltyCounter = 0;
-        int playtimeCounter = 0;
+	private string[] flavorTexts = new string[]
+		{
+			"You have defended your city against your savage enemies ",			// Defending Missions
+			"You have come back to Straterra every day, consecutively, for ",	// Loyalty Missions
+			"You have played Straterra for a total of this many hours: ",		// Playtime Missions
+			"You have shown your military prowess against your enemies ",		// Raiding Missions
+			"Your town is prosperous, and your warehouses overflow with ",		// Resource Missions
+			"Your towns advanced technology has allowed you to build ",			// Town Missions
+			"Your military is mighty, and you have successfully trained ",		// Training Missions
+			"Your empire is growing, and you have expanded by building ",		// World Missions
+			"Your town is efficient. Your production rates have surpassed "		// Yield Missions
+		};
 
-        for (int i = 0; i < missions.Length; i++)
-        {
-            switch (missions[i].Type)
-            {
-                case Mission.type.resourceAmount:
-                    resAmtCounter
-                    break;
-                
-                case Mission.type.resourceGain:
-                    resGainCounter
-                    break;
-                
-                case Mission.type.townBuilding:
-                    townBuildingCounter
-                    break;
-                
-                case Mission.type.worldBuilding:
-                    worldBuildingCounter
-                    break;
-                
-                case Mission.type.training:
-                    trainingCounter
-                    break;
-                
-                case Mission.type.raiding:
-                    raidingCounter
-                    break;
-                
-                case Mission.type.defending:
-                
-                    break;
-                
-                case Mission.type.loyalty:
-                
-                    break;
-                
-                case Mission.type.playtime:
-                
-                    break;
 
-            }
-        }
-        */
-    }
+	private int foodAmtIndex, woodAmtIndex, metalAmtIndex, orderAmtIndex, resGainIndex, townBuildingIndex, worldBuildingIndex, trainingIndex, raidingIndex, defendingIndex, loyaltyIndex, playtimeIndex;
+	
+	//private bool foodAmtComplete, woodAmtComplete, metalAmtComplete, orderAmtComplete, resAmtComplete, resGainComplete, townBuildingComplete, worldBuildingComplete, trainingComplete, raidingComplete, defendingComplete, loyaltyComplete, playtimeComplete;
+	
+	void Start()
+	{
+		
+		
+		
+		/*
+		int resAmtCounter = 0;
+		int resGainCounter = 0;
+		int townBuildingCounter = 0;
+		int worldBuildingCounter = 0;
+		int trainingCounter = 0;
+		int raidingCounter = 0;
+		int defendingCounter = 0;
+		int loyaltyCounter = 0;
+		int playtimeCounter = 0;
 
-    private void FixedUpdate()
-    {
-        ticks++;
-        if (ticks > tickMax)
-        {
-            CheckAllMissions();
-        }
-    }
+		for (int i = 0; i < missions.Length; i++)
+		{
+			switch (missions[i].Type)
+			{
+				case Mission.type.resourceAmount:
+					resAmtCounter
+					break;
+				
+				case Mission.type.resourceGain:
+					resGainCounter
+					break;
+				
+				case Mission.type.townBuilding:
+					townBuildingCounter
+					break;
+				
+				case Mission.type.worldBuilding:
+					worldBuildingCounter
+					break;
+				
+				case Mission.type.training:
+					trainingCounter
+					break;
+				
+				case Mission.type.raiding:
+					raidingCounter
+					break;
+				
+				case Mission.type.defending:
+				
+					break;
+				
+				case Mission.type.loyalty:
+				
+					break;
+				
+				case Mission.type.playtime:
+				
+					break;
 
-    private void CheckAllMissions()
-    {
-        CheckResourceAmountMissions();//if (!resAmtComplete)        
-        CheckResourceGainMissions();//if (!resGainComplete)       
-        CheckTownBuildingMissions();//if (!townBuildingComplete)  
-        CheckWorldBuildingMissions();//if (!worldBuildingComplete) 
-        CheckTrainingMissions();//if (!trainingComplete)      
-        CheckRaidingMissions();//if (!raidingComplete)       
-        CheckDefendingMissions();//if (!defendingComplete)     
-        CheckLoyaltyMissions();//if (!loyaltyComplete)       
-        CheckPlaytimeMissions();//if (!playtimeComplete)      
-    }
+			}
+		}
+		*/
+	}
 
-    private void CheckResourceAmountMissions()
-    {
-        // Food
-        if (foodAmtIndex < 5)
-        {
-            if (GameManager.PlayerFood > resAmtMissions[foodAmtIndex].amount)
-            {
-                // Rewar
-                foodAmtIndex++;
+	private void FixedUpdate()
+	{
+		ticks++;
+		if (ticks > tickMax)
+		{
+			CheckAllMissions();
+		}
+	}
 
-            }
+	private void CheckAllMissions()
+	{
+		CheckResourceAmountMissions();//if (!resAmtComplete)        
+		CheckResourceGainMissions();//if (!resGainComplete)       
+		CheckTownBuildingMissions();//if (!townBuildingComplete)  
+		CheckWorldBuildingMissions();//if (!worldBuildingComplete) 
+		CheckTrainingMissions();//if (!trainingComplete)      
+		CheckRaidingMissions();//if (!raidingComplete)       
+		CheckDefendingMissions();//if (!defendingComplete)     
+		CheckLoyaltyMissions();//if (!loyaltyComplete)       
+		CheckPlaytimeMissions();//if (!playtimeComplete)      
+	}
 
-        }
-        
-        
-        // Wood
-        if (woodAmtIndex < 5)
-        {
-            if (GameManager.PlayerWood > resAmtMissions[woodAmtIndex + 5].amount)
-            {
-                // Rewar
-                woodAmtIndex++;
-            }
-        }
+	private void CheckResourceAmountMissions()
+	{
+		// Food
+		if (foodAmtIndex < 5)
+		{
+			if (GameManager.PlayerFood > resAmtMissions[foodAmtIndex].amount)
+			{
+				// Rewar
+				foodAmtIndex++;
 
-        // Metal
-        if (metalAmtIndex < 5)
-        {
-            if (GameManager.PlayerMetal > resAmtMissions[metalAmtIndex + 10].amount)
-            {
-                // Rewar
-                metalAmtIndex++;
-            }
-        }
+			}
 
-        // Order
-        if (orderAmtIndex < 5)
-        {
-            if (GameManager.PlayerOrder > resAmtMissions[orderAmtIndex + 15].amount)
-            {
-                // Rewar
-                orderAmtIndex++;
-            }
-        }
-        
-        /*
-        for (int i = 0; i < resAmtMissions.Length; i++)
-        {
-            if (resAmtMissions[i].unitIdentifier == 0)
-            {
-                // Food
-            }
-            else if (resAmtMissions[i].unitIdentifier == 1)
-            {
-                // Wood
-            }
-            else if (resAmtMissions[i].unitIdentifier == 2)
-            {
-                // Metal
-            }
-            else
-            {
-                // Order
-            }
-        }
-        
-        
-        if (GameManager.PlayerFood > resAmtMissions[resAmtIndex].amount)
-        {
-            resAmtIndex++;
+		}
+		
+		
+		// Wood
+		if (woodAmtIndex < 5)
+		{
+			if (GameManager.PlayerWood > resAmtMissions[woodAmtIndex + 5].amount)
+			{
+				// Rewar
+				woodAmtIndex++;
+			}
+		}
 
-            if (resAmtIndex > resAmtMissions.Length) resAmtComplete = true;
-        }
-        */
-    }
-    
-    private void CheckResourceGainMissions()
-    {
-        
-    }
+		// Metal
+		if (metalAmtIndex < 5)
+		{
+			if (GameManager.PlayerMetal > resAmtMissions[metalAmtIndex + 10].amount)
+			{
+				// Rewar
+				metalAmtIndex++;
+			}
+		}
 
-    private void CheckTownBuildingMissions()
-    {
-        
-    }
+		// Order
+		if (orderAmtIndex < 5)
+		{
+			if (GameManager.PlayerOrder > resAmtMissions[orderAmtIndex + 15].amount)
+			{
+				// Rewar
+				orderAmtIndex++;
+			}
+		}
+		
+		/*
+		for (int i = 0; i < resAmtMissions.Length; i++)
+		{
+			if (resAmtMissions[i].unitIdentifier == 0)
+			{
+				// Food
+			}
+			else if (resAmtMissions[i].unitIdentifier == 1)
+			{
+				// Wood
+			}
+			else if (resAmtMissions[i].unitIdentifier == 2)
+			{
+				// Metal
+			}
+			else
+			{
+				// Order
+			}
+		}
+		
+		
+		if (GameManager.PlayerFood > resAmtMissions[resAmtIndex].amount)
+		{
+			resAmtIndex++;
 
-    private void CheckWorldBuildingMissions()
-    {
-        
-    }
+			if (resAmtIndex > resAmtMissions.Length) resAmtComplete = true;
+		}
+		*/
+	}
+	
+	private void CheckResourceGainMissions()
+	{
+		
+	}
 
-    private void CheckTrainingMissions()
-    {
-        
-    }
-    
-    private void CheckRaidingMissions()
-    {
-        
-    }
+	private void CheckTownBuildingMissions()
+	{
+		
+	}
 
-    private void CheckDefendingMissions()
-    {
-        
-    }
+	private void CheckWorldBuildingMissions()
+	{
+		
+	}
 
-    private void CheckLoyaltyMissions()
-    {
-        
-    }
+	private void CheckTrainingMissions()
+	{
+		
+	}
+	
+	private void CheckRaidingMissions()
+	{
+		
+	}
 
-    private void CheckPlaytimeMissions()
-    {
-        
-    }
+	private void CheckDefendingMissions()
+	{
+		
+	}
+
+	private void CheckLoyaltyMissions()
+	{
+		
+	}
+
+	private void CheckPlaytimeMissions()
+	{
+		
+	}
 }
