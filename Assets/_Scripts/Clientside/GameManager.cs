@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
 
     public int buildRange = 4;
 
+    public GridRange[] gridRange;
+
     public static Color PlayerColor = new Color(0.3f, 1.0f, 0.3f, 0.8f);
 
     public static int[] PlayerUnitAmounts { get => I.playerResources.unitAmounts; }
@@ -101,8 +103,74 @@ public class GameManager : MonoBehaviour
         {
             await Network.GetScheduledEvents();
         });
+
+        Grid.onReady += OnGridReady;
     }
 
+    private void OnGridReady()
+    {
+        UpdateGridRange();
+        Grid._instance.CanSetValidTiles();
+    }
+
+    public void UpdateGridRange()
+    {
+        gridRange = GetGridRange();
+    }
+
+    public GridRange[] GetGridRange()
+    {
+        List<GridRange> allBuildings = new List<GridRange>();
+        List<int> ownedBuildingPositions = new List<int>();
+        int id = LocalData.SelfUser.userId;
+
+        for (int x = 0; x < Grid._instance.width; x++)
+        {
+            for (int y = 0; y < Grid._instance.height; y++)
+            {
+                int position = Grid._instance.GetIdByInt(x,y);
+
+                if (Grid._instance.tiles[position].owner == id)
+                {
+                    if (Grid._instance.tiles[position].building > 1)  // Greater than 0 captures all buildings except village.
+                        ownedBuildingPositions.Add(position);
+                }
+            }
+        }
+
+        allBuildings.Add(new GridRange());
+        allBuildings[0].SetValues(LocalData.SelfUser.cityLocation, buildRange);
+
+        for (int i = 0; i < ownedBuildingPositions.Count; i++)
+        {
+            allBuildings.Add(new GridRange());
+            allBuildings[i+1].SetValues(ownedBuildingPositions[i], 2);
+        }
+
+        return allBuildings.ToArray();
+    }
+
+    public int[] FindOwnedBuildings()
+    {
+        List<int> ownedBuildingPositions = new List<int>();
+        int id = LocalData.SelfUser.userId;
+
+        for (int x = 0; x < Grid._instance.width; x++)
+        {
+            for (int y = 0; y < Grid._instance.height; y++)
+            {
+                int position = Grid._instance.GetIdByInt(x,y);
+
+                if (Grid._instance.tiles[position].owner == id)
+                {
+                    if (Grid._instance.tiles[position].building > 1)  // Greater than 0 captures all buildings except village.
+                        ownedBuildingPositions.Add(position);
+                }
+            }
+        }
+
+        return ownedBuildingPositions.ToArray();
+    }
 
     public void AddResources()
     {
