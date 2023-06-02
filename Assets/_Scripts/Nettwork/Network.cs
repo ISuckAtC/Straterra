@@ -18,6 +18,7 @@ public class Network
 
     // Storing the password for reconnection
     public static string password;
+    public static string username;
     public static List<NetworkStructs.User> allUsers;
 
     // Ensures that http client is created if it doesn't exist already.
@@ -49,9 +50,9 @@ public class Network
 
     }
 
-    public static async Task<ActionResult> GetSessionToken(string password)
+    public static async Task<ActionResult> GetSessionToken(string username, string password)
     {
-        HttpResponseMessage message = await HttpClient.GetAsync((LAN ? "http://127.0.0.1:80" : "http://18.216.109.151:80") + "/login?" + password);
+        HttpResponseMessage message = await HttpClient.GetAsync((LAN ? "http://127.0.0.1:80" : "http://18.216.109.151:80") + "/login?" + username + "&" + password);
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
     }
 
@@ -182,7 +183,7 @@ public class Network
                 // Attempt to relog
                 await Task.Run<NetworkStructs.ActionResult>(async () =>
                 {
-                    return await Network.GetSessionToken(password);
+                    return await Network.GetSessionToken(username, password);
                 }).ContinueWith(async result =>
                 {
                     var res = await result;
@@ -348,7 +349,7 @@ public class Network
                 // Attempt to relog
                 await Task.Run<NetworkStructs.ActionResult>(async () =>
                 {
-                    return await Network.GetSessionToken(password);
+                    return await Network.GetSessionToken(username, password);
                 }).ContinueWith(async result =>
                 {
                     var res = await result;

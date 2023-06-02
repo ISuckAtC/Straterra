@@ -87,13 +87,14 @@ public class LoginUI : MonoBehaviour
 				Debug.Log("This: " + passwordInput.text + ", " + hashedBytes.Length);
 		
 		string hashedPassword = string.Join("", hashedBytes.Select(x=> x.ToString("X2")));
+		string loginUsername = usernameInput.text;
 		
 		Debug.Log(hashedPassword);
 		
 		//string pass = passwordInput.text;
 		Task.Run<NetworkStructs.ActionResult>(async () =>
 		{
-			return await Network.GetSessionToken(hashedPassword);
+			return await Network.GetSessionToken(loginUsername, hashedPassword);
 		}).ContinueWith(async result =>
 		{
 			var res = result.Result;

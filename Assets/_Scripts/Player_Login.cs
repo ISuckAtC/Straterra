@@ -69,7 +69,7 @@ public class Player_Login : MonoBehaviour
 		string pass = input_Password.text;
 		Task.Run<NetworkStructs.ActionResult>(async () =>
 		{
-			return await Network.GetSessionToken(pass);
+			return await Network.GetSessionToken("ass", pass);
 		}).ContinueWith(async result =>
 		{
 			var res = result.Result;
