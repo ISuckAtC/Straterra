@@ -56,6 +56,7 @@ public class BuildingMenu : MonoBehaviour
 
     public void OpenUpgradeMenu()
     {
+        CityPlayer.cityPlayer.selectedSlot = slotId;
         currenTierBuildingLvlImage.sprite = CityPlayer.cityPlayer.buildingPrefabs[id].GetComponent<Image>().sprite;
         nextTierBuildingLvlImage.sprite = CityPlayer.cityPlayer.buildingPrefabs[id+1].GetComponent<Image>().sprite;
         TownBuilding building = TownBuildingDefinition.I[id];
@@ -91,7 +92,7 @@ public class BuildingMenu : MonoBehaviour
 
         upgradeTitle.text = "UPGRADE " + building.name + " to level " + nextBuilding.level;
         upgradeConfirmButton.GetComponent<Button>().onClick.RemoveAllListeners();
-        upgradeConfirmButton.GetComponent<Button>().onClick.AddListener(delegate {CityPlayer.cityPlayer.BuildBuilding(nextBuilding.id);});
+        upgradeConfirmButton.GetComponent<Button>().onClick.AddListener(delegate {Upgrade();});
         Debug.LogWarning("Upgrade button will upgrade " + nextBuilding.id);
         //Debug.Log("persistentEvent is " + upgradeConfirmButton.GetComponent<Button>().onClick.GetPersistentEventCount());
 

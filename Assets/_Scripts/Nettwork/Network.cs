@@ -34,13 +34,12 @@ public class Network
         }
     }
 
-    public static async Task<string> CreateUser(string username, string password)
+    public static async Task<ActionResult> CreateUser(string email, string username, string password)
     {
-        UnityEngine.Debug.Log("aa");
         try
         {
-            HttpResponseMessage responseMessage = await HttpClient.GetAsync((LAN ? "http://127.0.0.1:80" : "http://18.216.109.151:80") + "/createPlayer?" + username + "&" + password);
-            return await responseMessage.Content.ReadAsStringAsync();
+            HttpResponseMessage responseMessage = await HttpClient.GetAsync((LAN ? "http://127.0.0.1:80" : "http://18.216.109.151:80") + "/createPlayer?" + email + "&" + username + "&" + password);
+            return JsonUtility.FromJson<ActionResult>(await responseMessage.Content.ReadAsStringAsync());//await responseMessage.Content.ReadAsStringAsync();
         }
         catch (Exception e)
         {
@@ -257,6 +256,8 @@ public class Network
     }
     public static async Task<ActionResult> AttackMapTile(int target, List<Group> army)
     {
+        try
+        {
         string armyString = "";
         for (int i = 0; i < army.Count; ++i)
         {
@@ -266,6 +267,12 @@ public class Network
         HttpResponseMessage message = await HttpClient.GetAsync((LAN ? "http://127.0.0.1:80" : "http://18.216.109.151:80") + "/attackMapTile?" + tokenIdentity + "&" + target + "&" + armyString);
 
         return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.Message + "\n\n" + e.StackTrace);
+            throw;
+        }
     }
     
     public static async Task<ActionResult> StationUnits(int target, List<Group> army)

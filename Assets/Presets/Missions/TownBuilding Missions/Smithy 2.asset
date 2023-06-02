@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Smithy 2
   m_EditorClassIdentifier: 
   Type: 2
-  unitIdentifier: 7
-  amount: 0
+  unitIdentifier: 6
+  amount: 2
   foodReward: 0
   woodReward: 0
   metalReward: 0
   orderReward: 0
-  archerReward: 0
+  bowmanReward: 0
   cavalryReward: 0
   swordsmanReward: 0
   spearmanReward: 0
+  completed: 0

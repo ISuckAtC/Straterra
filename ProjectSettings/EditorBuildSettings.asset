@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Login.unity
-    guid: 31558e0165986a542a22c0f443c09663
+    path: Assets/Scenes/NewLogin.unity
+    guid: 4b90504d83ff03d4ea1a3794e7306add
   - enabled: 1
     path: Assets/Scenes/RunErikPrototype.unity
     guid: d1728c05c7158f6478f2a6bf18a99258
@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mikkel_4.unity
     guid: b0e5395c1d199f845ba71f5ad67d0656
+  - enabled: 1
+    path: Assets/Scenes/Login.unity
+    guid: 31558e0165986a542a22c0f443c09663
   m_configObjects: {}

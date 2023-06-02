@@ -154,6 +154,7 @@ public class AttackScreen : MonoBehaviour
         cancelButton.onClick.AddListener(delegate { CloseAttackScreen(owner); });
         clickAway.onClick.RemoveAllListeners();
         clickAway.onClick.AddListener(delegate { CloseAttackScreen(owner); });
+        armyText.text = "";
 
         MapBuilding building = MapBuildingDefinition.I[Grid._instance.tiles[tileId].building];
         for (int i = 0; i < Grid._instance.tiles[tileId].army.Count; i++)
@@ -200,6 +201,7 @@ public class AttackScreen : MonoBehaviour
         {
             tileTypeWindow.SetActive(false);
         }
+        attackButton.onClick.RemoveAllListeners();
         attackButton.onClick.AddListener(delegate { AttackWithSome(tilePosition); });
     }
     public void OnSwordsmenSliderChanged()
@@ -221,7 +223,7 @@ public class AttackScreen : MonoBehaviour
     public void AttackWithSome(int position)
     {
         Debug.Log("Attacked tile at position " + position + " has building type " + Grid._instance.tiles[position].building);
-        if (Grid._instance.tiles[position].building != 1) return;
+        //if (Grid._instance.tiles[position].building != 1) return;
 
         int lockPosition = position;
         List<Group> army = new List<Group>();
@@ -262,6 +264,7 @@ public class AttackScreen : MonoBehaviour
             }
         }
 
+        Debug.Log("About to run task, " + lockPosition + ", " + army);
         Task.Run(async () =>
         {
             return await Network.AttackMapTile(lockPosition, army);
@@ -282,8 +285,11 @@ public class AttackScreen : MonoBehaviour
             }
             else
             {
-                SplashText.Splash(result.message);
-                Debug.LogError(result.message);
+                aq.queue.Add(() =>
+                {
+                    SplashText.Splash(result.message);
+                    Debug.LogError(result.message);
+                });
             }
         });
     }

@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 8
   unitIdentifier: 0
-  amount: 7
+  amount: 166
   foodReward: 3000
   woodReward: 3000
   metalReward: 3000
   orderReward: 0
-  archerReward: 0
+  bowmanReward: 0
   cavalryReward: 0
   swordsmanReward: 0
   spearmanReward: 0
+  completed: 0
