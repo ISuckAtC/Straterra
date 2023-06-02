@@ -658,7 +658,7 @@ public class OverworldController : MonoBehaviour
 		{
 			// Random building
 			
-			InfoScreen._instance.OpenResourceInfoScreen();
+			InfoScreen._instance.OpenResourceInfoScreen(lockedId);
 			InfoScreen._instance.OpenInfoScreen();
 			InfoScreen._instance.UpdateInfoScreenResource(lockedId);
 		}

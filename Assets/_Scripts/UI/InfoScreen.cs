@@ -333,7 +333,6 @@ public class InfoScreen : MonoBehaviour
         else if (Grid._instance.tiles[tileId].owner != LocalData.SelfUser.userId)
         {
             SplashText.Splash("You do not own this tile");
-            openAttackResourceWindow.onClick.AddListener(delegate { attackScreen.OpenAttackScreen(Grid._instance.tiles[tileId].owner, true, tileId); });
         }
     }
     public void StationUnits(int tileId)
@@ -512,9 +511,11 @@ public class InfoScreen : MonoBehaviour
         attackButton.onClick.RemoveAllListeners();
     }
 
-    public void OpenResourceInfoScreen()
+    public void OpenResourceInfoScreen(int tileId)
     {
         resourceInfoScreen.SetActive(true);
+        openAttackResourceWindow.onClick.AddListener(delegate { attackScreen.OpenAttackScreen(Grid._instance.tiles[tileId].owner, true, tileId); });
+
 
         CloseVillageInfoScreen();
     }
@@ -522,6 +523,7 @@ public class InfoScreen : MonoBehaviour
     public void CloseResourceInfoScreen()
     {
         resourceInfoScreen.SetActive(false);
+        
     }
     /*
     public void ToggleInfoScreen(bool enable)
