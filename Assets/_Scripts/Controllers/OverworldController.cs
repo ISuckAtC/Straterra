@@ -840,7 +840,7 @@ public class OverworldController : MonoBehaviour
 		GameManager.PlayerOrder -= mapBuilding.orderCost;
 		*/
 
-		Debug.Log("" + mapBuilding.name + " was placed in location " + selectedPosition);
+		Debug.Log("" + mapBuilding.name + ", " + mapBuilding.id + " was placed in location " + selectedPosition);
 	}
 
 	public void PlaceOtherBuilding(byte buildingId, int owner, int position)
