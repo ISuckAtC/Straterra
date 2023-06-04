@@ -58,17 +58,49 @@ public class LoginUI : MonoBehaviour
 		{
 			if (login)
 			{
-				
+				if (usernameInput.isFocused)
+					passwordInput.Select();
+				else if (passwordInput.isFocused)
+					usernameInput.Select();
+				else
+					usernameInput.Select();
 			}
 			else if (register)
 			{
+				if (userRegInput.isFocused)
+					userMailInput.Select();
+				else if (userMailInput.isFocused)
+					userPassInput.Select();
+				else if (userPassInput.isFocused)
+					userRegInput.Select();
+				else
+					userRegInput.Select();
+			}
+			else
+			{
+				Debug.LogWarning("Neither Login or Register is true. Something is wrong.");
+			}
+		}
+		
+		if (Input.GetKeyDown(KeyCode.Return))
+		{
+			if (login)
+			{
+				if (usernameInput.text != "" && passwordInput.text != "")
+					Login();
+
+			}
+			else if (register)
+			{
+				if (userRegInput.text != "" && userMailInput.text != "" && userPassInput.text != "")
+					SendNewRegistration();
 
 			}
 			else
 			{
 				Debug.LogWarning("Neither Login or Register is true. Something is wrong.");
 			}
-		}        
+		}		
 
 	}
 
@@ -91,7 +123,6 @@ public class LoginUI : MonoBehaviour
 		
 		Debug.Log(hashedPassword);
 		
-		//string pass = passwordInput.text;
 		Task.Run<NetworkStructs.ActionResult>(async () =>
 		{
 			return await Network.GetSessionToken(loginUsername, hashedPassword);
@@ -199,9 +230,6 @@ public class LoginUI : MonoBehaviour
 		Debug.Log("This: " + newPassword + ", " + hashedBytes.Length);
 		
 		string hashedPassword = string.Join("", hashedBytes.Select(x=> x.ToString("X2")));
-
-				Debug.Log(hashedPassword);
-
 
 		Task.Run(async () =>
 		{
