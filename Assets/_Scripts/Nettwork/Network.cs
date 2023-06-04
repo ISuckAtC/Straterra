@@ -215,8 +215,9 @@ public class Network
     public static async Task<ActionResult> CreateMapBuilding(int id, int position)
     {
         HttpResponseMessage message = await HttpClient.GetAsync((LAN ? "http://127.0.0.1:80" : "http://18.216.109.151:80") + "/createMapBuilding?" + tokenIdentity + "&" + id + "&" + position);
-
-        return JsonUtility.FromJson<ActionResult>(await message.Content.ReadAsStringAsync());
+        string messageContent = await message.Content.ReadAsStringAsync();
+        Debug.Log("BuildMapTile message: " + messageContent);
+        return JsonUtility.FromJson<ActionResult>(messageContent);
     }
 
     public static async Task<ScheduledEventGroup> GetScheduledEvents()
