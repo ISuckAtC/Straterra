@@ -807,6 +807,7 @@ public class OverworldController : MonoBehaviour
 			NetworkStructs.ActionResult res = await result;
 			aq.queue.Add(() =>
 			{
+				Debug.Log("createMapBuilding message for " + Grid._instance.tiles[selectedPosition].tileType + "says : " + res.message);
 				if (!res.success)
 				{
 					Debug.LogError("Mapbuilding failed: " + res.message);
